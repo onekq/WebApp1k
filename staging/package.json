@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "fetch-mock": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "latest",
+    "react-scripts": "latest"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "latest",
+    "@babel/preset-react": "latest",
+    "@testing-library/dom": "latest",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom --watchAll=false"
+  }
+}

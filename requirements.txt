@@ -1,0 +1,6 @@
+anthropic
+fireworks-ai
+google-generativeai
+mistralai
+numpy
+tqdm
