@@ -21,7 +21,7 @@ test('Validate applying discounts on orders reduces the total amount correctly.'
   expect(screen.getByTestId('discountedAmount')).toHaveTextContent('90');
 }, 10000);
 
-test("Applying discounts on orders doesn't reduce the amount due to error.", async () => {
+test('Applying discounts on orders doesn\'t reduce the amount due to error.', async () => {
   fetchMock.post('/api/discount', { status: 500, body: { error: 'Internal Server Error' } });
 
   await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });

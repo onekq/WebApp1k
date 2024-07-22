@@ -20,7 +20,7 @@ test('Ensure managing order cancellations updates stock levels and order status 
   expect(screen.getByTestId('newStockLevel')).toHaveTextContent('95');
 }, 10000);
 
-test("Managing order cancellations doesn't update stock levels due to error.", async () => {
+test('Managing order cancellations doesn\'t update stock levels due to error.', async () => {
   fetchMock.post('/api/cancel-order', { status: 500, body: { error: 'Internal Server Error' } });
 
   await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });

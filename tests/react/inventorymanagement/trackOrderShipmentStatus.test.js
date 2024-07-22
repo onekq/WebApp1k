@@ -21,7 +21,7 @@ test('Validate tracking order shipment status updates order details correctly.',
   expect(screen.getByText('123456789')).toBeInTheDocument();
 }, 10000);
 
-test("Tracking order shipment status doesn't update details due to error.", async () => {
+test('Tracking order shipment status doesn\'t update details due to error.', async () => {
   fetchMock.get('/api/shipment-status', { status: 500, body: { error: 'Internal Server Error' } });
 
   await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });

@@ -21,7 +21,7 @@ test('Ensure handling returns updates inventory levels and order status correctl
   expect(screen.getByTestId('newStockLevel')).toHaveTextContent('105');
 }, 10000);
 
-test("Handling returns doesn't update inventory levels due to error.", async () => {
+test('Handling returns doesn\'t update inventory levels due to error.', async () => {
   fetchMock.post('/api/returns', { status: 500, body: { error: 'Internal Server Error' } });
 
   await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });

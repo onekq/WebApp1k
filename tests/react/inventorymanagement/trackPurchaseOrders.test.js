@@ -20,7 +20,7 @@ test('Validate tracking purchase orders shows all relevant orders correctly.', a
   expect(screen.getByText('Product B')).toBeInTheDocument();
 }, 10000);
 
-test("Tracking purchase orders doesn't show orders due to error.", async () => {
+test('Tracking purchase orders doesn\'t show orders due to error.', async () => {
   fetchMock.get('/api/purchase-orders', { status: 500, body: { error: 'Internal Server Error' } });
 
   await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });

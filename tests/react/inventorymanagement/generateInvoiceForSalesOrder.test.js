@@ -21,7 +21,7 @@ test('Verify generating an invoice for a sales order includes all relevant detai
   expect(screen.getByText('100')).toBeInTheDocument();
 }, 10000);
 
-test("Generating an invoice for a sales order doesn't show details due to error.", async () => {
+test('Generating an invoice for a sales order doesn\'t show details due to error.', async () => {
   fetchMock.get('/api/invoice', { status: 500, body: { error: 'Internal Server Error' } });
 
   await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });

@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    for run_number in range(1, 2):
+    for run_number in range(1, 11):
         run_dir = f"run{run_number}"
         # Skip runs which have been done before.
         if not copy_files(args.model_name, run_number):

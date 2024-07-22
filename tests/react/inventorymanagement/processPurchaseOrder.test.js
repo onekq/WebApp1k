@@ -21,7 +21,7 @@ test('Processing a purchase order increases the stock level appropriately.', asy
   expect(screen.getByTestId('newStockLevel')).toHaveTextContent('110');
 }, 10000);
 
-test("Processing a purchase order doesn't increase stock level due to error.", async () => {
+test('Processing a purchase order doesn\'t increase stock level due to error.', async () => {
   fetchMock.post('/api/purchase-order', { status: 500, body: { error: 'Internal Server Error' } });
 
   await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });

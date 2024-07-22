@@ -21,7 +21,7 @@ test('Ensure generating a purchase order receipt includes all relevant details.'
   expect(screen.getByText('200')).toBeInTheDocument();
 }, 10000);
 
-test("Generating a purchase order receipt doesn't show details due to error.", async () => {
+test('Generating a purchase order receipt doesn\'t show details due to error.', async () => {
   fetchMock.get('/api/purchase-receipt', { status: 500, body: { error: 'Internal Server Error' } });
 
   await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
