@@ -36,7 +36,7 @@ class FireworksCodeGenerator(CodeGenerator):
 
     def generate_code(self, prompt: str) -> str:
         response = self.client.chat.completions.create(
-            messages=self.make_prompt(prompt), model=self.model_name, max_tokens=2048,
+            messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=2048,
             temperature=self.temperature, top_p=self.top_p, presence_penalty=PRESENCE_PENALTY, frequency_penalty=FREQUENCY_PENALTY)
         return response.choices[0].message.content.strip()
 

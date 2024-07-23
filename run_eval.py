@@ -60,24 +60,31 @@ def write_code(code_generator, model_name, temperature=None, top_p=None, system_
 def run_test_and_process_log():
     os.chdir('staging')
     # After constructing the retry prompt, failure files are no longer needed.
-    for root, _, files in os.walk('src'):
-        for file in files:
-            if file.endswith('.failure.js') or file.endswith('.failure.log'):
-                os.remove(os.path.join(root, file))
-
+    for root, dirs, _ in os.walk('src'):
+        for subdir in dirs:
+            subdir_path = os.path.join(root, subdir)
+            for subroot, _, files in os.walk(subdir_path):
+                for file in files:
+                    if file.endswith('.failure.js') or file.endswith('.failure.log'):
+                        os.remove(os.path.join(subroot, file))
     # Determine npm path
     if os.name == 'nt':  # 'nt' indicates Windows
         npm_path = r'C:\Program Files\nodejs\npm.cmd'
     else:
         npm_path = 'npm'
 
-    directories = os.listdir('src')
+
+    directories = []
+    for framework_dir in os.listdir('src'):
+        framework_path = os.path.join('src', framework_dir)
+        for dir in os.listdir(framework_path):
+            directories.append(os.path.join(framework_path, dir).replace('\\', '/'))
+
     for dir in tqdm(directories, desc="Running tests and processing logs"):
-        dir_path = os.path.join('src', dir).replace('\\', '/')
         # Run npm test and save output
         try:
             with open("output.log", "w") as file:
-                subprocess.run([npm_path, "test", "--", "--testPathPattern", dir_path], stdout=file, stderr=subprocess.STDOUT, timeout=60)
+                subprocess.run([npm_path, "test", "--", "--testPathPattern", dir], stdout=file, stderr=subprocess.STDOUT, timeout=60)
         except subprocess.TimeoutExpired:
             subprocess.run(['python', 'process_log.py', '--timedout'])
             tqdm.write(f"Test results for {dir} (timedout) are saved and parsed.")
@@ -91,12 +98,17 @@ def run_test_and_process_log():
 def archive(model_name, run_dir):
     model_dir = os.path.join(MODELS_DIR, model_name)
     # Copy all files under STAGING_SRC_DIR, except *.test.js
-    for root, _, files in os.walk(STAGING_SRC_DIR):
-        for file in files:
-            if not file.endswith('.test.js'):
-                newpath = os.path.join(model_dir, run_dir, os.path.relpath(os.path.join(root, file), STAGING_SRC_DIR))
-                os.makedirs(os.path.dirname(newpath), exist_ok=True)
-                shutil.move(os.path.join(root, file), newpath)
+    for root, dirs, _ in os.walk(STAGING_SRC_DIR):
+        for subdir in dirs:
+            subdir_path = os.path.join(root, subdir)
+            for sub_root, _, sub_files in os.walk(subdir_path):
+                for file in sub_files:
+                    if not file.endswith('.test.js'):
+                        # Calculate the new path considering the additional directory level
+                        rel_path = os.path.relpath(os.path.join(sub_root, file), STAGING_SRC_DIR)
+                        newpath = os.path.join(model_dir, run_dir, rel_path)
+                        os.makedirs(os.path.dirname(newpath), exist_ok=True)
+                        shutil.move(os.path.join(sub_root, file), newpath)
 
     # Delete everything recursively under STAGING_SRC_DIR
     for root, dirs, files in os.walk(STAGING_SRC_DIR, topdown=False):

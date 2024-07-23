@@ -1,4 +1,6 @@
 __pycache__/
+staging/node_modules/
+staging/package-lock.json
 staging/src/
 staging/output.log
 models
