@@ -135,5 +135,4 @@ def choose_generator(generator_type: str) -> CodeGenerator:
     if generator_type not in generators:
         print(f"Unsupported generator type: {generator_type}")
         sys.exit(1)
-    print(generator_type)
     return generators[generator_type]

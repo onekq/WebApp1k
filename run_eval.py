@@ -57,7 +57,7 @@ def write_code(code_generator, model_name, temperature=None, top_p=None, system_
 
     return files_generated
 
-def run_test_and_process_log():
+def run_test_and_process_log(test_timeout):
     os.chdir('staging')
     # After constructing the retry prompt, failure files are no longer needed.
     for root, dirs, _ in os.walk('src'):
@@ -84,7 +84,7 @@ def run_test_and_process_log():
         # Run npm test and save output
         try:
             with open("output.log", "w") as file:
-                subprocess.run([npm_path, "test", "--", "--testPathPattern", dir], stdout=file, stderr=subprocess.STDOUT, timeout=60)
+                subprocess.run([npm_path, "test", "--", "--testPathPattern", dir], stdout=file, stderr=subprocess.STDOUT, timeout=test_timeout)
         except subprocess.TimeoutExpired:
             subprocess.run(['python', 'process_log.py', '--timedout'])
             tqdm.write(f"Test results for {dir} (timedout) are saved and parsed.")
@@ -129,11 +129,11 @@ if __name__ == "__main__":
     for run_number in range(1, 11):
         run_dir = f"run{run_number}"
         # Skip runs which have been done before.
-        if not copy_files(args.model_name, run_number):
-            tqdm.write(f"Skipped {args.model_name} run{run_number}")
+        if not copy_files(args.model_name, 'tests', run_dir, run_number):
+            tqdm.write(f"Skipped {args.model_name} {run_dir}")
             continue
         write_code(args.code_generator, args.model_name, temperature=0.2, top_p=0.8)
-        run_test_and_process_log()
+        run_test_and_process_log(60)
         archive(args.model_name, run_dir)
 
     # Calculate pass@k
