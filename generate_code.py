@@ -4,8 +4,8 @@ from fireworks.client import Fireworks
 import openai
 import google.generativeai as genai
 import anthropic
-from mistralai.client import MistralClient
-from mistralai.models.chat_completion import ChatMessage
+from groq import Groq
+from mistralai import Mistral
 import sys
 
 TOP_K = 40
@@ -74,15 +74,18 @@ class ClaudeCodeGenerator(CodeGenerator):
 
 class MistralCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
-        self.client = MistralClient(api_key=api_key)
-
-    def make_prompt(self, prompt: str) -> str:
-        if not hasattr(self, 'system_prompt'):
-            return [ChatMessage(role="user", content=prompt)]
-        return [ChatMessage(role="system", content=self.system_prompt), ChatMessage(role="user", content=prompt)]
+        self.client = Mistral(api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        response = self.client.chat(messages=self.make_prompt(prompt), model="codestral-latest", temperature=self.temperature, top_p=self.top_p)
+        response = self.client.chat.complete(messages=self.make_prompt(prompt), model=self.model_name, temperature=self.temperature, top_p=self.top_p)
+        return response.choices[0].message.content.strip()
+
+class GroqCodeGenerator(CodeGenerator):
+    def __init__(self, api_key: str):
+        self.client = Groq(api_key=api_key)
+
+    def generate_code(self, prompt: str) -> str:
+        response = self.client.chat(messages=self.make_prompt(prompt), model=self.model_name, temperature=self.temperature, top_p=self.top_p)
         return response.choices[0].message.content.strip()
 
 def extract_code(content: str) -> str:
@@ -129,7 +132,8 @@ def choose_generator(generator_type: str) -> CodeGenerator:
         "gemini": GeminiCodeGenerator(api_key=os.environ.get("GEMINI_API_KEY")),
         "claude": ClaudeCodeGenerator(api_key=os.environ.get("ANTHROPIC_API_KEY")),
         "mistral": MistralCodeGenerator(api_key=os.environ.get("MISTRAL_API_KEY")),
-        "fireworks": FireworksCodeGenerator(api_key=os.environ.get("FIREWORKS_API_KEY"))
+        "fireworks": FireworksCodeGenerator(api_key=os.environ.get("FIREWORKS_API_KEY")),
+        "groq": GroqCodeGenerator(api_key=os.environ.get("GROQ_API_KEY"))
     }
     
     if generator_type not in generators:

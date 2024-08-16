@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    for temperature in np.arange(0.1, 1.1, 0.1):
+    for temperature in np.arange(0, 1.1, 0.1):
         for top_p in np.arange(0, 1.1, 0.1):
             run_dir = f"t{temperature:.1f}_p{top_p:.1f}"
             # Skip runs which have been done before.
