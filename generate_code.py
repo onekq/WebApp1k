@@ -6,11 +6,17 @@ import google.generativeai as genai
 import anthropic
 from groq import Groq
 from mistralai import Mistral
+from pydantic import BaseModel
+from typing import List
 import sys
+import json
 
 TOP_K = 40
 PRESENCE_PENALTY = 0
 FREQUENCY_PENALTY = 0
+
+class Result(BaseModel):
+    errors: List[str]
 
 class CodeGenerator(ABC):
     def set_model(self, model_name: str):
@@ -30,6 +36,9 @@ class CodeGenerator(ABC):
     def generate_code(self, prompt: str) -> str:
         pass
 
+    def find_errors(self, prompt: str) -> str:
+        pass
+
 class FireworksCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
         self.client = Fireworks(api_key=api_key)
@@ -39,6 +48,12 @@ class FireworksCodeGenerator(CodeGenerator):
             messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=2048,
             temperature=self.temperature, top_p=self.top_p, presence_penalty=PRESENCE_PENALTY, frequency_penalty=FREQUENCY_PENALTY)
         return response.choices[0].message.content.strip()
+
+    def find_errors(self, prompt: str) -> str:
+        response = self.client.chat.completions.create(
+            messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=2048,
+            response_format={"type": "json_object", "schema": Result.model_json_schema()})
+        return response.choices[0].message.content
 
 class GPTCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
@@ -116,15 +131,36 @@ def generate_implementation(test_file: str, generator: CodeGenerator, failed_imp
         with open(failed_implementation_file, 'r') as file:
             failed_implementation_content = file.read()
         with open(failed_log_file, 'r') as file:
-            failed_log_content = file.read()
+            if failed_log_file.endswith('.json'):
+                json_data = json.load(file)
+                failed_log_content = json.dumps(json_data, indent=4)
+            else:
+                failed_log_content = file.read()
         prompt = (f"{failed_implementation_content} \n\nThe above code is the implementation of {implementation_file}. "
-                  f"It failed the tests below \n\n{test_content} \nBelow is the test log \n\n{failed_log_content} \n"
+                  f"It failed the tests below \n\n{test_content} \nBelow are test errors \n\n{failed_log_content} \n"
                   f"Try to generate {implementation_file} again to pass the tests. RETURN CODE ONLY.")
     else:
         prompt = f"Generate {implementation_file} to pass the tests below:\n\n{test_content}. RETURN CODE ONLY."
 
     implementation = generator.generate_code(prompt)
     return extract_code(implementation)
+
+def find_errors(test_file: str, generator: CodeGenerator, failed_implementation_file: str = None, failed_log_file: str = None) -> str:
+    with open(test_file, 'r') as file:
+        test_content = file.read()
+
+    implementation_file = os.path.basename(test_file).replace('.test.js', '.js')
+
+    if failed_implementation_file and failed_log_file:
+        with open(failed_implementation_file, 'r') as file:
+            failed_implementation_content = file.read()
+        with open(failed_log_file, 'r') as file:
+            failed_log_content = file.read()
+        prompt = (f"{failed_implementation_content} \n\nThe above code is the implementation of {implementation_file}. "
+                  f"It failed the tests below \n\n{test_content} \nBelow is the test log \n\n{failed_log_content} \n"
+                  f"List explanations to ALL errors in JSON array, one element per error")
+        return generator.find_errors(prompt)
+    return ""
 
 def choose_generator(generator_type: str) -> CodeGenerator:
     generators = {

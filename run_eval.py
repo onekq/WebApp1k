@@ -2,12 +2,14 @@ import os
 import shutil
 import subprocess
 from prepare_staging import copy_files, STAGING_SRC_DIR, MODELS_DIR
-from generate_code import choose_generator, generate_implementation
+from generate_code import choose_generator, generate_implementation, find_errors
 from pass_at_k import calculate_pass_at_k
 from tqdm import tqdm
 import argparse
+import json
 
 USE_RETRY_PROMPT = False
+USE_JSON_LOG = True
 
 def write_code(code_generator, model_name, temperature=None, top_p=None, system_prompt=None):
     generator = choose_generator(code_generator)
@@ -35,13 +37,25 @@ def write_code(code_generator, model_name, temperature=None, top_p=None, system_
         impl_file = os.path.join(STAGING_SRC_DIR, base_name + '.js')
         failure_file = os.path.join(STAGING_SRC_DIR, base_name + '.failure.js')
         failure_log = os.path.join(STAGING_SRC_DIR, base_name + '.failure.log')
+        failure_json = os.path.join(STAGING_SRC_DIR, base_name + '.failure.json')
         # In case of rerun due to crash, avoid calling LLM API for files already implemented by the previous run.
         if os.path.exists(impl_file):
             tqdm.write(f"Implementation file {impl_file} already exists.")
             continue
 
         if USE_RETRY_PROMPT and os.path.exists(failure_file):
-            implementation = generate_implementation(test_file, generator, failure_file, failure_log)
+            if USE_JSON_LOG:
+                while True:
+                    try:
+                        errors = json.loads(find_errors(test_file, generator, failure_file, failure_log))
+                        break
+                    except Exception as e:
+                        print(f"JSON error: {e}")
+                with open(failure_json, 'w') as f:
+                    json.dump(errors, f, indent=4)
+                implementation = generate_implementation(test_file, generator, failure_file, failure_json)
+            else:
+                implementation = generate_implementation(test_file, generator, failure_file, failure_log)
         else:
             implementation = generate_implementation(test_file, generator)
 
