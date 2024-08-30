@@ -27,7 +27,7 @@ class CodeGenerator(ABC):
         self.top_p = top_p
     def set_system_prompt(self, system_prompt: str):
         self.system_prompt = system_prompt
-    def make_prompt(self, prompt: str) -> str:
+    def make_prompt(self, prompt: str) -> list[dict[str, str]]:
         if not hasattr(self, 'system_prompt'):
             return [{ "role": "user", "content": prompt }]
         return [{"role": "system", "content": self.system_prompt}, { "role": "user", "content": prompt }]
@@ -37,7 +37,9 @@ class CodeGenerator(ABC):
         pass
 
     def find_errors(self, prompt: str) -> str:
-        pass
+        response = self.client.chat.completions.create(
+            messages=self.make_prompt(prompt), model=self.model_name, response_format={"type": "json_object"})
+        return response.choices[0].message.content
 
 class FireworksCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
@@ -95,6 +97,14 @@ class MistralCodeGenerator(CodeGenerator):
         response = self.client.chat.complete(messages=self.make_prompt(prompt), model=self.model_name, temperature=self.temperature, top_p=self.top_p)
         return response.choices[0].message.content.strip()
 
+    def find_errors(self, prompt: str) -> str:
+        response = self.client.chat.complete(messages=self.make_prompt(prompt), model=self.model_name, response_format={"type": "json_object"})
+        return response.choices[0].message.content
+
+class DeepSeekCodeGenerator(GPTCodeGenerator):
+    def __init__(self, api_key: str):
+        self.client = openai.OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
+
 class GroqCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
         self.client = Groq(api_key=api_key)
@@ -140,7 +150,7 @@ def generate_implementation(test_file: str, generator: CodeGenerator, failed_imp
                   f"It failed the tests below \n\n{test_content} \nBelow are test errors \n\n{failed_log_content} \n"
                   f"Try to generate {implementation_file} again to pass the tests. RETURN CODE ONLY.")
     else:
-        prompt = f"Generate {implementation_file} to pass the tests below:\n\n{test_content}. RETURN CODE ONLY."
+        prompt = (f"Generate {implementation_file} to pass the tests below:\n\n{test_content}. RETURN CODE ONLY.")
 
     implementation = generator.generate_code(prompt)
     return extract_code(implementation)
@@ -158,7 +168,7 @@ def find_errors(test_file: str, generator: CodeGenerator, failed_implementation_
             failed_log_content = file.read()
         prompt = (f"{failed_implementation_content} \n\nThe above code is the implementation of {implementation_file}. "
                   f"It failed the tests below \n\n{test_content} \nBelow is the test log \n\n{failed_log_content} \n"
-                  f"List explanations to ALL errors in JSON array, one element per error")
+                  f"List explanations to ALL errors in JSON array, one element per error. Avoid control characters.")
         return generator.find_errors(prompt)
     return ""
 
@@ -169,6 +179,7 @@ def choose_generator(generator_type: str) -> CodeGenerator:
         "claude": ClaudeCodeGenerator(api_key=os.environ.get("ANTHROPIC_API_KEY")),
         "mistral": MistralCodeGenerator(api_key=os.environ.get("MISTRAL_API_KEY")),
         "fireworks": FireworksCodeGenerator(api_key=os.environ.get("FIREWORKS_API_KEY")),
+        "deepseek": DeepSeekCodeGenerator(api_key=os.environ.get("DEEPSEEK_API_KEY")),
         "groq": GroqCodeGenerator(api_key=os.environ.get("GROQ_API_KEY"))
     }
     
