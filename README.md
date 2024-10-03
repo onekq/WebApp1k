@@ -1,4 +1,5 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/insights-from-benchmarking-frontier-language/code-generation-on-webapp1k-react)](https://paperswithcode.com/sota/code-generation-on-webapp1k-react?p=insights-from-benchmarking-frontier-language)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/a-case-study-of-web-app-coding-with-openai/code-generation-on-webapp1k-duo-react)](https://paperswithcode.com/sota/code-generation-on-webapp1k-duo-react?p=a-case-study-of-web-app-coding-with-openai)
 # WebApp1K Benchmark
 
 WebApp1K is a coding benchmark aiming to evaluate LLMs on their abilities to develop real-world web applications.
