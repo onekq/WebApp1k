@@ -113,6 +113,16 @@ class GroqCodeGenerator(CodeGenerator):
         response = self.client.chat(messages=self.make_prompt(prompt), model=self.model_name, temperature=self.temperature, top_p=self.top_p)
         return response.choices[0].message.content.strip()
 
+class NvidiaCodeGenerator(CodeGenerator):
+    def __init__(self, api_key: str):
+        self.client = openai.OpenAI(base_url="https://integrate.api.nvidia.com/v1", api_key=api_key)
+
+    def generate_code(self, prompt: str) -> str:
+        response = self.client.chat.completions.create(
+            messages=self.make_prompt(prompt), model=f"nvidia/{self.model_name}",
+            temperature=self.temperature, top_p=self.top_p, presence_penalty=PRESENCE_PENALTY, frequency_penalty=FREQUENCY_PENALTY)
+        return response.choices[0].message.content.strip()
+
 def extract_code(content: str) -> str:
     js_keywords = {'import', 'export', 'const', 'let', 'var', 'function', 'class', 'extends', 'constructor', 'return', 'if', 'else', 'switch', 'case', 'break', 'continue', 'for', 'while', 'do', 'try', 'catch', 'finally', 'throw', 'new', 'this', 'super'}
     lines = content.split('\n')
@@ -180,7 +190,8 @@ def choose_generator(generator_type: str) -> CodeGenerator:
         "mistral": MistralCodeGenerator(api_key=os.environ.get("MISTRAL_API_KEY")),
         "fireworks": FireworksCodeGenerator(api_key=os.environ.get("FIREWORKS_API_KEY")),
         "deepseek": DeepSeekCodeGenerator(api_key=os.environ.get("DEEPSEEK_API_KEY")),
-        "groq": GroqCodeGenerator(api_key=os.environ.get("GROQ_API_KEY"))
+        "groq": GroqCodeGenerator(api_key=os.environ.get("GROQ_API_KEY")),
+        "nvidia": NvidiaCodeGenerator(api_key=os.environ.get("NVIDIA_API_KEY"))
     }
     
     if generator_type not in generators:
