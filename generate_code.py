@@ -2,7 +2,7 @@ import os
 from abc import ABC, abstractmethod
 from fireworks.client import Fireworks
 import openai
-import google.generativeai as genai
+from google import genai
 import anthropic
 from groq import Groq
 from mistralai import Mistral
@@ -69,15 +69,10 @@ class GPTCodeGenerator(CodeGenerator):
 
 class GeminiCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
-        genai.configure(api_key=api_key)
+        self.client = genai.Client(api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        if hasattr(self, 'system_prompt'):
-            model = genai.GenerativeModel(model_name=self.model_name, system_instruction=self.system_prompt)
-        else:
-            model = genai.GenerativeModel(self.model_name)
-        config = genai.types.GenerationConfig(temperature=self.temperature, top_p=self.top_p, top_k=TOP_K)
-        return model.generate_content(prompt, generation_config=config).text.strip()
+        return self.client.models.generate_content(model=self.model_name, contents=prompt).text.strip()
 
 class ClaudeCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
@@ -104,6 +99,10 @@ class MistralCodeGenerator(CodeGenerator):
 class DeepSeekCodeGenerator(GPTCodeGenerator):
     def __init__(self, api_key: str):
         self.client = openai.OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
+
+class DeepInfraCodeGenerator(GPTCodeGenerator):
+    def __init__(self, api_key: str):
+        self.client = openai.OpenAI(api_key=api_key, base_url="https://api.deepinfra.com/v1/openai")
 
 class GroqCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
@@ -191,7 +190,8 @@ def choose_generator(generator_type: str) -> CodeGenerator:
         "fireworks": FireworksCodeGenerator(api_key=os.environ.get("FIREWORKS_API_KEY")),
         "deepseek": DeepSeekCodeGenerator(api_key=os.environ.get("DEEPSEEK_API_KEY")),
         "groq": GroqCodeGenerator(api_key=os.environ.get("GROQ_API_KEY")),
-        "nvidia": NvidiaCodeGenerator(api_key=os.environ.get("NVIDIA_API_KEY"))
+        "nvidia": NvidiaCodeGenerator(api_key=os.environ.get("NVIDIA_API_KEY")),
+        "deepinfra": DeepInfraCodeGenerator(api_key=os.environ.get("DEEPINFRA_API_KEY"))
     }
     
     if generator_type not in generators:
