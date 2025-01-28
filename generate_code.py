@@ -100,6 +100,10 @@ class DeepSeekCodeGenerator(GPTCodeGenerator):
     def __init__(self, api_key: str):
         self.client = openai.OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
 
+class QwenCodeGenerator(GPTCodeGenerator):
+    def __init__(self, api_key: str):
+        self.client = openai.OpenAI(api_key=api_key, base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1")
+
 class DeepInfraCodeGenerator(GPTCodeGenerator):
     def __init__(self, api_key: str):
         self.client = openai.OpenAI(api_key=api_key, base_url="https://api.deepinfra.com/v1/openai")
@@ -191,6 +195,7 @@ def choose_generator(generator_type: str) -> CodeGenerator:
         "deepseek": DeepSeekCodeGenerator(api_key=os.environ.get("DEEPSEEK_API_KEY")),
         "groq": GroqCodeGenerator(api_key=os.environ.get("GROQ_API_KEY")),
         "nvidia": NvidiaCodeGenerator(api_key=os.environ.get("NVIDIA_API_KEY")),
+        "qwen": QwenCodeGenerator(api_key=os.environ.get("QWEN_API_KEY")),
         "deepinfra": DeepInfraCodeGenerator(api_key=os.environ.get("DEEPINFRA_API_KEY"))
     }
     
