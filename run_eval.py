@@ -11,13 +11,9 @@ import json
 USE_RETRY_PROMPT = False
 USE_JSON_LOG = True
 
-def write_code(code_generator, model_name, temperature=None, top_p=None, system_prompt=None):
+def write_code(code_generator, model_name, system_prompt=None):
     generator = choose_generator(code_generator)
     generator.set_model(model_name)
-    if temperature is not None:
-        generator.set_temperature(temperature)
-    if top_p is not None:
-        generator.set_top_p(top_p)
     if system_prompt is not None:
         generator.set_system_prompt(system_prompt)
 
@@ -146,7 +142,7 @@ if __name__ == "__main__":
         if not copy_files(args.model_name, 'tests', run_dir, run_number):
             tqdm.write(f"Skipped {args.model_name} {run_dir}")
             continue
-        write_code(args.code_generator, args.model_name, temperature=0.2, top_p=0.8)
+        write_code(args.code_generator, args.model_name)
         run_test_and_process_log(60)
         archive(args.model_name, run_dir)
 

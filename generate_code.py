@@ -11,20 +11,12 @@ from typing import List
 import sys
 import json
 
-TOP_K = 40
-PRESENCE_PENALTY = 0
-FREQUENCY_PENALTY = 0
-
 class Result(BaseModel):
     errors: List[str]
 
 class CodeGenerator(ABC):
     def set_model(self, model_name: str):
         self.model_name = model_name
-    def set_temperature(self, temperature: float):
-        self.temperature = temperature
-    def set_top_p(self, top_p: float):
-        self.top_p = top_p
     def set_system_prompt(self, system_prompt: str):
         self.system_prompt = system_prompt
     def make_prompt(self, prompt: str) -> list[dict[str, str]]:
@@ -47,8 +39,7 @@ class FireworksCodeGenerator(CodeGenerator):
 
     def generate_code(self, prompt: str) -> str:
         response = self.client.chat.completions.create(
-            messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=2048,
-            temperature=self.temperature, top_p=self.top_p, presence_penalty=PRESENCE_PENALTY, frequency_penalty=FREQUENCY_PENALTY)
+            messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=2048)
         return response.choices[0].message.content.strip()
 
     def find_errors(self, prompt: str) -> str:
@@ -62,9 +53,7 @@ class GPTCodeGenerator(CodeGenerator):
         self.client = openai.OpenAI(api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        response = self.client.chat.completions.create(
-            messages=self.make_prompt(prompt), model=self.model_name,
-            temperature=self.temperature, top_p=self.top_p, presence_penalty=PRESENCE_PENALTY, frequency_penalty=FREQUENCY_PENALTY)
+        response = self.client.chat.completions.create(messages=self.make_prompt(prompt), model=self.model_name)
         return response.choices[0].message.content.strip()
 
 class GeminiCodeGenerator(CodeGenerator):
@@ -79,9 +68,7 @@ class ClaudeCodeGenerator(CodeGenerator):
         self.client = anthropic.Anthropic(api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        response = self.client.messages.create(
-            messages=self.make_prompt(prompt), model=self.model_name, max_tokens=2048,
-            temperature=self.temperature, top_p=self.top_p, top_k=TOP_K)
+        response = self.client.messages.create(messages=self.make_prompt(prompt), model=self.model_name, max_tokens=2048)
         return response.content[0].text.strip()
 
 class MistralCodeGenerator(CodeGenerator):
@@ -89,7 +76,7 @@ class MistralCodeGenerator(CodeGenerator):
         self.client = Mistral(api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        response = self.client.chat.complete(messages=self.make_prompt(prompt), model=self.model_name, temperature=self.temperature, top_p=self.top_p)
+        response = self.client.chat.complete(messages=self.make_prompt(prompt), model=self.model_name)
         return response.choices[0].message.content.strip()
 
     def find_errors(self, prompt: str) -> str:
@@ -113,7 +100,7 @@ class GroqCodeGenerator(CodeGenerator):
         self.client = Groq(api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        response = self.client.chat(messages=self.make_prompt(prompt), model=self.model_name, temperature=self.temperature, top_p=self.top_p)
+        response = self.client.chat(messages=self.make_prompt(prompt), model=self.model_name)
         return response.choices[0].message.content.strip()
 
 class NvidiaCodeGenerator(CodeGenerator):
@@ -121,9 +108,7 @@ class NvidiaCodeGenerator(CodeGenerator):
         self.client = openai.OpenAI(base_url="https://integrate.api.nvidia.com/v1", api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        response = self.client.chat.completions.create(
-            messages=self.make_prompt(prompt), model=f"nvidia/{self.model_name}",
-            temperature=self.temperature, top_p=self.top_p, presence_penalty=PRESENCE_PENALTY, frequency_penalty=FREQUENCY_PENALTY)
+        response = self.client.chat.completions.create(messages=self.make_prompt(prompt), model=f"nvidia/{self.model_name}")
         return response.choices[0].message.content.strip()
 
 def extract_code(content: str) -> str:
