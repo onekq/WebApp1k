@@ -47,7 +47,9 @@ def copy_files(model_name, test_dir, run_dir, max_runs) -> bool:
 
                     # Copy test files for all eligible cases
                     os.makedirs(staging_dir, exist_ok=True)
-                    shutil.copy(os.path.join(root, file), os.path.join(STAGING_SRC_DIR, relative_path))
+                    destination_path = os.path.join(STAGING_SRC_DIR, relative_path)
+                    if not os.path.exists(destination_path):
+                        shutil.copy(os.path.join(root, file), destination_path)
 
                     # If retried for no more than the maximum number of runs, copy the latest failure files
                     if failure_file:
