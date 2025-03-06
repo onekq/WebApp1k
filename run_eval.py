@@ -11,8 +11,7 @@ import json
 USE_RETRY_PROMPT = False
 USE_JSON_LOG = True
 
-def write_code(code_generator, model_name, system_prompt=None):
-    generator = choose_generator(code_generator)
+def write_code(generator, model_name, system_prompt=None):
     generator.set_model(model_name)
     if system_prompt is not None:
         generator.set_system_prompt(system_prompt)
@@ -133,8 +132,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run model experiments and archive results.")
     parser.add_argument('--model_name', '-m', type=str, required=True, help='The name of the model.')
     parser.add_argument('--code_generator', '-g', type=str, required=True, help='The code generator to use.')
+    parser.add_argument('--reasoning_mode', '-r', action='store_true', help='Enable the reasoning mode.')
 
     args = parser.parse_args()
+
+    generator = choose_generator(args.code_generator)
+    if args.reasoning_mode:
+        generator.set_max_tokens(32768)
 
     for run_number in range(1, 11):
         run_dir = f"run{run_number}"
@@ -142,7 +146,7 @@ if __name__ == "__main__":
         if not copy_files(args.model_name, 'tests', run_dir, run_number):
             tqdm.write(f"Skipped {args.model_name} {run_dir}")
             continue
-        write_code(args.code_generator, args.model_name)
+        write_code(generator, args.model_name)
         run_test_and_process_log(60)
         archive(args.model_name, run_dir)
 

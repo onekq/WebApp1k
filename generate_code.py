@@ -4,7 +4,6 @@ from fireworks.client import Fireworks
 import openai
 from google import genai
 import anthropic
-from groq import Groq
 from mistralai import Mistral
 from pydantic import BaseModel
 from typing import List
@@ -15,10 +14,14 @@ class Result(BaseModel):
     errors: List[str]
 
 class CodeGenerator(ABC):
+    max_tokens = 2048
+
     def set_model(self, model_name: str):
         self.model_name = model_name
     def set_system_prompt(self, system_prompt: str):
         self.system_prompt = system_prompt
+    def set_max_tokens(self, max_tokens: int):
+        self.max_tokens = max_tokens
     def make_prompt(self, prompt: str) -> list[dict[str, str]]:
         if not hasattr(self, 'system_prompt'):
             return [{ "role": "user", "content": prompt }]
@@ -39,12 +42,12 @@ class FireworksCodeGenerator(CodeGenerator):
 
     def generate_code(self, prompt: str) -> str:
         response = self.client.chat.completions.create(
-            messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=2048)
+            messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=self.max_tokens)
         return response.choices[0].message.content.strip()
 
     def find_errors(self, prompt: str) -> str:
         response = self.client.chat.completions.create(
-            messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=2048,
+            messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=self.max_tokens,
             response_format={"type": "json_object", "schema": Result.model_json_schema()})
         return response.choices[0].message.content
 
@@ -68,7 +71,7 @@ class ClaudeCodeGenerator(CodeGenerator):
         self.client = anthropic.Anthropic(api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        response = self.client.messages.create(messages=self.make_prompt(prompt), model=self.model_name, max_tokens=2048)
+        response = self.client.messages.create(messages=self.make_prompt(prompt), model=self.model_name, max_tokens=self.max_tokens)
         return response.content[0].text.strip()
 
 class MistralCodeGenerator(CodeGenerator):
@@ -95,13 +98,9 @@ class DeepInfraCodeGenerator(GPTCodeGenerator):
     def __init__(self, api_key: str):
         self.client = openai.OpenAI(api_key=api_key, base_url="https://api.deepinfra.com/v1/openai")
 
-class GroqCodeGenerator(CodeGenerator):
+class GroqCodeGenerator(GPTCodeGenerator):
     def __init__(self, api_key: str):
-        self.client = Groq(api_key=api_key)
-
-    def generate_code(self, prompt: str) -> str:
-        response = self.client.chat(messages=self.make_prompt(prompt), model=self.model_name)
-        return response.choices[0].message.content.strip()
+        self.client = openai.OpenAI(api_key=api_key, base_url="https://api.x.ai/v1")
 
 class NvidiaCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
@@ -112,6 +111,11 @@ class NvidiaCodeGenerator(CodeGenerator):
         return response.choices[0].message.content.strip()
 
 def extract_code(content: str) -> str:
+    # If </think> is found (reasoning model), clip content before it
+    think_index = content.find("</think>")
+    if think_index != -1:
+        content = content[think_index + len("</think>"):] 
+
     js_keywords = {'import', 'export', 'const', 'let', 'var', 'function', 'class', 'extends', 'constructor', 'return', 'if', 'else', 'switch', 'case', 'break', 'continue', 'for', 'while', 'do', 'try', 'catch', 'finally', 'throw', 'new', 'this', 'super'}
     lines = content.split('\n')
     code_lines = []
@@ -178,7 +182,7 @@ def choose_generator(generator_type: str) -> CodeGenerator:
         "mistral": MistralCodeGenerator(api_key=os.environ.get("MISTRAL_API_KEY")),
         "fireworks": FireworksCodeGenerator(api_key=os.environ.get("FIREWORKS_API_KEY")),
         "deepseek": DeepSeekCodeGenerator(api_key=os.environ.get("DEEPSEEK_API_KEY")),
-        "groq": GroqCodeGenerator(api_key=os.environ.get("GROQ_API_KEY")),
+        "groq": GroqCodeGenerator(api_key=os.environ.get("XAI_API_KEY")),
         "nvidia": NvidiaCodeGenerator(api_key=os.environ.get("NVIDIA_API_KEY")),
         "qwen": QwenCodeGenerator(api_key=os.environ.get("QWEN_API_KEY")),
         "deepinfra": DeepInfraCodeGenerator(api_key=os.environ.get("DEEPINFRA_API_KEY"))
