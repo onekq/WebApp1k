@@ -98,6 +98,10 @@ class DeepInfraCodeGenerator(GPTCodeGenerator):
     def __init__(self, api_key: str):
         self.client = openai.OpenAI(api_key=api_key, base_url="https://api.deepinfra.com/v1/openai")
 
+class OpenRouterCodeGenerator(GPTCodeGenerator):
+    def __init__(self, api_key: str):
+        self.client = openai.OpenAI(api_key=api_key, base_url="https://openrouter.ai/api/v1")
+
 class GroqCodeGenerator(GPTCodeGenerator):
     def __init__(self, api_key: str):
         self.client = openai.OpenAI(api_key=api_key, base_url="https://api.x.ai/v1")
@@ -185,7 +189,8 @@ def choose_generator(generator_type: str) -> CodeGenerator:
         "groq": GroqCodeGenerator(api_key=os.environ.get("XAI_API_KEY")),
         "nvidia": NvidiaCodeGenerator(api_key=os.environ.get("NVIDIA_API_KEY")),
         "qwen": QwenCodeGenerator(api_key=os.environ.get("QWEN_API_KEY")),
-        "deepinfra": DeepInfraCodeGenerator(api_key=os.environ.get("DEEPINFRA_API_KEY"))
+        "deepinfra": DeepInfraCodeGenerator(api_key=os.environ.get("DEEPINFRA_API_KEY")),
+        "openrouter": OpenRouterCodeGenerator(api_key=os.environ.get("OPENROUTER_API_KEY"))
     }
     
     if generator_type not in generators:
