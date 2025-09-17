@@ -85,9 +85,17 @@ def run_test_and_process_log(test_timeout):
 
     directories = []
     for framework_dir in os.listdir('src'):
+        if framework_dir.startswith('.'):
+            continue
         framework_path = os.path.join('src', framework_dir)
+        if not os.path.isdir(framework_path):
+            continue
         for dir in os.listdir(framework_path):
-            directories.append(os.path.join(framework_path, dir).replace('\\', '/'))
+            if dir.startswith('.'):
+                continue
+            dir_path = os.path.join(framework_path, dir)
+            if os.path.isdir(dir_path):
+                directories.append(dir_path.replace('\\', '/'))
 
     for dir in tqdm(directories, desc="Running tests and processing logs"):
         # Run npm test and save output
@@ -95,11 +103,11 @@ def run_test_and_process_log(test_timeout):
             with open("output.log", "w") as file:
                 subprocess.run([npm_path, "test", "--", "--testPathPattern", dir], stdout=file, stderr=subprocess.STDOUT, timeout=test_timeout)
         except subprocess.TimeoutExpired:
-            subprocess.run(['python', 'process_log.py', '--timedout'])
+            subprocess.run(['python3', 'process_log.py', '--timedout'])
             tqdm.write(f"Test results for {dir} (timedout) are saved and parsed.")
             continue
 
-        subprocess.run(['python', 'process_log.py'])
+        subprocess.run(['python3', 'process_log.py'])
         tqdm.write(f"Test results for {dir} are saved and parsed.")
 
     os.chdir('..')
@@ -140,10 +148,10 @@ if __name__ == "__main__":
     if args.reasoning_mode:
         generator.set_max_tokens(32768)
 
-    for run_number in range(1, 11):
+    for run_number in range(1, 2):
         run_dir = f"run{run_number}"
         # Skip runs which have been done before.
-        if not copy_files(args.model_name, 'tests', run_dir, run_number):
+        if not copy_files(args.model_name, 'duo_tests', run_dir, run_number):
             tqdm.write(f"Skipped {args.model_name} {run_dir}")
             continue
         write_code(generator, args.model_name)

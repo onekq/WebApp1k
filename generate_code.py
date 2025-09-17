@@ -2,7 +2,7 @@ import os
 from abc import ABC, abstractmethod
 from fireworks.client import Fireworks
 import openai
-from google import genai
+import google.generativeai as genai
 import anthropic
 from mistralai import Mistral
 from pydantic import BaseModel
@@ -61,10 +61,12 @@ class GPTCodeGenerator(CodeGenerator):
 
 class GeminiCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
-        self.client = genai.Client(api_key=api_key)
+        genai.configure(api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        return self.client.models.generate_content(model=self.model_name, contents=prompt).text.strip()
+        model = genai.GenerativeModel(self.model_name)
+        response = model.generate_content(prompt)
+        return response.text.strip()
 
 class ClaudeCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
@@ -179,21 +181,22 @@ def find_errors(test_file: str, generator: CodeGenerator, failed_implementation_
     return ""
 
 def choose_generator(generator_type: str) -> CodeGenerator:
-    generators = {
-        "gpt": GPTCodeGenerator(api_key=os.environ.get("OPENAI_API_KEY")),
-        "gemini": GeminiCodeGenerator(api_key=os.environ.get("GEMINI_API_KEY")),
-        "claude": ClaudeCodeGenerator(api_key=os.environ.get("ANTHROPIC_API_KEY")),
-        "mistral": MistralCodeGenerator(api_key=os.environ.get("MISTRAL_API_KEY")),
-        "fireworks": FireworksCodeGenerator(api_key=os.environ.get("FIREWORKS_API_KEY")),
-        "deepseek": DeepSeekCodeGenerator(api_key=os.environ.get("DEEPSEEK_API_KEY")),
-        "groq": GroqCodeGenerator(api_key=os.environ.get("XAI_API_KEY")),
-        "nvidia": NvidiaCodeGenerator(api_key=os.environ.get("NVIDIA_API_KEY")),
-        "qwen": QwenCodeGenerator(api_key=os.environ.get("QWEN_API_KEY")),
-        "deepinfra": DeepInfraCodeGenerator(api_key=os.environ.get("DEEPINFRA_API_KEY")),
-        "openrouter": OpenRouterCodeGenerator(api_key=os.environ.get("OPENROUTER_API_KEY"))
+    generator_map = {
+        "gpt": lambda: GPTCodeGenerator(api_key=os.environ.get("OPENAI_API_KEY")),
+        "gemini": lambda: GeminiCodeGenerator(api_key=os.environ.get("GEMINI_API_KEY")),
+        "claude": lambda: ClaudeCodeGenerator(api_key=os.environ.get("ANTHROPIC_API_KEY")),
+        "mistral": lambda: MistralCodeGenerator(api_key=os.environ.get("MISTRAL_API_KEY")),
+        "fireworks": lambda: FireworksCodeGenerator(api_key=os.environ.get("FIREWORKS_API_KEY")),
+        "deepseek": lambda: DeepSeekCodeGenerator(api_key=os.environ.get("DEEPSEEK_API_KEY")),
+        "groq": lambda: GroqCodeGenerator(api_key=os.environ.get("XAI_API_KEY")),
+        "nvidia": lambda: NvidiaCodeGenerator(api_key=os.environ.get("NVIDIA_API_KEY")),
+        "qwen": lambda: QwenCodeGenerator(api_key=os.environ.get("QWEN_API_KEY")),
+        "deepinfra": lambda: DeepInfraCodeGenerator(api_key=os.environ.get("DEEPINFRA_API_KEY")),
+        "openrouter": lambda: OpenRouterCodeGenerator(api_key=os.environ.get("OPENROUTER_API_KEY"))
     }
-    
-    if generator_type not in generators:
+
+    if generator_type not in generator_map:
         print(f"Unsupported generator type: {generator_type}")
+        print(f"Available generators: {', '.join(generator_map.keys())}")
         sys.exit(1)
-    return generators[generator_type]
+    return generator_map[generator_type]()
