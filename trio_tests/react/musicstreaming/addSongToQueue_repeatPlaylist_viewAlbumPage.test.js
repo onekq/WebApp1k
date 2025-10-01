@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a song to the playback queue', async () => {
   fetchMock.post('/api/queue', { id: 1, name: 'New Song' });
 
-  await act(async () => { render(<MemoryRouter><AddSongToQueue songId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App songId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-to-queue-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully adds a song to the playback queue', async () => {
 test('fails to add a song to the playback queue due to non-existing song', async () => {
   fetchMock.post('/api/queue', 404);
 
-  await act(async () => { render(<MemoryRouter><AddSongToQueue songId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App songId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-to-queue-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Repeat Playlist - failure shows error message', async () => {
 test('Viewing an album\'s page shows correct information.', async () => {
   fetchMock.get('/api/album/1', { title: 'Album Title' });
 
-  await act(async () => { render(<MemoryRouter><AlbumPage albumId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App albumId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Album Title')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('Viewing an album\'s page shows correct information.', async () => {
 test('Viewing an album\'s page fails with an error message.', async () => {
   fetchMock.get('/api/album/1', 500);
 
-  await act(async () => { render(<MemoryRouter><AlbumPage albumId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App albumId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error loading album information')).toBeInTheDocument();

@@ -15,7 +15,7 @@ test('Set Project Budget - success', async () => {
   fetchMock.post('/api/projects/budget', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('Set Project Budget - failure', async () => {
   fetchMock.post('/api/projects/budget', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -53,7 +53,7 @@ test('Add Milestone to Project - success', async () => {
   fetchMock.post('/api/projects/milestone', 201);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -72,7 +72,7 @@ test('Add Milestone to Project - failure', async () => {
   fetchMock.post('/api/projects/milestone', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -93,7 +93,7 @@ test('Filter tasks by assigned user successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by assigned user'), { target: { value: 'user1' } });
@@ -110,7 +110,7 @@ test('Fail to filter tasks by assigned user when API returns 500.', async () => 
   fetchMock.get('/api/tasks?assignedUser=user1', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by assigned user'), { target: { value: 'user1' } });

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current atmospheric pressure for a given location', async () => {
   fetchMock.get('/api/current-pressure?location=NYC', { pressure: 1013 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Pressure')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current atmospheric pressure for a given locati
 test('Fails to retrieve the current atmospheric pressure if the API returns an error', async () => {
   fetchMock.get('/api/current-pressure?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Pressure')); });
 
@@ -70,7 +70,7 @@ test('FetchNextDayForecast - fails to retrieve next-day forecast', async () => {
 test('correctly stores user notification settings', async () => {
   fetchMock.post('/preferences/notifications', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notifications-checkbox'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -81,7 +81,7 @@ test('correctly stores user notification settings', async () => {
 test('displays error when storing user notification settings fails', async () => {
   fetchMock.post('/preferences/notifications', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notifications-checkbox'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

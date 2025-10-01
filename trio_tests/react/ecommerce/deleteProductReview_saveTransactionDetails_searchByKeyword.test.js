@@ -14,7 +14,7 @@ afterEach(() => {
 test('Deleting a product review should succeed', async () => {
   fetchMock.delete('/api/reviews/123', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><DeleteReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete')); });
 
   expect(fetchMock.calls('/api/reviews/123')).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Deleting a product review should succeed', async () => {
 test('Deleting a product review should fail due to server error', async () => {
   fetchMock.delete('/api/reviews/123', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><DeleteReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete')); });
 
   expect(fetchMock.calls('/api/reviews/123')).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Deleting a product review should fail due to server error', async () => {
 test('save transaction details successfully', async () => {
   fetchMock.post('/api/save-transaction', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-transaction-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('save transaction details successfully', async () => {
 test('fail to save transaction details', async () => {
   fetchMock.post('/api/save-transaction', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-transaction-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('fail to save transaction details', async () => {
 test('searches by keyword successfully', async () => {
   fetchMock.get('/api/products?search=phone', { products: [{ id: 1, name: 'Smartphone' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('keyword-search'), { target: { value: 'phone' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -65,7 +65,7 @@ test('searches by keyword successfully', async () => {
 test('fails to search by keyword and shows error', async () => {
   fetchMock.get('/api/products?search=unknown', 404);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('keyword-search'), { target: { value: 'unknown' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 

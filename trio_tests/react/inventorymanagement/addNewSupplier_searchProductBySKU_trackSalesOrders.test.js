@@ -60,7 +60,7 @@ test('Searching for a product by SKU handles no results correctly.', async () =>
 test('Ensure tracking sales orders shows all relevant orders correctly.', async () => {
   fetchMock.get('/api/sales-orders', { status: 200, body: { orders: [{ id: 1, item: 'Product A', quantity: 5 }] } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('trackSalesOrders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -70,7 +70,7 @@ test('Ensure tracking sales orders shows all relevant orders correctly.', async 
 test('Tracking sales orders doesn\'t show orders due to error.', async () => {
   fetchMock.get('/api/sales-orders', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('trackSalesOrders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

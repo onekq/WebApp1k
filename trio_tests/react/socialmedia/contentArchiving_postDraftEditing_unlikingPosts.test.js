@@ -17,7 +17,7 @@ test('Successfully archives a post.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><PostComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Archive'));
@@ -33,7 +33,7 @@ test('Shows error message when archiving a post fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><PostComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Archive'));
@@ -47,7 +47,7 @@ test('Test editing saved drafts.', async () => {
   fetchMock.put('/api/posts/draft/1', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByText('Edit Draft'), { target: { value: 'Updated draft content' } });
@@ -64,7 +64,7 @@ test('Ensure changes are saved and displayed (draft).', async () => {
   fetchMock.put('/api/posts/draft/1', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByText('Edit Draft'), { target: { value: '' } });
@@ -80,7 +80,7 @@ test('Ensure changes are saved and displayed (draft).', async () => {
 test('Should unlike a liked post', async () => {
   fetchMock.post('api/unlike', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-button-post1')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -90,7 +90,7 @@ test('Should unlike a liked post', async () => {
 test('Should display an error when unliking a post not liked', async () => {
   fetchMock.post('api/unlike', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-button-invalid')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

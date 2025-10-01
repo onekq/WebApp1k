@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully like a comment on a recipe', async () => {
   fetchMock.post('/api/like-comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Successfully like a comment on a recipe', async () => {
 test('Fail to like a comment with error message', async () => {
   fetchMock.post('/api/like-comment', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Ensure recipes can be searched by keyword - failure', async () => {
 test('View Ingredient List successfully', async () => {
   fetchMock.get('/api/recipe/1/ingredients', { body: [{ name: 'Salt' }], status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Ingredients')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('View Ingredient List successfully', async () => {
 test('View Ingredient List failure shows error message', async () => {
   fetchMock.get('/api/recipe/1/ingredients', { body: { message: 'Error fetching ingredients' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Ingredients')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

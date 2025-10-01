@@ -56,7 +56,7 @@ test('CheckSeatAvailability - check seat availability fails with error message',
 test('User input data should be validated successfully.', async () => {
   fetchMock.post('/api/user/validate', 200);
 
-  await act(async () => { render(<MemoryRouter><InputValidationComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('input-data'), { target: { value: 'valid-data' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-input')); });
 
@@ -67,7 +67,7 @@ test('User input data should be validated successfully.', async () => {
 test('Error in user input data validation should show error message.', async () => {
   fetchMock.post('/api/user/validate', 400);
 
-  await act(async () => { render(<MemoryRouter><InputValidationComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('input-data'), { target: { value: 'invalid-data' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-input')); });
 

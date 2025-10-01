@@ -14,7 +14,7 @@ afterEach(() => {
 test('Applies loyalty points successfully', async () => {
   fetchMock.post('/api/applyLoyaltyPoints', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Apply Loyalty Points')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Applies loyalty points successfully', async () => {
 test('Fails to apply loyalty points', async () => {
   fetchMock.post('/api/applyLoyaltyPoints', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Apply Loyalty Points')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fails to apply loyalty points', async () => {
 test('calculateShippingCost: successfully calculate shipping costs', async () => {
   fetchMock.get('/api/cart/shipping', { status: 200, body: { shipping: '15.00' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-shipping')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('calculateShippingCost: successfully calculate shipping costs', async () =>
 test('calculateShippingCost: fail to calculate shipping costs with error message', async () => {
   fetchMock.get('/api/cart/shipping', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-shipping')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('calculateShippingCost: fail to calculate shipping costs with error message
 test('searches by keyword successfully', async () => {
   fetchMock.get('/api/products?search=phone', { products: [{ id: 1, name: 'Smartphone' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('keyword-search'), { target: { value: 'phone' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -65,7 +65,7 @@ test('searches by keyword successfully', async () => {
 test('fails to search by keyword and shows error', async () => {
   fetchMock.get('/api/products?search=unknown', 404);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('keyword-search'), { target: { value: 'unknown' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 

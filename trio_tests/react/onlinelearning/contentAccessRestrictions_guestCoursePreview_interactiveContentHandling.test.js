@@ -14,7 +14,7 @@ afterEach(() => {
 test('Content Access Restrictions success: should display restricted content.', async () => {
   fetchMock.get('/api/courses/1/content', { id: 1, title: 'Protected Content' });
 
-  await act(async () => { render(<MemoryRouter><ContentAccessRestrictions courseId={1} permission="admin" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} permission="admin" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Protected Content')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Content Access Restrictions success: should display restricted content.', 
 test('Content Access Restrictions failure: should display an error message on unauthorized access.', async () => {
   fetchMock.get('/api/courses/1/content', 403);
 
-  await act(async () => { render(<MemoryRouter><ContentAccessRestrictions courseId={1} permission="guest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} permission="guest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Access restricted.')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Content Access Restrictions failure: should display an error message on un
 test('Success: guest previews course successfully', async () => {
   fetchMock.get('/api/course-preview', 200);
 
-  await act(async () => { render(<MemoryRouter><GuestCoursePreviewComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('preview-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -42,7 +42,7 @@ test('Success: guest previews course successfully', async () => {
 test('Failure: guest course preview fails', async () => {
   fetchMock.get('/api/course-preview', 500);
 
-  await act(async () => { render(<MemoryRouter><GuestCoursePreviewComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('preview-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -52,7 +52,7 @@ test('Failure: guest course preview fails', async () => {
 test('Success: interactive content loads successfully', async () => {
   fetchMock.get('/api/interactive-content', 200);
 
-  await act(async () => { render(<MemoryRouter><InteractiveContentComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('load-interactive-content')); });
 
@@ -63,7 +63,7 @@ test('Success: interactive content loads successfully', async () => {
 test('Failure: interactive content fails to load', async () => {
   fetchMock.get('/api/interactive-content', 500);
 
-  await act(async () => { render(<MemoryRouter><InteractiveContentComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('load-interactive-content')); });
 

@@ -15,7 +15,7 @@ test('successfully calculates remaining amount to reach a financial goal', async
   fetchMock.get('/api/goal/remaining/1', { status: 200, body: { remaining: 500 } });
 
   await act(async () => {
-    render(<MemoryRouter><CalculateRemaining /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to calculate remaining amount to reach a financial goal', async () =
   fetchMock.get('/api/goal/remaining/1', { status: 404, body: { error: 'Goal not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><CalculateRemaining /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -45,7 +45,7 @@ test('Success: Import expenses from a CSV file.', async () => {
   fetchMock.post('/api/import-csv', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   const fileInput = screen.getByTestId('csv-file-input');
@@ -67,7 +67,7 @@ test('Failure: Import expenses from a CSV file.', async () => {
   fetchMock.post('/api/import-csv', { status: 400, body: { error: 'Invalid CSV file' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   const fileInput = screen.getByTestId('csv-file-input');
@@ -89,7 +89,7 @@ test('Success: Track expenses by payment method.', async () => {
   fetchMock.get('/api/track-expense-by-method', { status: 200, body: { success: true, result: 'Credit: 400, Cash: 300' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -104,7 +104,7 @@ test('Failure: Track expenses by payment method.', async () => {
   fetchMock.get('/api/track-expense-by-method', { status: 500, body: { error: 'Tracking error' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

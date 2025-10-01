@@ -15,7 +15,7 @@ test('successfully edits existing articles', async () => {
   fetchMock.put('path/to/api/article', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('article-input'), { target: { value: 'Updated Article' } });
@@ -32,7 +32,7 @@ test('fails to edit existing articles with error message', async () => {
   fetchMock.put('path/to/api/article', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('article-input'), { target: { value: 'Updated Article' } });
@@ -48,7 +48,7 @@ test('fails to edit existing articles with error message', async () => {
 test('notifies the user of a ticket status change', async () => {
   fetchMock.put('/api/tickets/1/notify', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketStatusNotification ticketId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App ticketId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Notify')); });
   
   expect(fetchMock.calls('/api/tickets/1/notify').length).toBe(1);
@@ -58,7 +58,7 @@ test('notifies the user of a ticket status change', async () => {
 test('shows error if notification fails', async () => {
   fetchMock.put('/api/tickets/1/notify', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketStatusNotification ticketId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App ticketId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Notify')); });
   
   expect(fetchMock.calls('/api/tickets/1/notify').length).toBe(1);
@@ -69,7 +69,7 @@ test('successfully tracks the number of views for an article', async () => {
   fetchMock.get('path/to/api/article/views', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('view-article-button'));
@@ -83,7 +83,7 @@ test('fails to track the number of views for an article with error message', asy
   fetchMock.get('path/to/api/article/views', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('view-article-button'));

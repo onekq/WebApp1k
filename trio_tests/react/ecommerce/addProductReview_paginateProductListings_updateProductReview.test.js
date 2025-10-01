@@ -14,7 +14,7 @@ afterEach(() => {
 test('Adding a product review should succeed', async () => {
   fetchMock.post('/api/reviews', { status: 201 });
 
-  await act(async () => { render(<MemoryRouter><AddReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Great product!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 
@@ -25,7 +25,7 @@ test('Adding a product review should succeed', async () => {
 test('Adding a product review should fail due to server error', async () => {
   fetchMock.post('/api/reviews', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><AddReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Great product!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 
@@ -36,7 +36,7 @@ test('Adding a product review should fail due to server error', async () => {
 test('paginates product listings successfully', async () => {
   fetchMock.get('/api/products?page=2', { products: [{ id: 2, name: 'Product 2' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('page-2')); });
 
   expect(fetchMock.called('/api/products?page=2')).toBe(true);
@@ -46,7 +46,7 @@ test('paginates product listings successfully', async () => {
 test('fails to paginate product listings and shows error', async () => {
   fetchMock.get('/api/products?page=2', 500);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('page-2')); });
 
   expect(fetchMock.called('/api/products?page=2')).toBe(true);
@@ -56,7 +56,7 @@ test('fails to paginate product listings and shows error', async () => {
 test('Updating a product review should succeed', async () => {
   fetchMock.put('/api/reviews/123', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><UpdateReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Updated review!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update')); });
 
@@ -67,7 +67,7 @@ test('Updating a product review should succeed', async () => {
 test('Updating a product review should fail due to server error', async () => {
   fetchMock.put('/api/reviews/123', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><UpdateReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Updated review!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update')); });
 

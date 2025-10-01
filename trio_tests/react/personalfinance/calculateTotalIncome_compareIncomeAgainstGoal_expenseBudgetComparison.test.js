@@ -65,7 +65,7 @@ test('Success: Compare expenses against the budget for a given period.', async (
   fetchMock.get('/api/compare-expense', { status: 200, body: { compared: true, result: 'Under budget' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -80,7 +80,7 @@ test('Failure: Compare expenses against the budget for a given period.', async (
   fetchMock.get('/api/compare-expense', { status: 400, body: { error: 'Comparison failed' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

@@ -14,7 +14,7 @@ afterEach(() => {
 test('deletes an expense successfully', async () => {
   fetchMock.delete('/api/expense/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-expense-button-1')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('deletes an expense successfully', async () => {
 test('fails to delete an expense', async () => {
   fetchMock.delete('/api/expense/1', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-expense-button-1')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -35,7 +35,7 @@ test('Success: Delete a monthly budget.', async () => {
   fetchMock.delete('/api/delete-budget', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -54,7 +54,7 @@ test('Failure: Delete a monthly budget.', async () => {
   fetchMock.delete('/api/delete-budget', { status: 400, body: { error: 'Budget not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

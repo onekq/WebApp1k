@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully contacts agent for viewing', async () => {
   fetchMock.post('/api/agent/contact', 200);
 
-  await act(async () => { render(<MemoryRouter><ContactAgentForViewing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('viewing-date'), { target: { value: '2023-10-01' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('contact-agent-btn')); });
 
@@ -25,7 +25,7 @@ test('successfully contacts agent for viewing', async () => {
 test('fails to contact agent for viewing and shows error message', async () => {
   fetchMock.post('/api/agent/contact', 500);
 
-  await act(async () => { render(<MemoryRouter><ContactAgentForViewing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('viewing-date'), { target: { value: '2023-10-01' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('contact-agent-btn')); });
 
@@ -36,7 +36,7 @@ test('fails to contact agent for viewing and shows error message', async () => {
 test('shows information about nearby schools for a property', async () => {
   fetchMock.get('/property/1/schools', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Schools')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('shows information about nearby schools for a property', async () => {
 test('fails to display nearby schools due to network error', async () => {
   fetchMock.get('/property/1/schools', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Schools')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -59,7 +59,7 @@ test('Filter by Property Features filters properties by features successfully', 
     body: [{ id: 1, features: ['balcony'] }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/features/i), { target: { value: 'balcony' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -73,7 +73,7 @@ test('Filter by Property Features filters properties by features fails', async (
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/features/i), { target: { value: 'balcony' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 

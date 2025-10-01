@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully creates a new playlist', async () => {
   fetchMock.post('/api/playlists', { id: 1, name: 'New Playlist' });
 
-  await act(async () => { render(<MemoryRouter><CreatePlaylist /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('playlist-name-input'), { target: { value: 'New Playlist' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('create-playlist-button')); });
 
@@ -25,7 +25,7 @@ test('successfully creates a new playlist', async () => {
 test('fails to create a new playlist with missing name', async () => {
   fetchMock.post('/api/playlists', 400);
 
-  await act(async () => { render(<MemoryRouter><CreatePlaylist /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('create-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

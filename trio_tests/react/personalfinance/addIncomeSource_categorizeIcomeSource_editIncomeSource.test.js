@@ -15,7 +15,7 @@ test('successfully adds a new income source', async () => {
   fetchMock.post('/income', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><AddIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Salary' } });
@@ -32,7 +32,7 @@ test('fails to add a new income source', async () => {
   fetchMock.post('/income', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><AddIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });
@@ -49,7 +49,7 @@ test('successfully categorizes an income source', async () => {
   fetchMock.post('/income/1/categorize', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><CategorizeIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/category/i), { target: { value: 'Job' } });
@@ -66,7 +66,7 @@ test('fails to categorize an income source', async () => {
   fetchMock.post('/income/1/categorize', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><CategorizeIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/category/i), { target: { value: '' } });
@@ -83,7 +83,7 @@ test('successfully edits an existing income source', async () => {
   fetchMock.put('/income/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><EditIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Updated Salary' } });
@@ -100,7 +100,7 @@ test('fails to edit an existing income source', async () => {
   fetchMock.put('/income/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><EditIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });

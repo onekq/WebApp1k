@@ -14,7 +14,7 @@ afterEach(() => {
 test('job seekers can successfully control the visibility of their profiles', async () => {
   fetchMock.post('/api/jobseeker/visibility', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ProfileVisibility /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Make Profile Public/i)); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('job seekers can successfully control the visibility of their profiles', as
 test('job seekers see an error message if visibility control fails', async () => {
   fetchMock.post('/api/jobseeker/visibility', 500);
 
-  await act(async () => { render(<MemoryRouter><ProfileVisibility /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Make Profile Public/i)); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('job seekers see an error message if visibility control fails', async () =>
 test('successful application resubmission.', async () => {
   fetchMock.post('/resubmitApplication', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resubmit-button')); });
 
@@ -45,7 +45,7 @@ test('successful application resubmission.', async () => {
 test('failure application resubmission.', async () => {
   fetchMock.post('/resubmitApplication', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resubmit-button')); });
 

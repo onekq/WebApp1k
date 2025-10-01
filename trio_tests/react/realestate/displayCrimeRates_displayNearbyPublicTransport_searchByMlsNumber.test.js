@@ -14,7 +14,7 @@ afterEach(() => {
 test('shows crime rates in the property\'s area', async () => {
   fetchMock.get('/property/1/crime', { body: {} });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Crime')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('shows crime rates in the property\'s area', async () => {
 test('fails to display crime rates due to network error', async () => {
   fetchMock.get('/property/1/crime', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Crime')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('fails to display crime rates due to network error', async () => {
 test('shows information about nearby public transportation', async () => {
   fetchMock.get('/property/1/transport', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Transport')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('shows information about nearby public transportation', async () => {
 test('fails to display nearby public transport due to network error', async () => {
   fetchMock.get('/property/1/transport', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Transport')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('fails to display nearby public transport due to network error', async () =
 test('Successfully searches by MLS number.', async () => {
   fetchMock.get('/api/properties?mls=12345', { data: { property: 'Property Data' } });
 
-  await act(async () => { render(<MemoryRouter><SearchByMLS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('mls-input'), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -65,7 +65,7 @@ test('Successfully searches by MLS number.', async () => {
 test('Fails to search by MLS number with error message.', async () => {
   fetchMock.get('/api/properties?mls=12345', 400);
 
-  await act(async () => { render(<MemoryRouter><SearchByMLS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('mls-input'), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 

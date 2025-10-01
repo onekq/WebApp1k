@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully sends automated reminders for deadlines', async () => {
   fetchMock.post('/reminders', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><AutomatedReminders /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Send Reminders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Successfully sends automated reminders for deadlines', async () => {
 test('Fails to send automated reminders for deadlines', async () => {
   fetchMock.post('/reminders', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><AutomatedReminders /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Send Reminders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Fails to send automated reminders for deadlines', async () => {
 test('Material Version Control success: should display version control info.', async () => {
   fetchMock.get('/api/course-materials/1/versions', [{ version: 1, details: 'Initial Version' }]);
 
-  await act(async () => { render(<MemoryRouter><MaterialVersionControl courseId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Initial Version')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('Material Version Control success: should display version control info.', a
 test('Material Version Control failure: should display an error message on version retrieval failure.', async () => {
   fetchMock.get('/api/course-materials/1/versions', 404);
 
-  await act(async () => { render(<MemoryRouter><MaterialVersionControl courseId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Version information cannot be retrieved.')).toBeInTheDocument();
@@ -52,7 +52,7 @@ test('Material Version Control failure: should display an error message on versi
 test('Progress report can be generated successfully.', async () => {
   fetchMock.get('/api/progress-report', { report: 'Mock Report' });
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Generate Progress Report/i)); });
 
   expect(fetchMock.calls('/api/progress-report').length).toEqual(1);
@@ -62,7 +62,7 @@ test('Progress report can be generated successfully.', async () => {
 test('Progress report generation fails if the server returns an error.', async () => {
   fetchMock.get('/api/progress-report', 500);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Generate Progress Report/i)); });
 
   expect(fetchMock.calls('/api/progress-report').length).toEqual(1);

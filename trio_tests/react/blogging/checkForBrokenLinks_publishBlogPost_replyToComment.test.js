@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully checks for broken links in a blog post', async () => {
   fetchMock.post('/api/check-broken-links', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/check for broken links/i)); });
 
   expect(fetchMock.calls('/api/check-broken-links').length).toBe(1);
@@ -24,7 +24,7 @@ test('successfully checks for broken links in a blog post', async () => {
 test('fails to check for broken links in a blog post due to server error', async () => {
   fetchMock.post('/api/check-broken-links', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/check for broken links/i)); });
 
   expect(fetchMock.calls('/api/check-broken-links').length).toBe(1);
@@ -35,7 +35,7 @@ test('Success: publish a draft blog post', async () => {
   fetchMock.put('/api/publishPost', { status: 200, body: { id: 1, title: 'Draft Post', content: 'Some content', status: 'Published' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/publish/i));
@@ -49,7 +49,7 @@ test('Failure: publish a draft post without content', async () => {
   fetchMock.put('/api/publishPost', { status: 400, body: { error: 'Content cannot be empty' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/publish/i));

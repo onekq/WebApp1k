@@ -14,7 +14,7 @@ afterEach(() => {
 test('Assign task to user successfully', async () => {
   fetchMock.post('/assign-task', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'New Task' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('assign-task-button')); });
@@ -26,7 +26,7 @@ test('Assign task to user successfully', async () => {
 test('Fail to assign task due to server error', async () => {
   fetchMock.post('/assign-task', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'New Task' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('assign-task-button')); });
@@ -38,7 +38,7 @@ test('Fail to assign task due to server error', async () => {
 test('successfully removes task dependencies.', async () => {
   fetchMock.delete('/api/task-dependencies', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TaskDependencies /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'Task 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-dependency-btn')); });
 
@@ -49,7 +49,7 @@ test('successfully removes task dependencies.', async () => {
 test('fails to remove task dependencies if server error.', async () => {
   fetchMock.delete('/api/task-dependencies', 500);
 
-  await act(async () => { render(<MemoryRouter><TaskDependencies /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'Task 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-dependency-btn')); });
 
@@ -60,7 +60,7 @@ test('fails to remove task dependencies if server error.', async () => {
 test('successfully stops task recurrence.', async () => {
   fetchMock.post('/api/stop-task-recurrence', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TaskRecurrence /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('stop-recurrence-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -70,7 +70,7 @@ test('successfully stops task recurrence.', async () => {
 test('fails to stop task recurrence if server error.', async () => {
   fetchMock.post('/api/stop-task-recurrence', 500);
 
-  await act(async () => { render(<MemoryRouter><TaskRecurrence /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('stop-recurrence-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);

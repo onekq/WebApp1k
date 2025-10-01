@@ -35,7 +35,7 @@ test('Confirmation email is not sent if registration fails', async () => {
 test('Displays accurate search results for events based on filters', async () => {
   fetchMock.get('/api/event/search?query=concert', { results: [{ name: 'Concert Event' }] });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'concert' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-btn')); });
 
@@ -46,7 +46,7 @@ test('Displays accurate search results for events based on filters', async () =>
 test('Displays error message when search results are unavailable', async () => {
   fetchMock.get('/api/event/search?query=concert', 404);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'concert' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-btn')); });
 

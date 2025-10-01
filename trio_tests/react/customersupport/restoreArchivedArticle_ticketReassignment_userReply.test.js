@@ -15,7 +15,7 @@ test('successfully restores archived articles', async () => {
   fetchMock.post('path/to/api/article/restore', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('restore-article-button'));
@@ -29,7 +29,7 @@ test('fails to restore archived articles with error message', async () => {
   fetchMock.post('path/to/api/article/restore', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('restore-article-button'));
@@ -42,7 +42,7 @@ test('fails to restore archived articles with error message', async () => {
 test('Reassigning ticket to a different agent should show success message.', async () => {
   fetchMock.post('/api/reassign-ticket', { agent: 'Jane Doe' });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('reassign-ticket')); });
 
@@ -53,7 +53,7 @@ test('Reassigning ticket to a different agent should show success message.', asy
 test('Reassigning ticket to a different agent should show error message when failed.', async () => {
   fetchMock.post('/api/reassign-ticket', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('reassign-ticket')); });
 
@@ -64,7 +64,7 @@ test('Reassigning ticket to a different agent should show error message when fai
 test('Allowing users to reply to agent comments should show success message.', async () => {
   fetchMock.post('/api/user-reply', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-reply'), { target: { value: 'User reply' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-reply')); });
 
@@ -75,7 +75,7 @@ test('Allowing users to reply to agent comments should show success message.', a
 test('Allowing users to reply to agent comments should show error message when failed.', async () => {
   fetchMock.post('/api/user-reply', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-reply'), { target: { value: 'User reply' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-reply')); });
 

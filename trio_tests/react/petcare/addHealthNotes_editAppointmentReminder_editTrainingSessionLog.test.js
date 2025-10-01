@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add health notes successfully', async () => {
   fetchMock.post('/api/health-notes', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notes-input'), { target: { value: 'Healthy!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Add health notes successfully', async () => {
 test('Fail to add health notes with error', async () => {
   fetchMock.post('/api/health-notes', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notes-input'), { target: { value: '' } }); }); // Failure case: Empty input
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -37,7 +37,7 @@ test('should update an existing appointment reminder successfully', async () => 
   fetchMock.put('/api/edit-appointment-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/New Appointment Description/i), { target: { value: 'Grooming' } });
@@ -54,7 +54,7 @@ test('should fail to update an existing appointment reminder', async () => {
   fetchMock.put('/api/edit-appointment-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/New Appointment Description/i), { target: { value: 'Grooming' } });
@@ -70,7 +70,7 @@ test('should fail to update an existing appointment reminder', async () => {
 test('Edits a training session log successfully.', async () => {
   fetchMock.put('/training-sessions/1', { message: 'Training session updated' });
 
-  await act(async () => { render(<MemoryRouter><EditTrainingSessionLog trainingId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App trainingId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('training-input'), { target: { value: 'Updated training' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -81,7 +81,7 @@ test('Edits a training session log successfully.', async () => {
 test('Fails to edit training session log with error message.', async () => {
   fetchMock.put('/training-sessions/1', { status: 500, body: { message: 'Failed to update training session' } });
 
-  await act(async () => { render(<MemoryRouter><EditTrainingSessionLog trainingId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App trainingId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('training-input'), { target: { value: 'Updated training' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

@@ -17,7 +17,7 @@ test('User can retrieve posts by tag successfully', async () => {
     body: [{ id: 1, title: 'First Post' }, { id: 2, title: 'Second Post' }]
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 
@@ -32,7 +32,7 @@ test('User gets an error message when retrieving posts by tag fails', async () =
     body: { error: 'Unable to fetch posts' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 
@@ -44,7 +44,7 @@ test('Success: retrieve a list of scheduled blog posts', async () => {
   fetchMock.get('/api/posts?status=scheduled', { status: 200, body: [{ id: 1, title: 'Scheduled Post' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -55,7 +55,7 @@ test('Failure: fetch scheduled posts but none exist', async () => {
   fetchMock.get('/api/posts?status=scheduled', { status: 404, body: { error: 'No scheduled posts found' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -65,7 +65,7 @@ test('Failure: fetch scheduled posts but none exist', async () => {
 test('successfully tracks post shares on social media', async () => {
   fetchMock.post('/api/trackPostShares', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackPostShares postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share Post')); });
 
   expect(fetchMock.calls('/api/trackPostShares')).toHaveLength(1);
@@ -76,7 +76,7 @@ test('successfully tracks post shares on social media', async () => {
 test('fails to track post shares with an error message', async () => {
   fetchMock.post('/api/trackPostShares', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackPostShares postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share Post')); });
 
   expect(fetchMock.calls('/api/trackPostShares')).toHaveLength(1);

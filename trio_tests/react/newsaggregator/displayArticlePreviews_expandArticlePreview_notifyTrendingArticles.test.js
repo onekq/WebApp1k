@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays article previews on the home page successfully', async () => {
   fetchMock.get('/api/articles', { status: 200, body: [{ id: 1, title: 'Test Article', preview: 'Test Preview' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Test Article')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Displays article previews on the home page successfully', async () => {
 test('Fails to display article previews on the home page', async () => {
   fetchMock.get('/api/articles', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load articles')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Fails to display article previews on the home page', async () => {
 test('Allows users to expand article previews to full articles successfully', async () => {
   fetchMock.get('/api/articles/1', { status: 200, body: { id: 1, content: 'Full Test Article Content' } });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Test Article')); });
 
   expect(fetchMock.calls()).toHaveLength(2);
@@ -42,7 +42,7 @@ test('Allows users to expand article previews to full articles successfully', as
 test('Fails to expand article previews to full articles', async () => {
   fetchMock.get('/api/articles/1', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Test Article')); });
 
   expect(fetchMock.calls()).toHaveLength(2);

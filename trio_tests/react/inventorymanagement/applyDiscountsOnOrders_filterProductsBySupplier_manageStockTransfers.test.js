@@ -14,7 +14,7 @@ afterEach(() => {
 test('Validate applying discounts on orders reduces the total amount correctly.', async () => {
   fetchMock.post('/api/discount', { status: 200, body: { success: true, discountedAmount: 90 } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('discountInput'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('applyDiscount')); });
 
@@ -25,7 +25,7 @@ test('Validate applying discounts on orders reduces the total amount correctly.'
 test('Applying discounts on orders doesn\'t reduce the amount due to error.', async () => {
   fetchMock.post('/api/discount', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('discountInput'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('applyDiscount')); });
 

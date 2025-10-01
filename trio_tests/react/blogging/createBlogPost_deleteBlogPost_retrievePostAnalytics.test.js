@@ -15,7 +15,7 @@ test('Success: create a new blog post', async () => {
   fetchMock.post('/api/createPost', { status: 200, body: { id: 1, title: 'New Post', content: 'Some content' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'New Post' } });
@@ -33,7 +33,7 @@ test('Failure: create a new blog post with an empty title', async () => {
   fetchMock.post('/api/createPost', { status: 400, body: { error: 'Title cannot be empty' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/content/i), { target: { value: 'Some content' } });
@@ -50,7 +50,7 @@ test('Success: delete a blog post', async () => {
   fetchMock.delete('/api/deletePost', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete/i));
@@ -64,7 +64,7 @@ test('Failure: delete a blog post without authorization', async () => {
   fetchMock.delete('/api/deletePost', { status: 403, body: { error: 'Unauthorized' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete/i));
@@ -77,7 +77,7 @@ test('Failure: delete a blog post without authorization', async () => {
 test('successfully retrieves analytics for a post', async () => {
   fetchMock.get('/api/getPostAnalytics?postId=1', { status: 200, body: { views: 10, shares: 5 } });
 
-  await act(async () => { render(<MemoryRouter><RetrievePostAnalytics postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Get Analytics')); });
 
   expect(fetchMock.calls('/api/getPostAnalytics')).toHaveLength(1);
@@ -88,7 +88,7 @@ test('successfully retrieves analytics for a post', async () => {
 test('fails to retrieve analytics for a post with an error message', async () => {
   fetchMock.get('/api/getPostAnalytics?postId=1', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><RetrievePostAnalytics postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Get Analytics')); });
 
   expect(fetchMock.calls('/api/getPostAnalytics')).toHaveLength(1);

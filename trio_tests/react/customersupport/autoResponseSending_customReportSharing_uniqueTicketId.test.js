@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully sends auto-responses based on ticket content.', async () => {
   fetchMock.post('/api/sendAutoResponse', 200);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseSending /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketContent'), { target: { value: 'Issue' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send Auto-Response')); });
 
@@ -25,7 +25,7 @@ test('Successfully sends auto-responses based on ticket content.', async () => {
 test('Fails to send auto-responses based on ticket content.', async () => {
   fetchMock.post('/api/sendAutoResponse', 500);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseSending /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketContent'), { target: { value: 'Issue' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send Auto-Response')); });
 
@@ -40,7 +40,7 @@ test('Successfully shares custom reports.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportSharing /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('share-email-input'), { target: { value: 'user@test.com' } });
@@ -60,7 +60,7 @@ test('Fails to share custom reports and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportSharing /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('share-email-input'), { target: { value: 'user@test.com' } });
@@ -76,7 +76,7 @@ test('Fails to share custom reports and shows error message.', async () => {
 test('assigns a unique ID to each new ticket', async () => {
   fetchMock.post('/api/tickets', { id: '12345' });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'Test Ticket' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
@@ -87,7 +87,7 @@ test('assigns a unique ID to each new ticket', async () => {
 test('fails to assign a unique ID if submission fails', async () => {
   fetchMock.post('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'Test Ticket' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   

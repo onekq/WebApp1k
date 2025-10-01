@@ -14,7 +14,7 @@ afterEach(() => {
 test('successful application status tracking.', async () => {
   fetchMock.get('/status/123', { status: 'In Progress' });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('status-check-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('check-status-button')); });
 
@@ -25,7 +25,7 @@ test('successful application status tracking.', async () => {
 test('failure application status tracking.', async () => {
   fetchMock.get('/status/123', 404);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('status-check-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('check-status-button')); });
 
@@ -36,7 +36,7 @@ test('failure application status tracking.', async () => {
 test('successful application resubmission.', async () => {
   fetchMock.post('/resubmitApplication', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resubmit-button')); });
 
@@ -47,7 +47,7 @@ test('successful application resubmission.', async () => {
 test('failure application resubmission.', async () => {
   fetchMock.post('/resubmitApplication', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resubmit-button')); });
 

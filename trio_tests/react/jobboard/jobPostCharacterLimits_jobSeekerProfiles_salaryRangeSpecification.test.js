@@ -15,7 +15,7 @@ test('Validating character limits on job description and title successfully', as
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -33,7 +33,7 @@ test('Validating character limits failure due to exceeding limit', async () => {
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -50,7 +50,7 @@ test('Validating character limits failure due to exceeding limit', async () => {
 test('job seekers can successfully create and update their profiles', async () => {
   fetchMock.post('/api/jobseeker', { success: true });
 
-  await act(async () => { render(<MemoryRouter><JobSeekerProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -61,7 +61,7 @@ test('job seekers can successfully create and update their profiles', async () =
 test('job seekers see an error message if profile update fails', async () => {
   fetchMock.post('/api/jobseeker', 500);
 
-  await act(async () => { render(<MemoryRouter><JobSeekerProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -72,7 +72,7 @@ test('job seekers see an error message if profile update fails', async () => {
 test('employers can successfully specify salary ranges in job posts', async () => {
   fetchMock.post('/api/job', { success: true });
 
-  await act(async () => { render(<MemoryRouter><JobPost /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Salary Range/i), { target: { value: '50k-70k' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Post Job/i)); });
 
@@ -83,7 +83,7 @@ test('employers can successfully specify salary ranges in job posts', async () =
 test('employers see an error message if specifying salary ranges fails', async () => {
   fetchMock.post('/api/job', 500);
 
-  await act(async () => { render(<MemoryRouter><JobPost /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Salary Range/i), { target: { value: '50k-70k' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Post Job/i)); });
 

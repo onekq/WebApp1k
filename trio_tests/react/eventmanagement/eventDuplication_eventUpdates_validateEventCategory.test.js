@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays success message upon event duplication', async () => {
   fetchMock.post('/api/event/duplicate', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('duplicate-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Displays success message upon event duplication', async () => {
 test('Displays error message upon failing to duplicate event', async () => {
   fetchMock.post('/api/event/duplicate', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('duplicate-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Displays error message upon failing to duplicate event', async () => {
 test('Displays success message upon successful event updates', async () => {
   fetchMock.post('/api/event/update', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('event-title-input'), { target: { value: 'New Title' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('update-event-btn')); });
 
@@ -45,7 +45,7 @@ test('Displays success message upon successful event updates', async () => {
 test('Displays error message upon failing to update event', async () => {
   fetchMock.post('/api/event/update', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('event-title-input'), { target: { value: 'New Title' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('update-event-btn')); });
 
@@ -56,7 +56,7 @@ test('Displays error message upon failing to update event', async () => {
 test('Should successfully submit event with valid category', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/category/i), { target: { value: 'Music' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -67,7 +67,7 @@ test('Should successfully submit event with valid category', async () => {
 test('Should show error for not selecting event category', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/category/i), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

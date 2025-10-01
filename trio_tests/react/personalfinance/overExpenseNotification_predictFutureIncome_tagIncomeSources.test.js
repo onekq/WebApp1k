@@ -15,7 +15,7 @@ test('successfully notifies when expenses exceed income for a given period', asy
   fetchMock.get('/api/expenses/notification', { status: 200, body: { notify: true } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to notify when expenses exceed income for a given period', async () 
   fetchMock.get('/api/expenses/notification', { status: 200, body: { notify: false } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -45,7 +45,7 @@ test('successfully predicts future income based on past data', async () => {
   fetchMock.get('/api/income/predict', { status: 200, body: { prediction: 5000 } });
 
   await act(async () => {
-    render(<MemoryRouter><PredictIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -60,7 +60,7 @@ test('fails to predict future income based on past data', async () => {
   fetchMock.get('/api/income/predict', { status: 400, body: { error: 'Prediction error' } });
 
   await act(async () => {
-    render(<MemoryRouter><PredictIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -75,7 +75,7 @@ test('successfully assigns tags to an income source', async () => {
   fetchMock.post('/income/1/tags', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><AssignTags incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/tags/i), { target: { value: 'Bonus,Part-time' } });
@@ -92,7 +92,7 @@ test('fails to assign tags to an income source', async () => {
   fetchMock.post('/income/1/tags', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><AssignTags incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/tags/i), { target: { value: '' } });

@@ -18,7 +18,7 @@ test('Successfully creates custom reports.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportCreation /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-name-input'), { target: { value: 'Test Report' } });
@@ -38,7 +38,7 @@ test('Fails to create custom reports and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportCreation /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-name-input'), { target: { value: 'Test Report' } });
@@ -55,7 +55,7 @@ test('successfully edits existing articles', async () => {
   fetchMock.put('path/to/api/article', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('article-input'), { target: { value: 'Updated Article' } });
@@ -72,7 +72,7 @@ test('fails to edit existing articles with error message', async () => {
   fetchMock.put('path/to/api/article', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('article-input'), { target: { value: 'Updated Article' } });
@@ -92,7 +92,7 @@ test('Successfully notifies agents of SLA breaches.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLABreachNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-breach-picker'), { target: { value: 'breach1' } });
@@ -112,7 +112,7 @@ test('Fails to notify agents of SLA breaches and shows error message.', async ()
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLABreachNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-breach-picker'), { target: { value: 'breach1' } });

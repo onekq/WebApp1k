@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds flights to an itinerary.', async () => {
   fetchMock.post('/api/add-flight', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('flight-input'), { target: { value: 'Flight1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-flight-button')); });
 
@@ -25,7 +25,7 @@ test('successfully adds flights to an itinerary.', async () => {
 test('fails to add flights due to network error.', async () => {
   fetchMock.post('/api/add-flight', { status: 500, body: { error: 'Network error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('flight-input'), { target: { value: 'Flight1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-flight-button')); });
 
@@ -56,7 +56,7 @@ test('SavePreferredFlights - save preferred flight fails with error message', as
 test('successfully validates itinerary conflicts.', async () => {
   fetchMock.post('/api/validate-conflicts', { status: 200, body: { conflicts: [] } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-conflicts-button')); });
 
   expect(fetchMock.calls('/api/validate-conflicts', 'POST')).toHaveLength(1);
@@ -66,7 +66,7 @@ test('successfully validates itinerary conflicts.', async () => {
 test('fails to validate itinerary conflicts due to conflicts.', async () => {
   fetchMock.post('/api/validate-conflicts', { status: 400, body: { conflicts: ['Conflict1'] } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-conflicts-button')); });
 
   expect(fetchMock.calls('/api/validate-conflicts', 'POST')).toHaveLength(1);

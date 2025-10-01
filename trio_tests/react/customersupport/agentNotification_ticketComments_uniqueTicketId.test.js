@@ -14,7 +14,7 @@ afterEach(() => {
 test('Notifying agent of new ticket assignment should show success message.', async () => {
   fetchMock.post('/api/notify-agent', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id'), { target: { value: '456' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('notify-agent')); });
 
@@ -25,7 +25,7 @@ test('Notifying agent of new ticket assignment should show success message.', as
 test('Notifying agent of new ticket assignment should show error message when failed.', async () => {
   fetchMock.post('/api/notify-agent', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id'), { target: { value: '456' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('notify-agent')); });
 
@@ -36,7 +36,7 @@ test('Notifying agent of new ticket assignment should show error message when fa
 test('Adding comments to a ticket should show success message.', async () => {
   fetchMock.post('/api/add-comment', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-comment'), { target: { value: 'This is a comment' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-comment')); });
 
@@ -47,7 +47,7 @@ test('Adding comments to a ticket should show success message.', async () => {
 test('Adding comments to a ticket should show error message when failed.', async () => {
   fetchMock.post('/api/add-comment', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-comment'), { target: { value: 'This is a comment' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-comment')); });
 
@@ -58,7 +58,7 @@ test('Adding comments to a ticket should show error message when failed.', async
 test('assigns a unique ID to each new ticket', async () => {
   fetchMock.post('/api/tickets', { id: '12345' });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'Test Ticket' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
@@ -69,7 +69,7 @@ test('assigns a unique ID to each new ticket', async () => {
 test('fails to assign a unique ID if submission fails', async () => {
   fetchMock.post('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'Test Ticket' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   

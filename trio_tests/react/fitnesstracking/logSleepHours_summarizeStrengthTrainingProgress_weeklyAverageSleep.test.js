@@ -36,7 +36,7 @@ test('fails to log sleep hours and displays an error message', async () => {
 test('should summarize strength training progress successfully.', async () => {
   fetchMock.get('/api/strength/progress', { status: 200, body: { progress: 'increased' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('summarize-progress-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -47,7 +47,7 @@ test('should summarize strength training progress successfully.', async () => {
 test('should fail to summarize strength training progress.', async () => {
   fetchMock.get('/api/strength/progress', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('summarize-progress-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -58,7 +58,7 @@ test('should fail to summarize strength training progress.', async () => {
 test('System calculates weekly average sleep hours successfully.', async () => {
   fetchMock.get('/api/average-sleep', { hours: 7 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-sleep')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -68,7 +68,7 @@ test('System calculates weekly average sleep hours successfully.', async () => {
 test('System fails to calculate weekly average sleep hours.', async () => {
   fetchMock.get('/api/average-sleep', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-sleep')); });
 
   expect(fetchMock.calls().length).toBe(1);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully tracks custom notification delivery.', async () => {
   fetchMock.get('/api/getCustomNotificationDelivery', { deliveryStatus: 'Success' });
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Success')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Successfully tracks custom notification delivery.', async () => {
 test('Fails to track custom notification delivery.', async () => {
   fetchMock.get('/api/getCustomNotificationDelivery', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to track delivery')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Fails to track custom notification delivery.', async () => {
 test('Successfully displays in-app notifications.', async () => {
   fetchMock.get('/api/getNotifications', { notifications: ['Notification 1'] });
 
-  await act(async () => { render(<MemoryRouter><InAppNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Notification 1')).toBeInTheDocument();
@@ -41,7 +41,7 @@ test('Successfully displays in-app notifications.', async () => {
 test('Fails to display in-app notifications.', async () => {
   fetchMock.get('/api/getNotifications', 500);
 
-  await act(async () => { render(<MemoryRouter><InAppNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load notifications')).toBeInTheDocument();
@@ -50,7 +50,7 @@ test('Fails to display in-app notifications.', async () => {
 test('Automatically assigning ticket to available agent should show success message.', async () => {
   fetchMock.post('/api/assign-ticket', { agent: 'John Doe' });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('new-ticket'), { target: { value: 'Issue description' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-ticket')); });
 
@@ -61,7 +61,7 @@ test('Automatically assigning ticket to available agent should show success mess
 test('Automatically assigning ticket to available agent should show error message when failed.', async () => {
   fetchMock.post('/api/assign-ticket', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('new-ticket'), { target: { value: 'Issue description' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-ticket')); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('should calculate cycling speed successfully.', async () => {
   fetchMock.post('/api/speed/calculate', { status: 200, body: { speed: '30 km/h' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('time-input'), { target: { value: '60' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('distance-input'), { target: { value: '30' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-speed-button')); });
@@ -27,7 +27,7 @@ test('should calculate cycling speed successfully.', async () => {
 test('should fail to calculate cycling speed.', async () => {
   fetchMock.post('/api/speed/calculate', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('time-input'), { target: { value: '60' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('distance-input'), { target: { value: '30' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-speed-button')); });
@@ -41,7 +41,7 @@ test('should successfully set a calorie intake goal', async () => {
   fetchMock.post('/api/goals/calories', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><SetCalorieGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/calorie goal/i), { target: { value: 2000 } });
@@ -58,7 +58,7 @@ test('should show error when setting a calorie intake goal fails', async () => {
   fetchMock.post('/api/goals/calories', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><SetCalorieGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/calorie goal/i), { target: { value: 2000 } });
@@ -75,7 +75,7 @@ test('should successfully view a graphical progress representation', async () =>
   fetchMock.get('/api/progress/graph', { status: 200, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><ViewProgressGraph /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -86,7 +86,7 @@ test('should show error message when viewing a graphical progress representation
   fetchMock.get('/api/progress/graph', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><ViewProgressGraph /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

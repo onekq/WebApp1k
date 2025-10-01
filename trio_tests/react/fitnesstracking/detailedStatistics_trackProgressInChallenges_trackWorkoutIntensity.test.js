@@ -15,7 +15,7 @@ test('User can view detailed statistics of a specific fitness activity successfu
   fetchMock.get('/api/detailedStatistics', { status: 200, body: { data: { calories: 500 } } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('view-detailed-statistics'));
@@ -29,7 +29,7 @@ test('User sees an error message when viewing detailed statistics fails.', async
   fetchMock.get('/api/detailedStatistics', { status: 500, body: { error: 'Failed to fetch statistics' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('view-detailed-statistics'));
@@ -42,7 +42,7 @@ test('User sees an error message when viewing detailed statistics fails.', async
 test('System tracks progress in fitness challenges successfully.', async () => {
   fetchMock.get('/api/progress-challenges', { progress: '50%' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-challenges')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -52,7 +52,7 @@ test('System tracks progress in fitness challenges successfully.', async () => {
 test('System fails to track progress in fitness challenges.', async () => {
   fetchMock.get('/api/progress-challenges', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-challenges')); });
 
   expect(fetchMock.calls().length).toBe(1);

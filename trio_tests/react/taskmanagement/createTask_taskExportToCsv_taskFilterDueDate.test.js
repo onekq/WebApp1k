@@ -36,7 +36,7 @@ test('should show error message when failing to create a task.', async () => {
 test('successfully exports tasks to a CSV file.', async () => {
   fetchMock.get('/api/export-tasks', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CSVImportExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('export-csv-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('successfully exports tasks to a CSV file.', async () => {
 test('fails to export tasks to a CSV file if server error.', async () => {
   fetchMock.get('/api/export-tasks', 500);
 
-  await act(async () => { render(<MemoryRouter><CSVImportExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('export-csv-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -59,7 +59,7 @@ test('Filter tasks by due date successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by due date'), { target: { value: '2023-10-10' } });
@@ -76,7 +76,7 @@ test('Fail to filter tasks by due date when API returns 500.', async () => {
   fetchMock.get('/api/tasks?dueDate=2023-10-10', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by due date'), { target: { value: '2023-10-10' } });

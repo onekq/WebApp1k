@@ -15,7 +15,7 @@ test('Set Project Budget - success', async () => {
   fetchMock.post('/api/projects/budget', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('Set Project Budget - failure', async () => {
   fetchMock.post('/api/projects/budget', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -53,7 +53,7 @@ test('Custom Workflows for Projects - success', async () => {
   fetchMock.post('/api/projects/workflows', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -72,7 +72,7 @@ test('Custom Workflows for Projects - failure', async () => {
   fetchMock.post('/api/projects/workflows', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -90,7 +90,7 @@ test('Custom Workflows for Projects - failure', async () => {
 test('successfully sets a task to recur.', async () => {
   fetchMock.post('/api/task-recurrence', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TaskRecurrence /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurrence-input'), { target: { value: 'Weekly' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-recurrence-btn')); });
 
@@ -101,7 +101,7 @@ test('successfully sets a task to recur.', async () => {
 test('fails to set a task to recur if server error.', async () => {
   fetchMock.post('/api/task-recurrence', 500);
 
-  await act(async () => { render(<MemoryRouter><TaskRecurrence /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurrence-input'), { target: { value: 'Weekly' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-recurrence-btn')); });
 

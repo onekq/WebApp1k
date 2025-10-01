@@ -15,7 +15,7 @@ test('successfully adds a recurring income', async () => {
   fetchMock.post('/income/recurring', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><AddRecurringIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Monthly Salary' } });
@@ -32,7 +32,7 @@ test('fails to add a recurring income', async () => {
   fetchMock.post('/income/recurring', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><AddRecurringIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });
@@ -49,7 +49,7 @@ test('successfully edits an existing income source', async () => {
   fetchMock.put('/income/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><EditIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Updated Salary' } });
@@ -66,7 +66,7 @@ test('fails to edit an existing income source', async () => {
   fetchMock.put('/income/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><EditIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });
@@ -83,7 +83,7 @@ test('Success: Generate a summary of expenses by category.', async () => {
   fetchMock.get('/api/summary', { status: 200, body: { success: true, summary: 'Food: 500, Transport: 200' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -98,7 +98,7 @@ test('Failure: Generate a summary of expenses by category.', async () => {
   fetchMock.get('/api/summary', { status: 500, body: { error: 'Summary error' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

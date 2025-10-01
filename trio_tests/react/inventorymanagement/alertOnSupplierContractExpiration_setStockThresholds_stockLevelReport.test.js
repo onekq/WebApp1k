@@ -58,7 +58,7 @@ test('Shows error message on failure when setting stock threshold', async () => 
 test('Generates stock level report successfully.', async () => {
   fetchMock.post('/api/stock-level-report', { body: { status: 'success', data: { /* ...expected data... */ }} });
 
-  await act(async () => { render(<MemoryRouter><StockLevelReport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report')); });
 
@@ -69,7 +69,7 @@ test('Generates stock level report successfully.', async () => {
 test('Fails to generate stock level report due to server error.', async () => {
   fetchMock.post('/api/stock-level-report', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><StockLevelReport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report')); });
 

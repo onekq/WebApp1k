@@ -17,7 +17,7 @@ test('fetchAirQualityAlerts successfully retrieves air quality alerts', async ()
     body: [{ id: 1, alert: 'Air Quality Alert' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Air Quality Alerts')); });
 
   expect(fetchMock.called('/api/air-quality-alerts')).toBeTruthy();
@@ -27,7 +27,7 @@ test('fetchAirQualityAlerts successfully retrieves air quality alerts', async ()
 test('fetchAirQualityAlerts fails to retrieve air quality alerts', async () => {
   fetchMock.getOnce('/api/air-quality-alerts', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Air Quality Alerts')); });
 
   expect(fetchMock.called('/api/air-quality-alerts')).toBeTruthy();
@@ -37,7 +37,7 @@ test('fetchAirQualityAlerts fails to retrieve air quality alerts', async () => {
 test('correctly stores user UV index preference', async () => {
   fetchMock.post('/preferences/uv-index', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('uv-index-checkbox'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -48,7 +48,7 @@ test('correctly stores user UV index preference', async () => {
 test('displays error when storing user UV index preference fails', async () => {
   fetchMock.post('/preferences/uv-index', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('uv-index-checkbox'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -59,7 +59,7 @@ test('displays error when storing user UV index preference fails', async () => {
 test('correctly stores user wind speed unit preference', async () => {
   fetchMock.post('/preferences/wind-speed-unit', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('wind-speed-unit-select'), { target: { value: 'km/h' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -70,7 +70,7 @@ test('correctly stores user wind speed unit preference', async () => {
 test('displays error when storing user wind speed unit preference fails', async () => {
   fetchMock.post('/preferences/wind-speed-unit', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('wind-speed-unit-select'), { target: { value: 'km/h' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

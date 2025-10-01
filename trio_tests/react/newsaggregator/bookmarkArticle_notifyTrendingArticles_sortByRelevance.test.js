@@ -14,7 +14,7 @@ afterEach(() => {
 test('bookmarks an article successfully', async () => {
   fetchMock.post('/bookmark', 200);
 
-  await act(async () => { render(<MemoryRouter><BookmarkArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('bookmarks an article successfully', async () => {
 test('fails to bookmark an article with error message', async () => {
   fetchMock.post('/bookmark', 500);
 
-  await act(async () => { render(<MemoryRouter><BookmarkArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Fails to notify user about trending articles.', async () => {
 test('Sorts articles by relevance successfully', async () => {
   fetchMock.get('/api/articles?sort=relevance', { status: 200, body: [{ id: 1, relevance: 100 }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="relevance" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="relevance" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('100')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('Sorts articles by relevance successfully', async () => {
 test('Fails to sort articles by relevance', async () => {
   fetchMock.get('/api/articles?sort=relevance', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="relevance" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="relevance" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to sort articles by relevance')).toBeInTheDocument();

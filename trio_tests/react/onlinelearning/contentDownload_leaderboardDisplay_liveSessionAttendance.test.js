@@ -14,7 +14,7 @@ afterEach(() => {
 test('Success: content downloaded successfully', async () => {
   fetchMock.get('/api/download', 200);
 
-  await act(async () => { render(<MemoryRouter><ContentDownloadComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('download-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Success: content downloaded successfully', async () => {
 test('Failure: content download fails', async () => {
   fetchMock.get('/api/download', 500);
 
-  await act(async () => { render(<MemoryRouter><ContentDownloadComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('download-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Failure: content download fails', async () => {
 test('Successfully displays leaderboard', async () => {
   fetchMock.get('/leaderboard', { status: 200, body: [{ id: 1, leader: 'User 1' }] });
 
-  await act(async () => { render(<MemoryRouter><LeaderboardDisplay /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('User 1')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('Successfully displays leaderboard', async () => {
 test('Fails to display leaderboard', async () => {
   fetchMock.get('/leaderboard', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><LeaderboardDisplay /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Leaderboard failed')).toBeInTheDocument();
@@ -52,7 +52,7 @@ test('Fails to display leaderboard', async () => {
 test('Successfully tracks attendance for live session', async () => {
   fetchMock.post('/live-sessions/attendance', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><LiveSessionAttendance /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Mark Attendance')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -62,7 +62,7 @@ test('Successfully tracks attendance for live session', async () => {
 test('Fails to track attendance for live session', async () => {
   fetchMock.post('/live-sessions/attendance', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><LiveSessionAttendance /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Mark Attendance')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

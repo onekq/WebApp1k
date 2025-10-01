@@ -16,7 +16,7 @@ test('Handle uncategorized articles successfully.', async () => {
     { id: 1, title: "Uncategorized Article 1" }
   ]);
 
-  await act(async () => { render(<MemoryRouter><UncategorizedArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText("Uncategorized Article 1")).toBeInTheDocument();
@@ -25,7 +25,7 @@ test('Handle uncategorized articles successfully.', async () => {
 test('Fail to handle uncategorized articles and display error.', async () => {
   fetchMock.get('/api/uncategorized-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><UncategorizedArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText("Error fetching uncategorized articles.")).toBeInTheDocument();
@@ -34,7 +34,7 @@ test('Fail to handle uncategorized articles and display error.', async () => {
 test('likes an article successfully', async () => {
   fetchMock.post('/like', 200);
 
-  await act(async () => { render(<MemoryRouter><LikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Like')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('likes an article successfully', async () => {
 test('fails to like an article with error message', async () => {
   fetchMock.post('/like', 500);
 
-  await act(async () => { render(<MemoryRouter><LikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Like')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

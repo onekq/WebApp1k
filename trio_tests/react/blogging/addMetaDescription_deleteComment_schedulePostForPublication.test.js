@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a meta description to a post', async () => {
   fetchMock.post('/api/meta-description', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/meta description/i), { target: { value: 'New Meta Description' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds a meta description to a post', async () => {
 test('fails to add a meta description to a post due to server error', async () => {
   fetchMock.post('/api/meta-description', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/meta description/i), { target: { value: 'New Meta Description' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -57,7 +57,7 @@ test('Success: schedule a post for future publication', async () => {
   fetchMock.post('/api/schedulePost', { status: 200, body: { id: 1, title: 'Scheduled Post', content: 'Some content', scheduledDate: '2023-10-10T12:00:00Z' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/date/i), { target: { value: '2023-10-10T12:00:00Z' } });
@@ -74,7 +74,7 @@ test('Failure: schedule a post with invalid date', async () => {
   fetchMock.post('/api/schedulePost', { status: 400, body: { error: 'Invalid date format' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/date/i), { target: { value: 'invalid-date' } });

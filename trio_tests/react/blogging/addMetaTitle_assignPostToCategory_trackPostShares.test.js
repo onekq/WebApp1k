@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a meta title to a post', async () => {
   fetchMock.post('/api/meta-title', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/meta title/i), { target: { value: 'New Meta Title' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds a meta title to a post', async () => {
 test('fails to add a meta title to a post due to server error', async () => {
   fetchMock.post('/api/meta-title', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/meta title/i), { target: { value: 'New Meta Title' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -39,7 +39,7 @@ test('User can assign a post to a category successfully', async () => {
     body: { postId: 1, categoryId: 1 }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign Category')); });
 
@@ -53,7 +53,7 @@ test('User gets an error message when assigning a post to a category fails', asy
     body: { error: 'Unable to assign category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign Category')); });
 
@@ -64,7 +64,7 @@ test('User gets an error message when assigning a post to a category fails', asy
 test('successfully tracks post shares on social media', async () => {
   fetchMock.post('/api/trackPostShares', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackPostShares postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share Post')); });
 
   expect(fetchMock.calls('/api/trackPostShares')).toHaveLength(1);
@@ -75,7 +75,7 @@ test('successfully tracks post shares on social media', async () => {
 test('fails to track post shares with an error message', async () => {
   fetchMock.post('/api/trackPostShares', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackPostShares postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share Post')); });
 
   expect(fetchMock.calls('/api/trackPostShares')).toHaveLength(1);

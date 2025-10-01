@@ -36,7 +36,7 @@ test('ApplyFlightDiscount - apply discount code fails with error message', async
 test('Price comparison should be provided for valid search.', async () => {
   fetchMock.post('/api/price/comparison', { price: 100 });
 
-  await act(async () => { render(<MemoryRouter><PriceComparisonComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('compare-prices')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Price comparison should be provided for valid search.', async () => {
 test('Error in providing price comparison should show error message.', async () => {
   fetchMock.post('/api/price/comparison', 500);
 
-  await act(async () => { render(<MemoryRouter><PriceComparisonComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('compare-prices')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Error in providing price comparison should show error message.', async () 
 test('Booking history should be retrieved and displayed for valid request.', async () => {
   fetchMock.get('/api/booking/history', [{ id: 1, status: 'Confirmed' }]);
 
-  await act(async () => { render(<MemoryRouter><BookingHistoryComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-history')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('Booking history should be retrieved and displayed for valid request.', asy
 test('Error in retrieving booking history should show error message.', async () => {
   fetchMock.get('/api/booking/history', 500);
 
-  await act(async () => { render(<MemoryRouter><BookingHistoryComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-history')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

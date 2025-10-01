@@ -35,7 +35,7 @@ test('Attendee detail update fails if no changes detected', async () => {
 test('Displays event accessibility options', async () => {
   fetchMock.get('/api/event/accessibility', { wheelchairAccess: true, signLanguageInterpreter: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Wheelchair access')).toBeInTheDocument();
@@ -45,7 +45,7 @@ test('Displays event accessibility options', async () => {
 test('Displays error message when accessibility options are unavailable', async () => {
   fetchMock.get('/api/event/accessibility', 404);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Accessibility options are unavailable')).toBeInTheDocument();
@@ -54,7 +54,7 @@ test('Displays error message when accessibility options are unavailable', async 
 test('Displays success message upon sending event notifications', async () => {
   fetchMock.post('/api/event/notify', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('notify-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -64,7 +64,7 @@ test('Displays success message upon sending event notifications', async () => {
 test('Displays error message upon failing to send event notifications', async () => {
   fetchMock.post('/api/event/notify', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('notify-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);

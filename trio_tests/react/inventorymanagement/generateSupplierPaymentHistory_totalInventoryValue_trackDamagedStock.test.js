@@ -37,7 +37,7 @@ test('Fails to generate supplier payment history.', async () => {
 test('Calculates total inventory value successfully.', async () => {
   fetchMock.post('/api/total-inventory-value', { body: { status: 'success', data: { value: 10000 }}});
 
-  await act(async () => { render(<MemoryRouter><TotalInventoryValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-value')); });
 
@@ -48,7 +48,7 @@ test('Calculates total inventory value successfully.', async () => {
 test('Fails to calculate total inventory value due to server error.', async () => {
   fetchMock.post('/api/total-inventory-value', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><TotalInventoryValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-value')); });
 

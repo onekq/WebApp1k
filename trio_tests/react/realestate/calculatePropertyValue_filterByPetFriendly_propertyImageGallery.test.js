@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully calculates property value.', async () => {
   fetchMock.post('/api/properties/value', { value: 500000 });
 
-  await act(async () => { render(<MemoryRouter><CalculatePropertyValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('property-details'), { target: { value: 'Property Details' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-button')); });
 
@@ -25,7 +25,7 @@ test('Successfully calculates property value.', async () => {
 test('Fails to calculate property value with error message.', async () => {
   fetchMock.post('/api/properties/value', 400);
 
-  await act(async () => { render(<MemoryRouter><CalculatePropertyValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('property-details'), { target: { value: 'Property Details' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-button')); });
 
@@ -36,7 +36,7 @@ test('Fails to calculate property value with error message.', async () => {
 test('Filter by pet-friendly properties successfully', async () => {
   fetchMock.get('/api/pet-friendly-properties', { properties: [{ id: 1, name: "Pet-Friendly 1" }] });
 
-  await act(async () => { render(<MemoryRouter><PetFriendlyFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-pet-friendly-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('Filter by pet-friendly properties successfully', async () => {
 test('Filter by pet-friendly properties fails with error', async () => {
   fetchMock.get('/api/pet-friendly-properties', 500);
 
-  await act(async () => { render(<MemoryRouter><PetFriendlyFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-pet-friendly-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -56,7 +56,7 @@ test('Filter by pet-friendly properties fails with error', async () => {
 test('displays multiple images of a property in a gallery format', async () => {
   fetchMock.get('/property/1/images', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Gallery')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -66,7 +66,7 @@ test('displays multiple images of a property in a gallery format', async () => {
 test('fails to display image gallery due to network error', async () => {
   fetchMock.get('/property/1/images', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Gallery')); });
 
   expect(fetchMock.calls().length).toBe(1);

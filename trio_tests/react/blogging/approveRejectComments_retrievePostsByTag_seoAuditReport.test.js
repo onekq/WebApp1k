@@ -37,7 +37,7 @@ test('User can retrieve posts by tag successfully', async () => {
     body: [{ id: 1, title: 'First Post' }, { id: 2, title: 'Second Post' }]
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 
@@ -52,7 +52,7 @@ test('User gets an error message when retrieving posts by tag fails', async () =
     body: { error: 'Unable to fetch posts' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 
@@ -63,7 +63,7 @@ test('User gets an error message when retrieving posts by tag fails', async () =
 test('successfully generates an SEO audit report', async () => {
   fetchMock.post('/api/seo-audit', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate seo audit report/i)); });
 
   expect(fetchMock.calls('/api/seo-audit').length).toBe(1);
@@ -73,7 +73,7 @@ test('successfully generates an SEO audit report', async () => {
 test('fails to generate an SEO audit report due to server error', async () => {
   fetchMock.post('/api/seo-audit', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate seo audit report/i)); });
 
   expect(fetchMock.calls('/api/seo-audit').length).toBe(1);

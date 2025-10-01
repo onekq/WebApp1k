@@ -54,7 +54,7 @@ test('Pause Song - failure shows error message', async () => {
 test('Songs are added to the playback queue correctly.', async () => {
   fetchMock.post('/api/queue', 200);
 
-  await act(async () => { render(<MemoryRouter><QueueComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-to-queue-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('Songs are added to the playback queue correctly.', async () => {
 test('Songs fail to add to the playback queue with an error message.', async () => {
   fetchMock.post('/api/queue', 500);
 
-  await act(async () => { render(<MemoryRouter><QueueComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-to-queue-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

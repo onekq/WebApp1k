@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully exports tasks to a CSV file.', async () => {
   fetchMock.get('/api/export-tasks', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CSVImportExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('export-csv-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('successfully exports tasks to a CSV file.', async () => {
 test('fails to export tasks to a CSV file if server error.', async () => {
   fetchMock.get('/api/export-tasks', 500);
 
-  await act(async () => { render(<MemoryRouter><CSVImportExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('export-csv-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -37,7 +37,7 @@ test('Filter tasks by assigned user successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by assigned user'), { target: { value: 'user1' } });
@@ -54,7 +54,7 @@ test('Fail to filter tasks by assigned user when API returns 500.', async () => 
   fetchMock.get('/api/tasks?assignedUser=user1', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by assigned user'), { target: { value: 'user1' } });

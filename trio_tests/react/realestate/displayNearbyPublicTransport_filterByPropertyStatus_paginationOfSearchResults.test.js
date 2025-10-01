@@ -14,7 +14,7 @@ afterEach(() => {
 test('shows information about nearby public transportation', async () => {
   fetchMock.get('/property/1/transport', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Transport')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('shows information about nearby public transportation', async () => {
 test('fails to display nearby public transport due to network error', async () => {
   fetchMock.get('/property/1/transport', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Transport')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -37,7 +37,7 @@ test('Filter by Property Status filters properties by status successfully', asyn
     body: [{ id: 1, status: 'for sale' }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/status/i), { target: { value: 'forsale' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -51,7 +51,7 @@ test('Filter by Property Status filters properties by status fails', async () =>
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/status/i), { target: { value: 'forsale' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -62,7 +62,7 @@ test('Filter by Property Status filters properties by status fails', async () =>
 test('splits search results across multiple pages', async () => {
   fetchMock.get('/properties?page=2', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('nextPage')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -72,7 +72,7 @@ test('splits search results across multiple pages', async () => {
 test('fails to paginate search results due to network error', async () => {
   fetchMock.get('/properties?page=2', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('nextPage')); });
 
   expect(fetchMock.calls().length).toBe(1);

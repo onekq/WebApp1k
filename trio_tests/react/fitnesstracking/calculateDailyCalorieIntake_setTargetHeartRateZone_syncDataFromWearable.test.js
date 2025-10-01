@@ -33,7 +33,7 @@ test('should successfully set a target heart rate zone', async () => {
   fetchMock.post('/api/goals/heart-rate', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><SetHeartRateZone /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/heart rate zone/i), { target: { value: '120-150' } });
@@ -50,7 +50,7 @@ test('should show error when setting a target heart rate zone fails', async () =
   fetchMock.post('/api/goals/heart-rate', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><SetHeartRateZone /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/heart rate zone/i), { target: { value: '120-150' } });
@@ -66,7 +66,7 @@ test('should show error when setting a target heart rate zone fails', async () =
 test('should sync data from connected wearable device successfully.', async () => {
   fetchMock.get('/api/device/sync', { status: 200, body: { data: 'some-data' } });
   
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -77,7 +77,7 @@ test('should sync data from connected wearable device successfully.', async () =
 test('should fail to sync data from connected wearable device.', async () => {
   fetchMock.get('/api/device/sync', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Success: content downloaded successfully', async () => {
   fetchMock.get('/api/download', 200);
 
-  await act(async () => { render(<MemoryRouter><ContentDownloadComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('download-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Success: content downloaded successfully', async () => {
 test('Failure: content download fails', async () => {
   fetchMock.get('/api/download', 500);
 
-  await act(async () => { render(<MemoryRouter><ContentDownloadComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('download-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Failure: content download fails', async () => {
 test('Success: instructor uploads course material', async () => {
   fetchMock.post('/api/upload', 200);
 
-  await act(async () => { render(<MemoryRouter><CourseMaterialUploadComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('upload-file'), { target: { files: ['file'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('upload-button')); });
 
@@ -45,7 +45,7 @@ test('Success: instructor uploads course material', async () => {
 test('Failure: course material upload fails', async () => {
   fetchMock.post('/api/upload', 500);
 
-  await act(async () => { render(<MemoryRouter><CourseMaterialUploadComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('upload-file'), { target: { files: ['file'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('upload-button')); });
 
@@ -56,7 +56,7 @@ test('Failure: course material upload fails', async () => {
 test('Success: multiple choice quiz functions correctly', async () => {
   fetchMock.get('/api/multiple-choice-quiz', 200);
 
-  await act(async () => { render(<MemoryRouter><InteractiveQuizTypesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('start-multiple-choice-quiz')); });
 
@@ -67,7 +67,7 @@ test('Success: multiple choice quiz functions correctly', async () => {
 test('Failure: multiple choice quiz fails to load', async () => {
   fetchMock.get('/api/multiple-choice-quiz', 500);
 
-  await act(async () => { render(<MemoryRouter><InteractiveQuizTypesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('start-multiple-choice-quiz')); });
 

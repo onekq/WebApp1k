@@ -17,7 +17,7 @@ test('Filter by Square Footage filters properties by their square footage succes
     body: [{ id: 1, sqft: 1000 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/square footage/i), { target: { value: '1000' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -31,7 +31,7 @@ test('Filter by Square Footage filters properties by their square footage fails'
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/square footage/i), { target: { value: '1000' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -45,7 +45,7 @@ test('Filter by Year Built filters properties by the year they were built succes
     body: [{ id: 1, yearBuilt: 2010 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/year built/i), { target: { value: '2010' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -59,7 +59,7 @@ test('Filter by Year Built filters properties by the year they were built fails'
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/year built/i), { target: { value: '2010' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -70,7 +70,7 @@ test('Filter by Year Built filters properties by the year they were built fails'
 test('splits search results across multiple pages', async () => {
   fetchMock.get('/properties?page=2', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('nextPage')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -80,7 +80,7 @@ test('splits search results across multiple pages', async () => {
 test('fails to paginate search results due to network error', async () => {
   fetchMock.get('/properties?page=2', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('nextPage')); });
 
   expect(fetchMock.calls().length).toBe(1);

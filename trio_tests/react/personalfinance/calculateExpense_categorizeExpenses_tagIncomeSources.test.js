@@ -15,7 +15,7 @@ test('successfully calculates the percentage of expenses in each category', asyn
   fetchMock.get('/api/expenses/categories', { status: 200, body: { percentages: { food: 30, entertainment: 20 } } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseCategories /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to calculate the percentage of expenses in each category', async () 
   fetchMock.get('/api/expenses/categories', { status: 400, body: { error: 'Calculation error' } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseCategories /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -44,7 +44,7 @@ test('fails to calculate the percentage of expenses in each category', async () 
 test('categorizes expenses successfully', async () => {
   fetchMock.post('/api/category', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('category-input'), { target: { value: 'Food' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-category-button')); });
 
@@ -55,7 +55,7 @@ test('categorizes expenses successfully', async () => {
 test('fails to categorize expenses', async () => {
   fetchMock.post('/api/category', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('category-input'), { target: { value: 'Food' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-category-button')); });
 
@@ -67,7 +67,7 @@ test('successfully assigns tags to an income source', async () => {
   fetchMock.post('/income/1/tags', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><AssignTags incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/tags/i), { target: { value: 'Bonus,Part-time' } });
@@ -84,7 +84,7 @@ test('fails to assign tags to an income source', async () => {
   fetchMock.post('/income/1/tags', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><AssignTags incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/tags/i), { target: { value: '' } });

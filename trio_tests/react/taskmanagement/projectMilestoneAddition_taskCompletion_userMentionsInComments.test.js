@@ -15,7 +15,7 @@ test('Add Milestone to Project - success', async () => {
   fetchMock.post('/api/projects/milestone', 201);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('Add Milestone to Project - failure', async () => {
   fetchMock.post('/api/projects/milestone', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -70,7 +70,7 @@ test('should show error when failing to mark task as completed.', async () => {
 test('Mention user in a task comment successfully', async () => {
   fetchMock.post('/mention-user', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Hey @User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-comment-button')); });
 
@@ -81,7 +81,7 @@ test('Mention user in a task comment successfully', async () => {
 test('Fail to mention user in a task comment due to server error', async () => {
   fetchMock.post('/mention-user', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Hey @User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-comment-button')); });
 

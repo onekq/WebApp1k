@@ -34,7 +34,7 @@ test('Fails to clear user reading history.', async () => {
 test('comments on an article successfully', async () => {
   fetchMock.post('/comment', 200);
 
-  await act(async () => { render(<MemoryRouter><CommentOnArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Write a comment'), { target: { value: 'Great article!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Post')); });
 
@@ -45,7 +45,7 @@ test('comments on an article successfully', async () => {
 test('fails to comment on an article with error message', async () => {
   fetchMock.post('/comment', 500);
 
-  await act(async () => { render(<MemoryRouter><CommentOnArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Write a comment'), { target: { value: 'Great article!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Post')); });
 

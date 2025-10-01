@@ -37,7 +37,7 @@ test('Set a due date for a task successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Set deadline'), { target: { value: '2023-10-10' } });
@@ -54,7 +54,7 @@ test('Fail to set a due date for a task when API returns 500.', async () => {
   fetchMock.post('/api/tasks/1/deadline', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Set deadline'), { target: { value: '2023-10-10' } });
@@ -70,7 +70,7 @@ test('Fail to set a due date for a task when API returns 500.', async () => {
 test('Set user availability successfully', async () => {
   fetchMock.post('/set-availability', { status: 200, body: { available: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('availability-toggle')); });
 
@@ -81,7 +81,7 @@ test('Set user availability successfully', async () => {
 test('Fail to set user availability due to server error', async () => {
   fetchMock.post('/set-availability', { status: 500, body: { available: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('availability-toggle')); });
 

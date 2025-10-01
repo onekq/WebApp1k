@@ -14,7 +14,7 @@ afterEach(() => {
 test('System calculates total calories burned in a week successfully.', async () => {
   fetchMock.get('/api/total-calories', { calories: 5000 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-calories')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('System calculates total calories burned in a week successfully.', async ()
 test('System fails to calculate total calories burned in a week.', async () => {
   fetchMock.get('/api/total-calories', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-calories')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -35,7 +35,7 @@ test('should successfully delete a daily fitness goal', async () => {
   fetchMock.delete('/api/goals/daily/123', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteDailyGoal goalId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App goalId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete goal/i));
@@ -49,7 +49,7 @@ test('should show error when deleting a daily fitness goal fails', async () => {
   fetchMock.delete('/api/goals/daily/123', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteDailyGoal goalId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App goalId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete goal/i));
@@ -63,7 +63,7 @@ test('should successfully edit a daily fitness goal', async () => {
   fetchMock.put('/api/goals/daily/123', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><EditDailyGoal goalId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App goalId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/daily goal/i), { target: { value: 12000 } });
@@ -80,7 +80,7 @@ test('should show error when editing a daily fitness goal fails', async () => {
   fetchMock.put('/api/goals/daily/123', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><EditDailyGoal goalId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App goalId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/daily goal/i), { target: { value: 12000 } });

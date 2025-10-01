@@ -17,7 +17,7 @@ test('fetchSevereWeatherAlerts successfully retrieves alerts', async () => {
     body: [{ id: 1, alert: 'Tornado Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Alerts')); });
 
   expect(fetchMock.called('/api/severe-weather-alerts')).toBeTruthy();
@@ -27,7 +27,7 @@ test('fetchSevereWeatherAlerts successfully retrieves alerts', async () => {
 test('fetchSevereWeatherAlerts fails to retrieve alerts', async () => {
   fetchMock.getOnce('/api/severe-weather-alerts', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Alerts')); });
 
   expect(fetchMock.called('/api/severe-weather-alerts')).toBeTruthy();
@@ -74,7 +74,7 @@ test('fetchTsunamiWarnings successfully retrieves tsunami warnings', async () =>
     body: [{ id: 1, warning: 'Tsunami Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Tsunami Warnings')); });
 
   expect(fetchMock.called('/api/tsunami-warnings')).toBeTruthy();
@@ -84,7 +84,7 @@ test('fetchTsunamiWarnings successfully retrieves tsunami warnings', async () =>
 test('fetchTsunamiWarnings fails to retrieve tsunami warnings', async () => {
   fetchMock.getOnce('/api/tsunami-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Tsunami Warnings')); });
 
   expect(fetchMock.called('/api/tsunami-warnings')).toBeTruthy();

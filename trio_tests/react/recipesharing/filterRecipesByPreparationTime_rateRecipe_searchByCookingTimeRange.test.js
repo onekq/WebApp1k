@@ -36,7 +36,7 @@ test('Ensure recipes can be filtered by preparation time - failure', async () =>
 test('Successfully rate a recipe', async () => {
   fetchMock.post('/api/rate-recipe', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('rate-input'), { target: { value: '5' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('rate-button')); });
 
@@ -47,7 +47,7 @@ test('Successfully rate a recipe', async () => {
 test('Fail to rate a recipe with error message', async () => {
   fetchMock.post('/api/rate-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('rate-input'), { target: { value: '5' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('rate-button')); });
 

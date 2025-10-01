@@ -14,7 +14,7 @@ afterEach(() => {
 test('assigns tags to expenses successfully', async () => {
   fetchMock.post('/api/tag', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input'), { target: { value: 'Groceries' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-tag-button')); });
 
@@ -25,7 +25,7 @@ test('assigns tags to expenses successfully', async () => {
 test('fails to assign tags to expenses', async () => {
   fetchMock.post('/api/tag', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input'), { target: { value: 'Groceries' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-tag-button')); });
 
@@ -37,7 +37,7 @@ test('successfully deletes an income source', async () => {
   fetchMock.delete('/income/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete income source/i));
@@ -51,7 +51,7 @@ test('fails to delete an income source', async () => {
   fetchMock.delete('/income/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete income source/i));
@@ -65,7 +65,7 @@ test('Success: Predict future expenses based on past data.', async () => {
   fetchMock.post('/api/predict-expense', { status: 200, body: { success: true, prediction: 300 } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -80,7 +80,7 @@ test('Failure: Predict future expenses based on past data.', async () => {
   fetchMock.post('/api/predict-expense', { status: 500, body: { error: 'Prediction error' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

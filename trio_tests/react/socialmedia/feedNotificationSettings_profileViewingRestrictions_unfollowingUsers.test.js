@@ -17,7 +17,7 @@ test('Successfully updates feed notification settings.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><NotificationSettingsComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText('Notify for specific users'), { target: { value: 'user1' } });
@@ -36,7 +36,7 @@ test('Shows error message when updating feed notification settings fails.', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><NotificationSettingsComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText('Notify for specific users'), { target: { value: 'user1' } });
@@ -53,7 +53,7 @@ test('Viewing restricted profile succeeds with proper data', async () => {
   const profileData = { name: 'John Doe', bio: 'Software Developer' };
   fetchMock.get('/api/profile/valid-id', { body: profileData, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><ProfileView profileId={'valid-id'} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App profileId={'valid-id'} /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('John Doe')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('Viewing restricted profile succeeds with proper data', async () => {
 test('Viewing restricted profile fails with proper message', async () => {
   fetchMock.get('/api/profile/restricted-id', { body: { error: 'Profile is private' }, status: 403 });
 
-  await act(async () => { render(<MemoryRouter><ProfileView profileId={'restricted-id'} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App profileId={'restricted-id'} /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Profile is private')).toBeInTheDocument();
@@ -72,7 +72,7 @@ test('Viewing restricted profile fails with proper message', async () => {
 test('Should unfollow a followed user', async () => {
   fetchMock.post('api/unfollow', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-input'), { target: { value: 'followedUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Unfollow')); });
 
@@ -83,7 +83,7 @@ test('Should unfollow a followed user', async () => {
 test('Should display an error when trying to unfollow a user not followed', async () => {
   fetchMock.post('api/unfollow', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-input'), { target: { value: 'unfollowedUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Unfollow')); });
 

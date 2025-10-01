@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can successfully delete an album.', async () => {
   fetchMock.delete('/api/albums', { success: true });
 
-  await act(async () => { render(<MemoryRouter><DeleteAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-album-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -24,7 +24,7 @@ test('Users can successfully delete an album.', async () => {
 test('Shows an error message when deleting album fails.', async () => {
   fetchMock.delete('/api/albums', { success: false });
 
-  await act(async () => { render(<MemoryRouter><DeleteAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-album-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -34,7 +34,7 @@ test('Shows an error message when deleting album fails.', async () => {
 test('should successfully set the resolution for viewing photos', async () => {
   fetchMock.post('/api/resolution', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ResolutionSettings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resolution-input'), { target: { value: '1080p' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resolution-button')); });
 
@@ -45,7 +45,7 @@ test('should successfully set the resolution for viewing photos', async () => {
 test('should fail to set the resolution for viewing photos with error message', async () => {
   fetchMock.post('/api/resolution', 404);
 
-  await act(async () => { render(<MemoryRouter><ResolutionSettings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resolution-input'), { target: { value: '1080p' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resolution-button')); });
 
@@ -57,7 +57,7 @@ test('uploads a photo successfully', async () => {
   fetchMock.post('/upload', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   
   await act(async () => {
@@ -76,7 +76,7 @@ test('fails to upload a photo', async () => {
   fetchMock.post('/upload', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

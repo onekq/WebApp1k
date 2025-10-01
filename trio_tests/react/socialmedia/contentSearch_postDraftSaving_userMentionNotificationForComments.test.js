@@ -17,7 +17,7 @@ test('Successfully searches and displays posts.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SearchComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Search'), { target: { value: 'test' } });
@@ -36,7 +36,7 @@ test('Shows error message for invalid search query.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SearchComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Search'), { target: { value: '' } });
@@ -53,7 +53,7 @@ test('Verify saving posts as drafts.', async () => {
   fetchMock.post('/api/posts/draft', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Write a post...'), { target: { value: 'Save as draft content' } });
@@ -70,7 +70,7 @@ test('Ensure error handling for saving drafts.', async () => {
   fetchMock.post('/api/posts/draft', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Write a post...'), { target: { value: '' } });
@@ -86,7 +86,7 @@ test('Ensure error handling for saving drafts.', async () => {
 test('should send a notification when a user is mentioned in a comment', async () => {
   fetchMock.post('/api/comment/mention', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), {target: {value: '@jane'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -97,7 +97,7 @@ test('should send a notification when a user is mentioned in a comment', async (
 test('should handle error when notification sending fails for a user mention in a comment', async () => {
   fetchMock.post('/api/comment/mention', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), {target: {value: '@jane'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 

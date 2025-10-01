@@ -15,7 +15,7 @@ test('User can create a new fitness activity successfully.', async () => {
   fetchMock.post('/api/createActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-name'), { target: { value: 'Running' } });
@@ -30,7 +30,7 @@ test('User sees an error message when creating a new fitness activity fails.', a
   fetchMock.post('/api/createActivity', { status: 500, body: { error: 'Failed to create activity' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-name'), { target: { value: 'Running' } });
@@ -66,7 +66,7 @@ test('fails to log weight and displays an error message', async () => {
 test('System predicts future fitness achievements based on current progress successfully.', async () => {
   fetchMock.get('/api/predict-achievements', { prediction: '5K run next month' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('predict-achievements')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -76,7 +76,7 @@ test('System predicts future fitness achievements based on current progress succ
 test('System fails to predict future fitness achievements based on current progress.', async () => {
   fetchMock.get('/api/predict-achievements', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('predict-achievements')); });
 
   expect(fetchMock.calls().length).toBe(1);

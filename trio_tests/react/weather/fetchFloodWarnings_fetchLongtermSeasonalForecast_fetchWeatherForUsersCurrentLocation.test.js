@@ -17,7 +17,7 @@ test('fetchFloodWarnings successfully retrieves flood warnings', async () => {
     body: [{ id: 1, warning: 'Flood Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Flood Warnings')); });
 
   expect(fetchMock.called('/api/flood-warnings')).toBeTruthy();
@@ -27,7 +27,7 @@ test('fetchFloodWarnings successfully retrieves flood warnings', async () => {
 test('fetchFloodWarnings fails to retrieve flood warnings', async () => {
   fetchMock.getOnce('/api/flood-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Flood Warnings')); });
 
   expect(fetchMock.called('/api/flood-warnings')).toBeTruthy();
@@ -71,7 +71,7 @@ test('FetchLongtermSeasonalForecast - fails to retrieve long-term seasonal forec
 test('Fetch weather for user\'s current location succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { location: 'Current Location', temperature: 30 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather for Current Location')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -81,7 +81,7 @@ test('Fetch weather for user\'s current location succeeds.', async () => {
 test('Fetch weather for user\'s current location fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather for Current Location')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

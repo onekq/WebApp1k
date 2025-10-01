@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully attaches files to a ticket', async () => {
   fetchMock.post('/api/tickets', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   const file = new File(['content'], 'test.pdf', { type: 'application/pdf' });
   await act(async () => { fireEvent.change(screen.getByLabelText('Attachment'), { target: { files: [file] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
@@ -26,7 +26,7 @@ test('successfully attaches files to a ticket', async () => {
 test('shows error if attaching file fails', async () => {
   fetchMock.post('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   const file = new File(['content'], 'test.pdf', { type: 'application/pdf' });
   await act(async () => { fireEvent.change(screen.getByLabelText('Attachment'), { target: { files: [file] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
@@ -42,7 +42,7 @@ test('Successfully reports on SLA performance.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLAPerformanceReporting /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-picker'), { target: { value: 'sla1' } });
@@ -62,7 +62,7 @@ test('Fails to report on SLA performance and shows error message.', async () => 
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLAPerformanceReporting /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-picker'), { target: { value: 'sla1' } });
@@ -78,7 +78,7 @@ test('Fails to report on SLA performance and shows error message.', async () => 
 test('filters tickets by status', async () => {
   fetchMock.get('/api/tickets?status=Open', { status: 200, body: [{ id: 1, status: 'Open' }] });
   
-  await act(async () => { render(<MemoryRouter><TicketStatusFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Status Filter'), { target: { value: 'Open' } }); });
   
   expect(fetchMock.calls('/api/tickets?status=Open').length).toBe(1);
@@ -88,7 +88,7 @@ test('filters tickets by status', async () => {
 test('shows error if filtering tickets fails', async () => {
   fetchMock.get('/api/tickets?status=Open', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketStatusFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Status Filter'), { target: { value: 'Open' } }); });
   
   expect(fetchMock.calls('/api/tickets?status=Open').length).toBe(1);

@@ -36,7 +36,7 @@ test('Fails to alert on supplier contract expiration.', async () => {
 test('Ensure managing order cancellations updates stock levels and order status correctly.', async () => {
   fetchMock.post('/api/cancel-order', { status: 200, body: { success: true, newStockLevel: 95 } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('cancelOrder')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Ensure managing order cancellations updates stock levels and order status 
 test('Managing order cancellations doesn\'t update stock levels due to error.', async () => {
   fetchMock.post('/api/cancel-order', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('cancelOrder')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Managing order cancellations doesn\'t update stock levels due to error.', 
 test('Generates profit margin report successfully.', async () => {
   fetchMock.post('/api/profit-margin-report', { body: { status: 'success', data: { margin: 30 }}});
 
-  await act(async () => { render(<MemoryRouter><ProfitMarginReport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report')); });
 
@@ -67,7 +67,7 @@ test('Generates profit margin report successfully.', async () => {
 test('Fails to generate profit margin report due to server error.', async () => {
   fetchMock.post('/api/profit-margin-report', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><ProfitMarginReport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report')); });
 

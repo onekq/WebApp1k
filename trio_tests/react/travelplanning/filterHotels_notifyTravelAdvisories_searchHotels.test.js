@@ -18,7 +18,7 @@ test('filterHotels - filters hotels successfully based on criteria', async () =>
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('filter-star-5'));
@@ -35,7 +35,7 @@ test('filterHotels - shows error message when no hotels match the filters', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('filter-star-5'));
@@ -74,7 +74,7 @@ test('searchHotels - should display hotel search results on successful search', 
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('destination-input'), { target: { value: 'Paris' } });
@@ -92,7 +92,7 @@ test('searchHotels - should display an error message on search failure', async (
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('destination-input'), { target: { value: 'Paris' } });

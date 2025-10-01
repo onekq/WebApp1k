@@ -17,7 +17,7 @@ test('User can create a new category successfully', async () => {
     body: { id: 1, name: 'New Category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Name'), { target: { value: 'New Category' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Category')); });
 
@@ -31,7 +31,7 @@ test('User gets an error message when creating a new category fails', async () =
     body: { error: 'Unable to create category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Name'), { target: { value: 'New Category' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Category')); });
 
@@ -45,7 +45,7 @@ test('User can edit an existing category successfully', async () => {
     body: { id: 1, name: 'Updated Category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Name'), { target: { value: 'Updated Category' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Category')); });
 
@@ -59,7 +59,7 @@ test('User gets an error message when editing a category fails', async () => {
     body: { error: 'Unable to update category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Name'), { target: { value: 'Updated Category' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Category')); });
 
@@ -70,7 +70,7 @@ test('User gets an error message when editing a category fails', async () => {
 test('successfully tracks unique visitors per post', async () => {
   fetchMock.post('/api/trackUniqueVisitors', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackUniqueVisitors postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Visit Post')); });
 
   expect(fetchMock.calls('/api/trackUniqueVisitors')).toHaveLength(1);
@@ -81,7 +81,7 @@ test('successfully tracks unique visitors per post', async () => {
 test('fails to track unique visitors with an error message', async () => {
   fetchMock.post('/api/trackUniqueVisitors', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackUniqueVisitors postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Visit Post')); });
 
   expect(fetchMock.calls('/api/trackUniqueVisitors')).toHaveLength(1);

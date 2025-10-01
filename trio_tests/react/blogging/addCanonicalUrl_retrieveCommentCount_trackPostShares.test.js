@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a canonical URL to a post', async () => {
   fetchMock.post('/api/canonical-url', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/canonical url/i), { target: { value: 'http://example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds a canonical URL to a post', async () => {
 test('fails to add a canonical URL to a post due to server error', async () => {
   fetchMock.post('/api/canonical-url', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/canonical url/i), { target: { value: 'http://example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -54,7 +54,7 @@ test('fails to retrieve comment count for a post', async () => {
 test('successfully tracks post shares on social media', async () => {
   fetchMock.post('/api/trackPostShares', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackPostShares postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share Post')); });
 
   expect(fetchMock.calls('/api/trackPostShares')).toHaveLength(1);
@@ -65,7 +65,7 @@ test('successfully tracks post shares on social media', async () => {
 test('fails to track post shares with an error message', async () => {
   fetchMock.post('/api/trackPostShares', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackPostShares postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share Post')); });
 
   expect(fetchMock.calls('/api/trackPostShares')).toHaveLength(1);

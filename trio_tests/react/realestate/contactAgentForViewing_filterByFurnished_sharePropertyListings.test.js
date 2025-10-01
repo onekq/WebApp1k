@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully contacts agent for viewing', async () => {
   fetchMock.post('/api/agent/contact', 200);
 
-  await act(async () => { render(<MemoryRouter><ContactAgentForViewing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('viewing-date'), { target: { value: '2023-10-01' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('contact-agent-btn')); });
 
@@ -25,7 +25,7 @@ test('successfully contacts agent for viewing', async () => {
 test('fails to contact agent for viewing and shows error message', async () => {
   fetchMock.post('/api/agent/contact', 500);
 
-  await act(async () => { render(<MemoryRouter><ContactAgentForViewing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('viewing-date'), { target: { value: '2023-10-01' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('contact-agent-btn')); });
 
@@ -36,7 +36,7 @@ test('fails to contact agent for viewing and shows error message', async () => {
 test('Filter by furnished properties successfully', async () => {
   fetchMock.get('/api/furnished-properties', { properties: [{ id: 1, name: "Furnished 1" }] });
 
-  await act(async () => { render(<MemoryRouter><FurnishedFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-furnished-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('Filter by furnished properties successfully', async () => {
 test('Filter by furnished properties fails with error', async () => {
   fetchMock.get('/api/furnished-properties', 500);
 
-  await act(async () => { render(<MemoryRouter><FurnishedFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-furnished-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -56,7 +56,7 @@ test('Filter by furnished properties fails with error', async () => {
 test('successfully shares property listings', async () => {
   fetchMock.post('/api/share', 200);
 
-  await act(async () => { render(<MemoryRouter><SharePropertyListings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-listing-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -66,7 +66,7 @@ test('successfully shares property listings', async () => {
 test('fails to share property listings and shows error message', async () => {
   fetchMock.post('/api/share', 500);
 
-  await act(async () => { render(<MemoryRouter><SharePropertyListings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-listing-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('should export fitness data to CSV successfully.', async () => {
   fetchMock.get('/api/data/export', { status: 200, body: 'csv-data' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('export-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -25,7 +25,7 @@ test('should export fitness data to CSV successfully.', async () => {
 test('should fail to export fitness data to CSV.', async () => {
   fetchMock.get('/api/data/export', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('export-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -37,7 +37,7 @@ test('should successfully join a fitness challenge', async () => {
   fetchMock.post('/api/challenges/join/123', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><JoinChallenge challengeId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App challengeId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/join challenge/i));
@@ -51,7 +51,7 @@ test('should show error when joining a fitness challenge fails', async () => {
   fetchMock.post('/api/challenges/join/123', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><JoinChallenge challengeId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App challengeId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/join challenge/i));
@@ -64,7 +64,7 @@ test('should show error when joining a fitness challenge fails', async () => {
 test('should sync data from connected wearable device successfully.', async () => {
   fetchMock.get('/api/device/sync', { status: 200, body: { data: 'some-data' } });
   
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -75,7 +75,7 @@ test('should sync data from connected wearable device successfully.', async () =
 test('should fail to sync data from connected wearable device.', async () => {
   fetchMock.get('/api/device/sync', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

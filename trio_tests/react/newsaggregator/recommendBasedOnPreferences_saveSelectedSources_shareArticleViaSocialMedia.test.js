@@ -34,7 +34,7 @@ test('Fails to recommend articles based on user preferences.', async () => {
 test('saves user-selected sources successfully', async () => {
   fetchMock.post('/api/save-sources', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sources-input'), { target: { value: 'BBC' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-sources-button')); });
 
@@ -45,7 +45,7 @@ test('saves user-selected sources successfully', async () => {
 test('fails to save user-selected sources', async () => {
   fetchMock.post('/api/save-sources', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sources-input'), { target: { value: 'BBC' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-sources-button')); });
 
@@ -56,7 +56,7 @@ test('fails to save user-selected sources', async () => {
 test('shares an article via social media successfully', async () => {
   fetchMock.post('/share/social-media', 200);
 
-  await act(async () => { render(<MemoryRouter><ShareViaSocialMediaComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('shares an article via social media successfully', async () => {
 test('fails to share an article via social media with error message', async () => {
   fetchMock.post('/share/social-media', 500);
 
-  await act(async () => { render(<MemoryRouter><ShareViaSocialMediaComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

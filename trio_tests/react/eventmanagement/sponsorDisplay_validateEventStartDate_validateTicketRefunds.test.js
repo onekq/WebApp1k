@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays sponsors and partners on event pages', async () => {
   fetchMock.get('/api/event/sponsors', { sponsors: ['Sponsor 1', 'Sponsor 2'], partners: ['Partner 1'] });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Sponsor 1')).toBeInTheDocument();
@@ -24,7 +24,7 @@ test('Displays sponsors and partners on event pages', async () => {
 test('Displays error message when sponsors and partners are unavailable', async () => {
   fetchMock.get('/api/event/sponsors', 404);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Sponsors and partners are unavailable')).toBeInTheDocument();
@@ -33,7 +33,7 @@ test('Displays error message when sponsors and partners are unavailable', async 
 test('Should successfully submit valid event start date', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/start date/i), { target: { value: '2023-12-12T10:00' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -44,7 +44,7 @@ test('Should successfully submit valid event start date', async () => {
 test('Should show error for past event start date', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/start date/i), { target: { value: '2022-12-12T10:00' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -55,7 +55,7 @@ test('Should show error for past event start date', async () => {
 test('processes ticket refund successfully', async () => {
   fetchMock.post('/processRefund', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('refundButton')); });
 
   expect(fetchMock.calls('/processRefund').length).toEqual(1);
@@ -63,7 +63,7 @@ test('processes ticket refund successfully', async () => {
 }, 10000);
 
 test('fails to process ticket refund', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('refundButton')); });
 
   expect(screen.getByText('Unable to process refund.')).toBeInTheDocument();

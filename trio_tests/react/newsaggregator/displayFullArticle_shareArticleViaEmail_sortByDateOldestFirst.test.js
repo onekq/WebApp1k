@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays full article content successfully', async () => {
   fetchMock.get('/api/articles', { status: 200, body: [{ id: 1, content: 'Full Test Article Content' }] });
 
-  await act(async () => { render(<MemoryRouter><ArticlePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Full Test Article Content')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Displays full article content successfully', async () => {
 test('Fails to display full article content', async () => {
   fetchMock.get('/api/articles', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><ArticlePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load full article content')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Fails to display full article content', async () => {
 test('shares an article via email successfully', async () => {
   fetchMock.post('/share/email', 200);
 
-  await act(async () => { render(<MemoryRouter><ShareViaEmailComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Email')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -42,7 +42,7 @@ test('shares an article via email successfully', async () => {
 test('fails to share an article via email with error message', async () => {
   fetchMock.post('/share/email', 500);
 
-  await act(async () => { render(<MemoryRouter><ShareViaEmailComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Email')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -52,7 +52,7 @@ test('fails to share an article via email with error message', async () => {
 test('Sorts articles by date (oldest first) successfully', async () => {
   fetchMock.get('/api/articles?sort=oldest', { status: 200, body: [{ id: 1, date: '2020-01-01' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="oldest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="oldest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('2020-01-01')).toBeInTheDocument();
@@ -61,7 +61,7 @@ test('Sorts articles by date (oldest first) successfully', async () => {
 test('Fails to sort articles by date (oldest first)', async () => {
   fetchMock.get('/api/articles?sort=oldest', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="oldest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="oldest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to sort articles by date')).toBeInTheDocument();

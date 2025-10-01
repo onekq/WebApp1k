@@ -14,7 +14,7 @@ afterEach(() => {
 test('Success: assignment submitted successfully', async () => {
   fetchMock.post('/api/assignment', 200);
 
-  await act(async () => { render(<MemoryRouter><AssignmentSubmissionComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('assignment-text'), { target: { value: 'assignment' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Success: assignment submitted successfully', async () => {
 test('Failure: assignment submission fails', async () => {
   fetchMock.post('/api/assignment', 500);
 
-  await act(async () => { render(<MemoryRouter><AssignmentSubmissionComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('assignment-text'), { target: { value: 'assignment' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -36,7 +36,7 @@ test('Failure: assignment submission fails', async () => {
 test('Users can be successfully added to the waitlist.', async () => {
   fetchMock.post('/api/waitlist', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Join Waitlist/i)); });
 
   expect(fetchMock.calls('/api/waitlist').length).toEqual(1);
@@ -46,7 +46,7 @@ test('Users can be successfully added to the waitlist.', async () => {
 test('Adding users to the waitlist fails with an error.', async () => {
   fetchMock.post('/api/waitlist', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Join Waitlist/i)); });
 
   expect(fetchMock.calls('/api/waitlist').length).toEqual(1);
@@ -56,7 +56,7 @@ test('Adding users to the waitlist fails with an error.', async () => {
 test('Success: video plays successfully', async () => {
   fetchMock.get('/api/video', 200);
   
-  await act(async () => { render(<MemoryRouter><WatchVideoComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('play-button')); });
 
@@ -67,7 +67,7 @@ test('Success: video plays successfully', async () => {
 test('Failure: video fails to play', async () => {
   fetchMock.get('/api/video', 500);
   
-  await act(async () => { render(<MemoryRouter><WatchVideoComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('play-button')); });
 

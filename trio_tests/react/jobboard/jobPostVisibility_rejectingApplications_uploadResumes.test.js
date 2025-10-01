@@ -15,7 +15,7 @@ test('Controlling job post visibility successfully', async () => {
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -33,7 +33,7 @@ test('Controlling job post visibility failure due to invalid visibility state', 
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -88,7 +88,7 @@ test('Rejecting an application fails due to server error.', async () => {
 test('successful resume upload.', async () => {
   fetchMock.post('/uploadResume', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resume-upload-input'), { target: { files: ['resume.pdf'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('upload-button')); });
 
@@ -99,7 +99,7 @@ test('successful resume upload.', async () => {
 test('failure resume upload.', async () => {
   fetchMock.post('/uploadResume', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resume-upload-input'), { target: { files: ['resume.pdf'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('upload-button')); });
 

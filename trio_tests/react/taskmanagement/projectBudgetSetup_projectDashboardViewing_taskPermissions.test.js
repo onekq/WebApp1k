@@ -15,7 +15,7 @@ test('Set Project Budget - success', async () => {
   fetchMock.post('/api/projects/budget', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('Set Project Budget - failure', async () => {
   fetchMock.post('/api/projects/budget', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -53,7 +53,7 @@ test('View Project Dashboard - success', async () => {
   fetchMock.get('/api/projects/dashboard', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -68,7 +68,7 @@ test('View Project Dashboard - failure', async () => {
   fetchMock.get('/api/projects/dashboard', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -82,7 +82,7 @@ test('View Project Dashboard - failure', async () => {
 test('Set task-specific permissions for users successfully', async () => {
   fetchMock.post('/set-task-permissions', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('permission-select'), { target: { value: 'edit' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-permission-button')); });
@@ -94,7 +94,7 @@ test('Set task-specific permissions for users successfully', async () => {
 test('Fail to set task-specific permissions for users due to server error', async () => {
   fetchMock.post('/set-task-permissions', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('permission-select'), { target: { value: 'edit' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-permission-button')); });

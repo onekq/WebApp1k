@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current cloud cover percentage for a given location', async () => {
   fetchMock.get('/api/current-clouds?location=NYC', { cloudCover: 45 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Cloud Cover')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current cloud cover percentage for a given loca
 test('Fails to retrieve the current cloud cover percentage if the API returns an error', async () => {
   fetchMock.get('/api/current-clouds?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Cloud Cover')); });
 

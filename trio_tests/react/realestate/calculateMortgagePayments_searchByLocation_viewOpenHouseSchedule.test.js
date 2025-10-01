@@ -14,7 +14,7 @@ afterEach(() => {
 test('Calculate mortgage payments successfully', async () => {
   fetchMock.post('/api/mortgage-calc', { estimatedPayment: 1200 });
 
-  await act(async () => { render(<MemoryRouter><CalculateMortgage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('price-input'), { target: { value: '300000' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-btn')); });
 
@@ -25,7 +25,7 @@ test('Calculate mortgage payments successfully', async () => {
 test('Calculate mortgage payments fails with error', async () => {
   fetchMock.post('/api/mortgage-calc', 500);
 
-  await act(async () => { render(<MemoryRouter><CalculateMortgage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('price-input'), { target: { value: '300000' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-btn')); });
 
@@ -39,7 +39,7 @@ test('Search by Location filters properties by location successfully', async () 
     body: [{ id: 1, location: 'New York' }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/location/i), { target: { value: 'newyork' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -53,7 +53,7 @@ test('Search by Location filters properties by location fails', async () => {
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/location/i), { target: { value: 'newyork' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -64,7 +64,7 @@ test('Search by Location filters properties by location fails', async () => {
 test('View open house schedule successfully', async () => {
   fetchMock.get('/api/open-house-schedule', { schedule: 'Sun 2-4 PM' });
 
-  await act(async () => { render(<MemoryRouter><OpenHouseSchedule /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-schedule-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -74,7 +74,7 @@ test('View open house schedule successfully', async () => {
 test('View open house schedule fails with error', async () => {
   fetchMock.get('/api/open-house-schedule', 500);
 
-  await act(async () => { render(<MemoryRouter><OpenHouseSchedule /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-schedule-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);

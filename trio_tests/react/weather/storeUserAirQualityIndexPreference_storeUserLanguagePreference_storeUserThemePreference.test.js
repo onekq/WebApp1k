@@ -14,7 +14,7 @@ afterEach(() => {
 test('correctly stores user air quality index preference', async () => {
   fetchMock.post('/preferences/air-quality-index', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('air-quality-checkbox'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -25,7 +25,7 @@ test('correctly stores user air quality index preference', async () => {
 test('displays error when storing user air quality index preference fails', async () => {
   fetchMock.post('/preferences/air-quality-index', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('air-quality-checkbox'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -36,7 +36,7 @@ test('displays error when storing user air quality index preference fails', asyn
 test('correctly stores user language preference', async () => {
   fetchMock.post('/preferences/language', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('language-select'), { target: { value: 'English' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -47,7 +47,7 @@ test('correctly stores user language preference', async () => {
 test('displays error when storing user language preference fails', async () => {
   fetchMock.post('/preferences/language', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('language-select'), { target: { value: 'English' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -58,7 +58,7 @@ test('displays error when storing user language preference fails', async () => {
 test('correctly stores user theme preference', async () => {
   fetchMock.post('/preferences/theme', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('theme-select'), { target: { value: 'dark' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -69,7 +69,7 @@ test('correctly stores user theme preference', async () => {
 test('displays error when storing user theme preference fails', async () => {
   fetchMock.post('/preferences/theme', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('theme-select'), { target: { value: 'dark' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

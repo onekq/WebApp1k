@@ -14,7 +14,7 @@ afterEach(() => {
 test('Customer support options should be provided successfully.', async () => {
   fetchMock.get('/api/support/options', [{ id: 1, method: 'Phone' }]);
 
-  await act(async () => { render(<MemoryRouter><CustomerSupportComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-support-options')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Customer support options should be provided successfully.', async () => {
 test('Error in offering customer support should show error message.', async () => {
   fetchMock.get('/api/support/options', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomerSupportComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-support-options')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -38,7 +38,7 @@ test('sortHotels - sorts hotel search results successfully', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('sort-price'));
@@ -55,7 +55,7 @@ test('sortHotels - shows error message on sorting failure', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('sort-price'));
@@ -68,7 +68,7 @@ test('sortHotels - shows error message on sorting failure', async () => {
 test('Booking status should be tracked and shown to users.', async () => {
   fetchMock.get('/api/booking/status', { status: 'Confirmed' });
 
-  await act(async () => { render(<MemoryRouter><BookingStatusComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-status')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -78,7 +78,7 @@ test('Booking status should be tracked and shown to users.', async () => {
 test('Error in tracking booking status should show error message.', async () => {
   fetchMock.get('/api/booking/status', 404);
 
-  await act(async () => { render(<MemoryRouter><BookingStatusComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-status')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

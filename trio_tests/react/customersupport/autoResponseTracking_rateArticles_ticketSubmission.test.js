@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully tracks the use of auto-responses.', async () => {
   fetchMock.get('/api/getAutoResponseUsage', { usage: '10 times' });
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('10 times')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Successfully tracks the use of auto-responses.', async () => {
 test('Fails to track the use of auto-responses.', async () => {
   fetchMock.get('/api/getAutoResponseUsage', 500);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to track usage')).toBeInTheDocument();
@@ -33,7 +33,7 @@ test('successfully rates articles for helpfulness', async () => {
   fetchMock.post('path/to/api/article/rate', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('rate-article-button'));
@@ -47,7 +47,7 @@ test('fails to rate articles for helpfulness with error message', async () => {
   fetchMock.post('path/to/api/article/rate', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('rate-article-button'));
@@ -60,7 +60,7 @@ test('fails to rate articles for helpfulness with error message', async () => {
 test('successfully submits a ticket with required fields filled', async () => {
   fetchMock.post('/api/tickets', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'Test Ticket' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
@@ -71,7 +71,7 @@ test('successfully submits a ticket with required fields filled', async () => {
 test('shows error when submitting a ticket with missing fields', async () => {
   fetchMock.post('/api/tickets', { status: 400 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
   expect(fetchMock.calls('/api/tickets').length).toBe(1);

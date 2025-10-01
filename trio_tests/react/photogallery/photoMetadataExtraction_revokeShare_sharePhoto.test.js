@@ -15,7 +15,7 @@ test('extracts photo metadata correctly', async () => {
   fetchMock.post('/upload', { status: 200, body: { metadata: { date: '2021-01-01', location: 'Paris' } } });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -35,7 +35,7 @@ test('fails to extract photo metadata', async () => {
   fetchMock.post('/upload', { status: 200, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -54,7 +54,7 @@ test('Revoke Share Link: success', async () => {
   fetchMock.post('/api/revokeShare', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('share-link-input'), { target: { value: 'link-id' } });
@@ -71,7 +71,7 @@ test('Revoke Share Link: failure', async () => {
   fetchMock.post('/api/revokeShare', { throws: new Error('Revoke Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('share-link-input'), { target: { value: 'link-id' } });
@@ -88,7 +88,7 @@ test('Share Photo: success', async () => {
   fetchMock.post('/api/sharePhoto', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('photo-input'), { target: { value: 'PhotoID' } });
@@ -105,7 +105,7 @@ test('Share Photo: failure', async () => {
   fetchMock.post('/api/sharePhoto', { throws: new Error('Share Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('photo-input'), { target: { value: 'PhotoID' } });

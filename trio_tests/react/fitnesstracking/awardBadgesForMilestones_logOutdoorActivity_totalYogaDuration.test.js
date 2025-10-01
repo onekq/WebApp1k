@@ -14,7 +14,7 @@ afterEach(() => {
 test('System awards badges for milestones achieved successfully.', async () => {
   fetchMock.get('/api/award-badges', { badge: '100 miles run' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('award-badge')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('System awards badges for milestones achieved successfully.', async () => {
 test('System fails to award badges for milestones achieved.', async () => {
   fetchMock.get('/api/award-badges', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('award-badge')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -35,7 +35,7 @@ test('User can log an outdoor activity and track the route using GPS successfull
   fetchMock.post('/api/logOutdoorActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('outdoor-activity-type'), { target: { value: 'Hiking' } });
@@ -50,7 +50,7 @@ test('User sees an error message when logging an outdoor activity fails.', async
   fetchMock.post('/api/logOutdoorActivity', { status: 500, body: { error: 'Failed to track activity' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('outdoor-activity-type'), { target: { value: 'Hiking' } });
@@ -64,7 +64,7 @@ test('User sees an error message when logging an outdoor activity fails.', async
 test('should calculate total yoga duration successfully.', async () => {
   fetchMock.get('/api/yoga/duration', { status: 200, body: { totalDuration: '10 hours' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-duration-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -75,7 +75,7 @@ test('should calculate total yoga duration successfully.', async () => {
 test('should fail to calculate total yoga duration.', async () => {
   fetchMock.get('/api/yoga/duration', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-duration-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('deletes a recurring expense successfully', async () => {
   fetchMock.delete('/api/recurring-expense/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-recurring-expense-button-1')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('deletes a recurring expense successfully', async () => {
 test('fails to delete a recurring expense', async () => {
   fetchMock.delete('/api/recurring-expense/1', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-recurring-expense-button-1')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -57,7 +57,7 @@ test('Fails to export expenses to a CSV file due to server error', async () => {
 test('splits an expense into multiple categories successfully', async () => {
   fetchMock.post('/api/split-expense', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('split-expense-input'), { target: { value: '150' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-split-expense-button')); });
 
@@ -68,7 +68,7 @@ test('splits an expense into multiple categories successfully', async () => {
 test('fails to split an expense into multiple categories', async () => {
   fetchMock.post('/api/split-expense', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('split-expense-input'), { target: { value: '150' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-split-expense-button')); });
 

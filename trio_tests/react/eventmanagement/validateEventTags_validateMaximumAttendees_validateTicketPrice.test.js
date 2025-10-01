@@ -14,7 +14,7 @@ afterEach(() => {
 test('Should successfully add valid event tags', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/tags/i), { target: { value: 'tech, conference' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -25,7 +25,7 @@ test('Should successfully add valid event tags', async () => {
 test('Should show error for invalid event tag characters', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/tags/i), { target: { value: 'tech, con*ference' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -36,7 +36,7 @@ test('Should show error for invalid event tag characters', async () => {
 test('Should successfully submit valid maximum attendees count', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/maximum attendees/i), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -47,7 +47,7 @@ test('Should successfully submit valid maximum attendees count', async () => {
 test('Should show error for negative maximum attendees count', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/maximum attendees/i), { target: { value: '-1' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -58,7 +58,7 @@ test('Should show error for negative maximum attendees count', async () => {
 test('sets ticket price successfully', async () => {
   fetchMock.post('/ticketPrice', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketPrice'), { target: { value: '25' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 
@@ -67,7 +67,7 @@ test('sets ticket price successfully', async () => {
 }, 10000);
 
 test('fails to set ticket price', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketPrice'), { target: { value: '-10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 

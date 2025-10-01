@@ -15,7 +15,7 @@ test('Deleting a job post successfully', async () => {
   fetchMock.delete('/api/job/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete/i));
@@ -29,7 +29,7 @@ test('Deleting a job post failure due to not found error', async () => {
   fetchMock.delete('/api/job/1', 404);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete/i));
@@ -43,7 +43,7 @@ test('Validating all fields before posting a job successfully', async () => {
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -61,7 +61,7 @@ test('Validating all fields failure due to empty fields', async () => {
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Submit/i));
@@ -75,7 +75,7 @@ test('Posting a new job successfully', async () => {
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -92,7 +92,7 @@ test('Posting a new job failure due to missing fields', async () => {
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Submit/i));

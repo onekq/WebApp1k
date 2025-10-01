@@ -54,7 +54,7 @@ test('fails to remove song from playback queue due to server error', async () =>
 test('Unliking a song removes it from the user\'s favorites.', async () => {
   fetchMock.post('/api/unlikeSong', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('Unliking a song removes it from the user\'s favorites.', async () => {
 test('Unliking a song fails with an error message.', async () => {
   fetchMock.post('/api/unlikeSong', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

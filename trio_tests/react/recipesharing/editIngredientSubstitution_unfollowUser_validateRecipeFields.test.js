@@ -35,7 +35,7 @@ test('fails to edit ingredient substitutions due to server error', async () => {
 test('Successfully unfollow another user', async () => {
   fetchMock.post('/api/unfollow-user', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unfollow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -45,7 +45,7 @@ test('Successfully unfollow another user', async () => {
 test('Fail to unfollow another user with error message', async () => {
   fetchMock.post('/api/unfollow-user', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unfollow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -55,7 +55,7 @@ test('Fail to unfollow another user with error message', async () => {
 test('successfully validates required fields for a recipe', async () => {
   fetchMock.post('/validate-recipe', 200);
 
-  await act(async () => { render(<MemoryRouter><ValidateRecipeFieldsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-name-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 
@@ -66,7 +66,7 @@ test('successfully validates required fields for a recipe', async () => {
 test('shows error message when failing to validate required fields for a recipe', async () => {
   fetchMock.post('/validate-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><ValidateRecipeFieldsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-name-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 

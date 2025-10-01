@@ -52,7 +52,7 @@ test('Duplicate job post detection fails due to server error.', async () => {
 test('employers can be successfully verified before allowing job postings', async () => {
   fetchMock.post('/api/employer/verify', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EmployerVerification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Verify Employer/i)); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -62,7 +62,7 @@ test('employers can be successfully verified before allowing job postings', asyn
 test('employers see an error message if verification fails', async () => {
   fetchMock.post('/api/employer/verify', 500);
 
-  await act(async () => { render(<MemoryRouter><EmployerVerification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Verify Employer/i)); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -72,7 +72,7 @@ test('employers see an error message if verification fails', async () => {
 test('employers can successfully use templates for common job posts', async () => {
   fetchMock.get('/api/job/templates', [{ title: 'Software Engineer', description: 'Develop applications' }]);
 
-  await act(async () => { render(<MemoryRouter><JobPostTemplates /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Software Engineer')).toBeInTheDocument();
@@ -81,7 +81,7 @@ test('employers can successfully use templates for common job posts', async () =
 test('employers see an error message if job post templates fail to load', async () => {
   fetchMock.get('/api/job/templates', 500);
 
-  await act(async () => { render(<MemoryRouter><JobPostTemplates /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Failed to load job post templates')).toBeInTheDocument();

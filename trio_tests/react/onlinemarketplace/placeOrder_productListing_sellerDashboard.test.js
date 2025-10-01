@@ -14,7 +14,7 @@ afterEach(() => {
 test('places an order successfully.', async () => {
   fetchMock.post('/api/order', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Place Order')); });
 
   expect(fetchMock.calls('/api/order').length).toEqual(1);
@@ -24,7 +24,7 @@ test('places an order successfully.', async () => {
 test('displays error on failing to place order.', async () => {
   fetchMock.post('/api/order', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Place Order')); });
 
   expect(fetchMock.calls('/api/order').length).toEqual(1);
@@ -34,7 +34,7 @@ test('displays error on failing to place order.', async () => {
 test('Product listing succeeds with required details.', async () => {
   fetchMock.post('/api/products', { status: 200, body: { id: 1, name: 'Sample Product' } });
 
-  await act(async () => { render(<MemoryRouter><ProductForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Product Name'), { target: { value: 'Sample Product' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 
@@ -45,7 +45,7 @@ test('Product listing succeeds with required details.', async () => {
 test('Product listing fails with missing details error.', async () => {
   fetchMock.post('/api/products', { status: 400, body: { message: 'Missing required details' } });
 
-  await act(async () => { render(<MemoryRouter><ProductForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Product Name'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 

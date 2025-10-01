@@ -34,7 +34,7 @@ test('fails to delete a recipe due to server error', async () => {
 test('successfully fetches user\'s added recipes', async () => {
   fetchMock.get('/user-recipes', { recipes: ['Recipe 1', 'Recipe 2'] });
 
-  await act(async () => { render(<MemoryRouter><ListUsersRecipesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Recipe 1')).toBeInTheDocument();
@@ -44,7 +44,7 @@ test('successfully fetches user\'s added recipes', async () => {
 test('shows error message when failing to fetch user\'s added recipes', async () => {
   fetchMock.get('/user-recipes', 500);
 
-  await act(async () => { render(<MemoryRouter><ListUsersRecipesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to fetch recipes')).toBeInTheDocument();
@@ -53,7 +53,7 @@ test('shows error message when failing to fetch user\'s added recipes', async ()
 test('successfully removes a recipe from favorites', async () => {
   fetchMock.post('/remove-from-favorites', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveRecipeFromFavoritesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unfavorite-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -63,7 +63,7 @@ test('successfully removes a recipe from favorites', async () => {
 test('shows error message when failing to remove a recipe from favorites', async () => {
   fetchMock.post('/remove-from-favorites', 500);
 
-  await act(async () => { render(<MemoryRouter><RemoveRecipeFromFavoritesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unfavorite-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

@@ -18,7 +18,7 @@ test('calculateHotelCost - calculates total hotel cost including taxes and fees'
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('calculate-cost-1'));
@@ -35,7 +35,7 @@ test('calculateHotelCost - shows error message when cost calculation fails', asy
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('calculate-cost-1'));
@@ -70,7 +70,7 @@ test('should show error if fetching travel tips fails', async () => {
 test('User preferences should be stored and applied successfully.', async () => {
   fetchMock.post('/api/user/preferences', 200);
 
-  await act(async () => { render(<MemoryRouter><UserPreferencesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('preference-input'), { target: { value: 'preference' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference')); });
 
@@ -81,7 +81,7 @@ test('User preferences should be stored and applied successfully.', async () => 
 test('Error in storing user preferences should show error message.', async () => {
   fetchMock.post('/api/user/preferences', 500);
 
-  await act(async () => { render(<MemoryRouter><UserPreferencesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('preference-input'), { target: { value: 'preference' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference')); });
 

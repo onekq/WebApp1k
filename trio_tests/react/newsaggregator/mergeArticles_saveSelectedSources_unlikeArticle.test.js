@@ -14,7 +14,7 @@ afterEach(() => {
 test('Merge articles from different sources successfully.', async () => {
   fetchMock.post('/api/merge-articles', { success: true });
 
-  await act(async () => { render(<MemoryRouter><MergeArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Merge Articles")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Merge articles from different sources successfully.', async () => {
 test('Fail to merge articles and display error.', async () => {
   fetchMock.post('/api/merge-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><MergeArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Merge Articles")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to merge articles and display error.', async () => {
 test('saves user-selected sources successfully', async () => {
   fetchMock.post('/api/save-sources', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sources-input'), { target: { value: 'BBC' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-sources-button')); });
 
@@ -45,7 +45,7 @@ test('saves user-selected sources successfully', async () => {
 test('fails to save user-selected sources', async () => {
   fetchMock.post('/api/save-sources', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sources-input'), { target: { value: 'BBC' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-sources-button')); });
 
@@ -56,7 +56,7 @@ test('fails to save user-selected sources', async () => {
 test('unlikes an article successfully', async () => {
   fetchMock.post('/unlike', 200);
 
-  await act(async () => { render(<MemoryRouter><UnlikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Unlike')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('unlikes an article successfully', async () => {
 test('fails to unlike an article with error message', async () => {
   fetchMock.post('/unlike', 500);
 
-  await act(async () => { render(<MemoryRouter><UnlikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Unlike')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

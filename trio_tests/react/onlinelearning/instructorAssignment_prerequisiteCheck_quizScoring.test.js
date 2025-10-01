@@ -14,7 +14,7 @@ afterEach(() => {
 test('Instructor Assignment success: should display assigned instructor.', async () => {
   fetchMock.post('/api/assign-instructor', { success: true });
 
-  await act(async () => { render(<MemoryRouter><InstructorAssignment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Instructor ID'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign')); });
 
@@ -25,7 +25,7 @@ test('Instructor Assignment success: should display assigned instructor.', async
 test('Instructor Assignment failure: should display an error message on assignment failure.', async () => {
   fetchMock.post('/api/assign-instructor', 400);
 
-  await act(async () => { render(<MemoryRouter><InstructorAssignment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Instructor ID'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign')); });
 
@@ -37,7 +37,7 @@ test('Enrollment is allowed after prerequisites are met.', async () => {
   fetchMock.get('/api/check-prerequisites/101', { prerequisitesMet: true });
   fetchMock.post('/api/enroll', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Check Prerequisites/i)); });
   await act(async () => { fireEvent.click(screen.getByText(/Enroll/i)); });
 
@@ -48,7 +48,7 @@ test('Enrollment is allowed after prerequisites are met.', async () => {
 test('Enrollment is blocked if prerequisites are not met.', async () => {
   fetchMock.get('/api/check-prerequisites/101', { prerequisitesMet: false });
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Check Prerequisites/i)); });
   await act(async () => { fireEvent.click(screen.getByText(/Enroll/i)); });
 
@@ -59,7 +59,7 @@ test('Enrollment is blocked if prerequisites are not met.', async () => {
 test('Quiz scoring is calculated correctly.', async () => {
   fetchMock.post('/api/quiz/score', { score: 85 });
 
-  await act(async () => { render(<MemoryRouter><Quiz /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/answer/i), { target: { value: 'correct answer' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -70,7 +70,7 @@ test('Quiz scoring is calculated correctly.', async () => {
 test('Error message is shown when quiz scoring fails.', async () => {
   fetchMock.post('/api/quiz/score', 500);
 
-  await act(async () => { render(<MemoryRouter><Quiz /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/answer/i), { target: { value: 'wrong answer' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

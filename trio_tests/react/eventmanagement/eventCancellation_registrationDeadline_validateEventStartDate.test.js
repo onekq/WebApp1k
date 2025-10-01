@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays successful cancellation message upon event cancellation', async () => {
   fetchMock.post('/api/event/cancel', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('cancel-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Displays successful cancellation message upon event cancellation', async (
 test('Displays error message upon failing to cancel an event', async () => {
   fetchMock.post('/api/event/cancel', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('cancel-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Registration fails if the deadline is passed', async () => {
 test('Should successfully submit valid event start date', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/start date/i), { target: { value: '2023-12-12T10:00' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -65,7 +65,7 @@ test('Should successfully submit valid event start date', async () => {
 test('Should show error for past event start date', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/start date/i), { target: { value: '2022-12-12T10:00' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

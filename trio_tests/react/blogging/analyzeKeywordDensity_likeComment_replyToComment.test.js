@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully analyzes keyword density of a post', async () => {
   fetchMock.post('/api/keyword-density', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/analyze keyword density/i)); });
 
   expect(fetchMock.calls('/api/keyword-density').length).toBe(1);
@@ -24,7 +24,7 @@ test('successfully analyzes keyword density of a post', async () => {
 test('fails to analyze keyword density of a post due to server error', async () => {
   fetchMock.post('/api/keyword-density', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/analyze keyword density/i)); });
 
   expect(fetchMock.calls('/api/keyword-density').length).toBe(1);

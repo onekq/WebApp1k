@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can successfully add photos to an album.', async () => {
   fetchMock.post('/api/albums/photos', { success: true });
 
-  await act(async () => { render(<MemoryRouter><AddPhotoToAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('photo-input'), { target: { files: ['photo1.jpg'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-photo-button')); });
 
@@ -25,7 +25,7 @@ test('Users can successfully add photos to an album.', async () => {
 test('Shows an error message when adding photo to album fails.', async () => {
   fetchMock.post('/api/albums/photos', { success: false });
 
-  await act(async () => { render(<MemoryRouter><AddPhotoToAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('photo-input'), { target: { files: ['photo1.jpg'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-photo-button')); });
 
@@ -36,7 +36,7 @@ test('Shows an error message when adding photo to album fails.', async () => {
 test('should successfully search photos by location', async () => {
   fetchMock.get('/api/search?location=Paris', { photos: [{ id: 1, location: 'Paris' }] });
 
-  await act(async () => { render(<MemoryRouter><SearchPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'Paris' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -47,7 +47,7 @@ test('should successfully search photos by location', async () => {
 test('should fail to search photos by location with error message', async () => {
   fetchMock.get('/api/search?location=Paris', 404);
 
-  await act(async () => { render(<MemoryRouter><SearchPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'Paris' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 

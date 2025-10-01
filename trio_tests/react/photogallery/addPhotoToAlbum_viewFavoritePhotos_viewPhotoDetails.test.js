@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can successfully add photos to an album.', async () => {
   fetchMock.post('/api/albums/photos', { success: true });
 
-  await act(async () => { render(<MemoryRouter><AddPhotoToAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('photo-input'), { target: { files: ['photo1.jpg'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-photo-button')); });
 
@@ -25,7 +25,7 @@ test('Users can successfully add photos to an album.', async () => {
 test('Shows an error message when adding photo to album fails.', async () => {
   fetchMock.post('/api/albums/photos', { success: false });
 
-  await act(async () => { render(<MemoryRouter><AddPhotoToAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('photo-input'), { target: { files: ['photo1.jpg'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-photo-button')); });
 
@@ -66,7 +66,7 @@ test('views detailed information of a photo successfully', async () => {
   fetchMock.get('/photo/1', { status: 200, body: { title: 'Sunset', date: '2021-01-01', location: 'Beach' } });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoDetailsComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -79,7 +79,7 @@ test('fails to view detailed information of a photo', async () => {
   fetchMock.get('/photo/1', { status: 404 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoDetailsComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds alt text to an image', async () => {
   fetchMock.post('/api/alt-text', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/alt text/i), { target: { value: 'New Alt Text' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds alt text to an image', async () => {
 test('fails to add alt text to an image due to server error', async () => {
   fetchMock.post('/api/alt-text', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/alt text/i), { target: { value: 'New Alt Text' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -37,7 +37,7 @@ test('Success: edit an existing blog post', async () => {
   fetchMock.put('/api/editPost', { status: 200, body: { id: 1, title: 'Updated Post', content: 'Updated content' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Updated Post' } });
@@ -55,7 +55,7 @@ test('Failure: edit an existing blog post without authorization', async () => {
   fetchMock.put('/api/editPost', { status: 403, body: { error: 'Unauthorized' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Updated Post' } });
@@ -73,7 +73,7 @@ test('Success: retrieve a list of published blog posts', async () => {
   fetchMock.get('/api/posts?status=published', { status: 200, body: [{ id: 1, title: 'Published Post' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -84,7 +84,7 @@ test('Failure: fetch published posts but none exist', async () => {
   fetchMock.get('/api/posts?status=published', { status: 404, body: { error: 'No published posts found' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

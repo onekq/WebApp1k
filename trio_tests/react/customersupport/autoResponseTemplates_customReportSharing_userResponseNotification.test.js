@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully configures auto-response templates.', async () => {
   fetchMock.post('/api/saveAutoResponseTemplate', 200);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTemplates /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('templateContent'), { target: { value: 'Hello' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Template')); });
 
@@ -25,7 +25,7 @@ test('Successfully configures auto-response templates.', async () => {
 test('Fails to configure auto-response templates.', async () => {
   fetchMock.post('/api/saveAutoResponseTemplate', 500);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTemplates /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('templateContent'), { target: { value: 'Hello' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Template')); });
 
@@ -40,7 +40,7 @@ test('Successfully shares custom reports.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportSharing /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('share-email-input'), { target: { value: 'user@test.com' } });
@@ -60,7 +60,7 @@ test('Fails to share custom reports and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportSharing /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('share-email-input'), { target: { value: 'user@test.com' } });
@@ -76,7 +76,7 @@ test('Fails to share custom reports and shows error message.', async () => {
 test('Notifying user of agent response should show success message.', async () => {
   fetchMock.post('/api/notify-user', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notification-user'), { target: { value: 'User123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('send-notification')); });
 
@@ -87,7 +87,7 @@ test('Notifying user of agent response should show success message.', async () =
 test('Notifying user of agent response should show error message when failed.', async () => {
   fetchMock.post('/api/notify-user', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notification-user'), { target: { value: 'User123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('send-notification')); });
 

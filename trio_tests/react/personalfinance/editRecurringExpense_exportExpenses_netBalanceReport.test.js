@@ -14,7 +14,7 @@ afterEach(() => {
 test('edits a recurring expense successfully', async () => {
   fetchMock.put('/api/recurring-expense/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurring-expense-input-1'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-recurring-expense-button-1')); });
 
@@ -25,7 +25,7 @@ test('edits a recurring expense successfully', async () => {
 test('fails to edit a recurring expense', async () => {
   fetchMock.put('/api/recurring-expense/1', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurring-expense-input-1'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-recurring-expense-button-1')); });
 

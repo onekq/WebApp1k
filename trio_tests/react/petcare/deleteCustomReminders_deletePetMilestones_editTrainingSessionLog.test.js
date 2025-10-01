@@ -15,7 +15,7 @@ test('should delete a custom reminder successfully', async () => {
   fetchMock.delete('/api/delete-custom-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete Reminder/i));
@@ -29,7 +29,7 @@ test('should fail to delete a custom reminder', async () => {
   fetchMock.delete('/api/delete-custom-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete Reminder/i));
@@ -42,7 +42,7 @@ test('should fail to delete a custom reminder', async () => {
 test('Successfully deletes a pet milestone', async () => {
   fetchMock.delete('/api/milestones/delete', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-milestone-button', { name: /delete/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -52,7 +52,7 @@ test('Successfully deletes a pet milestone', async () => {
 test('Fails to delete a pet milestone', async () => {
   fetchMock.delete('/api/milestones/delete', { status: 500 });
 
-  await act(async () => {	render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => {	render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-milestone-button', { name: /delete/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -62,7 +62,7 @@ test('Fails to delete a pet milestone', async () => {
 test('Edits a training session log successfully.', async () => {
   fetchMock.put('/training-sessions/1', { message: 'Training session updated' });
 
-  await act(async () => { render(<MemoryRouter><EditTrainingSessionLog trainingId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App trainingId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('training-input'), { target: { value: 'Updated training' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -73,7 +73,7 @@ test('Edits a training session log successfully.', async () => {
 test('Fails to edit training session log with error message.', async () => {
   fetchMock.put('/training-sessions/1', { status: 500, body: { message: 'Failed to update training session' } });
 
-  await act(async () => { render(<MemoryRouter><EditTrainingSessionLog trainingId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App trainingId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('training-input'), { target: { value: 'Updated training' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

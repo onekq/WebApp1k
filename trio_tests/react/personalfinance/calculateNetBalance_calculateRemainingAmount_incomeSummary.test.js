@@ -40,7 +40,7 @@ test('successfully calculates remaining amount to reach a financial goal', async
   fetchMock.get('/api/goal/remaining/1', { status: 200, body: { remaining: 500 } });
 
   await act(async () => {
-    render(<MemoryRouter><CalculateRemaining /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -55,7 +55,7 @@ test('fails to calculate remaining amount to reach a financial goal', async () =
   fetchMock.get('/api/goal/remaining/1', { status: 404, body: { error: 'Goal not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><CalculateRemaining /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

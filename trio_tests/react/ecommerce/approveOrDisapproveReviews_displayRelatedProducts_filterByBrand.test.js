@@ -15,7 +15,7 @@ afterEach(() => {
 test('Approving a review should succeed', async () => {
   fetchMock.post('/api/reviews/approve/123', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><ApproveReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Approve')); });
 
   expect(fetchMock.calls('/api/reviews/approve/123')).toHaveLength(1);
@@ -25,7 +25,7 @@ test('Approving a review should succeed', async () => {
 test('Disapproving a review should fail due to server error', async () => {
   fetchMock.post('/api/reviews/disapprove/123', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><DisapproveReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Disapprove')); });
 
   expect(fetchMock.calls('/api/reviews/disapprove/123')).toHaveLength(1);
@@ -35,7 +35,7 @@ test('Disapproving a review should fail due to server error', async () => {
 test('displays related products successfully', async () => {
   fetchMock.get('/api/products/1/related', { products: [{ id: 2, name: 'Related Product' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Product 1')); });
 
   expect(fetchMock.called('/api/products/1/related')).toBe(true);
@@ -45,7 +45,7 @@ test('displays related products successfully', async () => {
 test('fails to display related products and shows error', async () => {
   fetchMock.get('/api/products/1/related', 404);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Product 1')); });
 
   expect(fetchMock.called('/api/products/1/related')).toBe(true);
@@ -55,7 +55,7 @@ test('fails to display related products and shows error', async () => {
 test('filters by brand successfully', async () => {
   fetchMock.get('/api/products?brand=sony', { products: [{ id: 1, name: 'PlayStation' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('brand-filter'), { target: { value: 'sony' } }); });
 
   expect(fetchMock.called('/api/products?brand=sony')).toBe(true);
@@ -65,7 +65,7 @@ test('filters by brand successfully', async () => {
 test('fails to filter by brand and shows error', async () => {
   fetchMock.get('/api/products?brand=unknown', 404);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('brand-filter'), { target: { value: 'unknown' } }); });
 
   expect(fetchMock.called('/api/products?brand=unknown')).toBe(true);

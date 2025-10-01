@@ -14,7 +14,7 @@ afterEach(() => {
 test('Tracking the agent assigned to a ticket should show agent name.', async () => {
   fetchMock.post('/api/track-agent', { agent: 'James Bond' });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id-track'), { target: { value: '789' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-agent')); });
 
@@ -25,7 +25,7 @@ test('Tracking the agent assigned to a ticket should show agent name.', async ()
 test('Tracking the agent assigned to a ticket should show error message when failed.', async () => {
   fetchMock.post('/api/track-agent', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id-track'), { target: { value: '789' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-agent')); });
 
@@ -36,7 +36,7 @@ test('Tracking the agent assigned to a ticket should show error message when fai
 test('Tracking the history of responses should show response history.', async () => {
   fetchMock.get('/api/response-history', { history: ['Initial response', 'Follow-up response'] });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-history'), { target: { value: 'history123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-history')); });
 
@@ -47,7 +47,7 @@ test('Tracking the history of responses should show response history.', async ()
 test('Tracking the history of responses should show error message when failed.', async () => {
   fetchMock.get('/api/response-history', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-history'), { target: { value: 'history123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-history')); });
 
@@ -58,7 +58,7 @@ test('Tracking the history of responses should show error message when failed.',
 test('Successfully sends SMS notifications for urgent updates.', async () => {
   fetchMock.post('/api/sendSms', 200);
 
-  await act(async () => { render(<MemoryRouter><SmsNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketId'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send SMS')); });
 
@@ -69,7 +69,7 @@ test('Successfully sends SMS notifications for urgent updates.', async () => {
 test('Fails to send SMS notifications for urgent updates.', async () => {
   fetchMock.post('/api/sendSms', 500);
 
-  await act(async () => { render(<MemoryRouter><SmsNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketId'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send SMS')); });
 

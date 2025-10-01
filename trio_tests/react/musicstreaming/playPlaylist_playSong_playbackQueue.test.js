@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully plays a playlist', async () => {
   fetchMock.post('/api/playlists/1/play', 200);
 
-  await act(async () => { render(<MemoryRouter><PlayPlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('play-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully plays a playlist', async () => {
 test('fails to play a non-existing playlist', async () => {
   fetchMock.post('/api/playlists/1/play', 404);
 
-  await act(async () => { render(<MemoryRouter><PlayPlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('play-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Play Song - failure shows error message', async () => {
 test('Songs are added to the playback queue correctly.', async () => {
   fetchMock.post('/api/queue', 200);
 
-  await act(async () => { render(<MemoryRouter><QueueComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-to-queue-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('Songs are added to the playback queue correctly.', async () => {
 test('Songs fail to add to the playback queue with an error message.', async () => {
   fetchMock.post('/api/queue', 500);
 
-  await act(async () => { render(<MemoryRouter><QueueComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-to-queue-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

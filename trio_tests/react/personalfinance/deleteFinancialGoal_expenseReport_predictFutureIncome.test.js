@@ -15,7 +15,7 @@ test('successfully deletes a financial goal', async () => {
   fetchMock.delete('/api/goal/1', { status: 200, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to delete a financial goal', async () => {
   fetchMock.delete('/api/goal/1', { status: 404, body: { error: 'Goal not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -70,7 +70,7 @@ test('successfully predicts future income based on past data', async () => {
   fetchMock.get('/api/income/predict', { status: 200, body: { prediction: 5000 } });
 
   await act(async () => {
-    render(<MemoryRouter><PredictIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -85,7 +85,7 @@ test('fails to predict future income based on past data', async () => {
   fetchMock.get('/api/income/predict', { status: 400, body: { error: 'Prediction error' } });
 
   await act(async () => {
-    render(<MemoryRouter><PredictIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

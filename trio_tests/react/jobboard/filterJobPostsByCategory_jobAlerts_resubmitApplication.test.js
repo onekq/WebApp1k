@@ -94,7 +94,7 @@ test('shows an error message when setting up alerts fails.', async () => {
 test('successful application resubmission.', async () => {
   fetchMock.post('/resubmitApplication', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resubmit-button')); });
 
@@ -105,7 +105,7 @@ test('successful application resubmission.', async () => {
 test('failure application resubmission.', async () => {
   fetchMock.post('/resubmitApplication', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resubmit-button')); });
 

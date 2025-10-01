@@ -17,7 +17,7 @@ test('fetchExtremeHeatWarnings successfully retrieves extreme heat warnings', as
     body: [{ id: 1, warning: 'Extreme Heat Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Extreme Heat Warnings')); });
 
   expect(fetchMock.called('/api/extreme-heat-warnings')).toBeTruthy();
@@ -27,7 +27,7 @@ test('fetchExtremeHeatWarnings successfully retrieves extreme heat warnings', as
 test('fetchExtremeHeatWarnings fails to retrieve extreme heat warnings', async () => {
   fetchMock.getOnce('/api/extreme-heat-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Extreme Heat Warnings')); });
 
   expect(fetchMock.called('/api/extreme-heat-warnings')).toBeTruthy();
@@ -37,7 +37,7 @@ test('fetchExtremeHeatWarnings fails to retrieve extreme heat warnings', async (
 test('correctly stores user location preference', async () => {
   fetchMock.post('/preferences/location', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('location-input'), { target: { value: 'New York' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -48,7 +48,7 @@ test('correctly stores user location preference', async () => {
 test('displays error when storing user location preference fails', async () => {
   fetchMock.post('/preferences/location', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('location-input'), { target: { value: 'New York' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -59,7 +59,7 @@ test('displays error when storing user location preference fails', async () => {
 test('correctly stores user temperature unit preference', async () => {
   fetchMock.post('/preferences/temperature-unit', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('temperature-unit-select'), { target: { value: 'Celsius' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -70,7 +70,7 @@ test('correctly stores user temperature unit preference', async () => {
 test('displays error when storing user temperature unit preference fails', async () => {
   fetchMock.post('/preferences/temperature-unit', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('temperature-unit-select'), { target: { value: 'Celsius' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

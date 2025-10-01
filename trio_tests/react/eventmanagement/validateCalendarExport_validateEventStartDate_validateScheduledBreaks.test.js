@@ -34,7 +34,7 @@ test('Fails to validate calendar export.', async () => {
 test('Should successfully submit valid event start date', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/start date/i), { target: { value: '2023-12-12T10:00' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -45,7 +45,7 @@ test('Should successfully submit valid event start date', async () => {
 test('Should show error for past event start date', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/start date/i), { target: { value: '2022-12-12T10:00' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

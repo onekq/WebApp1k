@@ -48,7 +48,7 @@ test('Fetch48hourForecast - fails to retrieve 48-hour forecast', async () => {
 test('Successfully retrieves the current atmospheric pressure for a given location', async () => {
   fetchMock.get('/api/current-pressure?location=NYC', { pressure: 1013 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Pressure')); });
 
@@ -59,7 +59,7 @@ test('Successfully retrieves the current atmospheric pressure for a given locati
 test('Fails to retrieve the current atmospheric pressure if the API returns an error', async () => {
   fetchMock.get('/api/current-pressure?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Pressure')); });
 
@@ -70,7 +70,7 @@ test('Fails to retrieve the current atmospheric pressure if the API returns an e
 test('Successfully retrieves the current wind speed for a given location', async () => {
   fetchMock.get('/api/current-wind?location=NYC', { windSpeed: 10 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Wind Speed')); });
 
@@ -81,7 +81,7 @@ test('Successfully retrieves the current wind speed for a given location', async
 test('Fails to retrieve the current wind speed if the API returns an error', async () => {
   fetchMock.get('/api/current-wind?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Wind Speed')); });
 

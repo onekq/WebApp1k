@@ -15,7 +15,7 @@ test('Success: save a draft of a blog post', async () => {
   fetchMock.post('/api/saveDraft', { status: 200, body: { id: 1, title: 'Draft Post', content: 'Some content' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Draft Post' } });
@@ -33,7 +33,7 @@ test('Failure: save a draft of a blog post with network error', async () => {
   fetchMock.post('/api/saveDraft', { throws: new Error('Network Error') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Draft Post' } });
@@ -51,7 +51,7 @@ test('Success: edit an existing blog post', async () => {
   fetchMock.put('/api/editPost', { status: 200, body: { id: 1, title: 'Updated Post', content: 'Updated content' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Updated Post' } });
@@ -69,7 +69,7 @@ test('Failure: edit an existing blog post without authorization', async () => {
   fetchMock.put('/api/editPost', { status: 403, body: { error: 'Unauthorized' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Updated Post' } });

@@ -17,7 +17,7 @@ test('Successfully restores an archived post.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ArchivedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Restore'));
@@ -33,7 +33,7 @@ test('Shows error message when restoring an archived post fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ArchivedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Restore'));
@@ -49,7 +49,7 @@ test('Successfully refreshes feed to show new posts.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FeedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Refresh'));
@@ -65,7 +65,7 @@ test('Shows error message when feed refresh fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FeedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Refresh'));
@@ -78,7 +78,7 @@ test('Shows error message when feed refresh fails.', async () => {
 test('should send a notification when a comment is added', async () => {
   fetchMock.post('/api/comment', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), {target: {value: 'Nice post!'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -89,7 +89,7 @@ test('should send a notification when a comment is added', async () => {
 test('should handle error when notification sending fails for a comment', async () => {
   fetchMock.post('/api/comment', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), {target: {value: 'Nice post!'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 

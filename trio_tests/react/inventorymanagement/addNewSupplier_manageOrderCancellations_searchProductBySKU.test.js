@@ -38,7 +38,7 @@ test('Fails to add a new supplier with server error.', async () => {
 test('Ensure managing order cancellations updates stock levels and order status correctly.', async () => {
   fetchMock.post('/api/cancel-order', { status: 200, body: { success: true, newStockLevel: 95 } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('cancelOrder')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -48,7 +48,7 @@ test('Ensure managing order cancellations updates stock levels and order status 
 test('Managing order cancellations doesn\'t update stock levels due to error.', async () => {
   fetchMock.post('/api/cancel-order', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('cancelOrder')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

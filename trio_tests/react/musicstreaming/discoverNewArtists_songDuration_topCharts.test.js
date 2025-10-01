@@ -34,7 +34,7 @@ test('Shows error message when discovery feature fails to suggest new artists.',
 test('The song duration is displayed correctly.', async () => {
   fetchMock.get('/api/song/1', { duration: '3:45' });
 
-  await act(async () => { render(<MemoryRouter><SongComponent songId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App songId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('3:45')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('The song duration is displayed correctly.', async () => {
 test('The song duration fails to display with an error message.', async () => {
   fetchMock.get('/api/song/1', 500);
 
-  await act(async () => { render(<MemoryRouter><SongComponent songId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App songId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error loading song duration')).toBeInTheDocument();

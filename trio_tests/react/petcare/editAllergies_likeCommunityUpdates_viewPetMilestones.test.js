@@ -14,7 +14,7 @@ afterEach(() => {
 test('Edit allergies successfully.', async () => {
   fetchMock.put('/api/allergies/1', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/allergy/i), {target: {value: 'Peanuts'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Edit Allergy/i)); });
 
@@ -25,7 +25,7 @@ test('Edit allergies successfully.', async () => {
 test('Fail to edit allergies due to server error.', async () => {
   fetchMock.put('/api/allergies/1', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/allergy/i), {target: {value: 'Peanuts'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Edit Allergy/i)); });
 
@@ -36,7 +36,7 @@ test('Fail to edit allergies due to server error.', async () => {
 test('Successfully likes a community update', async () => {
   fetchMock.post('/api/community/like', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Successfully likes a community update', async () => {
 test('Fails to like a community update', async () => {
   fetchMock.post('/api/community/like', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Fails to like a community update', async () => {
 test('Successfully views pet milestones', async () => {
   fetchMock.get('/api/milestones/view', { status: 200, body: [{ id: 1, description: 'First birthday' }] });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('First birthday')).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('Successfully views pet milestones', async () => {
 test('Fails to view pet milestones', async () => {
   fetchMock.get('/api/milestones/view', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to fetch milestones')).toBeInTheDocument();

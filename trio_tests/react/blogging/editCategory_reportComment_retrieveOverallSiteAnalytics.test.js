@@ -17,7 +17,7 @@ test('User can edit an existing category successfully', async () => {
     body: { id: 1, name: 'Updated Category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Name'), { target: { value: 'Updated Category' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Category')); });
 
@@ -31,7 +31,7 @@ test('User gets an error message when editing a category fails', async () => {
     body: { error: 'Unable to update category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Name'), { target: { value: 'Updated Category' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Category')); });
 
@@ -62,7 +62,7 @@ test('fails to report a comment', async () => {
 test('successfully retrieves overall site analytics', async () => {
   fetchMock.get('/api/getSiteAnalytics', { status: 200, body: { totalPosts: 100, totalViews: 1000 } });
 
-  await act(async () => { render(<MemoryRouter><RetrieveSiteAnalytics /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Get Site Analytics')); });
 
   expect(fetchMock.calls('/api/getSiteAnalytics')).toHaveLength(1);
@@ -73,7 +73,7 @@ test('successfully retrieves overall site analytics', async () => {
 test('fails to retrieve overall site analytics with an error message', async () => {
   fetchMock.get('/api/getSiteAnalytics', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><RetrieveSiteAnalytics /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Get Site Analytics')); });
 
   expect(fetchMock.calls('/api/getSiteAnalytics')).toHaveLength(1);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('processes refund successfully.', async () => {
   fetchMock.post('/api/refund', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Request Refund')); });
 
   expect(fetchMock.calls('/api/refund').length).toEqual(1);
@@ -24,7 +24,7 @@ test('processes refund successfully.', async () => {
 test('displays error on refund processing failure.', async () => {
   fetchMock.post('/api/refund', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Request Refund')); });
 
   expect(fetchMock.calls('/api/refund').length).toEqual(1);
@@ -34,7 +34,7 @@ test('displays error on refund processing failure.', async () => {
 test('Sort Products successfully sorts products.', async () => {
   fetchMock.get('/api/sort', { status: 200, body: { results: ['Product A', 'Product B'] } });
 
-  await act(async () => { render(<MemoryRouter><SortProducts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('Sort Products successfully sorts products.', async () => {
 test('Sort Products fails and displays error message.', async () => {
   fetchMock.get('/api/sort', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><SortProducts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

@@ -34,7 +34,7 @@ test('fails to browse genres due to server error', async () => {
 test('successfully deletes a playlist', async () => {
   fetchMock.delete('/api/playlists/1', 200);
 
-  await act(async () => { render(<MemoryRouter><DeletePlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('successfully deletes a playlist', async () => {
 test('fails to delete a non-existing playlist', async () => {
   fetchMock.delete('/api/playlists/1', 404);
 
-  await act(async () => { render(<MemoryRouter><DeletePlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

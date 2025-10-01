@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a meta description to a post', async () => {
   fetchMock.post('/api/meta-description', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/meta description/i), { target: { value: 'New Meta Description' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds a meta description to a post', async () => {
 test('fails to add a meta description to a post due to server error', async () => {
   fetchMock.post('/api/meta-description', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/meta description/i), { target: { value: 'New Meta Description' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -36,7 +36,7 @@ test('fails to add a meta description to a post due to server error', async () =
 test('successfully generates an XML sitemap', async () => {
   fetchMock.post('/api/xml-sitemap', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate xml sitemap/i)); });
 
   expect(fetchMock.calls('/api/xml-sitemap').length).toBe(1);
@@ -46,7 +46,7 @@ test('successfully generates an XML sitemap', async () => {
 test('fails to generate an XML sitemap due to server error', async () => {
   fetchMock.post('/api/xml-sitemap', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate xml sitemap/i)); });
 
   expect(fetchMock.calls('/api/xml-sitemap').length).toBe(1);

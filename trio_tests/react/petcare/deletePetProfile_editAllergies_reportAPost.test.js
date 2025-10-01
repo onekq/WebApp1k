@@ -14,7 +14,7 @@ afterEach(() => {
 test('Delete pet profile successfully.', async () => {
   fetchMock.delete('/api/pets/1', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Delete Pet/i)); });
 
   expect(fetchMock.calls('/api/pets/1').length).toBe(1);
@@ -24,7 +24,7 @@ test('Delete pet profile successfully.', async () => {
 test('Fail to delete pet profile due to server error.', async () => {
   fetchMock.delete('/api/pets/1', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Delete Pet/i)); });
 
   expect(fetchMock.calls('/api/pets/1').length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to delete pet profile due to server error.', async () => {
 test('Edit allergies successfully.', async () => {
   fetchMock.put('/api/allergies/1', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/allergy/i), {target: {value: 'Peanuts'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Edit Allergy/i)); });
 
@@ -45,7 +45,7 @@ test('Edit allergies successfully.', async () => {
 test('Fail to edit allergies due to server error.', async () => {
   fetchMock.put('/api/allergies/1', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/allergy/i), {target: {value: 'Peanuts'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Edit Allergy/i)); });
 
@@ -56,7 +56,7 @@ test('Fail to edit allergies due to server error.', async () => {
 test('Successfully reports an inappropriate post', async () => {
   fetchMock.post('/api/community/report', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('report-button', { name: /report/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('Successfully reports an inappropriate post', async () => {
 test('Fails to report an inappropriate post', async () => {
   fetchMock.post('/api/community/report', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('report-button', { name: /report/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);

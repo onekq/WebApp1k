@@ -15,7 +15,7 @@ test('successfully exports income to a CSV file', async () => {
   fetchMock.post('/income/export', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><ExportIncomeToCSV /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/export to csv/i));
@@ -29,7 +29,7 @@ test('fails to export income to a CSV file', async () => {
   fetchMock.post('/income/export', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><ExportIncomeToCSV /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/export to csv/i));
@@ -42,7 +42,7 @@ test('fails to export income to a CSV file', async () => {
 test('merges multiple expenses into one successfully', async () => {
   fetchMock.post('/api/merge-expense', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('merge-expense-input-1'), { target: { value: '300' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-merge-expense-button')); });
 
@@ -53,7 +53,7 @@ test('merges multiple expenses into one successfully', async () => {
 test('fails to merge multiple expenses into one', async () => {
   fetchMock.post('/api/merge-expense', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('merge-expense-input-1'), { target: { value: '300' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-merge-expense-button')); });
 
@@ -65,7 +65,7 @@ test('Success: Set a monthly budget for a category.', async () => {
   fetchMock.post('/api/set-budget', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -88,7 +88,7 @@ test('Failure: Set a monthly budget for a category.', async () => {
   fetchMock.post('/api/set-budget', { status: 400, body: { error: 'Invalid budget' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

@@ -35,7 +35,7 @@ test('Filter tasks by status successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by status'), { target: { value: 'completed' } });
@@ -52,7 +52,7 @@ test('Fail to filter tasks by status when API returns 500.', async () => {
   fetchMock.get('/api/tasks?status=completed', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by status'), { target: { value: 'completed' } });
@@ -74,7 +74,7 @@ test('Sort tasks by priority successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Sort by'), { target: { value: 'priority' } });
@@ -92,7 +92,7 @@ test('Fail to sort tasks by priority when API returns 500.', async () => {
   fetchMock.get('/api/tasks?sort=priority', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Sort by'), { target: { value: 'priority' } });

@@ -14,7 +14,7 @@ afterEach(() => {
 test('System awards badges for milestones achieved successfully.', async () => {
   fetchMock.get('/api/award-badges', { badge: '100 miles run' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('award-badge')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('System awards badges for milestones achieved successfully.', async () => {
 test('System fails to award badges for milestones achieved.', async () => {
   fetchMock.get('/api/award-badges', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('award-badge')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -35,7 +35,7 @@ test('should successfully delete a daily fitness goal', async () => {
   fetchMock.delete('/api/goals/daily/123', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteDailyGoal goalId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App goalId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete goal/i));
@@ -49,7 +49,7 @@ test('should show error when deleting a daily fitness goal fails', async () => {
   fetchMock.delete('/api/goals/daily/123', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteDailyGoal goalId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App goalId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete goal/i));
@@ -63,7 +63,7 @@ test('User can log their mood after workouts successfully.', async () => {
   fetchMock.post('/api/logMood', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('mood'), { target: { value: 'Happy' } });
@@ -78,7 +78,7 @@ test('User sees an error message when logging their mood fails.', async () => {
   fetchMock.post('/api/logMood', { status: 500, body: { error: 'Failed to log mood' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('mood'), { target: { value: 'Happy' } });

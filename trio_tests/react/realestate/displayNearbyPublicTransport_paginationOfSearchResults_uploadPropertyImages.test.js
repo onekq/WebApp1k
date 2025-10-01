@@ -14,7 +14,7 @@ afterEach(() => {
 test('shows information about nearby public transportation', async () => {
   fetchMock.get('/property/1/transport', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Transport')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('shows information about nearby public transportation', async () => {
 test('fails to display nearby public transport due to network error', async () => {
   fetchMock.get('/property/1/transport', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Transport')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('fails to display nearby public transport due to network error', async () =
 test('splits search results across multiple pages', async () => {
   fetchMock.get('/properties?page=2', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('nextPage')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('splits search results across multiple pages', async () => {
 test('fails to paginate search results due to network error', async () => {
   fetchMock.get('/properties?page=2', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('nextPage')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('fails to paginate search results due to network error', async () => {
 test('Successfully uploads property images.', async () => {
   fetchMock.post('/api/properties/1/images', { success: true });
 
-  await act(async () => { render(<MemoryRouter><UploadPropertyImages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('image-upload'), { target: { files: [new File([], 'image.jpg')] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -65,7 +65,7 @@ test('Successfully uploads property images.', async () => {
 test('Fails to upload property images with error message.', async () => {
   fetchMock.post('/api/properties/1/images', 400);
 
-  await act(async () => { render(<MemoryRouter><UploadPropertyImages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('image-upload'), { target: { files: [new File([], 'image.jpg')] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

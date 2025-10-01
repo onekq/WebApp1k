@@ -14,7 +14,7 @@ afterEach(() => {
 test('assigns tags to expenses successfully', async () => {
   fetchMock.post('/api/tag', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input'), { target: { value: 'Groceries' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-tag-button')); });
 
@@ -25,7 +25,7 @@ test('assigns tags to expenses successfully', async () => {
 test('fails to assign tags to expenses', async () => {
   fetchMock.post('/api/tag', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input'), { target: { value: 'Groceries' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-tag-button')); });
 
@@ -61,7 +61,7 @@ test('Fails to calculate total expenses due to invalid period format', async () 
 test('edits an existing expense successfully', async () => {
   fetchMock.put('/api/expense/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expense-amount-input-1'), { target: { value: '200' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-expense-button-1')); });
 
@@ -72,7 +72,7 @@ test('edits an existing expense successfully', async () => {
 test('fails to edit an existing expense', async () => {
   fetchMock.put('/api/expense/1', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expense-amount-input-1'), { target: { value: '200' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-expense-button-1')); });
 

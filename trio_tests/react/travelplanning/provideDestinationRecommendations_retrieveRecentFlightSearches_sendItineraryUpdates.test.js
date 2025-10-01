@@ -58,7 +58,7 @@ test('RetrieveRecentFlightSearches - retrieve recent flight search fails with er
 test('successfully sends itinerary updates.', async () => {
   fetchMock.post('/api/send-updates', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('send-updates-button')); });
 
   expect(fetchMock.calls('/api/send-updates', 'POST')).toHaveLength(1);
@@ -68,7 +68,7 @@ test('successfully sends itinerary updates.', async () => {
 test('fails to send updates due to invalid email.', async () => {
   fetchMock.post('/api/send-updates', { status: 400, body: { error: 'Invalid email address' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('send-updates-button')); });
 
   expect(fetchMock.calls('/api/send-updates', 'POST')).toHaveLength(1);

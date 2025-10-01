@@ -14,7 +14,7 @@ afterEach(() => {
 test('Bulk enrollment is successful for organizations.', async () => {
   fetchMock.post('/api/bulk-enroll', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Organization ID/i), { target: { value: 'org123' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Bulk Enroll/i)); });
 
@@ -25,7 +25,7 @@ test('Bulk enrollment is successful for organizations.', async () => {
 test('Bulk enrollment fails if the server returns an error.', async () => {
   fetchMock.post('/api/bulk-enroll', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Organization ID/i), { target: { value: 'org123' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Bulk Enroll/i)); });
 
@@ -36,7 +36,7 @@ test('Bulk enrollment fails if the server returns an error.', async () => {
 test('Success: guest previews course successfully', async () => {
   fetchMock.get('/api/course-preview', 200);
 
-  await act(async () => { render(<MemoryRouter><GuestCoursePreviewComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('preview-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Success: guest previews course successfully', async () => {
 test('Failure: guest course preview fails', async () => {
   fetchMock.get('/api/course-preview', 500);
 
-  await act(async () => { render(<MemoryRouter><GuestCoursePreviewComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('preview-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Failure: guest course preview fails', async () => {
 test('Users can be successfully added to the waitlist.', async () => {
   fetchMock.post('/api/waitlist', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Join Waitlist/i)); });
 
   expect(fetchMock.calls('/api/waitlist').length).toEqual(1);
@@ -66,7 +66,7 @@ test('Users can be successfully added to the waitlist.', async () => {
 test('Adding users to the waitlist fails with an error.', async () => {
   fetchMock.post('/api/waitlist', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Join Waitlist/i)); });
 
   expect(fetchMock.calls('/api/waitlist').length).toEqual(1);

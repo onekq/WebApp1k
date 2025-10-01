@@ -36,7 +36,7 @@ test('Ensure recipes can be filtered by cuisine type - failure', async () => {
 test('successfully removes a saved recipe from user profile', async () => {
   fetchMock.post('/remove-saved-recipe', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveSavedRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('successfully removes a saved recipe from user profile', async () => {
 test('shows error message when failing to remove a saved recipe', async () => {
   fetchMock.post('/remove-saved-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><RemoveSavedRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('shows error message when failing to remove a saved recipe', async () => {
 test('successfully validates required fields for a recipe', async () => {
   fetchMock.post('/validate-recipe', 200);
 
-  await act(async () => { render(<MemoryRouter><ValidateRecipeFieldsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-name-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 
@@ -67,7 +67,7 @@ test('successfully validates required fields for a recipe', async () => {
 test('shows error message when failing to validate required fields for a recipe', async () => {
   fetchMock.post('/validate-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><ValidateRecipeFieldsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-name-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 

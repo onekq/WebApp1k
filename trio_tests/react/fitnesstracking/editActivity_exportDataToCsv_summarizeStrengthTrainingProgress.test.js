@@ -15,7 +15,7 @@ test('User can edit an existing fitness activity successfully.', async () => {
   fetchMock.put('/api/editActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-name'), { target: { value: 'Updated Running' } });
@@ -30,7 +30,7 @@ test('User sees an error message when editing a fitness activity fails.', async 
   fetchMock.put('/api/editActivity', { status: 500, body: { error: 'Failed to edit activity' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-name'), { target: { value: 'Updated Running' } });
@@ -44,7 +44,7 @@ test('User sees an error message when editing a fitness activity fails.', async 
 test('should export fitness data to CSV successfully.', async () => {
   fetchMock.get('/api/data/export', { status: 200, body: 'csv-data' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('export-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -55,7 +55,7 @@ test('should export fitness data to CSV successfully.', async () => {
 test('should fail to export fitness data to CSV.', async () => {
   fetchMock.get('/api/data/export', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('export-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('should fail to export fitness data to CSV.', async () => {
 test('should summarize strength training progress successfully.', async () => {
   fetchMock.get('/api/strength/progress', { status: 200, body: { progress: 'increased' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('summarize-progress-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -77,7 +77,7 @@ test('should summarize strength training progress successfully.', async () => {
 test('should fail to summarize strength training progress.', async () => {
   fetchMock.get('/api/strength/progress', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('summarize-progress-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

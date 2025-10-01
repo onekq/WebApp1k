@@ -56,7 +56,7 @@ test('fails to filter explicit content because no songs match the filter', async
 test('Viewing an album\'s page shows correct information.', async () => {
   fetchMock.get('/api/album/1', { title: 'Album Title' });
 
-  await act(async () => { render(<MemoryRouter><AlbumPage albumId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App albumId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Album Title')).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('Viewing an album\'s page shows correct information.', async () => {
 test('Viewing an album\'s page fails with an error message.', async () => {
   fetchMock.get('/api/album/1', 500);
 
-  await act(async () => { render(<MemoryRouter><AlbumPage albumId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App albumId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error loading album information')).toBeInTheDocument();

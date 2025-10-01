@@ -14,7 +14,7 @@ afterEach(() => {
 test('shares an article via email successfully', async () => {
   fetchMock.post('/share/email', 200);
 
-  await act(async () => { render(<MemoryRouter><ShareViaEmailComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Email')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('shares an article via email successfully', async () => {
 test('fails to share an article via email with error message', async () => {
   fetchMock.post('/share/email', 500);
 
-  await act(async () => { render(<MemoryRouter><ShareViaEmailComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Email')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('fails to share an article via email with error message', async () => {
 test('Sorts articles by date (newest first) successfully', async () => {
   fetchMock.get('/api/articles?sort=newest', { status: 200, body: [{ id: 1, date: '2023-10-01' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="newest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="newest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('2023-10-01')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('Sorts articles by date (newest first) successfully', async () => {
 test('Fails to sort articles by date (newest first)', async () => {
   fetchMock.get('/api/articles?sort=newest', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="newest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="newest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to sort articles by date')).toBeInTheDocument();

@@ -14,7 +14,7 @@ afterEach(() => {
 test('sorts tickets by submission date', async () => {
   fetchMock.get('/api/tickets?sort=submissionDate', { status: 200, body: [{ id: 2, date: '2023-01-01' }, { id: 1, date: '2023-01-02' }] });
   
-  await act(async () => { render(<MemoryRouter><TicketSorting /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Sort by Date')); });
   
   expect(fetchMock.calls('/api/tickets?sort=submissionDate').length).toBe(1);
@@ -25,7 +25,7 @@ test('sorts tickets by submission date', async () => {
 test('shows error if sorting tickets fails', async () => {
   fetchMock.get('/api/tickets?sort=submissionDate', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSorting /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Sort by Date')); });
   
   expect(fetchMock.calls('/api/tickets?sort=submissionDate').length).toBe(1);
@@ -35,7 +35,7 @@ test('shows error if sorting tickets fails', async () => {
 test('filters tickets by status', async () => {
   fetchMock.get('/api/tickets?status=Open', { status: 200, body: [{ id: 1, status: 'Open' }] });
   
-  await act(async () => { render(<MemoryRouter><TicketStatusFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Status Filter'), { target: { value: 'Open' } }); });
   
   expect(fetchMock.calls('/api/tickets?status=Open').length).toBe(1);
@@ -45,7 +45,7 @@ test('filters tickets by status', async () => {
 test('shows error if filtering tickets fails', async () => {
   fetchMock.get('/api/tickets?status=Open', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketStatusFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Status Filter'), { target: { value: 'Open' } }); });
   
   expect(fetchMock.calls('/api/tickets?status=Open').length).toBe(1);
@@ -55,7 +55,7 @@ test('shows error if filtering tickets fails', async () => {
 test('assigns a unique ID to each new ticket', async () => {
   fetchMock.post('/api/tickets', { id: '12345' });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'Test Ticket' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
@@ -66,7 +66,7 @@ test('assigns a unique ID to each new ticket', async () => {
 test('fails to assign a unique ID if submission fails', async () => {
   fetchMock.post('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'Test Ticket' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   

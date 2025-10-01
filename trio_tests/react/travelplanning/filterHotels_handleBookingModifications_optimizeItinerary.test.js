@@ -18,7 +18,7 @@ test('filterHotels - filters hotels successfully based on criteria', async () =>
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('filter-star-5'));
@@ -35,7 +35,7 @@ test('filterHotels - shows error message when no hotels match the filters', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('filter-star-5'));
@@ -48,7 +48,7 @@ test('filterHotels - shows error message when no hotels match the filters', asyn
 test('Booking should be modified successfully for valid request.', async () => {
   fetchMock.put('/api/booking/modify', 200);
 
-  await act(async () => { render(<MemoryRouter><BookingModificationComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('booking-id'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('modify-booking')); });
 
@@ -59,7 +59,7 @@ test('Booking should be modified successfully for valid request.', async () => {
 test('Error in booking modification should show error message.', async () => {
   fetchMock.put('/api/booking/modify', 400);
 
-  await act(async () => { render(<MemoryRouter><BookingModificationComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('booking-id'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('modify-booking')); });
 
@@ -70,7 +70,7 @@ test('Error in booking modification should show error message.', async () => {
 test('successfully optimizes itinerary for travel time and convenience.', async () => {
   fetchMock.post('/api/optimize-itinerary', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('optimize-itinerary-button')); });
 
   expect(fetchMock.calls('/api/optimize-itinerary', 'POST')).toHaveLength(1);
@@ -80,7 +80,7 @@ test('successfully optimizes itinerary for travel time and convenience.', async 
 test('fails to optimize itinerary due to server error.', async () => {
   fetchMock.post('/api/optimize-itinerary', { status: 500, body: { error: 'Server error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('optimize-itinerary-button')); });
 
   expect(fetchMock.calls('/api/optimize-itinerary', 'POST')).toHaveLength(1);

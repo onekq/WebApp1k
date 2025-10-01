@@ -18,7 +18,7 @@ test('Successfully reports on SLA performance.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLAPerformanceReporting /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-picker'), { target: { value: 'sla1' } });
@@ -38,7 +38,7 @@ test('Fails to report on SLA performance and shows error message.', async () => 
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLAPerformanceReporting /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-picker'), { target: { value: 'sla1' } });
@@ -54,7 +54,7 @@ test('Fails to report on SLA performance and shows error message.', async () => 
 test('Escalating tickets to higher support levels should show success message.', async () => {
   fetchMock.post('/api/escalate-ticket', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('escalation-ticket-id'), { target: { value: 'escalate123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('escalate-ticket')); });
 
@@ -65,7 +65,7 @@ test('Escalating tickets to higher support levels should show success message.',
 test('Escalating tickets to higher support levels should show error message when failed.', async () => {
   fetchMock.post('/api/escalate-ticket', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('escalation-ticket-id'), { target: { value: 'escalate123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('escalate-ticket')); });
 
@@ -77,7 +77,7 @@ test('successfully tracks the number of views for an article', async () => {
   fetchMock.get('path/to/api/article/views', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('view-article-button'));
@@ -91,7 +91,7 @@ test('fails to track the number of views for an article with error message', asy
   fetchMock.get('path/to/api/article/views', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('view-article-button'));

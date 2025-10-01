@@ -18,7 +18,7 @@ test('filterHotels - filters hotels successfully based on criteria', async () =>
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('filter-star-5'));
@@ -35,7 +35,7 @@ test('filterHotels - shows error message when no hotels match the filters', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('filter-star-5'));
@@ -48,7 +48,7 @@ test('filterHotels - shows error message when no hotels match the filters', asyn
 test('Multiple user profiles should be managed successfully.', async () => {
   fetchMock.get('/api/user/profiles', [{ id: 1, name: 'John Doe' }]);
 
-  await act(async () => { render(<MemoryRouter><UserProfileComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-profiles')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -58,7 +58,7 @@ test('Multiple user profiles should be managed successfully.', async () => {
 test('Error in managing user profiles should show error message.', async () => {
   fetchMock.get('/api/user/profiles', 404);
 
-  await act(async () => { render(<MemoryRouter><UserProfileComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-profiles')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -68,7 +68,7 @@ test('Error in managing user profiles should show error message.', async () => {
 test('successfully shares an itinerary with other users.', async () => {
   fetchMock.post('/api/share-itinerary', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('share-input'), { target: { value: 'user@example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-itinerary-button')); });
 
@@ -79,7 +79,7 @@ test('successfully shares an itinerary with other users.', async () => {
 test('fails to share itinerary due to invalid email.', async () => {
   fetchMock.post('/api/share-itinerary', { status: 400, body: { error: 'Invalid email address' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('share-input'), { target: { value: 'invalid-email' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-itinerary-button')); });
 

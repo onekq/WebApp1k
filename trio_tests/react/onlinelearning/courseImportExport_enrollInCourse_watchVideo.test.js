@@ -14,7 +14,7 @@ afterEach(() => {
 test('Course Import/Export success: should display success message on course import.', async () => {
   fetchMock.post('/api/import-course', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CourseImportExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('file-upload'), { target: { files: [new File([''], 'course.json')] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Import Course')); });
 
@@ -25,7 +25,7 @@ test('Course Import/Export success: should display success message on course imp
 test('Course Import/Export failure: should display an error message on course import failure.', async () => {
   fetchMock.post('/api/import-course', 400);
 
-  await act(async () => { render(<MemoryRouter><CourseImportExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('file-upload'), { target: { files: [new File([''], 'course.json')] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Import Course')); });
 
@@ -36,7 +36,7 @@ test('Course Import/Export failure: should display an error message on course im
 test('Users can successfully enroll in a course.', async () => {
   fetchMock.post('/api/enroll', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Course ID/i), { target: { value: '101' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Enroll/i)); });
 
@@ -47,7 +47,7 @@ test('Users can successfully enroll in a course.', async () => {
 test('Users cannot enroll in a course if the server returns an error.', async () => {
   fetchMock.post('/api/enroll', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Course ID/i), { target: { value: '101' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Enroll/i)); });
 
@@ -58,7 +58,7 @@ test('Users cannot enroll in a course if the server returns an error.', async ()
 test('Success: video plays successfully', async () => {
   fetchMock.get('/api/video', 200);
   
-  await act(async () => { render(<MemoryRouter><WatchVideoComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('play-button')); });
 
@@ -69,7 +69,7 @@ test('Success: video plays successfully', async () => {
 test('Failure: video fails to play', async () => {
   fetchMock.get('/api/video', 500);
   
-  await act(async () => { render(<MemoryRouter><WatchVideoComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('play-button')); });
 

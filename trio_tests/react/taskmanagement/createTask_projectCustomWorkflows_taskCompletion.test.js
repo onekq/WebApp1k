@@ -37,7 +37,7 @@ test('Custom Workflows for Projects - success', async () => {
   fetchMock.post('/api/projects/workflows', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -56,7 +56,7 @@ test('Custom Workflows for Projects - failure', async () => {
   fetchMock.post('/api/projects/workflows', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

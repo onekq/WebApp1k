@@ -35,7 +35,7 @@ test('Archive Project - success', async () => {
   fetchMock.post('/api/projects/archive', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -50,7 +50,7 @@ test('Archive Project - failure', async () => {
   fetchMock.post('/api/projects/archive', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -64,7 +64,7 @@ test('Archive Project - failure', async () => {
 test('successfully removes task dependencies.', async () => {
   fetchMock.delete('/api/task-dependencies', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TaskDependencies /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'Task 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-dependency-btn')); });
 
@@ -75,7 +75,7 @@ test('successfully removes task dependencies.', async () => {
 test('fails to remove task dependencies if server error.', async () => {
   fetchMock.delete('/api/task-dependencies', 500);
 
-  await act(async () => { render(<MemoryRouter><TaskDependencies /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'Task 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-dependency-btn')); });
 

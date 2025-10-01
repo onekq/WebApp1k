@@ -55,7 +55,7 @@ test('Editing an existing job post successfully', async () => {
   fetchMock.put('/api/job/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Senior Software Engineer' } });
@@ -72,7 +72,7 @@ test('Editing an existing job post failure due to network error', async () => {
   fetchMock.put('/api/job/1', 500);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Senior Software Engineer' } });
@@ -88,7 +88,7 @@ test('Editing an existing job post failure due to network error', async () => {
 test('successful withdrawal of job application.', async () => {
   fetchMock.post('/withdraw/123', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('withdraw-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('withdraw-button')); });
 
@@ -99,7 +99,7 @@ test('successful withdrawal of job application.', async () => {
 test('failure withdrawal of job application.', async () => {
   fetchMock.post('/withdraw/123', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('withdraw-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('withdraw-button')); });
 

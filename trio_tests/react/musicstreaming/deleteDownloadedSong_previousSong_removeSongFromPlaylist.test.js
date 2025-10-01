@@ -54,7 +54,7 @@ test('Previous Song - failure shows error message', async () => {
 test('successfully removes a song from a playlist', async () => {
   fetchMock.delete('/api/playlists/1/songs/1', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveSongFromPlaylist playlistId={1} songId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} songId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-song-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('successfully removes a song from a playlist', async () => {
 test('fails to remove a non-existing song from the playlist', async () => {
   fetchMock.delete('/api/playlists/1/songs/1', 404);
 
-  await act(async () => { render(<MemoryRouter><RemoveSongFromPlaylist playlistId={1} songId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} songId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-song-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

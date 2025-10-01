@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a song to a playlist', async () => {
   fetchMock.post('/api/playlists/1/songs', { id: 1, name: 'New Song' });
 
-  await act(async () => { render(<MemoryRouter><AddSongToPlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('song-name-input'), { target: { value: 'New Song' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-song-button')); });
 
@@ -25,7 +25,7 @@ test('successfully adds a song to a playlist', async () => {
 test('fails to add a song to a playlist that does not exist', async () => {
   fetchMock.post('/api/playlists/1/songs', 404);
 
-  await act(async () => { render(<MemoryRouter><AddSongToPlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('song-name-input'), { target: { value: 'New Song' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-song-button')); });
 
@@ -58,7 +58,7 @@ test('fails to filter songs by artist because no songs match the filter', async 
 test('successfully plays a playlist', async () => {
   fetchMock.post('/api/playlists/1/play', 200);
 
-  await act(async () => { render(<MemoryRouter><PlayPlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('play-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -68,7 +68,7 @@ test('successfully plays a playlist', async () => {
 test('fails to play a non-existing playlist', async () => {
   fetchMock.post('/api/playlists/1/play', 404);
 
-  await act(async () => { render(<MemoryRouter><PlayPlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('play-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

@@ -58,7 +58,7 @@ test('Shows error message on failure when setting reorder level', async () => {
 test('Validate tracking purchase orders shows all relevant orders correctly.', async () => {
   fetchMock.get('/api/purchase-orders', { status: 200, body: { orders: [{ id: 1, item: 'Product B', quantity: 10 }] } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('trackPurchaseOrders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -68,7 +68,7 @@ test('Validate tracking purchase orders shows all relevant orders correctly.', a
 test('Tracking purchase orders doesn\'t show orders due to error.', async () => {
   fetchMock.get('/api/purchase-orders', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('trackPurchaseOrders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

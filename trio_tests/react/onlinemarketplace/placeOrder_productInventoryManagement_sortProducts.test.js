@@ -14,7 +14,7 @@ afterEach(() => {
 test('places an order successfully.', async () => {
   fetchMock.post('/api/order', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Place Order')); });
 
   expect(fetchMock.calls('/api/order').length).toEqual(1);
@@ -24,7 +24,7 @@ test('places an order successfully.', async () => {
 test('displays error on failing to place order.', async () => {
   fetchMock.post('/api/order', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Place Order')); });
 
   expect(fetchMock.calls('/api/order').length).toEqual(1);
@@ -34,7 +34,7 @@ test('displays error on failing to place order.', async () => {
 test('Inventory management for sellers succeeds.', async () => {
   fetchMock.get('/api/seller/inventory', { status: 200, body: [{ id: 1, name: 'Sample Product', stock: 15 }] });
 
-  await act(async () => { render(<MemoryRouter><InventoryManagement /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/seller/inventory').length).toBe(1);
   expect(screen.getByText('Sample Product')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('Inventory management for sellers succeeds.', async () => {
 test('Inventory management fails with error message.', async () => {
   fetchMock.get('/api/seller/inventory', { status: 500, body: { message: 'Internal server error' } });
 
-  await act(async () => { render(<MemoryRouter><InventoryManagement /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/seller/inventory').length).toBe(1);
   expect(screen.getByText('Internal server error')).toBeInTheDocument();
@@ -52,7 +52,7 @@ test('Inventory management fails with error message.', async () => {
 test('Sort Products successfully sorts products.', async () => {
   fetchMock.get('/api/sort', { status: 200, body: { results: ['Product A', 'Product B'] } });
 
-  await act(async () => { render(<MemoryRouter><SortProducts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -62,7 +62,7 @@ test('Sort Products successfully sorts products.', async () => {
 test('Sort Products fails and displays error message.', async () => {
   fetchMock.get('/api/sort', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><SortProducts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

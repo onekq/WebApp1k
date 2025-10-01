@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully attaches files to a ticket', async () => {
   fetchMock.post('/api/tickets', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   const file = new File(['content'], 'test.pdf', { type: 'application/pdf' });
   await act(async () => { fireEvent.change(screen.getByLabelText('Attachment'), { target: { files: [file] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
@@ -26,7 +26,7 @@ test('successfully attaches files to a ticket', async () => {
 test('shows error if attaching file fails', async () => {
   fetchMock.post('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   const file = new File(['content'], 'test.pdf', { type: 'application/pdf' });
   await act(async () => { fireEvent.change(screen.getByLabelText('Attachment'), { target: { files: [file] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
@@ -39,7 +39,7 @@ test('successfully restores archived articles', async () => {
   fetchMock.post('path/to/api/article/restore', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('restore-article-button'));
@@ -53,7 +53,7 @@ test('fails to restore archived articles with error message', async () => {
   fetchMock.post('path/to/api/article/restore', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('restore-article-button'));
@@ -66,7 +66,7 @@ test('fails to restore archived articles with error message', async () => {
 test('Notifying user of agent response should show success message.', async () => {
   fetchMock.post('/api/notify-user', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notification-user'), { target: { value: 'User123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('send-notification')); });
 
@@ -77,7 +77,7 @@ test('Notifying user of agent response should show success message.', async () =
 test('Notifying user of agent response should show error message when failed.', async () => {
   fetchMock.post('/api/notify-user', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notification-user'), { target: { value: 'User123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('send-notification')); });
 

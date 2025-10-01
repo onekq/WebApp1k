@@ -36,7 +36,7 @@ test('fails to place a bid on a product with an error message displayed.', async
 test('Cancel Order success removes order from list', async () => {
   fetchMock.delete('/api/orders/1', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Cancel Order')); });
 
   expect(fetchMock.calls('/api/orders/1').length).toBe(1);
@@ -46,7 +46,7 @@ test('Cancel Order success removes order from list', async () => {
 test('Cancel Order failure shows error message', async () => {
   fetchMock.delete('/api/orders/1', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Cancel Order')); });
 
   expect(screen.getByText('Error cancelling order')).toBeInTheDocument();
@@ -55,7 +55,7 @@ test('Cancel Order failure shows error message', async () => {
 test('processes payment securely.', async () => {
   fetchMock.post('/api/payment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Pay Now')); });
 
   expect(fetchMock.calls('/api/payment').length).toEqual(1);
@@ -65,7 +65,7 @@ test('processes payment securely.', async () => {
 test('displays error on secure payment failure.', async () => {
   fetchMock.post('/api/payment', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Pay Now')); });
 
   expect(fetchMock.calls('/api/payment').length).toEqual(1);

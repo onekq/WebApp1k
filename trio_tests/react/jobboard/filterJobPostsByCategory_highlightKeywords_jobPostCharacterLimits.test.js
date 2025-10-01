@@ -95,7 +95,7 @@ test('Validating character limits on job description and title successfully', as
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -113,7 +113,7 @@ test('Validating character limits failure due to exceeding limit', async () => {
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });

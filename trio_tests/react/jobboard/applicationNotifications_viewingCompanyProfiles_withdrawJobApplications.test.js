@@ -14,7 +14,7 @@ afterEach(() => {
 test('successful application notifications.', async () => {
   fetchMock.get('/notifications', [{ message: 'Application Approved' }]);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('notifications-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successful application notifications.', async () => {
 test('failure application notifications.', async () => {
   fetchMock.get('/notifications', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('notifications-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('failure application notifications.', async () => {
 test('job seekers can successfully view company profiles', async () => {
   fetchMock.get('/api/company/1', { name: 'TechCorp', bio: 'A tech company' });
 
-  await act(async () => { render(<MemoryRouter><CompanyProfileView companyId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App companyId="1" /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('TechCorp')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('job seekers can successfully view company profiles', async () => {
 test('job seekers see an error message if company profile fails to load', async () => {
   fetchMock.get('/api/company/1', 404);
 
-  await act(async () => { render(<MemoryRouter><CompanyProfileView companyId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App companyId="1" /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Error loading company profile')).toBeInTheDocument();
@@ -52,7 +52,7 @@ test('job seekers see an error message if company profile fails to load', async 
 test('successful withdrawal of job application.', async () => {
   fetchMock.post('/withdraw/123', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('withdraw-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('withdraw-button')); });
 
@@ -63,7 +63,7 @@ test('successful withdrawal of job application.', async () => {
 test('failure withdrawal of job application.', async () => {
   fetchMock.post('/withdraw/123', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('withdraw-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('withdraw-button')); });
 

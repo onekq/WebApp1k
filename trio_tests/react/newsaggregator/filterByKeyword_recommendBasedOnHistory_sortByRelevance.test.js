@@ -14,7 +14,7 @@ afterEach(() => {
 test('Searches articles by keyword successfully', async () => {
   fetchMock.get('/api/articles?search=keyword', { status: 200, body: [{ id: 1, title: 'Test Keyword' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'keyword' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -25,7 +25,7 @@ test('Searches articles by keyword successfully', async () => {
 test('Fails to search articles by keyword', async () => {
   fetchMock.get('/api/articles?search=keyword', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'keyword' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -56,7 +56,7 @@ test('Fails to recommend articles based on user history.', async () => {
 test('Sorts articles by relevance successfully', async () => {
   fetchMock.get('/api/articles?sort=relevance', { status: 200, body: [{ id: 1, relevance: 100 }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="relevance" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="relevance" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('100')).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('Sorts articles by relevance successfully', async () => {
 test('Fails to sort articles by relevance', async () => {
   fetchMock.get('/api/articles?sort=relevance', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="relevance" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="relevance" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to sort articles by relevance')).toBeInTheDocument();

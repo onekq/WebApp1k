@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully sends email notifications for ticket updates.', async () => {
   fetchMock.post('/api/sendEmail', 200);
 
-  await act(async () => { render(<MemoryRouter><EmailNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketId'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send Notification')); });
 
@@ -25,7 +25,7 @@ test('Successfully sends email notifications for ticket updates.', async () => {
 test('Fails to send email notifications for ticket updates.', async () => {
   fetchMock.post('/api/sendEmail', 500);
 
-  await act(async () => { render(<MemoryRouter><EmailNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketId'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send Notification')); });
 
@@ -36,7 +36,7 @@ test('Fails to send email notifications for ticket updates.', async () => {
 test('Successfully displays in-app notifications.', async () => {
   fetchMock.get('/api/getNotifications', { notifications: ['Notification 1'] });
 
-  await act(async () => { render(<MemoryRouter><InAppNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Notification 1')).toBeInTheDocument();
@@ -45,7 +45,7 @@ test('Successfully displays in-app notifications.', async () => {
 test('Fails to display in-app notifications.', async () => {
   fetchMock.get('/api/getNotifications', 500);
 
-  await act(async () => { render(<MemoryRouter><InAppNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load notifications')).toBeInTheDocument();
@@ -58,7 +58,7 @@ test('Successfully exports reports to CSV.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ExportingReports /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-type-picker'), { target: { value: 'csv' } });
@@ -78,7 +78,7 @@ test('Fails to export reports to CSV and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ExportingReports /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-type-picker'), { target: { value: 'csv' } });

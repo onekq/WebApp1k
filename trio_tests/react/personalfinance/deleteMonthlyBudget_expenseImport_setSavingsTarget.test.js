@@ -15,7 +15,7 @@ test('Success: Delete a monthly budget.', async () => {
   fetchMock.delete('/api/delete-budget', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('Failure: Delete a monthly budget.', async () => {
   fetchMock.delete('/api/delete-budget', { status: 400, body: { error: 'Budget not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -53,7 +53,7 @@ test('Success: Import expenses from a CSV file.', async () => {
   fetchMock.post('/api/import-csv', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   const fileInput = screen.getByTestId('csv-file-input');
@@ -75,7 +75,7 @@ test('Failure: Import expenses from a CSV file.', async () => {
   fetchMock.post('/api/import-csv', { status: 400, body: { error: 'Invalid CSV file' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   const fileInput = screen.getByTestId('csv-file-input');
@@ -97,7 +97,7 @@ test('successfully sets savings targets', async () => {
   fetchMock.post('/api/savings/target', { status: 201, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><SetSavingsTarget /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -113,7 +113,7 @@ test('fails to set savings targets', async () => {
   fetchMock.post('/api/savings/target', { status: 400, body: { error: 'Invalid target' } });
 
   await act(async () => {
-    render(<MemoryRouter><SetSavingsTarget /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

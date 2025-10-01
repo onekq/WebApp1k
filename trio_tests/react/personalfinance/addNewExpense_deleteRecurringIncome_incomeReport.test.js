@@ -14,7 +14,7 @@ afterEach(() => {
 test('adds a new expense successfully', async () => {
   fetchMock.post('/api/expense', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expense-amount-input'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-expense-button')); });
 
@@ -25,7 +25,7 @@ test('adds a new expense successfully', async () => {
 test('fails to add a new expense', async () => {
   fetchMock.post('/api/expense', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expense-amount-input'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-expense-button')); });
 
@@ -37,7 +37,7 @@ test('successfully deletes a recurring income', async () => {
   fetchMock.delete('/income/recurring/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteRecurringIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete recurring income/i));
@@ -51,7 +51,7 @@ test('fails to delete a recurring income', async () => {
   fetchMock.delete('/income/recurring/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteRecurringIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete recurring income/i));

@@ -36,7 +36,7 @@ test('Fails to delete supplier with server error.', async () => {
 test('Ensure generating a purchase order receipt includes all relevant details.', async () => {
   fetchMock.get('/api/purchase-receipt', { status: 200, body: { receipt: { id: 1, total: 200, items: [{ item: 'Product B', quantity: 10 }] } } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generateReceipt')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -47,7 +47,7 @@ test('Ensure generating a purchase order receipt includes all relevant details.'
 test('Generating a purchase order receipt doesn\'t show details due to error.', async () => {
   fetchMock.get('/api/purchase-receipt', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generateReceipt')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

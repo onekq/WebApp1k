@@ -82,7 +82,7 @@ test('FetchShorttermForecast - fails to retrieve short-term forecast', async () 
 test('correctly stores user forecast update interval preference', async () => {
   fetchMock.post('/preferences/update-interval', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('update-interval-select'), { target: { value: '30' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -93,7 +93,7 @@ test('correctly stores user forecast update interval preference', async () => {
 test('displays error when storing user forecast update interval preference fails', async () => {
   fetchMock.post('/preferences/update-interval', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('update-interval-select'), { target: { value: '30' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

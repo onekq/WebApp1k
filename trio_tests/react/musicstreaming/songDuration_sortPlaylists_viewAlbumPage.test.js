@@ -14,7 +14,7 @@ afterEach(() => {
 test('The song duration is displayed correctly.', async () => {
   fetchMock.get('/api/song/1', { duration: '3:45' });
 
-  await act(async () => { render(<MemoryRouter><SongComponent songId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App songId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('3:45')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('The song duration is displayed correctly.', async () => {
 test('The song duration fails to display with an error message.', async () => {
   fetchMock.get('/api/song/1', 500);
 
-  await act(async () => { render(<MemoryRouter><SongComponent songId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App songId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error loading song duration')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('The song duration fails to display with an error message.', async () => {
 test('successfully sorts playlists by name', async () => {
   fetchMock.get('/api/playlists?sort=name', [{ id: 1, name: 'A Playlist' }, { id: 2, name: 'B Playlist' }]);
 
-  await act(async () => { render(<MemoryRouter><SortPlaylists sortBy="name" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="name" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-name-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -42,7 +42,7 @@ test('successfully sorts playlists by name', async () => {
 test('fails to sort playlists by name due to empty list', async () => {
   fetchMock.get('/api/playlists?sort=name', 404);
 
-  await act(async () => { render(<MemoryRouter><SortPlaylists sortBy="name" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="name" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-name-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -52,7 +52,7 @@ test('fails to sort playlists by name due to empty list', async () => {
 test('Viewing an album\'s page shows correct information.', async () => {
   fetchMock.get('/api/album/1', { title: 'Album Title' });
 
-  await act(async () => { render(<MemoryRouter><AlbumPage albumId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App albumId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Album Title')).toBeInTheDocument();
@@ -61,7 +61,7 @@ test('Viewing an album\'s page shows correct information.', async () => {
 test('Viewing an album\'s page fails with an error message.', async () => {
   fetchMock.get('/api/album/1', 500);
 
-  await act(async () => { render(<MemoryRouter><AlbumPage albumId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App albumId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error loading album information')).toBeInTheDocument();

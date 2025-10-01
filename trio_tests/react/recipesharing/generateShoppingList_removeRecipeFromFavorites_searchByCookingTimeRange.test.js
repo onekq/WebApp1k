@@ -14,7 +14,7 @@ afterEach(() => {
 test('Generate Shopping List successfully', async () => {
   fetchMock.post('/api/recipe/1/shopping-list', { body: { message: 'Shopping list generated' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Shopping List')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Generate Shopping List successfully', async () => {
 test('Generate Shopping List failure shows error message', async () => {
   fetchMock.post('/api/recipe/1/shopping-list', { body: { message: 'Error generating shopping list' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Shopping List')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Generate Shopping List failure shows error message', async () => {
 test('successfully removes a recipe from favorites', async () => {
   fetchMock.post('/remove-from-favorites', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveRecipeFromFavoritesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unfavorite-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('successfully removes a recipe from favorites', async () => {
 test('shows error message when failing to remove a recipe from favorites', async () => {
   fetchMock.post('/remove-from-favorites', 500);
 
-  await act(async () => { render(<MemoryRouter><RemoveRecipeFromFavoritesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unfavorite-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

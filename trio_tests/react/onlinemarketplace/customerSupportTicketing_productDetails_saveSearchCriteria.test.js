@@ -14,7 +14,7 @@ afterEach(() => {
 test('Customer Support Ticketing success creates a new ticket', async () => {
   fetchMock.post('/api/tickets', { id: 1, issue: 'Issue description' });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('issue-input'), { target: { value: 'Issue description' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit Ticket')); });
 
@@ -25,7 +25,7 @@ test('Customer Support Ticketing success creates a new ticket', async () => {
 test('Customer Support Ticketing failure shows error message', async () => {
   fetchMock.post('/api/tickets', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('issue-input'), { target: { value: 'Issue description' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit Ticket')); });
 
@@ -35,7 +35,7 @@ test('Customer Support Ticketing failure shows error message', async () => {
 test('Product details retrieval and display succeed.', async () => {
   fetchMock.get('/api/products/1', { status: 200, body: { id: 1, name: 'Sample Product' } });
 
-  await act(async () => { render(<MemoryRouter><ProductDetails productId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/products/1').length).toBe(1);
   expect(screen.getByText('Sample Product')).toBeInTheDocument();
@@ -44,7 +44,7 @@ test('Product details retrieval and display succeed.', async () => {
 test('Product details retrieval fails with error message.', async () => {
   fetchMock.get('/api/products/1', { status: 404, body: { message: 'Product not found' } });
 
-  await act(async () => { render(<MemoryRouter><ProductDetails productId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/products/1').length).toBe(1);
   expect(screen.getByText('Product not found')).toBeInTheDocument();
@@ -53,7 +53,7 @@ test('Product details retrieval fails with error message.', async () => {
 test('Save Search Criteria successfully saves search criteria.', async () => {
   fetchMock.post('/api/saveSearch', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SaveSearchCriteria /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-search-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -63,7 +63,7 @@ test('Save Search Criteria successfully saves search criteria.', async () => {
 test('Save Search Criteria fails and displays error message.', async () => {
   fetchMock.post('/api/saveSearch', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><SaveSearchCriteria /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-search-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

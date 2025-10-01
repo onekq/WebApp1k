@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add vaccination record successfully.', async () => {
   fetchMock.post('/api/vaccinations', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vaccine/i), {target: {value: 'Rabies'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Vaccination/i)); });
 
@@ -25,7 +25,7 @@ test('Add vaccination record successfully.', async () => {
 test('Fail to add vaccination record due to missing vaccine name.', async () => {
   fetchMock.post('/api/vaccinations', 400);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vaccine/i), {target: {value: ''}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Vaccination/i)); });
 
@@ -36,7 +36,7 @@ test('Fail to add vaccination record due to missing vaccine name.', async () => 
 test('Add vet contact information successfully.', async () => {
   fetchMock.post('/api/vets', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vet name/i), {target: {value: 'Dr. Smith'}}); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/phone/i), {target: {value: '123-456-7890'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Vet Contact/i)); });
@@ -48,7 +48,7 @@ test('Add vet contact information successfully.', async () => {
 test('Fail to add vet contact information due to missing vet name.', async () => {
   fetchMock.post('/api/vets', 400);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vet name/i), {target: {value: ''}}); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/phone/i), {target: {value: '123-456-7890'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Vet Contact/i)); });
@@ -61,7 +61,7 @@ test('should set a new custom reminder successfully', async () => {
   fetchMock.post('/api/set-custom-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Custom Event/i), { target: { value: 'Birthday' } });
@@ -78,7 +78,7 @@ test('should fail to set a new custom reminder', async () => {
   fetchMock.post('/api/set-custom-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Custom Event/i), { target: { value: 'Birthday' } });

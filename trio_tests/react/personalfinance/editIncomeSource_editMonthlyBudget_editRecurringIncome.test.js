@@ -15,7 +15,7 @@ test('successfully edits an existing income source', async () => {
   fetchMock.put('/income/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><EditIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Updated Salary' } });
@@ -32,7 +32,7 @@ test('fails to edit an existing income source', async () => {
   fetchMock.put('/income/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><EditIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });
@@ -49,7 +49,7 @@ test('Success: Edit a monthly budget.', async () => {
   fetchMock.put('/api/edit-budget', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -72,7 +72,7 @@ test('Failure: Edit a monthly budget.', async () => {
   fetchMock.put('/api/edit-budget', { status: 400, body: { error: 'Budget not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -95,7 +95,7 @@ test('successfully edits a recurring income', async () => {
   fetchMock.put('/income/recurring/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><EditRecurringIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Updated Salary' } });
@@ -112,7 +112,7 @@ test('fails to edit a recurring income', async () => {
   fetchMock.put('/income/recurring/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><EditRecurringIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });

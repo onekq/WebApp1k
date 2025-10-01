@@ -15,7 +15,7 @@ test('Success: Calculate the average expense per category for a given period.', 
   fetchMock.get('/api/calculate-average', { status: 200, body: { average: 250 } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('Failure: Calculate the average expense per category for a given period.', 
   fetchMock.get('/api/calculate-average', { status: 400, body: { error: 'Calculation error' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -44,7 +44,7 @@ test('Failure: Calculate the average expense per category for a given period.', 
 test('categorizes expenses successfully', async () => {
   fetchMock.post('/api/category', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('category-input'), { target: { value: 'Food' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-category-button')); });
 
@@ -55,7 +55,7 @@ test('categorizes expenses successfully', async () => {
 test('fails to categorize expenses', async () => {
   fetchMock.post('/api/category', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('category-input'), { target: { value: 'Food' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-category-button')); });
 
@@ -67,7 +67,7 @@ test('successfully tracks income by payment method', async () => {
   fetchMock.get('/income/payment-method/credit-card', { status: 200, body: [{ id: 1, name: 'Salary' }] });
 
   await act(async () => {
-    render(<MemoryRouter><TrackIncomePaymentMethod paymentMethod="credit-card" /></MemoryRouter>);
+    render(<MemoryRouter><App paymentMethod="credit-card" /></MemoryRouter>);
   });
 
   expect(fetchMock.calls('/income/payment-method/credit-card')).toHaveLength(1);
@@ -78,7 +78,7 @@ test('fails to track income by payment method', async () => {
   fetchMock.get('/income/payment-method/credit-card', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><TrackIncomePaymentMethod paymentMethod="credit-card" /></MemoryRouter>);
+    render(<MemoryRouter><App paymentMethod="credit-card" /></MemoryRouter>);
   });
 
   expect(fetchMock.calls('/income/payment-method/credit-card')).toHaveLength(1);

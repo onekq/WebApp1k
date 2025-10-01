@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully removes items from an itinerary.', async () => {
   fetchMock.delete('/api/remove-item', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-item-button')); });
 
   expect(fetchMock.calls('/api/remove-item', 'DELETE')).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully removes items from an itinerary.', async () => {
 test('fails to remove items due to network error.', async () => {
   fetchMock.delete('/api/remove-item', { status: 500, body: { error: 'Network error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-item-button')); });
 
   expect(fetchMock.calls('/api/remove-item', 'DELETE')).toHaveLength(1);
@@ -35,7 +35,7 @@ test('savePreferredHotels - saves preferred hotels to a wishlist successfully', 
   fetchMock.post('/api/hotels/1/wishlist', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('save-wishlist-1'));
@@ -52,7 +52,7 @@ test('savePreferredHotels - shows error message when saving to wishlist fails', 
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('save-wishlist-1'));
@@ -69,7 +69,7 @@ test('validateHotelDetails - validates hotel details successfully before booking
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('validate-hotel-1'));
@@ -86,7 +86,7 @@ test('validateHotelDetails - shows error when validation fails', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('validate-hotel-1'));

@@ -17,7 +17,7 @@ test('fetchHurricaneWarnings successfully retrieves hurricane warnings', async (
     body: [{ id: 1, warning: 'Hurricane Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Hurricane Warnings')); });
 
   expect(fetchMock.called('/api/hurricane-warnings')).toBeTruthy();
@@ -27,7 +27,7 @@ test('fetchHurricaneWarnings successfully retrieves hurricane warnings', async (
 test('fetchHurricaneWarnings fails to retrieve hurricane warnings', async () => {
   fetchMock.getOnce('/api/hurricane-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Hurricane Warnings')); });
 
   expect(fetchMock.called('/api/hurricane-warnings')).toBeTruthy();
@@ -74,7 +74,7 @@ test('fetchWildfireAlerts successfully retrieves wildfire alerts', async () => {
     body: [{ id: 1, alert: 'Wildfire Alert' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Wildfire Alerts')); });
 
   expect(fetchMock.called('/api/wildfire-alerts')).toBeTruthy();
@@ -84,7 +84,7 @@ test('fetchWildfireAlerts successfully retrieves wildfire alerts', async () => {
 test('fetchWildfireAlerts fails to retrieve wildfire alerts', async () => {
   fetchMock.getOnce('/api/wildfire-alerts', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Wildfire Alerts')); });
 
   expect(fetchMock.called('/api/wildfire-alerts')).toBeTruthy();

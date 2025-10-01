@@ -14,7 +14,7 @@ afterEach(() => {
 test('successful duplicate application detection.', async () => {
   fetchMock.get('/checkDuplicate/123', { duplicate: false });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('check-duplicate-button')); });
 
@@ -25,7 +25,7 @@ test('successful duplicate application detection.', async () => {
 test('failure duplicate application detection.', async () => {
   fetchMock.get('/checkDuplicate/123', { duplicate: true });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('check-duplicate-button')); });
 
@@ -36,7 +36,7 @@ test('failure duplicate application detection.', async () => {
 test('job seekers can successfully control the visibility of their profiles', async () => {
   fetchMock.post('/api/jobseeker/visibility', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ProfileVisibility /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Make Profile Public/i)); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('job seekers can successfully control the visibility of their profiles', as
 test('job seekers see an error message if visibility control fails', async () => {
   fetchMock.post('/api/jobseeker/visibility', 500);
 
-  await act(async () => { render(<MemoryRouter><ProfileVisibility /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Make Profile Public/i)); });
 
   expect(fetchMock.calls().length).toBe(1);

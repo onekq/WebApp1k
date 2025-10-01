@@ -17,7 +17,7 @@ test('Successfully restores an archived post.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ArchivedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Restore'));
@@ -33,7 +33,7 @@ test('Shows error message when restoring an archived post fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ArchivedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Restore'));
@@ -46,7 +46,7 @@ test('Shows error message when restoring an archived post fails.', async () => {
 test('should send a notification when a post is liked', async () => {
   fetchMock.post('/api/like', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('should send a notification when a post is liked', async () => {
 test('should handle error when notification sending fails for a liked post', async () => {
   fetchMock.post('/api/like', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('should handle error when notification sending fails for a liked post', asy
 test('Should tag a valid user in a comment', async () => {
   fetchMock.post('api/tag', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input-comment'), { target: { value: 'userToTag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Tag')); });
 
@@ -77,7 +77,7 @@ test('Should tag a valid user in a comment', async () => {
 test('Should display an error when tagging an invalid user in a comment', async () => {
   fetchMock.post('api/tag', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input-comment'), { target: { value: 'invalidUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Tag')); });
 

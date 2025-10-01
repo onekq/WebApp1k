@@ -18,7 +18,7 @@ test('applyHotelDiscount - applies discount code successfully to hotel booking',
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('discount-code-input'), { target: { value: 'DISCOUNT10' } });
@@ -36,7 +36,7 @@ test('applyHotelDiscount - shows error message when discount code application fa
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('discount-code-input'), { target: { value: 'DISCOUNT10' } });
@@ -54,7 +54,7 @@ test('cancelHotelBooking - cancels hotel booking and processes refund calculatio
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('cancel-booking-1'));
@@ -71,7 +71,7 @@ test('cancelHotelBooking - shows error message when cancellation fails', async (
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('cancel-booking-1'));

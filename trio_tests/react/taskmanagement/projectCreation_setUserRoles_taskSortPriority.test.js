@@ -15,7 +15,7 @@ test('Create Project - success', async () => {
   fetchMock.post('/api/projects', 201);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -38,7 +38,7 @@ test('Create Project - failure', async () => {
   fetchMock.post('/api/projects', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -60,7 +60,7 @@ test('Create Project - failure', async () => {
 test('Set user roles successfully', async () => {
   fetchMock.post('/set-user-roles', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('role-manager-button')); });
 
@@ -71,7 +71,7 @@ test('Set user roles successfully', async () => {
 test('Fail to set user roles due to server error', async () => {
   fetchMock.post('/set-user-roles', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('role-manager-button')); });
 
@@ -88,7 +88,7 @@ test('Sort tasks by priority successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Sort by'), { target: { value: 'priority' } });
@@ -106,7 +106,7 @@ test('Fail to sort tasks by priority when API returns 500.', async () => {
   fetchMock.get('/api/tasks?sort=priority', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Sort by'), { target: { value: 'priority' } });

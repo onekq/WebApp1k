@@ -32,7 +32,7 @@ test('fails to calculate daily calorie intake and displays an error message', as
 test('should import fitness data from CSV successfully.', async () => {
   fetchMock.post('/api/data/import', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('import-input'), { target: { value: 'csv-file-data' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('import-button')); });
 
@@ -44,7 +44,7 @@ test('should import fitness data from CSV successfully.', async () => {
 test('should fail to import fitness data from CSV.', async () => {
   fetchMock.post('/api/data/import', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('import-input'), { target: { value: 'csv-file-data' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('import-button')); });
 

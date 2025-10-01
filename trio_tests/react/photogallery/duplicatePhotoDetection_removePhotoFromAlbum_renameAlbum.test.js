@@ -15,7 +15,7 @@ test('detects a duplicate photo', async () => {
   fetchMock.post('/upload', { status: 409 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('does not detect a duplicate photo', async () => {
   fetchMock.post('/upload', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -52,7 +52,7 @@ test('does not detect a duplicate photo', async () => {
 test('Users can successfully remove photos from an album.', async () => {
   fetchMock.delete('/api/albums/photos', { success: true });
 
-  await act(async () => { render(<MemoryRouter><RemovePhotoFromAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-photo-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -62,7 +62,7 @@ test('Users can successfully remove photos from an album.', async () => {
 test('Shows an error message when removing photo from album fails.', async () => {
   fetchMock.delete('/api/albums/photos', { success: false });
 
-  await act(async () => { render(<MemoryRouter><RemovePhotoFromAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-photo-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -72,7 +72,7 @@ test('Shows an error message when removing photo from album fails.', async () =>
 test('Users can successfully rename an album.', async () => {
   fetchMock.put('/api/albums', { success: true });
 
-  await act(async () => { render(<MemoryRouter><RenameAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('album-name-input'), { target: { value: 'NewAlbumName' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('rename-album-button')); });
 
@@ -83,7 +83,7 @@ test('Users can successfully rename an album.', async () => {
 test('Shows an error message when renaming album fails.', async () => {
   fetchMock.put('/api/albums', { success: false });
 
-  await act(async () => { render(<MemoryRouter><RenameAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('album-name-input'), { target: { value: 'NewAlbumName' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('rename-album-button')); });
 

@@ -34,7 +34,7 @@ test('should show error when creating subtask fails.', async () => {
 test('successfully sets a task to recur.', async () => {
   fetchMock.post('/api/task-recurrence', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TaskRecurrence /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurrence-input'), { target: { value: 'Weekly' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-recurrence-btn')); });
 
@@ -45,7 +45,7 @@ test('successfully sets a task to recur.', async () => {
 test('fails to set a task to recur if server error.', async () => {
   fetchMock.post('/api/task-recurrence', 500);
 
-  await act(async () => { render(<MemoryRouter><TaskRecurrence /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurrence-input'), { target: { value: 'Weekly' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-recurrence-btn')); });
 
@@ -59,7 +59,7 @@ test('Set a due date for a task successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Set deadline'), { target: { value: '2023-10-10' } });
@@ -76,7 +76,7 @@ test('Fail to set a due date for a task when API returns 500.', async () => {
   fetchMock.post('/api/tasks/1/deadline', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Set deadline'), { target: { value: '2023-10-10' } });

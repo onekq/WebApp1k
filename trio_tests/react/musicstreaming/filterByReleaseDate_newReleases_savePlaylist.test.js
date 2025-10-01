@@ -56,7 +56,7 @@ test('Shows error message when new releases fail to load.', async () => {
 test('successfully saves changes to a playlist', async () => {
   fetchMock.put('/api/playlists/1', 200);
 
-  await act(async () => { render(<MemoryRouter><SavePlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('successfully saves changes to a playlist', async () => {
 test('fails to save changes to a non-existing playlist', async () => {
   fetchMock.put('/api/playlists/1', 404);
 
-  await act(async () => { render(<MemoryRouter><SavePlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

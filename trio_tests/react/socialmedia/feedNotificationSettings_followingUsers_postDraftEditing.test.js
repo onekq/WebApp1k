@@ -17,7 +17,7 @@ test('Successfully updates feed notification settings.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><NotificationSettingsComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText('Notify for specific users'), { target: { value: 'user1' } });
@@ -36,7 +36,7 @@ test('Shows error message when updating feed notification settings fails.', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><NotificationSettingsComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText('Notify for specific users'), { target: { value: 'user1' } });
@@ -52,7 +52,7 @@ test('Shows error message when updating feed notification settings fails.', asyn
 test('Should follow a valid user', async () => {
   fetchMock.post('api/follow', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-input'), { target: { value: 'validUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Follow')); });
 
@@ -63,7 +63,7 @@ test('Should follow a valid user', async () => {
 test('Should display an error when trying to follow an invalid user', async () => {
   fetchMock.post('api/follow', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-input'), { target: { value: 'invalidUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Follow')); });
 
@@ -75,7 +75,7 @@ test('Test editing saved drafts.', async () => {
   fetchMock.put('/api/posts/draft/1', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByText('Edit Draft'), { target: { value: 'Updated draft content' } });
@@ -92,7 +92,7 @@ test('Ensure changes are saved and displayed (draft).', async () => {
   fetchMock.put('/api/posts/draft/1', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByText('Edit Draft'), { target: { value: '' } });

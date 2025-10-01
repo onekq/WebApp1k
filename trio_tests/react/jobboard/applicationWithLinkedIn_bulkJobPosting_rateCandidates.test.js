@@ -14,7 +14,7 @@ afterEach(() => {
 test('successful LinkedIn application.', async () => {
   fetchMock.post('/applyLinkedIn', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-linkedin-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successful LinkedIn application.', async () => {
 test('failure LinkedIn application.', async () => {
   fetchMock.post('/applyLinkedIn', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-linkedin-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

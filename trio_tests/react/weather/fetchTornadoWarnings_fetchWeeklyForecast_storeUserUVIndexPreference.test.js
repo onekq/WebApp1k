@@ -17,7 +17,7 @@ test('fetchTornadoWarnings successfully retrieves tornado warnings', async () =>
     body: [{ id: 1, warning: 'Tornado Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Tornado Warnings')); });
 
   expect(fetchMock.called('/api/tornado-warnings')).toBeTruthy();
@@ -27,7 +27,7 @@ test('fetchTornadoWarnings successfully retrieves tornado warnings', async () =>
 test('fetchTornadoWarnings fails to retrieve tornado warnings', async () => {
   fetchMock.getOnce('/api/tornado-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Tornado Warnings')); });
 
   expect(fetchMock.called('/api/tornado-warnings')).toBeTruthy();
@@ -71,7 +71,7 @@ test('FetchWeeklyForecast - fails to retrieve weekly forecast', async () => {
 test('correctly stores user UV index preference', async () => {
   fetchMock.post('/preferences/uv-index', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('uv-index-checkbox'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -82,7 +82,7 @@ test('correctly stores user UV index preference', async () => {
 test('displays error when storing user UV index preference fails', async () => {
   fetchMock.post('/preferences/uv-index', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('uv-index-checkbox'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

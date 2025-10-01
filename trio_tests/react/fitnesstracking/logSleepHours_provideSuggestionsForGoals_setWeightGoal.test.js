@@ -55,7 +55,7 @@ test('should successfully set a weight goal', async () => {
   fetchMock.post('/api/goals/weight', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><SetWeightGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/weight goal/i), { target: { value: 150 } });
@@ -72,7 +72,7 @@ test('should show error when setting a weight goal fails', async () => {
   fetchMock.post('/api/goals/weight', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><SetWeightGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/weight goal/i), { target: { value: 150 } });

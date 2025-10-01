@@ -17,7 +17,7 @@ test('Compare estimated time to actual time spent on a task successfully.', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -29,7 +29,7 @@ test('Fail to compare estimated time to actual time spent on a task when API ret
   fetchMock.get('/api/tasks/1/time-comparison', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -62,7 +62,7 @@ test('Filter tasks by status successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by status'), { target: { value: 'completed' } });
@@ -79,7 +79,7 @@ test('Fail to filter tasks by status when API returns 500.', async () => {
   fetchMock.get('/api/tasks?status=completed', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by status'), { target: { value: 'completed' } });

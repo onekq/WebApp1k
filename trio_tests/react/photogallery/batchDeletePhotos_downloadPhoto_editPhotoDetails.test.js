@@ -15,7 +15,7 @@ test('batch deletes multiple photos successfully', async () => {
   fetchMock.delete('/photos', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><BatchPhotoDeleteComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to batch delete multiple photos', async () => {
   fetchMock.delete('/photos', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><BatchPhotoDeleteComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -45,7 +45,7 @@ test('downloads a photo successfully', async () => {
   fetchMock.get('/download/1', { status: 200, body: 'image binary data' });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoDownloadComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -60,7 +60,7 @@ test('fails to download a photo', async () => {
   fetchMock.get('/download/1', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoDownloadComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -75,7 +75,7 @@ test('edits photo details successfully', async () => {
   fetchMock.put('/photo/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoEditComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -94,7 +94,7 @@ test('fails to edit photo details', async () => {
   fetchMock.put('/photo/1', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoEditComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   await act(async () => {

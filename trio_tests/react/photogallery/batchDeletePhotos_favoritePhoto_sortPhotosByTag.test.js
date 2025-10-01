@@ -15,7 +15,7 @@ test('batch deletes multiple photos successfully', async () => {
   fetchMock.delete('/photos', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><BatchPhotoDeleteComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to batch delete multiple photos', async () => {
   fetchMock.delete('/photos', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><BatchPhotoDeleteComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -72,7 +72,7 @@ test('Should show error message when failing to mark a photo as favorite.', asyn
 test('should successfully sort photos by tag', async () => {
   fetchMock.get('/api/sort?tag=sunset', { photos: [{ id: 1, tag: 'sunset' }] });
 
-  await act(async () => { render(<MemoryRouter><SortPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sort-input'), { target: { value: 'sunset' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-button')); });
 
@@ -83,7 +83,7 @@ test('should successfully sort photos by tag', async () => {
 test('should fail to sort photos by tag with error message', async () => {
   fetchMock.get('/api/sort?tag=sunset', 404);
 
-  await act(async () => { render(<MemoryRouter><SortPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sort-input'), { target: { value: 'sunset' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-button')); });
 

@@ -33,7 +33,7 @@ test('User can delete a fitness activity successfully.', async () => {
   fetchMock.delete('/api/deleteActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('delete-activity'));
@@ -47,7 +47,7 @@ test('User sees an error message when deleting a fitness activity fails.', async
   fetchMock.delete('/api/deleteActivity', { status: 500, body: { error: 'Failed to delete activity' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('delete-activity'));
@@ -61,7 +61,7 @@ test('should successfully set a reminder for workouts', async () => {
   fetchMock.post('/api/reminders/workouts', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><SetWorkoutReminder /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/reminder/i), { target: { value: '07:00 AM' } });
@@ -78,7 +78,7 @@ test('should show error when setting a reminder for workouts fails', async () =>
   fetchMock.post('/api/reminders/workouts', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><SetWorkoutReminder /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/reminder/i), { target: { value: '07:00 AM' } });

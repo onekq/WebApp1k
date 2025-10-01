@@ -14,7 +14,7 @@ afterEach(() => {
 test('adds a recurring expense successfully', async () => {
   fetchMock.post('/api/recurring-expense', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurring-expense-input'), { target: { value: '50' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-recurring-expense-button')); });
 
@@ -25,7 +25,7 @@ test('adds a recurring expense successfully', async () => {
 test('fails to add a recurring expense', async () => {
   fetchMock.post('/api/recurring-expense', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurring-expense-input'), { target: { value: '50' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-recurring-expense-button')); });
 
@@ -37,7 +37,7 @@ test('successfully deletes a recurring income', async () => {
   fetchMock.delete('/income/recurring/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteRecurringIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete recurring income/i));
@@ -51,7 +51,7 @@ test('fails to delete a recurring income', async () => {
   fetchMock.delete('/income/recurring/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteRecurringIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete recurring income/i));
@@ -65,7 +65,7 @@ test('Success: Compare expenses against the budget for a given period.', async (
   fetchMock.get('/api/compare-expense', { status: 200, body: { compared: true, result: 'Under budget' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -80,7 +80,7 @@ test('Failure: Compare expenses against the budget for a given period.', async (
   fetchMock.get('/api/compare-expense', { status: 400, body: { error: 'Comparison failed' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

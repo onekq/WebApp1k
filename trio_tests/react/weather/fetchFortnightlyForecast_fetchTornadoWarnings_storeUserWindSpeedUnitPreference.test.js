@@ -51,7 +51,7 @@ test('fetchTornadoWarnings successfully retrieves tornado warnings', async () =>
     body: [{ id: 1, warning: 'Tornado Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Tornado Warnings')); });
 
   expect(fetchMock.called('/api/tornado-warnings')).toBeTruthy();
@@ -61,7 +61,7 @@ test('fetchTornadoWarnings successfully retrieves tornado warnings', async () =>
 test('fetchTornadoWarnings fails to retrieve tornado warnings', async () => {
   fetchMock.getOnce('/api/tornado-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Tornado Warnings')); });
 
   expect(fetchMock.called('/api/tornado-warnings')).toBeTruthy();
@@ -71,7 +71,7 @@ test('fetchTornadoWarnings fails to retrieve tornado warnings', async () => {
 test('correctly stores user wind speed unit preference', async () => {
   fetchMock.post('/preferences/wind-speed-unit', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('wind-speed-unit-select'), { target: { value: 'km/h' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -82,7 +82,7 @@ test('correctly stores user wind speed unit preference', async () => {
 test('displays error when storing user wind speed unit preference fails', async () => {
   fetchMock.post('/preferences/wind-speed-unit', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('wind-speed-unit-select'), { target: { value: 'km/h' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

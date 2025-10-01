@@ -14,7 +14,7 @@ afterEach(() => {
 test('correctly calculates shipping based on location.', async () => {
   fetchMock.post('/api/shipping', { body: { cost: 15 } });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('location-input'), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Calculate Shipping')); });
 
@@ -25,7 +25,7 @@ test('correctly calculates shipping based on location.', async () => {
 test('displays error on failing to calculate shipping.', async () => {
   fetchMock.post('/api/shipping', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('location-input'), { target: { value: '54321' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Calculate Shipping')); });
 
@@ -36,7 +36,7 @@ test('displays error on failing to calculate shipping.', async () => {
 test('Filter Products successfully filters products.', async () => {
   fetchMock.get('/api/filter', { status: 200, body: { results: ['Filtered Product 1'] } });
 
-  await act(async () => { render(<MemoryRouter><FilterProducts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-category')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Filter Products successfully filters products.', async () => {
 test('Filter Products fails and displays error message.', async () => {
   fetchMock.get('/api/filter', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><FilterProducts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-category')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Filter Products fails and displays error message.', async () => {
 test('View Wish List success displays wish list items', async () => {
   fetchMock.get('/api/wishlist', [{ id: 1, product: 'Product 1' }]);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/wishlist').length).toBe(1);
   expect(screen.getByText('Product 1')).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('View Wish List success displays wish list items', async () => {
 test('View Wish List failure shows error message', async () => {
   fetchMock.get('/api/wishlist', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(screen.getByText('Error loading wish list')).toBeInTheDocument();
 }, 10000);

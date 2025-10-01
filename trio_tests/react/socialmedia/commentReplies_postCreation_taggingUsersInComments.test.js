@@ -14,7 +14,7 @@ afterEach(() => {
 test('Should reply to an existing comment', async () => {
   fetchMock.post('api/reply', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('reply-input'), { target: { value: 'Nice comment!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Reply')); });
 
@@ -25,7 +25,7 @@ test('Should reply to an existing comment', async () => {
 test('Should display an error when replying to an invalid comment', async () => {
   fetchMock.post('api/reply', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('reply-input'), { target: { value: 'Nice comment!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Reply')); });
 
@@ -37,7 +37,7 @@ test('Verify post creation with valid content.', async () => {
   fetchMock.post('/api/posts', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Write a post...'), { target: { value: 'Hello World!' } });
@@ -54,7 +54,7 @@ test('Ensure error handling for invalid post content.', async () => {
   fetchMock.post('/api/posts', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Write a post...'), { target: { value: '' } });
@@ -70,7 +70,7 @@ test('Ensure error handling for invalid post content.', async () => {
 test('Should tag a valid user in a comment', async () => {
   fetchMock.post('api/tag', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input-comment'), { target: { value: 'userToTag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Tag')); });
 
@@ -81,7 +81,7 @@ test('Should tag a valid user in a comment', async () => {
 test('Should display an error when tagging an invalid user in a comment', async () => {
   fetchMock.post('api/tag', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input-comment'), { target: { value: 'invalidUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Tag')); });
 

@@ -35,7 +35,7 @@ test('fails to add cooking tips due to missing input', async () => {
 test('successfully fetches user\'s saved recipes', async () => {
   fetchMock.get('/saved-recipes', { recipes: ['Recipe 1', 'Recipe 2'] });
 
-  await act(async () => { render(<MemoryRouter><ListSavedRecipesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Recipe 1')).toBeInTheDocument();
@@ -45,7 +45,7 @@ test('successfully fetches user\'s saved recipes', async () => {
 test('shows error message when failing to fetch user\'s saved recipes', async () => {
   fetchMock.get('/saved-recipes', 500);
 
-  await act(async () => { render(<MemoryRouter><ListSavedRecipesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to fetch saved recipes')).toBeInTheDocument();

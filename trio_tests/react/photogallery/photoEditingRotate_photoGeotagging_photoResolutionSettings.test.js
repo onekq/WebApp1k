@@ -14,7 +14,7 @@ afterEach(() => {
 test('should successfully rotate a photo', async () => {
   fetchMock.post('/api/rotate', { id: 1, rotated: true });
 
-  await act(async () => { render(<MemoryRouter><RotatePhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('rotate-input'), { target: { value: '90' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('rotate-button')); });
 
@@ -25,7 +25,7 @@ test('should successfully rotate a photo', async () => {
 test('should fail to rotate a photo with error message', async () => {
   fetchMock.post('/api/rotate', 404);
 
-  await act(async () => { render(<MemoryRouter><RotatePhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('rotate-input'), { target: { value: '90' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('rotate-button')); });
 
@@ -36,7 +36,7 @@ test('should fail to rotate a photo with error message', async () => {
 test('should successfully add/edit geotags on a photo', async () => {
   fetchMock.post('/api/geotag', { id: 1, geotag: 'Paris' });
 
-  await act(async () => { render(<MemoryRouter><GeotagPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('geotag-input'), { target: { value: 'Paris' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('geotag-button')); });
 
@@ -47,7 +47,7 @@ test('should successfully add/edit geotags on a photo', async () => {
 test('should fail to add/edit geotags on a photo with error message', async () => {
   fetchMock.post('/api/geotag', 404);
 
-  await act(async () => { render(<MemoryRouter><GeotagPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('geotag-input'), { target: { value: 'Paris' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('geotag-button')); });
 
@@ -58,7 +58,7 @@ test('should fail to add/edit geotags on a photo with error message', async () =
 test('should successfully set the resolution for viewing photos', async () => {
   fetchMock.post('/api/resolution', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ResolutionSettings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resolution-input'), { target: { value: '1080p' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resolution-button')); });
 
@@ -69,7 +69,7 @@ test('should successfully set the resolution for viewing photos', async () => {
 test('should fail to set the resolution for viewing photos with error message', async () => {
   fetchMock.post('/api/resolution', 404);
 
-  await act(async () => { render(<MemoryRouter><ResolutionSettings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resolution-input'), { target: { value: '1080p' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resolution-button')); });
 

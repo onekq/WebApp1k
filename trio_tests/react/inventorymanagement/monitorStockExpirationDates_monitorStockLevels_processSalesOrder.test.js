@@ -50,7 +50,7 @@ test('Shows error message on failure when fetching stock levels', async () => {
 test('Processing a sales order reduces the stock level appropriately.', async () => {
   fetchMock.post('/api/sales-order', { status: 200, body: { success: true, newStockLevel: 90 } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('orderInput'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitOrder')); });
 
@@ -61,7 +61,7 @@ test('Processing a sales order reduces the stock level appropriately.', async ()
 test('Processing a sales order doesn\'t reduce stock level due to error.', async () => {
   fetchMock.post('/api/sales-order', { status: 500, body: { error: 'Internal Server Error' } });
   
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('orderInput'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitOrder')); });
 

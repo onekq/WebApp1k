@@ -14,7 +14,7 @@ afterEach(() => {
 test('filters articles by excluded categories successfully', async () => {
   fetchMock.get('/api/articles?excludedCategories=Sports', { status: 200, body: [{ id: 2, title: 'Non-Sports News' }] });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-categories-filter-input'), { target: { value: 'Sports' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-excluded-categories-filter-button')); });
 
@@ -25,7 +25,7 @@ test('filters articles by excluded categories successfully', async () => {
 test('fails to filter articles by excluded categories', async () => {
   fetchMock.get('/api/articles?excludedCategories=Sports', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-categories-filter-input'), { target: { value: 'Sports' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-excluded-categories-filter-button')); });
 
@@ -56,7 +56,7 @@ test('Fails to recommend articles based on user preferences.', async () => {
 test('Sorts articles by date (newest first) successfully', async () => {
   fetchMock.get('/api/articles?sort=newest', { status: 200, body: [{ id: 1, date: '2023-10-01' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="newest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="newest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('2023-10-01')).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('Sorts articles by date (newest first) successfully', async () => {
 test('Fails to sort articles by date (newest first)', async () => {
   fetchMock.get('/api/articles?sort=newest', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="newest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="newest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to sort articles by date')).toBeInTheDocument();

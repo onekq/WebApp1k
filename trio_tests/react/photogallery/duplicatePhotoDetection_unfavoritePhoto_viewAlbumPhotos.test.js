@@ -15,7 +15,7 @@ test('detects a duplicate photo', async () => {
   fetchMock.post('/upload', { status: 409 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('does not detect a duplicate photo', async () => {
   fetchMock.post('/upload', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -81,7 +81,7 @@ test('View Album Photos: success', async () => {
   fetchMock.get('/api/album/photos?album=AlbumID', { body: [{ id: 1, name: 'Photo1' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-id-input'), { target: { value: 'AlbumID' } });
@@ -98,7 +98,7 @@ test('View Album Photos: failure', async () => {
   fetchMock.get('/api/album/photos?album=AlbumID', { throws: new Error('View Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-id-input'), { target: { value: 'AlbumID' } });

@@ -14,7 +14,7 @@ afterEach(() => {
 test('should successfully add/edit geotags on a photo', async () => {
   fetchMock.post('/api/geotag', { id: 1, geotag: 'Paris' });
 
-  await act(async () => { render(<MemoryRouter><GeotagPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('geotag-input'), { target: { value: 'Paris' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('geotag-button')); });
 
@@ -25,7 +25,7 @@ test('should successfully add/edit geotags on a photo', async () => {
 test('should fail to add/edit geotags on a photo with error message', async () => {
   fetchMock.post('/api/geotag', 404);
 
-  await act(async () => { render(<MemoryRouter><GeotagPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('geotag-input'), { target: { value: 'Paris' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('geotag-button')); });
 
@@ -36,7 +36,7 @@ test('should fail to add/edit geotags on a photo with error message', async () =
 test('Users can successfully rename an album.', async () => {
   fetchMock.put('/api/albums', { success: true });
 
-  await act(async () => { render(<MemoryRouter><RenameAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('album-name-input'), { target: { value: 'NewAlbumName' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('rename-album-button')); });
 
@@ -47,7 +47,7 @@ test('Users can successfully rename an album.', async () => {
 test('Shows an error message when renaming album fails.', async () => {
   fetchMock.put('/api/albums', { success: false });
 
-  await act(async () => { render(<MemoryRouter><RenameAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('album-name-input'), { target: { value: 'NewAlbumName' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('rename-album-button')); });
 
@@ -59,7 +59,7 @@ test('Share Photo: success', async () => {
   fetchMock.post('/api/sharePhoto', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('photo-input'), { target: { value: 'PhotoID' } });
@@ -76,7 +76,7 @@ test('Share Photo: failure', async () => {
   fetchMock.post('/api/sharePhoto', { throws: new Error('Share Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('photo-input'), { target: { value: 'PhotoID' } });

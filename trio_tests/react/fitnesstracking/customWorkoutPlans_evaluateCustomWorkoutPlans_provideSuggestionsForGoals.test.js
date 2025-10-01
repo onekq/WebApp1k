@@ -15,7 +15,7 @@ test('should successfully create a custom workout plan', async () => {
   fetchMock.post('/api/workouts/custom', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><CreateWorkoutPlan /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/workout name/i), { target: { value: 'Morning Yoga' } });
@@ -32,7 +32,7 @@ test('should show error when creating a custom workout plan fails', async () => 
   fetchMock.post('/api/workouts/custom', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><CreateWorkoutPlan /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/workout name/i), { target: { value: 'Morning Yoga' } });

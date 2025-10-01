@@ -36,7 +36,7 @@ test('fails to filter songs by artist because no songs match the filter', async 
 test('The song duration is displayed correctly.', async () => {
   fetchMock.get('/api/song/1', { duration: '3:45' });
 
-  await act(async () => { render(<MemoryRouter><SongComponent songId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App songId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('3:45')).toBeInTheDocument();
@@ -45,7 +45,7 @@ test('The song duration is displayed correctly.', async () => {
 test('The song duration fails to display with an error message.', async () => {
   fetchMock.get('/api/song/1', 500);
 
-  await act(async () => { render(<MemoryRouter><SongComponent songId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App songId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error loading song duration')).toBeInTheDocument();
@@ -54,7 +54,7 @@ test('The song duration fails to display with an error message.', async () => {
 test('successfully sorts songs within a playlist by name', async () => {
   fetchMock.get('/api/playlists/1/songs?sort=name', [{ id: 1, name: 'A Song' }, { id: 2, name: 'B Song' }]);
 
-  await act(async () => { render(<MemoryRouter><SortSongsInPlaylist playlistId={1} sortBy="name" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} sortBy="name" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-songs-by-name-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('successfully sorts songs within a playlist by name', async () => {
 test('fails to sort songs within a playlist due to empty playlist', async () => {
   fetchMock.get('/api/playlists/1/songs?sort=name', 404);
 
-  await act(async () => { render(<MemoryRouter><SortSongsInPlaylist playlistId={1} sortBy="name" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} sortBy="name" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-songs-by-name-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

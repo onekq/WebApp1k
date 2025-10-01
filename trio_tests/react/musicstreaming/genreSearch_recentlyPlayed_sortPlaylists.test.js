@@ -36,7 +36,7 @@ test('Shows error message when searching for a genre by name fails.', async () =
 test('Recently played songs are logged correctly.', async () => {
   fetchMock.get('/api/recentlyPlayed', [{ song: 'Song 1' }]);
 
-  await act(async () => { render(<MemoryRouter><RecentlyPlayed /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Song 1')).toBeInTheDocument();
@@ -45,7 +45,7 @@ test('Recently played songs are logged correctly.', async () => {
 test('Recently played songs fail to log with an error message.', async () => {
   fetchMock.get('/api/recentlyPlayed', 500);
 
-  await act(async () => { render(<MemoryRouter><RecentlyPlayed /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error retrieving recently played songs')).toBeInTheDocument();
@@ -54,7 +54,7 @@ test('Recently played songs fail to log with an error message.', async () => {
 test('successfully sorts playlists by name', async () => {
   fetchMock.get('/api/playlists?sort=name', [{ id: 1, name: 'A Playlist' }, { id: 2, name: 'B Playlist' }]);
 
-  await act(async () => { render(<MemoryRouter><SortPlaylists sortBy="name" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="name" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-name-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('successfully sorts playlists by name', async () => {
 test('fails to sort playlists by name due to empty list', async () => {
   fetchMock.get('/api/playlists?sort=name', 404);
 
-  await act(async () => { render(<MemoryRouter><SortPlaylists sortBy="name" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="name" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-name-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

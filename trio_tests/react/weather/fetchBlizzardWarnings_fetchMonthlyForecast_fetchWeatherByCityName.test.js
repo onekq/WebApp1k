@@ -17,7 +17,7 @@ test('fetchBlizzardWarnings successfully retrieves blizzard warnings', async () 
     body: [{ id: 1, warning: 'Blizzard Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Blizzard Warnings')); });
 
   expect(fetchMock.called('/api/blizzard-warnings')).toBeTruthy();
@@ -27,7 +27,7 @@ test('fetchBlizzardWarnings successfully retrieves blizzard warnings', async () 
 test('fetchBlizzardWarnings fails to retrieve blizzard warnings', async () => {
   fetchMock.getOnce('/api/blizzard-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Blizzard Warnings')); });
 
   expect(fetchMock.called('/api/blizzard-warnings')).toBeTruthy();
@@ -71,7 +71,7 @@ test('FetchMonthlyForecast - fails to retrieve monthly forecast', async () => {
 test('Fetch weather by city name succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { city: 'New York', temperature: 20 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('city-input'), { target: { value: 'New York' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -82,7 +82,7 @@ test('Fetch weather by city name succeeds.', async () => {
 test('Fetch weather by city name fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('city-input'), { target: { value: 'InvalidCity' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 

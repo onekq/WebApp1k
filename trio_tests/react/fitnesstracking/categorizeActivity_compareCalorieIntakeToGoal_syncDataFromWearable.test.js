@@ -15,7 +15,7 @@ test('User can categorize a fitness activity successfully.', async () => {
   fetchMock.post('/api/categorizeActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-category'), { target: { value: 'Cycling' } });
@@ -30,7 +30,7 @@ test('User sees an error message when categorizing a fitness activity fails.', a
   fetchMock.post('/api/categorizeActivity', { status: 500, body: { error: 'Failed to set category' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-category'), { target: { value: 'Cycling' } });
@@ -62,7 +62,7 @@ test('fails to compare calorie intake to goal and displays an error message', as
 test('should sync data from connected wearable device successfully.', async () => {
   fetchMock.get('/api/device/sync', { status: 200, body: { data: 'some-data' } });
   
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -73,7 +73,7 @@ test('should sync data from connected wearable device successfully.', async () =
 test('should fail to sync data from connected wearable device.', async () => {
   fetchMock.get('/api/device/sync', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

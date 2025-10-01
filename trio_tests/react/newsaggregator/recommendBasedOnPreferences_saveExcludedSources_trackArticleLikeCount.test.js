@@ -34,7 +34,7 @@ test('Fails to recommend articles based on user preferences.', async () => {
 test('saves user-excluded sources successfully', async () => {
   fetchMock.post('/api/save-excluded-sources', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-sources-input'), { target: { value: 'CNN' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-excluded-sources-button')); });
 
@@ -45,7 +45,7 @@ test('saves user-excluded sources successfully', async () => {
 test('fails to save user-excluded sources', async () => {
   fetchMock.post('/api/save-excluded-sources', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-sources-input'), { target: { value: 'CNN' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-excluded-sources-button')); });
 

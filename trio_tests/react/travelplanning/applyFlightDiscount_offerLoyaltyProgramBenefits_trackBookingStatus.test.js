@@ -58,7 +58,7 @@ test('should show error if fetching loyalty program benefits fails', async () =>
 test('Booking status should be tracked and shown to users.', async () => {
   fetchMock.get('/api/booking/status', { status: 'Confirmed' });
 
-  await act(async () => { render(<MemoryRouter><BookingStatusComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-status')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -68,7 +68,7 @@ test('Booking status should be tracked and shown to users.', async () => {
 test('Error in tracking booking status should show error message.', async () => {
   fetchMock.get('/api/booking/status', 404);
 
-  await act(async () => { render(<MemoryRouter><BookingStatusComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-status')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

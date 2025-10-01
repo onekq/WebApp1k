@@ -15,7 +15,7 @@ test('User can categorize a fitness activity successfully.', async () => {
   fetchMock.post('/api/categorizeActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-category'), { target: { value: 'Cycling' } });
@@ -30,7 +30,7 @@ test('User sees an error message when categorizing a fitness activity fails.', a
   fetchMock.post('/api/categorizeActivity', { status: 500, body: { error: 'Failed to set category' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-category'), { target: { value: 'Cycling' } });
@@ -66,7 +66,7 @@ test('fails to log weight and displays an error message', async () => {
 test('System calculates weekly average sleep hours successfully.', async () => {
   fetchMock.get('/api/average-sleep', { hours: 7 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-sleep')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -76,7 +76,7 @@ test('System calculates weekly average sleep hours successfully.', async () => {
 test('System fails to calculate weekly average sleep hours.', async () => {
   fetchMock.get('/api/average-sleep', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-sleep')); });
 
   expect(fetchMock.calls().length).toBe(1);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('shows information about nearby schools for a property', async () => {
   fetchMock.get('/property/1/schools', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Schools')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('shows information about nearby schools for a property', async () => {
 test('fails to display nearby schools due to network error', async () => {
   fetchMock.get('/property/1/schools', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Schools')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('fails to display nearby schools due to network error', async () => {
 test('successfully saves search criteria', async () => {
   fetchMock.post('/api/search/save', 200);
 
-  await act(async () => { render(<MemoryRouter><SaveSearchCriteria /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-criteria'), { target: { value: '2BHK' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-search-btn')); });
 
@@ -45,7 +45,7 @@ test('successfully saves search criteria', async () => {
 test('fails to save search criteria and shows error message', async () => {
   fetchMock.post('/api/search/save', 500);
 
-  await act(async () => { render(<MemoryRouter><SaveSearchCriteria /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-criteria'), { target: { value: '2BHK' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-search-btn')); });
 
@@ -59,7 +59,7 @@ test('Search by Location filters properties by location successfully', async () 
     body: [{ id: 1, location: 'New York' }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/location/i), { target: { value: 'newyork' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -73,7 +73,7 @@ test('Search by Location filters properties by location fails', async () => {
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/location/i), { target: { value: 'newyork' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 

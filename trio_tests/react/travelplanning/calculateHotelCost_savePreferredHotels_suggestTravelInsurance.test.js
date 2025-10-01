@@ -18,7 +18,7 @@ test('calculateHotelCost - calculates total hotel cost including taxes and fees'
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('calculate-cost-1'));
@@ -35,7 +35,7 @@ test('calculateHotelCost - shows error message when cost calculation fails', asy
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('calculate-cost-1'));
@@ -49,7 +49,7 @@ test('savePreferredHotels - saves preferred hotels to a wishlist successfully', 
   fetchMock.post('/api/hotels/1/wishlist', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('save-wishlist-1'));
@@ -66,7 +66,7 @@ test('savePreferredHotels - shows error message when saving to wishlist fails', 
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('save-wishlist-1'));

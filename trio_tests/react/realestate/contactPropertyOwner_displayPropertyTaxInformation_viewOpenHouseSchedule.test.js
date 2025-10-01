@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully contacts property owner', async () => {
   fetchMock.post('/api/contact', 200);
 
-  await act(async () => { render(<MemoryRouter><ContactPropertyOwner /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('contact-message'), { target: { value: 'Hello' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('contact-submit-btn')); });
 
@@ -25,7 +25,7 @@ test('successfully contacts property owner', async () => {
 test('fails to contact property owner and shows error message', async () => {
   fetchMock.post('/api/contact', 500);
 
-  await act(async () => { render(<MemoryRouter><ContactPropertyOwner /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('contact-message'), { target: { value: 'Hello' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('contact-submit-btn')); });
 
@@ -36,7 +36,7 @@ test('fails to contact property owner and shows error message', async () => {
 test('shows property tax details for a listing', async () => {
   fetchMock.get('/property/1/tax', { body: {} });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Tax')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('shows property tax details for a listing', async () => {
 test('fails to display property tax information due to network error', async () => {
   fetchMock.get('/property/1/tax', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Tax')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -56,7 +56,7 @@ test('fails to display property tax information due to network error', async () 
 test('View open house schedule successfully', async () => {
   fetchMock.get('/api/open-house-schedule', { schedule: 'Sun 2-4 PM' });
 
-  await act(async () => { render(<MemoryRouter><OpenHouseSchedule /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-schedule-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -66,7 +66,7 @@ test('View open house schedule successfully', async () => {
 test('View open house schedule fails with error', async () => {
   fetchMock.get('/api/open-house-schedule', 500);
 
-  await act(async () => { render(<MemoryRouter><OpenHouseSchedule /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-schedule-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('should calculate cycling speed successfully.', async () => {
   fetchMock.post('/api/speed/calculate', { status: 200, body: { speed: '30 km/h' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('time-input'), { target: { value: '60' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('distance-input'), { target: { value: '30' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-speed-button')); });
@@ -27,7 +27,7 @@ test('should calculate cycling speed successfully.', async () => {
 test('should fail to calculate cycling speed.', async () => {
   fetchMock.post('/api/speed/calculate', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('time-input'), { target: { value: '60' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('distance-input'), { target: { value: '30' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-speed-button')); });
@@ -40,7 +40,7 @@ test('should fail to calculate cycling speed.', async () => {
 test('should import fitness data from CSV successfully.', async () => {
   fetchMock.post('/api/data/import', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('import-input'), { target: { value: 'csv-file-data' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('import-button')); });
 
@@ -52,7 +52,7 @@ test('should import fitness data from CSV successfully.', async () => {
 test('should fail to import fitness data from CSV.', async () => {
   fetchMock.post('/api/data/import', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('import-input'), { target: { value: 'csv-file-data' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('import-button')); });
 
@@ -65,7 +65,7 @@ test('should successfully set a calorie intake goal', async () => {
   fetchMock.post('/api/goals/calories', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><SetCalorieGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/calorie goal/i), { target: { value: 2000 } });
@@ -82,7 +82,7 @@ test('should show error when setting a calorie intake goal fails', async () => {
   fetchMock.post('/api/goals/calories', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><SetCalorieGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/calorie goal/i), { target: { value: 2000 } });

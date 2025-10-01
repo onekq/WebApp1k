@@ -40,7 +40,7 @@ test('successfully exports income to a CSV file', async () => {
   fetchMock.post('/income/export', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><ExportIncomeToCSV /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/export to csv/i));
@@ -54,7 +54,7 @@ test('fails to export income to a CSV file', async () => {
   fetchMock.post('/income/export', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><ExportIncomeToCSV /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/export to csv/i));

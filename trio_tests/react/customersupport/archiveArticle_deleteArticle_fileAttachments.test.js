@@ -15,7 +15,7 @@ test('successfully archives articles', async () => {
   fetchMock.post('path/to/api/article/archive', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('archive-article-button'));
@@ -29,7 +29,7 @@ test('fails to archive articles with error message', async () => {
   fetchMock.post('path/to/api/article/archive', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('archive-article-button'));
@@ -43,7 +43,7 @@ test('successfully deletes outdated articles', async () => {
   fetchMock.delete('path/to/api/article', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('delete-article-button'));
@@ -57,7 +57,7 @@ test('fails to delete outdated articles with error message', async () => {
   fetchMock.delete('path/to/api/article', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('delete-article-button'));
@@ -70,7 +70,7 @@ test('fails to delete outdated articles with error message', async () => {
 test('successfully attaches files to a ticket', async () => {
   fetchMock.post('/api/tickets', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   const file = new File(['content'], 'test.pdf', { type: 'application/pdf' });
   await act(async () => { fireEvent.change(screen.getByLabelText('Attachment'), { target: { files: [file] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
@@ -82,7 +82,7 @@ test('successfully attaches files to a ticket', async () => {
 test('shows error if attaching file fails', async () => {
   fetchMock.post('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   const file = new File(['content'], 'test.pdf', { type: 'application/pdf' });
   await act(async () => { fireEvent.change(screen.getByLabelText('Attachment'), { target: { files: [file] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });

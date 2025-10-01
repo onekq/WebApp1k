@@ -14,7 +14,7 @@ afterEach(() => {
 test('should send a notification when a user receives a new message', async () => {
   fetchMock.post('/api/message', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Messages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('message-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('should send a notification when a user receives a new message', async () =
 test('should handle error when notification sending fails for a new message', async () => {
   fetchMock.post('/api/message', 500);
 
-  await act(async () => { render(<MemoryRouter><Messages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('message-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -35,7 +35,7 @@ test('Verify unpinning a post.', async () => {
   fetchMock.put('/api/posts/unpin/1', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Unpin Post'));
@@ -49,7 +49,7 @@ test('Ensure error handling for unpinning non-pinned posts.', async () => {
   fetchMock.put('/api/posts/unpin/1', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Unpin Post'));
@@ -62,7 +62,7 @@ test('Ensure error handling for unpinning non-pinned posts.', async () => {
 test('User blocking succeeds for valid user', async () => {
   fetchMock.post('/api/profile/block', { body: { message: 'User blocked' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><BlockUser userId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App userId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Block User')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -72,7 +72,7 @@ test('User blocking succeeds for valid user', async () => {
 test('User blocking fails for invalid user', async () => {
   fetchMock.post('/api/profile/block', { body: { error: 'Invalid user' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><BlockUser userId={9999} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App userId={9999} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Block User')); });
 
   expect(fetchMock.calls().length).toBe(1);

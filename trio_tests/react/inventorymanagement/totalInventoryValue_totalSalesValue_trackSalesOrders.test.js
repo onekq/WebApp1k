@@ -14,7 +14,7 @@ afterEach(() => {
 test('Calculates total inventory value successfully.', async () => {
   fetchMock.post('/api/total-inventory-value', { body: { status: 'success', data: { value: 10000 }}});
 
-  await act(async () => { render(<MemoryRouter><TotalInventoryValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-value')); });
 
@@ -25,7 +25,7 @@ test('Calculates total inventory value successfully.', async () => {
 test('Fails to calculate total inventory value due to server error.', async () => {
   fetchMock.post('/api/total-inventory-value', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><TotalInventoryValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-value')); });
 
@@ -36,7 +36,7 @@ test('Fails to calculate total inventory value due to server error.', async () =
 test('Calculates total sales value successfully.', async () => {
   fetchMock.post('/api/total-sales-value', { body: { status: 'success', data: { value: 20000 }}});
 
-  await act(async () => { render(<MemoryRouter><TotalSalesValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-value')); });
 
@@ -47,7 +47,7 @@ test('Calculates total sales value successfully.', async () => {
 test('Fails to calculate total sales value due to server error.', async () => {
   fetchMock.post('/api/total-sales-value', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><TotalSalesValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-value')); });
 
@@ -58,7 +58,7 @@ test('Fails to calculate total sales value due to server error.', async () => {
 test('Ensure tracking sales orders shows all relevant orders correctly.', async () => {
   fetchMock.get('/api/sales-orders', { status: 200, body: { orders: [{ id: 1, item: 'Product A', quantity: 5 }] } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('trackSalesOrders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -68,7 +68,7 @@ test('Ensure tracking sales orders shows all relevant orders correctly.', async 
 test('Tracking sales orders doesn\'t show orders due to error.', async () => {
   fetchMock.get('/api/sales-orders', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('trackSalesOrders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

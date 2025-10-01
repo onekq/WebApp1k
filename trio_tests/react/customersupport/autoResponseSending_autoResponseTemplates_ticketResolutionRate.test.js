@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully sends auto-responses based on ticket content.', async () => {
   fetchMock.post('/api/sendAutoResponse', 200);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseSending /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketContent'), { target: { value: 'Issue' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send Auto-Response')); });
 
@@ -25,7 +25,7 @@ test('Successfully sends auto-responses based on ticket content.', async () => {
 test('Fails to send auto-responses based on ticket content.', async () => {
   fetchMock.post('/api/sendAutoResponse', 500);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseSending /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketContent'), { target: { value: 'Issue' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send Auto-Response')); });
 
@@ -36,7 +36,7 @@ test('Fails to send auto-responses based on ticket content.', async () => {
 test('Successfully configures auto-response templates.', async () => {
   fetchMock.post('/api/saveAutoResponseTemplate', 200);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTemplates /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('templateContent'), { target: { value: 'Hello' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Template')); });
 
@@ -47,7 +47,7 @@ test('Successfully configures auto-response templates.', async () => {
 test('Fails to configure auto-response templates.', async () => {
   fetchMock.post('/api/saveAutoResponseTemplate', 500);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTemplates /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('templateContent'), { target: { value: 'Hello' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Template')); });
 
@@ -62,7 +62,7 @@ test('Successfully reports on ticket resolution rates.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ResolutionRateReporting /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-02-01' } });
@@ -82,7 +82,7 @@ test('Fails to report on ticket resolution rates and shows error message.', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><ResolutionRateReporting /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-02-01' } });

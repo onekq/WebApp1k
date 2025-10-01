@@ -15,7 +15,7 @@ test('successfully adds new articles', async () => {
   fetchMock.post('path/to/api/article', 201);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('article-input'), { target: { value: 'New Article' } });
@@ -32,7 +32,7 @@ test('fails to add new articles with error message', async () => {
   fetchMock.post('path/to/api/article', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('article-input'), { target: { value: 'New Article' } });
@@ -48,7 +48,7 @@ test('fails to add new articles with error message', async () => {
 test('Successfully tracks the use of auto-responses.', async () => {
   fetchMock.get('/api/getAutoResponseUsage', { usage: '10 times' });
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('10 times')).toBeInTheDocument();
@@ -57,7 +57,7 @@ test('Successfully tracks the use of auto-responses.', async () => {
 test('Fails to track the use of auto-responses.', async () => {
   fetchMock.get('/api/getAutoResponseUsage', 500);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to track usage')).toBeInTheDocument();
@@ -70,7 +70,7 @@ test('Successfully shares custom reports.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportSharing /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('share-email-input'), { target: { value: 'user@test.com' } });
@@ -90,7 +90,7 @@ test('Fails to share custom reports and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportSharing /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('share-email-input'), { target: { value: 'user@test.com' } });

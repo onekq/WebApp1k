@@ -14,7 +14,7 @@ afterEach(() => {
 test('should calculate running pace successfully.', async () => {
   fetchMock.post('/api/pace/calculate', { status: 200, body: { pace: '5:00 min/km' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('time-input'), { target: { value: '25' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('distance-input'), { target: { value: '5' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-pace-button')); });
@@ -27,7 +27,7 @@ test('should calculate running pace successfully.', async () => {
 test('should fail to calculate running pace.', async () => {
   fetchMock.post('/api/pace/calculate', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('time-input'), { target: { value: '25' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('distance-input'), { target: { value: '5' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-pace-button')); });
@@ -41,7 +41,7 @@ test('User can log their mood after workouts successfully.', async () => {
   fetchMock.post('/api/logMood', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('mood'), { target: { value: 'Happy' } });
@@ -56,7 +56,7 @@ test('User sees an error message when logging their mood fails.', async () => {
   fetchMock.post('/api/logMood', { status: 500, body: { error: 'Failed to log mood' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('mood'), { target: { value: 'Happy' } });
@@ -70,7 +70,7 @@ test('User sees an error message when logging their mood fails.', async () => {
 test('User can view a summary of their fitness activities for the past month successfully.', async () => {
   fetchMock.get('/api/monthly-summary', { summary: 'Excellent progress' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-summary')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -80,7 +80,7 @@ test('User can view a summary of their fitness activities for the past month suc
 test('User fails to view a summary of their fitness activities for the past month.', async () => {
   fetchMock.get('/api/monthly-summary', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-summary')); });
 
   expect(fetchMock.calls().length).toBe(1);

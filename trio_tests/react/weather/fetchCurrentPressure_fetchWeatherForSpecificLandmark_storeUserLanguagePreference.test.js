@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current atmospheric pressure for a given location', async () => {
   fetchMock.get('/api/current-pressure?location=NYC', { pressure: 1013 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Pressure')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current atmospheric pressure for a given locati
 test('Fails to retrieve the current atmospheric pressure if the API returns an error', async () => {
   fetchMock.get('/api/current-pressure?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Pressure')); });
 
@@ -36,7 +36,7 @@ test('Fails to retrieve the current atmospheric pressure if the API returns an e
 test('Fetch weather for specific landmark succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { landmark: 'Eiffel Tower', temperature: 18 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('landmark-input'), { target: { value: 'Eiffel Tower' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -47,7 +47,7 @@ test('Fetch weather for specific landmark succeeds.', async () => {
 test('Fetch weather for specific landmark fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('landmark-input'), { target: { value: 'InvalidLandmark' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -58,7 +58,7 @@ test('Fetch weather for specific landmark fails.', async () => {
 test('correctly stores user language preference', async () => {
   fetchMock.post('/preferences/language', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('language-select'), { target: { value: 'English' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -69,7 +69,7 @@ test('correctly stores user language preference', async () => {
 test('displays error when storing user language preference fails', async () => {
   fetchMock.post('/preferences/language', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('language-select'), { target: { value: 'English' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

@@ -34,7 +34,7 @@ test('CancelFlightBooking - cancel flight booking fails with error message', asy
 test('successfully optimizes itinerary for travel time and convenience.', async () => {
   fetchMock.post('/api/optimize-itinerary', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('optimize-itinerary-button')); });
 
   expect(fetchMock.calls('/api/optimize-itinerary', 'POST')).toHaveLength(1);
@@ -44,7 +44,7 @@ test('successfully optimizes itinerary for travel time and convenience.', async 
 test('fails to optimize itinerary due to server error.', async () => {
   fetchMock.post('/api/optimize-itinerary', { status: 500, body: { error: 'Server error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('optimize-itinerary-button')); });
 
   expect(fetchMock.calls('/api/optimize-itinerary', 'POST')).toHaveLength(1);

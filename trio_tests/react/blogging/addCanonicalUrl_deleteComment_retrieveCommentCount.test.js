@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a canonical URL to a post', async () => {
   fetchMock.post('/api/canonical-url', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/canonical url/i), { target: { value: 'http://example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds a canonical URL to a post', async () => {
 test('fails to add a canonical URL to a post due to server error', async () => {
   fetchMock.post('/api/canonical-url', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/canonical url/i), { target: { value: 'http://example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 

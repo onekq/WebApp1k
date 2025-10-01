@@ -58,7 +58,7 @@ test('Create Project Template - success', async () => {
   fetchMock.post('/api/projects/template', 201);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -77,7 +77,7 @@ test('Create Project Template - failure', async () => {
   fetchMock.post('/api/projects/template', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

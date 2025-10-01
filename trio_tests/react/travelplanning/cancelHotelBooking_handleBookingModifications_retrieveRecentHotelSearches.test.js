@@ -18,7 +18,7 @@ test('cancelHotelBooking - cancels hotel booking and processes refund calculatio
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('cancel-booking-1'));
@@ -35,7 +35,7 @@ test('cancelHotelBooking - shows error message when cancellation fails', async (
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('cancel-booking-1'));
@@ -48,7 +48,7 @@ test('cancelHotelBooking - shows error message when cancellation fails', async (
 test('Booking should be modified successfully for valid request.', async () => {
   fetchMock.put('/api/booking/modify', 200);
 
-  await act(async () => { render(<MemoryRouter><BookingModificationComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('booking-id'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('modify-booking')); });
 
@@ -59,7 +59,7 @@ test('Booking should be modified successfully for valid request.', async () => {
 test('Error in booking modification should show error message.', async () => {
   fetchMock.put('/api/booking/modify', 400);
 
-  await act(async () => { render(<MemoryRouter><BookingModificationComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('booking-id'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('modify-booking')); });
 
@@ -74,7 +74,7 @@ test('retrieveRecentHotelSearches - retrieves recent hotel searches successfully
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('retrieve-recent-searches'));
@@ -91,7 +91,7 @@ test('retrieveRecentHotelSearches - shows error message when retrieval fails', a
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('retrieve-recent-searches'));

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Logs a daily activity successfully.', async () => {
   fetchMock.post('/activities', { message: 'Activity logged' });
 
-  await act(async () => { render(<MemoryRouter><LogDailyActivity /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('activity-input'), { target: { value: 'Walk the dog' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Logs a daily activity successfully.', async () => {
 test('Fails to log a daily activity with error message.', async () => {
   fetchMock.post('/activities', { status: 500, body: { message: 'Failed to log activity' } });
 
-  await act(async () => { render(<MemoryRouter><LogDailyActivity /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('activity-input'), { target: { value: 'Walk the dog' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -36,7 +36,7 @@ test('Fails to log a daily activity with error message.', async () => {
 test('Successfully reports an inappropriate post', async () => {
   fetchMock.post('/api/community/report', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('report-button', { name: /report/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Successfully reports an inappropriate post', async () => {
 test('Fails to report an inappropriate post', async () => {
   fetchMock.post('/api/community/report', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('report-button', { name: /report/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Fails to report an inappropriate post', async () => {
 test('Views activity summary successfully.', async () => {
   fetchMock.get('/activities/summary', { summary: 'Activity summary data' });
 
-  await act(async () => { render(<MemoryRouter><ViewActivitySummary /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/activities/summary').length).toBe(1);
   expect(screen.getByText('Activity summary data')).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('Views activity summary successfully.', async () => {
 test('Fails to view activity summary with error message.', async () => {
   fetchMock.get('/activities/summary', { status: 500, body: { message: 'Failed to fetch summary' } });
 
-  await act(async () => { render(<MemoryRouter><ViewActivitySummary /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/activities/summary').length).toBe(1);
   expect(screen.getByTestId('error-message')).toBeInTheDocument();

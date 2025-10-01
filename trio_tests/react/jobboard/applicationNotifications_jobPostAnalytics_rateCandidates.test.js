@@ -14,7 +14,7 @@ afterEach(() => {
 test('successful application notifications.', async () => {
   fetchMock.get('/notifications', [{ message: 'Application Approved' }]);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('notifications-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successful application notifications.', async () => {
 test('failure application notifications.', async () => {
   fetchMock.get('/notifications', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('notifications-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

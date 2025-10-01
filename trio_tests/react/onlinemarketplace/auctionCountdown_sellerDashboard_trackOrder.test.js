@@ -58,7 +58,7 @@ test('fails to display the seller dashboard with an error message.', async () =>
 test('Track Order success displays tracking information', async () => {
   fetchMock.get('/api/orders/1/track', { status: 'In Transit' });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Track Order')); });
 
   expect(fetchMock.calls('/api/orders/1/track').length).toBe(1);
@@ -68,7 +68,7 @@ test('Track Order success displays tracking information', async () => {
 test('Track Order failure shows error message', async () => {
   fetchMock.get('/api/orders/1/track', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Track Order')); });
 
   expect(screen.getByText('Error tracking order')).toBeInTheDocument();

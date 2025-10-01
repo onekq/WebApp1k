@@ -17,7 +17,7 @@ test('User can create a new category successfully', async () => {
     body: { id: 1, name: 'New Category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Name'), { target: { value: 'New Category' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Category')); });
 
@@ -31,7 +31,7 @@ test('User gets an error message when creating a new category fails', async () =
     body: { error: 'Unable to create category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Name'), { target: { value: 'New Category' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Category')); });
 
@@ -42,7 +42,7 @@ test('User gets an error message when creating a new category fails', async () =
 test('successfully generates post performance report', async () => {
   fetchMock.get('/api/generatePostPerformanceReport?postId=1', { status: 200, body: { performance: 'high' } });
 
-  await act(async () => { render(<MemoryRouter><GeneratePostPerformanceReport postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Report')); });
 
   expect(fetchMock.calls('/api/generatePostPerformanceReport')).toHaveLength(1);
@@ -52,7 +52,7 @@ test('successfully generates post performance report', async () => {
 test('fails to generate post performance report with an error message', async () => {
   fetchMock.get('/api/generatePostPerformanceReport?postId=1', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><GeneratePostPerformanceReport postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Report')); });
 
   expect(fetchMock.calls('/api/generatePostPerformanceReport')).toHaveLength(1);
@@ -63,7 +63,7 @@ test('Success: retrieve a list of scheduled blog posts', async () => {
   fetchMock.get('/api/posts?status=scheduled', { status: 200, body: [{ id: 1, title: 'Scheduled Post' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -74,7 +74,7 @@ test('Failure: fetch scheduled posts but none exist', async () => {
   fetchMock.get('/api/posts?status=scheduled', { status: 404, body: { error: 'No scheduled posts found' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

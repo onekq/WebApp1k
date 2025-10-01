@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully calculates property value.', async () => {
   fetchMock.post('/api/properties/value', { value: 500000 });
 
-  await act(async () => { render(<MemoryRouter><CalculatePropertyValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('property-details'), { target: { value: 'Property Details' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-button')); });
 
@@ -25,7 +25,7 @@ test('Successfully calculates property value.', async () => {
 test('Fails to calculate property value with error message.', async () => {
   fetchMock.post('/api/properties/value', 400);
 
-  await act(async () => { render(<MemoryRouter><CalculatePropertyValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('property-details'), { target: { value: 'Property Details' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-button')); });
 
@@ -39,7 +39,7 @@ test('Search by Number of Bathrooms filters properties by number of bathrooms su
     body: [{ id: 1, bathrooms: 2 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/bathrooms/i), { target: { value: '2' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -53,7 +53,7 @@ test('Search by Number of Bathrooms filters properties by number of bathrooms fa
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/bathrooms/i), { target: { value: '2' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -64,7 +64,7 @@ test('Search by Number of Bathrooms filters properties by number of bathrooms fa
 test('Search by property owner successfully', async () => {
   fetchMock.get('/api/properties-by-owner', { properties: [{ id: 1, owner: "Owner 1" }] });
 
-  await act(async () => { render(<MemoryRouter><PropertyOwnerSearch /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('owner-search-input'), { target: { value: 'Owner 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-by-owner-btn')); });
 
@@ -75,7 +75,7 @@ test('Search by property owner successfully', async () => {
 test('Search by property owner fails with error', async () => {
   fetchMock.get('/api/properties-by-owner', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyOwnerSearch /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('owner-search-input'), { target: { value: 'Owner 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-by-owner-btn')); });
 

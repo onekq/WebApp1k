@@ -15,7 +15,7 @@ test('View Project Dashboard - success', async () => {
   fetchMock.get('/api/projects/dashboard', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('View Project Dashboard - failure', async () => {
   fetchMock.get('/api/projects/dashboard', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -45,7 +45,7 @@ test('Create Project Template - success', async () => {
   fetchMock.post('/api/projects/template', 201);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -64,7 +64,7 @@ test('Create Project Template - failure', async () => {
   fetchMock.post('/api/projects/template', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -82,7 +82,7 @@ test('Create Project Template - failure', async () => {
 test('successfully allocates resources to a task.', async () => {
   fetchMock.post('/api/resource-allocation', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ResourceAllocation /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resource-input'), { target: { value: '50%' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('allocate-resource-btn')); });
 
@@ -93,7 +93,7 @@ test('successfully allocates resources to a task.', async () => {
 test('fails to allocate resources to a task if server error.', async () => {
   fetchMock.post('/api/resource-allocation', 500);
 
-  await act(async () => { render(<MemoryRouter><ResourceAllocation /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resource-input'), { target: { value: '50%' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('allocate-resource-btn')); });
 

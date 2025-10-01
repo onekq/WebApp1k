@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully comment on a recipe', async () => {
   fetchMock.post('/api/comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Yummy!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -25,7 +25,7 @@ test('Successfully comment on a recipe', async () => {
 test('Fail to comment on recipe with error message', async () => {
   fetchMock.post('/api/comment', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Yummy!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -36,7 +36,7 @@ test('Fail to comment on recipe with error message', async () => {
 test('successfully saves a recipe to user profile', async () => {
   fetchMock.post('/save-recipe', 200);
 
-  await act(async () => { render(<MemoryRouter><SaveRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-button')); });
 
@@ -47,7 +47,7 @@ test('successfully saves a recipe to user profile', async () => {
 test('shows error message when failing to save a recipe', async () => {
   fetchMock.post('/save-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><SaveRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-button')); });
 

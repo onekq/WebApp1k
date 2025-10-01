@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully generates an XML sitemap', async () => {
   fetchMock.post('/api/xml-sitemap', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate xml sitemap/i)); });
 
   expect(fetchMock.calls('/api/xml-sitemap').length).toBe(1);
@@ -24,7 +24,7 @@ test('successfully generates an XML sitemap', async () => {
 test('fails to generate an XML sitemap due to server error', async () => {
   fetchMock.post('/api/xml-sitemap', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate xml sitemap/i)); });
 
   expect(fetchMock.calls('/api/xml-sitemap').length).toBe(1);
@@ -37,7 +37,7 @@ test('User can assign a post to a category successfully', async () => {
     body: { postId: 1, categoryId: 1 }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign Category')); });
 
@@ -51,7 +51,7 @@ test('User gets an error message when assigning a post to a category fails', asy
     body: { error: 'Unable to assign category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign Category')); });
 
@@ -62,7 +62,7 @@ test('User gets an error message when assigning a post to a category fails', asy
 test('successfully tracks unique visitors per post', async () => {
   fetchMock.post('/api/trackUniqueVisitors', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackUniqueVisitors postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Visit Post')); });
 
   expect(fetchMock.calls('/api/trackUniqueVisitors')).toHaveLength(1);
@@ -73,7 +73,7 @@ test('successfully tracks unique visitors per post', async () => {
 test('fails to track unique visitors with an error message', async () => {
   fetchMock.post('/api/trackUniqueVisitors', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackUniqueVisitors postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Visit Post')); });
 
   expect(fetchMock.calls('/api/trackUniqueVisitors')).toHaveLength(1);

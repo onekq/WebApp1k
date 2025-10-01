@@ -15,7 +15,7 @@ test('deletes a photo successfully', async () => {
   fetchMock.delete('/photo/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoManagementComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to delete a photo', async () => {
   fetchMock.delete('/photo/1', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoManagementComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -45,7 +45,7 @@ test('detects a duplicate photo', async () => {
   fetchMock.post('/upload', { status: 409 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -64,7 +64,7 @@ test('does not detect a duplicate photo', async () => {
   fetchMock.post('/upload', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -82,7 +82,7 @@ test('does not detect a duplicate photo', async () => {
 test('Users can successfully add tags to photos.', async () => {
   fetchMock.post('/api/tags', { success: true });
 
-  await act(async () => { render(<MemoryRouter><PhotoTaggingComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input'), { target: { value: 'Nature' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-tag-button')); });
 
@@ -93,7 +93,7 @@ test('Users can successfully add tags to photos.', async () => {
 test('Shows an error message when tag addition fails.', async () => {
   fetchMock.post('/api/tags', { success: false });
 
-  await act(async () => { render(<MemoryRouter><PhotoTaggingComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input'), { target: { value: 'Nature' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-tag-button')); });
 

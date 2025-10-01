@@ -37,7 +37,7 @@ test('Generate Project Report - success', async () => {
   fetchMock.get('/api/projects/report', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -52,7 +52,7 @@ test('Generate Project Report - failure', async () => {
   fetchMock.get('/api/projects/report', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -66,7 +66,7 @@ test('Generate Project Report - failure', async () => {
 test('successfully sets task dependencies.', async () => {
   fetchMock.post('/api/task-dependencies', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TaskDependencies /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'Task 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-dependency-btn')); });
 
@@ -77,7 +77,7 @@ test('successfully sets task dependencies.', async () => {
 test('fails to set task dependencies if server error.', async () => {
   fetchMock.post('/api/task-dependencies', 500);
 
-  await act(async () => { render(<MemoryRouter><TaskDependencies /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'Task 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-dependency-btn')); });
 

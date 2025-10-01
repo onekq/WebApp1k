@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully removes task dependencies.', async () => {
   fetchMock.delete('/api/task-dependencies', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TaskDependencies /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'Task 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-dependency-btn')); });
 
@@ -25,7 +25,7 @@ test('successfully removes task dependencies.', async () => {
 test('fails to remove task dependencies if server error.', async () => {
   fetchMock.delete('/api/task-dependencies', 500);
 
-  await act(async () => { render(<MemoryRouter><TaskDependencies /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'Task 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-dependency-btn')); });
 
@@ -57,7 +57,7 @@ test('Set a due date for a task successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Set deadline'), { target: { value: '2023-10-10' } });
@@ -74,7 +74,7 @@ test('Fail to set a due date for a task when API returns 500.', async () => {
   fetchMock.post('/api/tasks/1/deadline', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Set deadline'), { target: { value: '2023-10-10' } });

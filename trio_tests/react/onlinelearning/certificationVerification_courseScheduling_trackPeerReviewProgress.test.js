@@ -14,7 +14,7 @@ afterEach(() => {
 test('Certificate is verified successfully.', async () => {
   fetchMock.post('/api/certificates/verify', { valid: true });
 
-  await act(async () => { render(<MemoryRouter><CertificateVerification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/certificate id/i), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/verify/i)); });
 
@@ -25,7 +25,7 @@ test('Certificate is verified successfully.', async () => {
 test('Error message is shown when certificate verification fails.', async () => {
   fetchMock.post('/api/certificates/verify', { valid: false });
 
-  await act(async () => { render(<MemoryRouter><CertificateVerification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/certificate id/i), { target: { value: 'invalid' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/verify/i)); });
 
@@ -36,7 +36,7 @@ test('Error message is shown when certificate verification fails.', async () => 
 test('Course Scheduling success: should display scheduled courses.', async () => {
   fetchMock.post('/api/schedule-course', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CourseScheduling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Course ID'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Schedule')); });
 
@@ -47,7 +47,7 @@ test('Course Scheduling success: should display scheduled courses.', async () =>
 test('Course Scheduling failure: should display an error message on schedule failure.', async () => {
   fetchMock.post('/api/schedule-course', 400);
 
-  await act(async () => { render(<MemoryRouter><CourseScheduling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Course ID'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Schedule')); });
 
@@ -58,7 +58,7 @@ test('Course Scheduling failure: should display an error message on schedule fai
 test('Peer review progress is tracked successfully.', async () => {
   fetchMock.get('/api/peer-review-progress/101', { progress: 'Reviewed' });
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Track Peer Review/i)); });
 
   expect(fetchMock.calls('/api/peer-review-progress/101').length).toEqual(1);
@@ -68,7 +68,7 @@ test('Peer review progress is tracked successfully.', async () => {
 test('Peer review progress tracking fails if the server returns an error.', async () => {
   fetchMock.get('/api/peer-review-progress/101', 500);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Track Peer Review/i)); });
 
   expect(fetchMock.calls('/api/peer-review-progress/101').length).toEqual(1);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds alt text to an image', async () => {
   fetchMock.post('/api/alt-text', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/alt text/i), { target: { value: 'New Alt Text' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds alt text to an image', async () => {
 test('fails to add alt text to an image due to server error', async () => {
   fetchMock.post('/api/alt-text', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/alt text/i), { target: { value: 'New Alt Text' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -39,7 +39,7 @@ test('User can assign tags to a post successfully', async () => {
     body: { postId: 1, tags: [1, 2] }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tags Select'), { target: { value: ['1', '2'] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign Tags')); });
 
@@ -53,7 +53,7 @@ test('User gets an error message when assigning tags to a post fails', async () 
     body: { error: 'Unable to assign tags' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tags Select'), { target: { value: ['1', '2'] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign Tags')); });
 
@@ -65,7 +65,7 @@ test('Success: save a draft of a blog post', async () => {
   fetchMock.post('/api/saveDraft', { status: 200, body: { id: 1, title: 'Draft Post', content: 'Some content' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Draft Post' } });
@@ -83,7 +83,7 @@ test('Failure: save a draft of a blog post with network error', async () => {
   fetchMock.post('/api/saveDraft', { throws: new Error('Network Error') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Draft Post' } });

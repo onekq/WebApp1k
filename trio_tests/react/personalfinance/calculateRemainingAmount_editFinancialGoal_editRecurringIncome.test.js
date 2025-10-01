@@ -15,7 +15,7 @@ test('successfully calculates remaining amount to reach a financial goal', async
   fetchMock.get('/api/goal/remaining/1', { status: 200, body: { remaining: 500 } });
 
   await act(async () => {
-    render(<MemoryRouter><CalculateRemaining /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to calculate remaining amount to reach a financial goal', async () =
   fetchMock.get('/api/goal/remaining/1', { status: 404, body: { error: 'Goal not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><CalculateRemaining /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -45,7 +45,7 @@ test('successfully edits a financial goal', async () => {
   fetchMock.put('/api/goal/1', { status: 200, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><EditFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -61,7 +61,7 @@ test('fails to edit a financial goal', async () => {
   fetchMock.put('/api/goal/1', { status: 400, body: { error: 'Invalid update' } });
 
   await act(async () => {
-    render(<MemoryRouter><EditFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -77,7 +77,7 @@ test('successfully edits a recurring income', async () => {
   fetchMock.put('/income/recurring/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><EditRecurringIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Updated Salary' } });
@@ -94,7 +94,7 @@ test('fails to edit a recurring income', async () => {
   fetchMock.put('/income/recurring/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><EditRecurringIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });

@@ -15,7 +15,7 @@ test('successfully calculates the percentage of expenses in each category', asyn
   fetchMock.get('/api/expenses/categories', { status: 200, body: { percentages: { food: 30, entertainment: 20 } } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseCategories /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to calculate the percentage of expenses in each category', async () 
   fetchMock.get('/api/expenses/categories', { status: 400, body: { error: 'Calculation error' } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseCategories /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -45,7 +45,7 @@ test('Success: Import expenses from a CSV file.', async () => {
   fetchMock.post('/api/import-csv', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   const fileInput = screen.getByTestId('csv-file-input');
@@ -67,7 +67,7 @@ test('Failure: Import expenses from a CSV file.', async () => {
   fetchMock.post('/api/import-csv', { status: 400, body: { error: 'Invalid CSV file' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   const fileInput = screen.getByTestId('csv-file-input');
@@ -89,7 +89,7 @@ test('successfully tracks progress towards a financial goal', async () => {
   fetchMock.get('/api/goal/progress/1', { status: 200, body: { progress: 50 } });
 
   await act(async () => {
-    render(<MemoryRouter><TrackProgress /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -104,7 +104,7 @@ test('fails to track progress towards a financial goal', async () => {
   fetchMock.get('/api/goal/progress/1', { status: 404, body: { error: 'Goal not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><TrackProgress /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

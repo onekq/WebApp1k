@@ -14,7 +14,7 @@ afterEach(() => {
 test('should calculate running pace successfully.', async () => {
   fetchMock.post('/api/pace/calculate', { status: 200, body: { pace: '5:00 min/km' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('time-input'), { target: { value: '25' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('distance-input'), { target: { value: '5' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-pace-button')); });
@@ -27,7 +27,7 @@ test('should calculate running pace successfully.', async () => {
 test('should fail to calculate running pace.', async () => {
   fetchMock.post('/api/pace/calculate', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('time-input'), { target: { value: '25' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('distance-input'), { target: { value: '5' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-pace-button')); });
@@ -59,7 +59,7 @@ test('should successfully set a calorie intake goal', async () => {
   fetchMock.post('/api/goals/calories', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><SetCalorieGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/calorie goal/i), { target: { value: 2000 } });
@@ -76,7 +76,7 @@ test('should show error when setting a calorie intake goal fails', async () => {
   fetchMock.post('/api/goals/calories', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><SetCalorieGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/calorie goal/i), { target: { value: 2000 } });

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays accurate event analytics', async () => {
   fetchMock.get('/api/event/analytics', { count: 100, sales: 50 });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Attendee count: 100')).toBeInTheDocument();
@@ -24,7 +24,7 @@ test('Displays accurate event analytics', async () => {
 test('Displays error message when analytics data is inaccurate', async () => {
   fetchMock.get('/api/event/analytics', 500);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Failed to fetch event analytics')).toBeInTheDocument();
@@ -33,7 +33,7 @@ test('Displays error message when analytics data is inaccurate', async () => {
 test('Displays success message upon event archiving', async () => {
   fetchMock.post('/api/event/archive', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('archive-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -43,7 +43,7 @@ test('Displays success message upon event archiving', async () => {
 test('Displays error message upon failing to archive event', async () => {
   fetchMock.post('/api/event/archive', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('archive-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -53,7 +53,7 @@ test('Displays error message upon failing to archive event', async () => {
 test('Should successfully submit event with valid type', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/type/i), { target: { value: 'Conference' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -64,7 +64,7 @@ test('Should successfully submit event with valid type', async () => {
 test('Should show error for not selecting event type', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/type/i), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

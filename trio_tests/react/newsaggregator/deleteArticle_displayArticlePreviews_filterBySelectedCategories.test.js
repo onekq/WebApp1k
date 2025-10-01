@@ -14,7 +14,7 @@ afterEach(() => {
 test('Delete saved article successfully.', async () => {
   fetchMock.post('/api/delete-article', { success: true });
 
-  await act(async () => { render(<MemoryRouter><DeleteArticle /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Delete Article")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Delete saved article successfully.', async () => {
 test('Fail to delete saved article and display error.', async () => {
   fetchMock.post('/api/delete-article', 500);
 
-  await act(async () => { render(<MemoryRouter><DeleteArticle /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Delete Article")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to delete saved article and display error.', async () => {
 test('Displays article previews on the home page successfully', async () => {
   fetchMock.get('/api/articles', { status: 200, body: [{ id: 1, title: 'Test Article', preview: 'Test Preview' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Test Article')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('Displays article previews on the home page successfully', async () => {
 test('Fails to display article previews on the home page', async () => {
   fetchMock.get('/api/articles', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load articles')).toBeInTheDocument();
@@ -52,7 +52,7 @@ test('Fails to display article previews on the home page', async () => {
 test('filters articles by selected categories successfully', async () => {
   fetchMock.get('/api/articles?categories=Tech', { status: 200, body: [{ id: 1, title: 'Tech News' }] });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('categories-filter-input'), { target: { value: 'Tech' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-categories-filter-button')); });
 
@@ -63,7 +63,7 @@ test('filters articles by selected categories successfully', async () => {
 test('fails to filter articles by selected categories', async () => {
   fetchMock.get('/api/articles?categories=Tech', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('categories-filter-input'), { target: { value: 'Tech' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-categories-filter-button')); });
 

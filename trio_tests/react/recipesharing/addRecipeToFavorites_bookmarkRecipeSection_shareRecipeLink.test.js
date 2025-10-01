@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a recipe to favorites', async () => {
   fetchMock.post('/add-to-favorites', 200);
 
-  await act(async () => { render(<MemoryRouter><AddRecipeToFavoritesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('favorite-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully adds a recipe to favorites', async () => {
 test('shows error message when failing to add a recipe to favorites', async () => {
   fetchMock.post('/add-to-favorites', 500);
 
-  await act(async () => { render(<MemoryRouter><AddRecipeToFavoritesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('favorite-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('shows error message when failing to add a recipe to favorites', async () =
 test('Bookmark Recipe Section successfully', async () => {
   fetchMock.post('/api/recipe/1/bookmark', { body: { message: 'Section bookmarked' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Bookmark Section')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('Bookmark Recipe Section successfully', async () => {
 test('Bookmark Recipe Section failure shows error message', async () => {
   fetchMock.post('/api/recipe/1/bookmark', { body: { message: 'Error bookmarking section' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Bookmark Section')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Bookmark Recipe Section failure shows error message', async () => {
 test('Share Recipe Link successfully', async () => {
   fetchMock.post('/api/recipe/1/share', { body: { message: 'Recipe link shared' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share Recipe Link')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('Share Recipe Link successfully', async () => {
 test('Share Recipe Link failure shows error message', async () => {
   fetchMock.post('/api/recipe/1/share', { body: { message: 'Error sharing recipe link' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share Recipe Link')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

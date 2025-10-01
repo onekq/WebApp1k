@@ -15,7 +15,7 @@ test('successfully restores archived articles', async () => {
   fetchMock.post('path/to/api/article/restore', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('restore-article-button'));
@@ -29,7 +29,7 @@ test('fails to restore archived articles with error message', async () => {
   fetchMock.post('path/to/api/article/restore', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('restore-article-button'));
@@ -42,7 +42,7 @@ test('fails to restore archived articles with error message', async () => {
 test('Automatically assigning ticket to available agent should show success message.', async () => {
   fetchMock.post('/api/assign-ticket', { agent: 'John Doe' });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('new-ticket'), { target: { value: 'Issue description' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-ticket')); });
 
@@ -53,7 +53,7 @@ test('Automatically assigning ticket to available agent should show success mess
 test('Automatically assigning ticket to available agent should show error message when failed.', async () => {
   fetchMock.post('/api/assign-ticket', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('new-ticket'), { target: { value: 'Issue description' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-ticket')); });
 
@@ -64,7 +64,7 @@ test('Automatically assigning ticket to available agent should show error messag
 test('successfully sets ticket priority', async () => {
   fetchMock.post('/api/tickets', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Priority'), { target: { value: 'High' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
@@ -75,7 +75,7 @@ test('successfully sets ticket priority', async () => {
 test('shows error if setting priority fails', async () => {
   fetchMock.post('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Priority'), { target: { value: 'High' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   

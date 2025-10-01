@@ -14,7 +14,7 @@ afterEach(() => {
 test('System calculates total calories burned in a week successfully.', async () => {
   fetchMock.get('/api/total-calories', { calories: 5000 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-calories')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('System calculates total calories burned in a week successfully.', async ()
 test('System fails to calculate total calories burned in a week.', async () => {
   fetchMock.get('/api/total-calories', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-calories')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -52,7 +52,7 @@ test('fails to evaluate custom workout plans and displays an error message', asy
 test('should calculate total yoga duration successfully.', async () => {
   fetchMock.get('/api/yoga/duration', { status: 200, body: { totalDuration: '10 hours' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-duration-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -63,7 +63,7 @@ test('should calculate total yoga duration successfully.', async () => {
 test('should fail to calculate total yoga duration.', async () => {
   fetchMock.get('/api/yoga/duration', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-duration-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

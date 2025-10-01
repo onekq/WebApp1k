@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can successfully batch tag multiple photos.', async () => {
   fetchMock.post('/api/batch-tags', { success: true });
 
-  await act(async () => { render(<MemoryRouter><BatchTagPhotosComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('batch-tag-input'), { target: { value: 'Holiday' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('batch-tag-button')); });
 
@@ -25,7 +25,7 @@ test('Users can successfully batch tag multiple photos.', async () => {
 test('Shows an error message when batch tagging photos fails.', async () => {
   fetchMock.post('/api/batch-tags', { success: false });
 
-  await act(async () => { render(<MemoryRouter><BatchTagPhotosComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('batch-tag-input'), { target: { value: 'Holiday' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('batch-tag-button')); });
 
@@ -37,7 +37,7 @@ test('Download Album: success', async () => {
   fetchMock.post('/api/downloadAlbum', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-id-input'), { target: { value: 'AlbumID' } });
@@ -54,7 +54,7 @@ test('Download Album: failure', async () => {
   fetchMock.post('/api/downloadAlbum', { throws: new Error('Download Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-id-input'), { target: { value: 'AlbumID' } });

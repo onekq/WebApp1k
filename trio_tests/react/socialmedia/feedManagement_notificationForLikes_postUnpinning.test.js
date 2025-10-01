@@ -17,7 +17,7 @@ test('Displays posts from followed users in feed successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FeedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -30,7 +30,7 @@ test('Displays error when failing to load posts from followed users in feed.', a
   });
 
   await act(async () => {
-    render(<MemoryRouter><FeedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -40,7 +40,7 @@ test('Displays error when failing to load posts from followed users in feed.', a
 test('should send a notification when a post is liked', async () => {
   fetchMock.post('/api/like', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -50,7 +50,7 @@ test('should send a notification when a post is liked', async () => {
 test('should handle error when notification sending fails for a liked post', async () => {
   fetchMock.post('/api/like', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -61,7 +61,7 @@ test('Verify unpinning a post.', async () => {
   fetchMock.put('/api/posts/unpin/1', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Unpin Post'));
@@ -75,7 +75,7 @@ test('Ensure error handling for unpinning non-pinned posts.', async () => {
   fetchMock.put('/api/posts/unpin/1', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Unpin Post'));

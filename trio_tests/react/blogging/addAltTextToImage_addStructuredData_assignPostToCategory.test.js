@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds alt text to an image', async () => {
   fetchMock.post('/api/alt-text', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/alt text/i), { target: { value: 'New Alt Text' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds alt text to an image', async () => {
 test('fails to add alt text to an image due to server error', async () => {
   fetchMock.post('/api/alt-text', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/alt text/i), { target: { value: 'New Alt Text' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -36,7 +36,7 @@ test('fails to add alt text to an image due to server error', async () => {
 test('successfully adds structured data to a post', async () => {
   fetchMock.post('/api/structured-data', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/structured data/i), { target: { value: '{ "type": "BlogPosting" }' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -47,7 +47,7 @@ test('successfully adds structured data to a post', async () => {
 test('fails to add structured data to a post due to server error', async () => {
   fetchMock.post('/api/structured-data', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/structured data/i), { target: { value: '{ "type": "BlogPosting" }' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -61,7 +61,7 @@ test('User can assign a post to a category successfully', async () => {
     body: { postId: 1, categoryId: 1 }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign Category')); });
 
@@ -75,7 +75,7 @@ test('User gets an error message when assigning a post to a category fails', asy
     body: { error: 'Unable to assign category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign Category')); });
 

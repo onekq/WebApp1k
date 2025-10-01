@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays feedback form post-event', async () => {
   fetchMock.get('/api/event/feedback', { form: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByTestId('feedback-form')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Displays feedback form post-event', async () => {
 test('Displays error message when feedback form is unavailable post-event', async () => {
   fetchMock.get('/api/event/feedback', 404);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Feedback form is unavailable')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Displays error message when feedback form is unavailable post-event', asyn
 test('Displays sponsors and partners on event pages', async () => {
   fetchMock.get('/api/event/sponsors', { sponsors: ['Sponsor 1', 'Sponsor 2'], partners: ['Partner 1'] });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Sponsor 1')).toBeInTheDocument();
@@ -42,7 +42,7 @@ test('Displays sponsors and partners on event pages', async () => {
 test('Displays error message when sponsors and partners are unavailable', async () => {
   fetchMock.get('/api/event/sponsors', 404);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Sponsors and partners are unavailable')).toBeInTheDocument();
@@ -51,7 +51,7 @@ test('Displays error message when sponsors and partners are unavailable', async 
 test('Should successfully submit valid maximum attendees count', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/maximum attendees/i), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -62,7 +62,7 @@ test('Should successfully submit valid maximum attendees count', async () => {
 test('Should show error for negative maximum attendees count', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/maximum attendees/i), { target: { value: '-1' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

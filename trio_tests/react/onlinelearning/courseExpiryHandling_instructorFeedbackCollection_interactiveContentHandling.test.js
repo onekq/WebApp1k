@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully handles course expiry and re-enrollment', async () => {
   fetchMock.post('/courses/expire', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CourseExpiryHandling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Re-enroll')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Successfully handles course expiry and re-enrollment', async () => {
 test('Fails to handle course expiry and re-enrollment', async () => {
   fetchMock.post('/courses/expire', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><CourseExpiryHandling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Re-enroll')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Fails to handle course expiry and re-enrollment', async () => {
 test('Feedback from instructors about course content is collected.', async () => {
   fetchMock.post('/api/instructors/feedback', { success: true });
 
-  await act(async () => { render(<MemoryRouter><InstructorFeedback /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/content feedback/i), { target: { value: 'Well-structured course!' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit feedback/i)); });
 
@@ -45,7 +45,7 @@ test('Feedback from instructors about course content is collected.', async () =>
 test('Error message is shown when instructor feedback submission fails.', async () => {
   fetchMock.post('/api/instructors/feedback', 500);
 
-  await act(async () => { render(<MemoryRouter><InstructorFeedback /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/content feedback/i), { target: { value: 'Could be better.' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit feedback/i)); });
 
@@ -56,7 +56,7 @@ test('Error message is shown when instructor feedback submission fails.', async 
 test('Success: interactive content loads successfully', async () => {
   fetchMock.get('/api/interactive-content', 200);
 
-  await act(async () => { render(<MemoryRouter><InteractiveContentComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('load-interactive-content')); });
 
@@ -67,7 +67,7 @@ test('Success: interactive content loads successfully', async () => {
 test('Failure: interactive content fails to load', async () => {
   fetchMock.get('/api/interactive-content', 500);
 
-  await act(async () => { render(<MemoryRouter><InteractiveContentComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('load-interactive-content')); });
 

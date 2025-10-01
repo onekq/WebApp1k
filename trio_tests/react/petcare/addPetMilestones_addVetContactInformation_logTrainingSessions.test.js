@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully adds a new pet milestone', async () => {
   fetchMock.post('/api/milestones/add', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('milestone-input'), { target: { value: 'Learned to Sit' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-milestone-button')); });
 
@@ -25,7 +25,7 @@ test('Successfully adds a new pet milestone', async () => {
 test('Fails to add new pet milestone', async () => {
   fetchMock.post('/api/milestones/add', { status: 400 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-milestone-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -35,7 +35,7 @@ test('Fails to add new pet milestone', async () => {
 test('Add vet contact information successfully.', async () => {
   fetchMock.post('/api/vets', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vet name/i), {target: {value: 'Dr. Smith'}}); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/phone/i), {target: {value: '123-456-7890'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Vet Contact/i)); });
@@ -47,7 +47,7 @@ test('Add vet contact information successfully.', async () => {
 test('Fail to add vet contact information due to missing vet name.', async () => {
   fetchMock.post('/api/vets', 400);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vet name/i), {target: {value: ''}}); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/phone/i), {target: {value: '123-456-7890'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Vet Contact/i)); });
@@ -59,7 +59,7 @@ test('Fail to add vet contact information due to missing vet name.', async () =>
 test('Logs a training session successfully.', async () => {
   fetchMock.post('/training-sessions', { message: 'Training session logged' });
 
-  await act(async () => { render(<MemoryRouter><LogTrainingSessions /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('training-input'), { target: { value: 'Obedience training' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -70,7 +70,7 @@ test('Logs a training session successfully.', async () => {
 test('Fails to log a training session with error message.', async () => {
   fetchMock.post('/training-sessions', { status: 500, body: { message: 'Failed to log training session' } });
 
-  await act(async () => { render(<MemoryRouter><LogTrainingSessions /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('training-input'), { target: { value: 'Obedience training' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

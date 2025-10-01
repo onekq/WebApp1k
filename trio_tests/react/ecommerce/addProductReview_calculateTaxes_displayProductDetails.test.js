@@ -14,7 +14,7 @@ afterEach(() => {
 test('Adding a product review should succeed', async () => {
   fetchMock.post('/api/reviews', { status: 201 });
 
-  await act(async () => { render(<MemoryRouter><AddReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Great product!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 
@@ -25,7 +25,7 @@ test('Adding a product review should succeed', async () => {
 test('Adding a product review should fail due to server error', async () => {
   fetchMock.post('/api/reviews', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><AddReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Great product!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 
@@ -36,7 +36,7 @@ test('Adding a product review should fail due to server error', async () => {
 test('calculateTaxes: successfully calculate taxes', async () => {
   fetchMock.get('/api/cart/taxes', { status: 200, body: { taxes: '8.00' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-taxes')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('calculateTaxes: successfully calculate taxes', async () => {
 test('calculateTaxes: fail to calculate taxes with error message', async () => {
   fetchMock.get('/api/cart/taxes', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-taxes')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -56,7 +56,7 @@ test('calculateTaxes: fail to calculate taxes with error message', async () => {
 test('displays product details successfully', async () => {
   fetchMock.get('/api/products/1', { id: 1, name: 'Product 1', description: 'A great product', price: 100, rating: 4 });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Product 1')); });
 
   expect(fetchMock.called('/api/products/1')).toBe(true);
@@ -66,7 +66,7 @@ test('displays product details successfully', async () => {
 test('fails to display product details and shows error', async () => {
   fetchMock.get('/api/products/1', 404);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Product 1')); });
 
   expect(fetchMock.called('/api/products/1')).toBe(true);

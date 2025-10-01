@@ -14,7 +14,7 @@ afterEach(() => {
 test('Should reply to an existing comment', async () => {
   fetchMock.post('api/reply', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('reply-input'), { target: { value: 'Nice comment!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Reply')); });
 
@@ -25,7 +25,7 @@ test('Should reply to an existing comment', async () => {
 test('Should display an error when replying to an invalid comment', async () => {
   fetchMock.post('api/reply', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('reply-input'), { target: { value: 'Nice comment!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Reply')); });
 
@@ -36,7 +36,7 @@ test('Should display an error when replying to an invalid comment', async () => 
 test('Should delete an existing comment', async () => {
   fetchMock.delete('api/comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Should delete an existing comment', async () => {
 test('Should display an error when deleting a non-existent comment', async () => {
   fetchMock.delete('api/comment', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-comment-button-invalid')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -59,7 +59,7 @@ test('Successfully orders posts in feed.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><OrderComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText('Order By'), { target: { value: 'popular' } });
@@ -75,7 +75,7 @@ test('Shows error message when ordering posts fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><OrderComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText('Order By'), { target: { value: 'popular' } });

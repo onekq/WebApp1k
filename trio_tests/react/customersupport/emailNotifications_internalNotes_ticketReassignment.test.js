@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully sends email notifications for ticket updates.', async () => {
   fetchMock.post('/api/sendEmail', 200);
 
-  await act(async () => { render(<MemoryRouter><EmailNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketId'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send Notification')); });
 
@@ -25,7 +25,7 @@ test('Successfully sends email notifications for ticket updates.', async () => {
 test('Fails to send email notifications for ticket updates.', async () => {
   fetchMock.post('/api/sendEmail', 500);
 
-  await act(async () => { render(<MemoryRouter><EmailNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketId'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send Notification')); });
 
@@ -36,7 +36,7 @@ test('Fails to send email notifications for ticket updates.', async () => {
 test('Adding internal notes to tickets should show success message.', async () => {
   fetchMock.post('/api/add-internal-note', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('internal-note'), { target: { value: 'Internal note content' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-internal-note')); });
 
@@ -47,7 +47,7 @@ test('Adding internal notes to tickets should show success message.', async () =
 test('Adding internal notes to tickets should show error message when failed.', async () => {
   fetchMock.post('/api/add-internal-note', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('internal-note'), { target: { value: 'Internal note content' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-internal-note')); });
 
@@ -58,7 +58,7 @@ test('Adding internal notes to tickets should show error message when failed.', 
 test('Reassigning ticket to a different agent should show success message.', async () => {
   fetchMock.post('/api/reassign-ticket', { agent: 'Jane Doe' });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('reassign-ticket')); });
 
@@ -69,7 +69,7 @@ test('Reassigning ticket to a different agent should show success message.', asy
 test('Reassigning ticket to a different agent should show error message when failed.', async () => {
   fetchMock.post('/api/reassign-ticket', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('reassign-ticket')); });
 

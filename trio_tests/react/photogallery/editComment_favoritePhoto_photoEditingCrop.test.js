@@ -76,7 +76,7 @@ test('Should show error message when failing to mark a photo as favorite.', asyn
 test('should successfully crop a photo', async () => {
   fetchMock.post('/api/crop', { id: 1, cropped: true });
 
-  await act(async () => { render(<MemoryRouter><CropPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('crop-input'), { target: { value: '100x100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('crop-button')); });
 
@@ -87,7 +87,7 @@ test('should successfully crop a photo', async () => {
 test('should fail to crop a photo with error message', async () => {
   fetchMock.post('/api/crop', 404);
 
-  await act(async () => { render(<MemoryRouter><CropPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('crop-input'), { target: { value: '100x100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('crop-button')); });
 

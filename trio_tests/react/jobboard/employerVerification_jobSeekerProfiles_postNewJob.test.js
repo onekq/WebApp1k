@@ -14,7 +14,7 @@ afterEach(() => {
 test('employers can be successfully verified before allowing job postings', async () => {
   fetchMock.post('/api/employer/verify', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EmployerVerification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Verify Employer/i)); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('employers can be successfully verified before allowing job postings', asyn
 test('employers see an error message if verification fails', async () => {
   fetchMock.post('/api/employer/verify', 500);
 
-  await act(async () => { render(<MemoryRouter><EmployerVerification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Verify Employer/i)); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('employers see an error message if verification fails', async () => {
 test('job seekers can successfully create and update their profiles', async () => {
   fetchMock.post('/api/jobseeker', { success: true });
 
-  await act(async () => { render(<MemoryRouter><JobSeekerProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -45,7 +45,7 @@ test('job seekers can successfully create and update their profiles', async () =
 test('job seekers see an error message if profile update fails', async () => {
   fetchMock.post('/api/jobseeker', 500);
 
-  await act(async () => { render(<MemoryRouter><JobSeekerProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -57,7 +57,7 @@ test('Posting a new job successfully', async () => {
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -74,7 +74,7 @@ test('Posting a new job failure due to missing fields', async () => {
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Submit/i));

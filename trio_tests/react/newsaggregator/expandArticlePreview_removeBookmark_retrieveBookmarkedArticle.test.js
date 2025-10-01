@@ -14,7 +14,7 @@ afterEach(() => {
 test('Allows users to expand article previews to full articles successfully', async () => {
   fetchMock.get('/api/articles/1', { status: 200, body: { id: 1, content: 'Full Test Article Content' } });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Test Article')); });
 
   expect(fetchMock.calls()).toHaveLength(2);
@@ -24,7 +24,7 @@ test('Allows users to expand article previews to full articles successfully', as
 test('Fails to expand article previews to full articles', async () => {
   fetchMock.get('/api/articles/1', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Test Article')); });
 
   expect(fetchMock.calls()).toHaveLength(2);
@@ -34,7 +34,7 @@ test('Fails to expand article previews to full articles', async () => {
 test('removes a bookmark from an article successfully', async () => {
   fetchMock.delete('/bookmark/1', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveBookmarkComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Remove Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('removes a bookmark from an article successfully', async () => {
 test('fails to remove a bookmark from an article with error message', async () => {
   fetchMock.delete('/bookmark/1', 500);
 
-  await act(async () => { render(<MemoryRouter><RemoveBookmarkComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Remove Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('fails to remove a bookmark from an article with error message', async () =
 test('retrieves bookmarked articles successfully', async () => {
   fetchMock.get('/bookmarks', { articles: [{ id: 1, title: 'Test Article' }] });
 
-  await act(async () => { render(<MemoryRouter><RetrieveBookmarkedArticlesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Test Article')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('retrieves bookmarked articles successfully', async () => {
 test('fails to retrieve bookmarked articles with error message', async () => {
   fetchMock.get('/bookmarks', 500);
 
-  await act(async () => { render(<MemoryRouter><RetrieveBookmarkedArticlesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load bookmarks')).toBeInTheDocument();

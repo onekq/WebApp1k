@@ -15,7 +15,7 @@ test('Automatically expiring job posts after a set period successfully', async (
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -33,7 +33,7 @@ test('Automatically expiring job posts failure due to invalid date', async () =>
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -51,7 +51,7 @@ test('Posting a new job successfully', async () => {
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -68,7 +68,7 @@ test('Posting a new job failure due to missing fields', async () => {
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Submit/i));
@@ -81,7 +81,7 @@ test('Posting a new job failure due to missing fields', async () => {
 test('employers can successfully specify salary ranges in job posts', async () => {
   fetchMock.post('/api/job', { success: true });
 
-  await act(async () => { render(<MemoryRouter><JobPost /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Salary Range/i), { target: { value: '50k-70k' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Post Job/i)); });
 
@@ -92,7 +92,7 @@ test('employers can successfully specify salary ranges in job posts', async () =
 test('employers see an error message if specifying salary ranges fails', async () => {
   fetchMock.post('/api/job', 500);
 
-  await act(async () => { render(<MemoryRouter><JobPost /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Salary Range/i), { target: { value: '50k-70k' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Post Job/i)); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Badge is awarded for course achievements.', async () => {
   fetchMock.post('/api/course/awardBadge', { badgeId: 1 });
 
-  await act(async () => { render(<MemoryRouter><CourseAchievement /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/achieve badge/i)); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -24,7 +24,7 @@ test('Badge is awarded for course achievements.', async () => {
 test('Error message is shown when badge awarding fails.', async () => {
   fetchMock.post('/api/course/awardBadge', 500);
 
-  await act(async () => { render(<MemoryRouter><CourseAchievement /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/achieve badge/i)); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -34,7 +34,7 @@ test('Error message is shown when badge awarding fails.', async () => {
 test('Success: content downloaded successfully', async () => {
   fetchMock.get('/api/download', 200);
 
-  await act(async () => { render(<MemoryRouter><ContentDownloadComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('download-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('Success: content downloaded successfully', async () => {
 test('Failure: content download fails', async () => {
   fetchMock.get('/api/download', 500);
 
-  await act(async () => { render(<MemoryRouter><ContentDownloadComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('download-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Failure: content download fails', async () => {
 test('Course Scheduling success: should display scheduled courses.', async () => {
   fetchMock.post('/api/schedule-course', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CourseScheduling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Course ID'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Schedule')); });
 
@@ -65,7 +65,7 @@ test('Course Scheduling success: should display scheduled courses.', async () =>
 test('Course Scheduling failure: should display an error message on schedule failure.', async () => {
   fetchMock.post('/api/schedule-course', 400);
 
-  await act(async () => { render(<MemoryRouter><CourseScheduling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Course ID'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Schedule')); });
 

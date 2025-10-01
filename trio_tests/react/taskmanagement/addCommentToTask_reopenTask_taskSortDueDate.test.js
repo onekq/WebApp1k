@@ -58,7 +58,7 @@ test('Sort tasks by due date successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Sort by'), { target: { value: 'dueDate' } });
@@ -76,7 +76,7 @@ test('Fail to sort tasks by due date when API returns 500.', async () => {
   fetchMock.get('/api/tasks?sort=dueDate', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Sort by'), { target: { value: 'dueDate' } });

@@ -15,7 +15,7 @@ test('should delete an appointment reminder successfully', async () => {
   fetchMock.delete('/api/delete-appointment-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete Reminder/i));
@@ -29,7 +29,7 @@ test('should fail to delete an appointment reminder', async () => {
   fetchMock.delete('/api/delete-appointment-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete Reminder/i));
@@ -42,7 +42,7 @@ test('should fail to delete an appointment reminder', async () => {
 test('Delete vaccination record successfully.', async () => {
   fetchMock.delete('/api/vaccinations/1', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Delete Vaccination/i)); });
 
   expect(fetchMock.calls('/api/vaccinations/1').length).toBe(1);
@@ -52,7 +52,7 @@ test('Delete vaccination record successfully.', async () => {
 test('Fail to delete vaccination record due to server error.', async () => {
   fetchMock.delete('/api/vaccinations/1', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Delete Vaccination/i)); });
 
   expect(fetchMock.calls('/api/vaccinations/1').length).toBe(1);
@@ -62,7 +62,7 @@ test('Fail to delete vaccination record due to server error.', async () => {
 test('Successfully likes a community update', async () => {
   fetchMock.post('/api/community/like', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -72,7 +72,7 @@ test('Successfully likes a community update', async () => {
 test('Fails to like a community update', async () => {
   fetchMock.post('/api/community/like', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

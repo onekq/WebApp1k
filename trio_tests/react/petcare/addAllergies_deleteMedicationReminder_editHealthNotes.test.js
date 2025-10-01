@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add allergies successfully.', async () => {
   fetchMock.post('/api/allergies', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/allergy/i), {target: {value: 'Peanuts'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Allergy/i)); });
 
@@ -25,7 +25,7 @@ test('Add allergies successfully.', async () => {
 test('Fail to add allergies due to missing allergy name.', async () => {
   fetchMock.post('/api/allergies', 400);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/allergy/i), {target: {value: ''}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Allergy/i)); });
 
@@ -37,7 +37,7 @@ test('should delete a medication reminder successfully', async () => {
   fetchMock.delete('/api/delete-medication-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete Reminder/i));
@@ -51,7 +51,7 @@ test('should fail to delete a medication reminder', async () => {
   fetchMock.delete('/api/delete-medication-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete Reminder/i));
@@ -64,7 +64,7 @@ test('should fail to delete a medication reminder', async () => {
 test('Edit health notes successfully', async () => {
   fetchMock.put('/api/health-notes/1', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notes-input'), { target: { value: 'Very healthy!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -75,7 +75,7 @@ test('Edit health notes successfully', async () => {
 test('Fail to edit health notes with error', async () => {
   fetchMock.put('/api/health-notes/1', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notes-input'), { target: { value: '' } }); }); // Failure case: Empty input
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

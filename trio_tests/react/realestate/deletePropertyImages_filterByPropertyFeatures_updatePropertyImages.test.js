@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully deletes property images.', async () => {
   fetchMock.delete('/api/properties/1/images/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><DeletePropertyImages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-image-button')); });
 
   expect(fetchMock.calls('/api/properties/1/images/1').length).toEqual(1);
@@ -24,7 +24,7 @@ test('Successfully deletes property images.', async () => {
 test('Fails to delete property images with error message.', async () => {
   fetchMock.delete('/api/properties/1/images/1', 400);
 
-  await act(async () => { render(<MemoryRouter><DeletePropertyImages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-image-button')); });
 
   expect(fetchMock.calls('/api/properties/1/images/1').length).toEqual(1);
@@ -37,7 +37,7 @@ test('Filter by Property Features filters properties by features successfully', 
     body: [{ id: 1, features: ['balcony'] }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/features/i), { target: { value: 'balcony' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -51,7 +51,7 @@ test('Filter by Property Features filters properties by features fails', async (
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/features/i), { target: { value: 'balcony' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -62,7 +62,7 @@ test('Filter by Property Features filters properties by features fails', async (
 test('Successfully updates property images.', async () => {
   fetchMock.put('/api/properties/1/images/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><UpdatePropertyImages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('image-upload'), { target: { files: [new File([], 'updated-image.jpg')] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -73,7 +73,7 @@ test('Successfully updates property images.', async () => {
 test('Fails to update property images with error message.', async () => {
   fetchMock.put('/api/properties/1/images/1', 400);
 
-  await act(async () => { render(<MemoryRouter><UpdatePropertyImages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('image-upload'), { target: { files: [new File([], 'updated-image.jpg')] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

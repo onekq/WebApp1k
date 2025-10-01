@@ -14,7 +14,7 @@ afterEach(() => {
 test('save transaction details successfully', async () => {
   fetchMock.post('/api/save-transaction', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-transaction-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('save transaction details successfully', async () => {
 test('fail to save transaction details', async () => {
   fetchMock.post('/api/save-transaction', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-transaction-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('fail to save transaction details', async () => {
 test('sorts by price ascending successfully', async () => {
   fetchMock.get('/api/products?sort=price_asc', { products: [{ id: 1, name: 'Budget Phone' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-price-asc')); });
 
   expect(fetchMock.called('/api/products?sort=price_asc')).toBe(true);
@@ -44,7 +44,7 @@ test('sorts by price ascending successfully', async () => {
 test('fails to sort by price ascending and shows error', async () => {
   fetchMock.get('/api/products?sort=price_asc', 500);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-price-asc')); });
 
   expect(fetchMock.called('/api/products?sort=price_asc')).toBe(true);
@@ -54,7 +54,7 @@ test('fails to sort by price ascending and shows error', async () => {
 test('valid CVV', async () => {
   fetchMock.post('/api/validate-cvv', { valid: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cvv-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 
@@ -65,7 +65,7 @@ test('valid CVV', async () => {
 test('invalid CVV', async () => {
   fetchMock.post('/api/validate-cvv', 400);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cvv-input'), { target: { value: '12A' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 

@@ -17,7 +17,7 @@ test('Filter by Amenities filters properties by amenities successfully', async (
     body: [{ id: 1, amenities: ['pool'] }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/amenities/i), { target: { value: 'pool' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -31,7 +31,7 @@ test('Filter by Amenities filters properties by amenities fails', async () => {
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/amenities/i), { target: { value: 'pool' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -42,7 +42,7 @@ test('Filter by Amenities filters properties by amenities fails', async () => {
 test('shows the property location on a map', async () => {
   fetchMock.get('/property/1/location', { body: {} });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Map')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -52,7 +52,7 @@ test('shows the property location on a map', async () => {
 test('fails to display property location on map due to network error', async () => {
   fetchMock.get('/property/1/location', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Map')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -62,7 +62,7 @@ test('fails to display property location on map due to network error', async () 
 test('View similar properties successfully', async () => {
   fetchMock.get('/api/similar-properties', { properties: [{ id: 1, name: "Prop 1" }] });
 
-  await act(async () => { render(<MemoryRouter><SimilarProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-similar-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -72,7 +72,7 @@ test('View similar properties successfully', async () => {
 test('View similar properties fails with error', async () => {
   fetchMock.get('/api/similar-properties', 500);
 
-  await act(async () => { render(<MemoryRouter><SimilarProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-similar-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);

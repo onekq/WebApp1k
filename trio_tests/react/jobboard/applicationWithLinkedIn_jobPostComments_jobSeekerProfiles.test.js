@@ -14,7 +14,7 @@ afterEach(() => {
 test('successful LinkedIn application.', async () => {
   fetchMock.post('/applyLinkedIn', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-linkedin-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successful LinkedIn application.', async () => {
 test('failure LinkedIn application.', async () => {
   fetchMock.post('/applyLinkedIn', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-linkedin-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -74,7 +74,7 @@ test('Adding a comment to a job post fails due to server error.', async () => {
 test('job seekers can successfully create and update their profiles', async () => {
   fetchMock.post('/api/jobseeker', { success: true });
 
-  await act(async () => { render(<MemoryRouter><JobSeekerProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -85,7 +85,7 @@ test('job seekers can successfully create and update their profiles', async () =
 test('job seekers see an error message if profile update fails', async () => {
   fetchMock.post('/api/jobseeker', 500);
 
-  await act(async () => { render(<MemoryRouter><JobSeekerProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 

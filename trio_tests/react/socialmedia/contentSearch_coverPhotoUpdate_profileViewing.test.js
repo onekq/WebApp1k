@@ -17,7 +17,7 @@ test('Successfully searches and displays posts.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SearchComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Search'), { target: { value: 'test' } });
@@ -36,7 +36,7 @@ test('Shows error message for invalid search query.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SearchComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Search'), { target: { value: '' } });
@@ -52,7 +52,7 @@ test('Shows error message for invalid search query.', async () => {
 test('Cover photo update succeeds with valid image', async () => {
   fetchMock.put('/api/profile/cover-photo', { body: { message: 'Cover photo updated' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CoverPhotoUpdate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cover-photo'), { target: { files: [new File([], 'cover.jpg', { type: 'image/jpeg' })] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Cover Photo')); });
 
@@ -63,7 +63,7 @@ test('Cover photo update succeeds with valid image', async () => {
 test('Cover photo update fails with invalid image', async () => {
   fetchMock.put('/api/profile/cover-photo', { body: { error: 'Invalid image format' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><CoverPhotoUpdate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cover-photo'), { target: { files: [new File([], 'cover.txt', { type: 'text/plain' })] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Cover Photo')); });
 
@@ -74,7 +74,7 @@ test('Cover photo update fails with invalid image', async () => {
 test('Profile viewing succeeds for existing profile', async () => {
   fetchMock.get('/api/profile/1', { body: { name: 'John Doe' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><ProfileView profileId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App profileId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('John Doe')).toBeInTheDocument();
@@ -83,7 +83,7 @@ test('Profile viewing succeeds for existing profile', async () => {
 test('Profile viewing fails for non-existent profile', async () => {
   fetchMock.get('/api/profile/999', { body: { error: 'Profile not found' }, status: 404 });
 
-  await act(async () => { render(<MemoryRouter><ProfileView profileId={999} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App profileId={999} /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Profile not found')).toBeInTheDocument();

@@ -34,7 +34,7 @@ test('Fails to clear user reading history.', async () => {
 test('displays articles based on user preferences successfully', async () => {
   fetchMock.get('/api/articles?preferences=true', { status: 200, body: [{ id: 5, title: 'Preferred News' }] });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('display-preferences-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('displays articles based on user preferences successfully', async () => {
 test('fails to display articles based on user preferences', async () => {
   fetchMock.get('/api/articles?preferences=true', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('display-preferences-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add health checkup successfully', async () => {
   fetchMock.post('/api/health-checkups', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('checkup-input'), { target: { value: 'Annual Checkup' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Add health checkup successfully', async () => {
 test('Fail to add health checkup with error', async () => {
   fetchMock.post('/api/health-checkups', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('checkup-input'), { target: { value: '' } }); }); // Failure case: Empty input
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -36,7 +36,7 @@ test('Fail to add health checkup with error', async () => {
 test('Views training sessions list successfully.', async () => {
   fetchMock.get('/training-sessions', [{ description: 'Obedience training' }]);
 
-  await act(async () => { render(<MemoryRouter><ViewTrainingSessions /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/training-sessions').length).toBe(1);
   expect(screen.getByText('Obedience training')).toBeInTheDocument();
@@ -45,7 +45,7 @@ test('Views training sessions list successfully.', async () => {
 test('Fails to view training sessions list with error message.', async () => {
   fetchMock.get('/training-sessions', { status: 500, body: { message: 'Failed to fetch training sessions' } });
 
-  await act(async () => { render(<MemoryRouter><ViewTrainingSessions /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/training-sessions').length).toBe(1);
   expect(screen.getByTestId('error-message')).toBeInTheDocument();
@@ -60,7 +60,7 @@ test('should load upcoming reminders successfully', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -72,7 +72,7 @@ test('should fail to load upcoming reminders', async () => {
   fetchMock.get('/api/upcoming-reminders', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

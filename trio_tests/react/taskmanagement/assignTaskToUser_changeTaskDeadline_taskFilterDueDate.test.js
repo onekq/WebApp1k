@@ -14,7 +14,7 @@ afterEach(() => {
 test('Assign task to user successfully', async () => {
   fetchMock.post('/assign-task', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'New Task' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('assign-task-button')); });
@@ -26,7 +26,7 @@ test('Assign task to user successfully', async () => {
 test('Fail to assign task due to server error', async () => {
   fetchMock.post('/assign-task', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'New Task' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('assign-task-button')); });
@@ -41,7 +41,7 @@ test('Change the due date of an existing task successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Change deadline'), { target: { value: '2023-10-11' } });
@@ -58,7 +58,7 @@ test('Fail to change the due date of an existing task when API returns 500.', as
   fetchMock.put('/api/tasks/1/deadline', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Change deadline'), { target: { value: '2023-10-11' } });
@@ -77,7 +77,7 @@ test('Filter tasks by due date successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by due date'), { target: { value: '2023-10-10' } });
@@ -94,7 +94,7 @@ test('Fail to filter tasks by due date when API returns 500.', async () => {
   fetchMock.get('/api/tasks?dueDate=2023-10-10', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by due date'), { target: { value: '2023-10-10' } });

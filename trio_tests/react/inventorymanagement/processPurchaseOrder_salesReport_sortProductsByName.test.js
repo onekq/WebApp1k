@@ -14,7 +14,7 @@ afterEach(() => {
 test('Processing a purchase order increases the stock level appropriately.', async () => {
   fetchMock.post('/api/purchase-order', { status: 200, body: { success: true, newStockLevel: 110 } });
   
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('orderInput'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitOrder')); });
 
@@ -25,7 +25,7 @@ test('Processing a purchase order increases the stock level appropriately.', asy
 test('Processing a purchase order doesn\'t increase stock level due to error.', async () => {
   fetchMock.post('/api/purchase-order', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('orderInput'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitOrder')); });
 
@@ -36,7 +36,7 @@ test('Processing a purchase order doesn\'t increase stock level due to error.', 
 test('Generates sales report successfully.', async () => {
   fetchMock.post('/api/sales-report', { body: { status: 'success', data: { /* ...expected data... */ }} });
 
-  await act(async () => { render(<MemoryRouter><SalesReport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report')); });
 
@@ -47,7 +47,7 @@ test('Generates sales report successfully.', async () => {
 test('Fails to generate sales report due to server error.', async () => {
   fetchMock.post('/api/sales-report', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><SalesReport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report')); });
 

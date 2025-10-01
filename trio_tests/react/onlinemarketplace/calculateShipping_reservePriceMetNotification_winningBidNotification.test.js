@@ -14,7 +14,7 @@ afterEach(() => {
 test('correctly calculates shipping based on location.', async () => {
   fetchMock.post('/api/shipping', { body: { cost: 15 } });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('location-input'), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Calculate Shipping')); });
 
@@ -25,7 +25,7 @@ test('correctly calculates shipping based on location.', async () => {
 test('displays error on failing to calculate shipping.', async () => {
   fetchMock.post('/api/shipping', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('location-input'), { target: { value: '54321' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Calculate Shipping')); });
 

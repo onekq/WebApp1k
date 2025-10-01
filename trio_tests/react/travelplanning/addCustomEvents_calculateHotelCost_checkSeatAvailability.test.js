@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds custom events to an itinerary.', async () => {
   fetchMock.post('/api/add-event', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('event-input'), { target: { value: 'Event1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-event-button')); });
 
@@ -25,7 +25,7 @@ test('successfully adds custom events to an itinerary.', async () => {
 test('fails to add custom events due to network error.', async () => {
   fetchMock.post('/api/add-event', { status: 500, body: { error: 'Network error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('event-input'), { target: { value: 'Event1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-event-button')); });
 
@@ -40,7 +40,7 @@ test('calculateHotelCost - calculates total hotel cost including taxes and fees'
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('calculate-cost-1'));
@@ -57,7 +57,7 @@ test('calculateHotelCost - shows error message when cost calculation fails', asy
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('calculate-cost-1'));

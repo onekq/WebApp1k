@@ -54,7 +54,7 @@ test('Fails to recommend articles based on user history.', async () => {
 test('unlikes an article successfully', async () => {
   fetchMock.post('/unlike', 200);
 
-  await act(async () => { render(<MemoryRouter><UnlikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Unlike')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('unlikes an article successfully', async () => {
 test('fails to unlike an article with error message', async () => {
   fetchMock.post('/unlike', 500);
 
-  await act(async () => { render(<MemoryRouter><UnlikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Unlike')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

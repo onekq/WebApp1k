@@ -15,7 +15,7 @@ test('successfully categorizes articles by topic', async () => {
   fetchMock.get('path/to/api/articles?category=topic', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('category-select'), { target: { value: 'topic' } });
@@ -29,7 +29,7 @@ test('fails to categorize articles by topic with error message', async () => {
   fetchMock.get('path/to/api/articles?category=topic', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('category-select'), { target: { value: 'topic' } });
@@ -42,7 +42,7 @@ test('fails to categorize articles by topic with error message', async () => {
 test('Successfully creates custom notification rules.', async () => {
   fetchMock.post('/api/createCustomNotificationRule', 200);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationRules /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ruleContent'), { target: { value: 'Rule' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Rule')); });
 
@@ -53,7 +53,7 @@ test('Successfully creates custom notification rules.', async () => {
 test('Fails to create custom notification rules.', async () => {
   fetchMock.post('/api/createCustomNotificationRule', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationRules /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ruleContent'), { target: { value: 'Rule' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Rule')); });
 
@@ -64,7 +64,7 @@ test('Fails to create custom notification rules.', async () => {
 test('Escalating tickets to higher support levels should show success message.', async () => {
   fetchMock.post('/api/escalate-ticket', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('escalation-ticket-id'), { target: { value: 'escalate123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('escalate-ticket')); });
 
@@ -75,7 +75,7 @@ test('Escalating tickets to higher support levels should show success message.',
 test('Escalating tickets to higher support levels should show error message when failed.', async () => {
   fetchMock.post('/api/escalate-ticket', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('escalation-ticket-id'), { target: { value: 'escalate123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('escalate-ticket')); });
 

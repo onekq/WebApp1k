@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add allergies successfully.', async () => {
   fetchMock.post('/api/allergies', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/allergy/i), {target: {value: 'Peanuts'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Allergy/i)); });
 
@@ -25,7 +25,7 @@ test('Add allergies successfully.', async () => {
 test('Fail to add allergies due to missing allergy name.', async () => {
   fetchMock.post('/api/allergies', 400);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/allergy/i), {target: {value: ''}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Allergy/i)); });
 
@@ -36,7 +36,7 @@ test('Fail to add allergies due to missing allergy name.', async () => {
 test('Successfully comments on a community update', async () => {
   fetchMock.post('/api/community/comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Nice update!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -47,7 +47,7 @@ test('Successfully comments on a community update', async () => {
 test('Fails to comment on a community update', async () => {
   fetchMock.post('/api/community/comment', { status: 400 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -57,7 +57,7 @@ test('Fails to comment on a community update', async () => {
 test('Delete health notes successfully', async () => {
   fetchMock.delete('/api/health-notes/1', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-button')); });
 
   expect(fetchMock.calls('/api/health-notes/1').length).toBe(1);
@@ -67,7 +67,7 @@ test('Delete health notes successfully', async () => {
 test('Fail to delete health notes with error', async () => {
   fetchMock.delete('/api/health-notes/1', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-button')); });
 
   expect(fetchMock.calls('/api/health-notes/1').length).toBe(1);

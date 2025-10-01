@@ -15,7 +15,7 @@ test('should successfully edit a daily fitness goal', async () => {
   fetchMock.put('/api/goals/daily/123', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><EditDailyGoal goalId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App goalId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/daily goal/i), { target: { value: 12000 } });
@@ -32,7 +32,7 @@ test('should show error when editing a daily fitness goal fails', async () => {
   fetchMock.put('/api/goals/daily/123', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><EditDailyGoal goalId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App goalId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/daily goal/i), { target: { value: 12000 } });
@@ -71,7 +71,7 @@ test('should successfully set a reminder for workouts', async () => {
   fetchMock.post('/api/reminders/workouts', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><SetWorkoutReminder /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/reminder/i), { target: { value: '07:00 AM' } });
@@ -88,7 +88,7 @@ test('should show error when setting a reminder for workouts fails', async () =>
   fetchMock.post('/api/reminders/workouts', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><SetWorkoutReminder /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/reminder/i), { target: { value: '07:00 AM' } });

@@ -14,7 +14,7 @@ afterEach(() => {
 test('The system correctly tracks course progress.', async () => {
   fetchMock.get('/api/course-progress/101', { progress: 50 });
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Track Progress/i)); });
 
   expect(fetchMock.calls('/api/course-progress/101').length).toEqual(1);
@@ -24,7 +24,7 @@ test('The system correctly tracks course progress.', async () => {
 test('Course progress tracking fails with an error response from the server.', async () => {
   fetchMock.get('/api/course-progress/101', 500);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Track Progress/i)); });
 
   expect(fetchMock.calls('/api/course-progress/101').length).toEqual(1);
@@ -34,7 +34,7 @@ test('Course progress tracking fails with an error response from the server.', a
 test('Course Scheduling success: should display scheduled courses.', async () => {
   fetchMock.post('/api/schedule-course', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CourseScheduling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Course ID'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Schedule')); });
 
@@ -45,7 +45,7 @@ test('Course Scheduling success: should display scheduled courses.', async () =>
 test('Course Scheduling failure: should display an error message on schedule failure.', async () => {
   fetchMock.post('/api/schedule-course', 400);
 
-  await act(async () => { render(<MemoryRouter><CourseScheduling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Course ID'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Schedule')); });
 
@@ -56,7 +56,7 @@ test('Course Scheduling failure: should display an error message on schedule fai
 test('Progress report can be generated successfully.', async () => {
   fetchMock.get('/api/progress-report', { report: 'Mock Report' });
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Generate Progress Report/i)); });
 
   expect(fetchMock.calls('/api/progress-report').length).toEqual(1);
@@ -66,7 +66,7 @@ test('Progress report can be generated successfully.', async () => {
 test('Progress report generation fails if the server returns an error.', async () => {
   fetchMock.get('/api/progress-report', 500);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Generate Progress Report/i)); });
 
   expect(fetchMock.calls('/api/progress-report').length).toEqual(1);

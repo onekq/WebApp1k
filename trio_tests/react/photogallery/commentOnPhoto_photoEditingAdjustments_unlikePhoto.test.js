@@ -48,7 +48,7 @@ test('Should show error message when failing to add a comment.', async () => {
 test('should successfully adjust photo settings', async () => {
   fetchMock.post('/api/adjustments', { id: 1, adjusted: true });
 
-  await act(async () => { render(<MemoryRouter><AdjustPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('adjustments-input'), { target: { value: 'brightness|10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('adjustments-button')); });
 
@@ -59,7 +59,7 @@ test('should successfully adjust photo settings', async () => {
 test('should fail to adjust photo settings with error message', async () => {
   fetchMock.post('/api/adjustments', 404);
 
-  await act(async () => { render(<MemoryRouter><AdjustPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('adjustments-input'), { target: { value: 'brightness|10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('adjustments-button')); });
 

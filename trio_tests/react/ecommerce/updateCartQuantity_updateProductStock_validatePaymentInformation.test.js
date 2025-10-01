@@ -14,7 +14,7 @@ afterEach(() => {
 test('updateCartQuantity: successfully update product quantity in cart', async () => {
   fetchMock.put('/api/cart/1', { status: 200, body: { message: 'Updated' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cart-quantity'), { target: { value: '3' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('update-quantity')); });
 
@@ -25,7 +25,7 @@ test('updateCartQuantity: successfully update product quantity in cart', async (
 test('updateCartQuantity: fail to update product quantity in cart with error message', async () => {
   fetchMock.put('/api/cart/1', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cart-quantity'), { target: { value: '3' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('update-quantity')); });
 
@@ -36,7 +36,7 @@ test('updateCartQuantity: fail to update product quantity in cart with error mes
 test('Updates product stock successfully', async () => {
   fetchMock.patch('/api/updateProductStock', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Update Product Stock')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('Updates product stock successfully', async () => {
 test('Fails to update product stock', async () => {
   fetchMock.patch('/api/updateProductStock', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Update Product Stock')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -56,7 +56,7 @@ test('Fails to update product stock', async () => {
 test('Validates payment information successfully', async () => {
   fetchMock.post('/api/validatePaymentInformation', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Card Number'), { target: { value: '4111111111111111' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Validate Payment')); });
 
@@ -67,7 +67,7 @@ test('Validates payment information successfully', async () => {
 test('Fails to validate payment information with invalid card number', async () => {
   fetchMock.post('/api/validatePaymentInformation', 400);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Card Number'), { target: { value: '1234' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Validate Payment')); });
 

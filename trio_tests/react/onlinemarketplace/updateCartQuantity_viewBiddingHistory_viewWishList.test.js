@@ -14,7 +14,7 @@ afterEach(() => {
 test('Updating the quantity of a product in the cart succeeds.', async () => {
   fetchMock.put('/api/cart/1', { status: 200, body: { message: 'Quantity updated successfully' } });
 
-  await act(async () => { render(<MemoryRouter><CartPage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Quantity'), { target: { value: '2' } }); });
 
   expect(fetchMock.calls('/api/cart/1').length).toBe(1);
@@ -24,7 +24,7 @@ test('Updating the quantity of a product in the cart succeeds.', async () => {
 test('Updating the quantity of a product in the cart fails with error message.', async () => {
   fetchMock.put('/api/cart/1', { status: 400, body: { message: 'Invalid quantity' } });
 
-  await act(async () => { render(<MemoryRouter><CartPage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Quantity'), { target: { value: '-1' } }); });
 
   expect(fetchMock.calls('/api/cart/1').length).toBe(1);
@@ -62,7 +62,7 @@ test('fails to view bidding history with an error message displayed.', async () 
 test('View Wish List success displays wish list items', async () => {
   fetchMock.get('/api/wishlist', [{ id: 1, product: 'Product 1' }]);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/wishlist').length).toBe(1);
   expect(screen.getByText('Product 1')).toBeInTheDocument();
@@ -71,7 +71,7 @@ test('View Wish List success displays wish list items', async () => {
 test('View Wish List failure shows error message', async () => {
   fetchMock.get('/api/wishlist', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(screen.getByText('Error loading wish list')).toBeInTheDocument();
 }, 10000);

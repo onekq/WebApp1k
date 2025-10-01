@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current humidity for a given location', async () => {
   fetchMock.get('/api/current-humidity?location=NYC', { humidity: 65 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Humidity')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current humidity for a given location', async (
 test('Fails to retrieve the current humidity if the API returns an error', async () => {
   fetchMock.get('/api/current-humidity?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Humidity')); });
 
@@ -36,7 +36,7 @@ test('Fails to retrieve the current humidity if the API returns an error', async
 test('Successfully retrieves the current wind speed for a given location', async () => {
   fetchMock.get('/api/current-wind?location=NYC', { windSpeed: 10 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Wind Speed')); });
 
@@ -47,7 +47,7 @@ test('Successfully retrieves the current wind speed for a given location', async
 test('Fails to retrieve the current wind speed if the API returns an error', async () => {
   fetchMock.get('/api/current-wind?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Wind Speed')); });
 
@@ -58,7 +58,7 @@ test('Fails to retrieve the current wind speed if the API returns an error', asy
 test('correctly stores user wind speed unit preference', async () => {
   fetchMock.post('/preferences/wind-speed-unit', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('wind-speed-unit-select'), { target: { value: 'km/h' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -69,7 +69,7 @@ test('correctly stores user wind speed unit preference', async () => {
 test('displays error when storing user wind speed unit preference fails', async () => {
   fetchMock.post('/preferences/wind-speed-unit', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('wind-speed-unit-select'), { target: { value: 'km/h' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

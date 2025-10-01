@@ -14,7 +14,7 @@ afterEach(() => {
 test('Applies loyalty points successfully', async () => {
   fetchMock.post('/api/applyLoyaltyPoints', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Apply Loyalty Points')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Applies loyalty points successfully', async () => {
 test('Fails to apply loyalty points', async () => {
   fetchMock.post('/api/applyLoyaltyPoints', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Apply Loyalty Points')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fails to apply loyalty points', async () => {
 test('handle payment failure due to insufficient funds', async () => {
   fetchMock.post('/api/process-payment', { success: false, error: 'Insufficient funds' });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('handle payment failure due to insufficient funds', async () => {
 test('handle payment failure with generic error', async () => {
   fetchMock.post('/api/process-payment', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('handle payment failure with generic error', async () => {
 test('removeFromCart: successfully remove a product from the cart', async () => {
   fetchMock.delete('/api/cart/1', { status: 200, body: { message: 'Removed' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-from-cart')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -64,7 +64,7 @@ test('removeFromCart: successfully remove a product from the cart', async () => 
 test('removeFromCart: fail to remove a product from the cart with error message', async () => {
   fetchMock.delete('/api/cart/1', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-from-cart')); });
 
   expect(fetchMock.calls().length).toBe(1);

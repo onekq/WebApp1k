@@ -14,7 +14,7 @@ afterEach(() => {
 test('Feedback is collected at the end of the course.', async () => {
   fetchMock.post('/api/courses/feedback', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CourseFeedback /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/feedback/i), { target: { value: 'Excellent course!' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit feedback/i)); });
 
@@ -25,7 +25,7 @@ test('Feedback is collected at the end of the course.', async () => {
 test('Error message is shown when feedback submission fails.', async () => {
   fetchMock.post('/api/courses/feedback', 500);
 
-  await act(async () => { render(<MemoryRouter><CourseFeedback /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/feedback/i), { target: { value: 'Not great.' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit feedback/i)); });
 
@@ -36,7 +36,7 @@ test('Error message is shown when feedback submission fails.', async () => {
 test('Users can rate and review courses.', async () => {
   fetchMock.post('/api/courses/rate', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CourseReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/rating/i), { target: { value: 5 } }); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/review/i), { target: { value: 'Great course!' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit review/i)); });
@@ -48,7 +48,7 @@ test('Users can rate and review courses.', async () => {
 test('Error message is shown when submission fails.', async () => {
   fetchMock.post('/api/courses/rate', 500);
 
-  await act(async () => { render(<MemoryRouter><CourseReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/rating/i), { target: { value: 3 } }); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/review/i), { target: { value: 'Okay course.' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit review/i)); });
@@ -60,7 +60,7 @@ test('Error message is shown when submission fails.', async () => {
 test('Material Version Control success: should display version control info.', async () => {
   fetchMock.get('/api/course-materials/1/versions', [{ version: 1, details: 'Initial Version' }]);
 
-  await act(async () => { render(<MemoryRouter><MaterialVersionControl courseId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Initial Version')).toBeInTheDocument();
@@ -69,7 +69,7 @@ test('Material Version Control success: should display version control info.', a
 test('Material Version Control failure: should display an error message on version retrieval failure.', async () => {
   fetchMock.get('/api/course-materials/1/versions', 404);
 
-  await act(async () => { render(<MemoryRouter><MaterialVersionControl courseId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Version information cannot be retrieved.')).toBeInTheDocument();

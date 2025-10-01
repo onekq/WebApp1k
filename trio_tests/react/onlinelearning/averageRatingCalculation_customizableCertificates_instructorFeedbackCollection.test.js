@@ -14,7 +14,7 @@ afterEach(() => {
 test('Average rating is calculated correctly for a course.', async () => {
   fetchMock.get('/api/courses/ratings', { average: 4.5 });
 
-  await act(async () => { render(<MemoryRouter><CourseRating /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   
   expect(fetchMock.calls().length).toEqual(1);
   expect(screen.getByText(/average rating/i)).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Average rating is calculated correctly for a course.', async () => {
 test('Error message is shown when rating calculation fails.', async () => {
   fetchMock.get('/api/courses/ratings', 500);
 
-  await act(async () => { render(<MemoryRouter><CourseRating /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   
   expect(fetchMock.calls().length).toEqual(1);
   expect(screen.getByText(/failed to calculate average rating/i)).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Error message is shown when rating calculation fails.', async () => {
 test('Certificate templates are customizable.', async () => {
   fetchMock.post('/api/certificates/customize', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CustomizeCertificate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/template/i), { target: { value: 'new template' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -43,7 +43,7 @@ test('Certificate templates are customizable.', async () => {
 test('Error message is shown when customization fails.', async () => {
   fetchMock.post('/api/certificates/customize', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomizeCertificate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/template/i), { target: { value: 'invalid template' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -54,7 +54,7 @@ test('Error message is shown when customization fails.', async () => {
 test('Feedback from instructors about course content is collected.', async () => {
   fetchMock.post('/api/instructors/feedback', { success: true });
 
-  await act(async () => { render(<MemoryRouter><InstructorFeedback /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/content feedback/i), { target: { value: 'Well-structured course!' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit feedback/i)); });
 
@@ -65,7 +65,7 @@ test('Feedback from instructors about course content is collected.', async () =>
 test('Error message is shown when instructor feedback submission fails.', async () => {
   fetchMock.post('/api/instructors/feedback', 500);
 
-  await act(async () => { render(<MemoryRouter><InstructorFeedback /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/content feedback/i), { target: { value: 'Could be better.' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit feedback/i)); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current visibility distance for a given location', async () => {
   fetchMock.get('/api/current-visibility?location=NYC', { visibility: 10 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Visibility')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current visibility distance for a given locatio
 test('Fails to retrieve the current visibility distance if the API returns an error', async () => {
   fetchMock.get('/api/current-visibility?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Visibility')); });
 
@@ -36,7 +36,7 @@ test('Fails to retrieve the current visibility distance if the API returns an er
 test('Fetch weather for favorite locations succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { favoriteLocation: 'Paris', temperature: 18 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather for Favorite Locations')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Fetch weather for favorite locations succeeds.', async () => {
 test('Fetch weather for favorite locations fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather for Favorite Locations')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Fetch weather for favorite locations fails.', async () => {
 test('Fetch weather for multiple locations succeeds.', async () => {
   fetchMock.post('/api/weather', { data: [{ location: 'New York', temperature: 20 }, { location: 'Los Angeles', temperature: 25 }] });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('locations-input'), { target: { value: 'New York, Los Angeles' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -68,7 +68,7 @@ test('Fetch weather for multiple locations succeeds.', async () => {
 test('Fetch weather for multiple locations fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('locations-input'), { target: { value: 'InvalidLocation1, InvalidLocation2' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 

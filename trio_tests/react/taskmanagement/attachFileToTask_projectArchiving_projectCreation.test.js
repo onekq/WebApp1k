@@ -36,7 +36,7 @@ test('Archive Project - success', async () => {
   fetchMock.post('/api/projects/archive', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -51,7 +51,7 @@ test('Archive Project - failure', async () => {
   fetchMock.post('/api/projects/archive', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -66,7 +66,7 @@ test('Create Project - success', async () => {
   fetchMock.post('/api/projects', 201);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -89,7 +89,7 @@ test('Create Project - failure', async () => {
   fetchMock.post('/api/projects', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

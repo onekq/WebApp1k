@@ -49,7 +49,7 @@ test('Filter Photos by Album: success', async () => {
   fetchMock.get('/api/photos?album=AlbumID', { body: [{ id: 1, name: 'Photo1' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-filter-input'), { target: { value: 'AlbumID' } });
@@ -66,7 +66,7 @@ test('Filter Photos by Album: failure', async () => {
   fetchMock.get('/api/photos?album=AlbumID', { throws: new Error('Filter Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-filter-input'), { target: { value: 'AlbumID' } });
@@ -82,7 +82,7 @@ test('Filter Photos by Album: failure', async () => {
 test('should successfully view photos in slideshow mode', async () => {
   fetchMock.get('/api/photos', { photos: [{ id: 1 }] });
 
-  await act(async () => { render(<MemoryRouter><Slideshow /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('start-slideshow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -92,7 +92,7 @@ test('should successfully view photos in slideshow mode', async () => {
 test('should fail to view photos in slideshow mode with error message', async () => {
   fetchMock.get('/api/photos', 404);
 
-  await act(async () => { render(<MemoryRouter><Slideshow /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('start-slideshow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

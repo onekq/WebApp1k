@@ -14,7 +14,7 @@ afterEach(() => {
 test('Assignment grading logic works correctly.', async () => {
   fetchMock.post('/api/assignments/grade', { grade: 'A' });
 
-  await act(async () => { render(<MemoryRouter><AssignmentGrading /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/assignment id/i), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/grade/i)); });
 
@@ -25,7 +25,7 @@ test('Assignment grading logic works correctly.', async () => {
 test('Error message is shown when grading fails.', async () => {
   fetchMock.post('/api/assignments/grade', 500);
 
-  await act(async () => { render(<MemoryRouter><AssignmentGrading /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/assignment id/i), { target: { value: 'invalid' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/grade/i)); });
 
@@ -36,7 +36,7 @@ test('Error message is shown when grading fails.', async () => {
 test('Successfully posts a new forum post', async () => {
   fetchMock.post('/forum/posts', { status: 201 });
 
-  await act(async () => { render(<MemoryRouter><DiscussionForum /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('post-content'), { target: { value: 'New post' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Post')); });
 
@@ -47,7 +47,7 @@ test('Successfully posts a new forum post', async () => {
 test('Fails to post a new forum post', async () => {
   fetchMock.post('/forum/posts', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><DiscussionForum /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('post-content'), { target: { value: 'New post' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Post')); });
 
@@ -58,7 +58,7 @@ test('Fails to post a new forum post', async () => {
 test('Quiz scoring is calculated correctly.', async () => {
   fetchMock.post('/api/quiz/score', { score: 85 });
 
-  await act(async () => { render(<MemoryRouter><Quiz /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/answer/i), { target: { value: 'correct answer' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -69,7 +69,7 @@ test('Quiz scoring is calculated correctly.', async () => {
 test('Error message is shown when quiz scoring fails.', async () => {
   fetchMock.post('/api/quiz/score', 500);
 
-  await act(async () => { render(<MemoryRouter><Quiz /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/answer/i), { target: { value: 'wrong answer' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

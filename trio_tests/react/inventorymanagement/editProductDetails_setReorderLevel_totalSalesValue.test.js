@@ -58,7 +58,7 @@ test('Shows error message on failure when setting reorder level', async () => {
 test('Calculates total sales value successfully.', async () => {
   fetchMock.post('/api/total-sales-value', { body: { status: 'success', data: { value: 20000 }}});
 
-  await act(async () => { render(<MemoryRouter><TotalSalesValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-value')); });
 
@@ -69,7 +69,7 @@ test('Calculates total sales value successfully.', async () => {
 test('Fails to calculate total sales value due to server error.', async () => {
   fetchMock.post('/api/total-sales-value', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><TotalSalesValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-value')); });
 

@@ -15,7 +15,7 @@ test('Success: create a new blog post', async () => {
   fetchMock.post('/api/createPost', { status: 200, body: { id: 1, title: 'New Post', content: 'Some content' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'New Post' } });
@@ -33,7 +33,7 @@ test('Failure: create a new blog post with an empty title', async () => {
   fetchMock.post('/api/createPost', { status: 400, body: { error: 'Title cannot be empty' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/content/i), { target: { value: 'Some content' } });
@@ -52,7 +52,7 @@ test('User can create a new tag successfully', async () => {
     body: { id: 1, name: 'New Tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Name'), { target: { value: 'New Tag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Tag')); });
 
@@ -66,7 +66,7 @@ test('User gets an error message when creating a new tag fails', async () => {
     body: { error: 'Unable to create tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Name'), { target: { value: 'New Tag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Tag')); });
 

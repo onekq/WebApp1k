@@ -36,7 +36,7 @@ test('Filtering products by category shows a message if no products are found.',
 test('Processing a sales order reduces the stock level appropriately.', async () => {
   fetchMock.post('/api/sales-order', { status: 200, body: { success: true, newStockLevel: 90 } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('orderInput'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitOrder')); });
 
@@ -47,7 +47,7 @@ test('Processing a sales order reduces the stock level appropriately.', async ()
 test('Processing a sales order doesn\'t reduce stock level due to error.', async () => {
   fetchMock.post('/api/sales-order', { status: 500, body: { error: 'Internal Server Error' } });
   
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('orderInput'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitOrder')); });
 
@@ -58,7 +58,7 @@ test('Processing a sales order doesn\'t reduce stock level due to error.', async
 test('Validate tracking order shipment status updates order details correctly.', async () => {
   fetchMock.get('/api/shipment-status', { status: 200, body: { status: 'Shipped', trackingNumber: '123456789' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('trackShipmentStatus')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -69,7 +69,7 @@ test('Validate tracking order shipment status updates order details correctly.',
 test('Tracking order shipment status doesn\'t update details due to error.', async () => {
   fetchMock.get('/api/shipment-status', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('trackShipmentStatus')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

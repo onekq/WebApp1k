@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds custom events to an itinerary.', async () => {
   fetchMock.post('/api/add-event', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('event-input'), { target: { value: 'Event1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-event-button')); });
 
@@ -25,7 +25,7 @@ test('successfully adds custom events to an itinerary.', async () => {
 test('fails to add custom events due to network error.', async () => {
   fetchMock.post('/api/add-event', { status: 500, body: { error: 'Network error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('event-input'), { target: { value: 'Event1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-event-button')); });
 
@@ -36,7 +36,7 @@ test('fails to add custom events due to network error.', async () => {
 test('Customer support options should be provided successfully.', async () => {
   fetchMock.get('/api/support/options', [{ id: 1, method: 'Phone' }]);
 
-  await act(async () => { render(<MemoryRouter><CustomerSupportComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-support-options')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Customer support options should be provided successfully.', async () => {
 test('Error in offering customer support should show error message.', async () => {
   fetchMock.get('/api/support/options', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomerSupportComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-support-options')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Error in offering customer support should show error message.', async () =
 test('Price comparison should be provided for valid search.', async () => {
   fetchMock.post('/api/price/comparison', { price: 100 });
 
-  await act(async () => { render(<MemoryRouter><PriceComparisonComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('compare-prices')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('Price comparison should be provided for valid search.', async () => {
 test('Error in providing price comparison should show error message.', async () => {
   fetchMock.post('/api/price/comparison', 500);
 
-  await act(async () => { render(<MemoryRouter><PriceComparisonComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('compare-prices')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

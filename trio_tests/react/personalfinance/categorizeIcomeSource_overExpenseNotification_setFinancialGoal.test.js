@@ -15,7 +15,7 @@ test('successfully categorizes an income source', async () => {
   fetchMock.post('/income/1/categorize', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><CategorizeIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/category/i), { target: { value: 'Job' } });
@@ -32,7 +32,7 @@ test('fails to categorize an income source', async () => {
   fetchMock.post('/income/1/categorize', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><CategorizeIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/category/i), { target: { value: '' } });
@@ -49,7 +49,7 @@ test('successfully notifies when expenses exceed income for a given period', asy
   fetchMock.get('/api/expenses/notification', { status: 200, body: { notify: true } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -64,7 +64,7 @@ test('fails to notify when expenses exceed income for a given period', async () 
   fetchMock.get('/api/expenses/notification', { status: 200, body: { notify: false } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -79,7 +79,7 @@ test('successfully sets a new financial goal', async () => {
   fetchMock.post('/api/goal', { status: 201, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><SetFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -95,7 +95,7 @@ test('fails to set a new financial goal', async () => {
   fetchMock.post('/api/goal', { status: 400, body: { error: 'Invalid goal' } });
 
   await act(async () => {
-    render(<MemoryRouter><SetFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

@@ -54,7 +54,7 @@ test('Shows error on failure when sending automated reorder alerts', async () =>
 test('Generates reorder report successfully.', async () => {
   fetchMock.post('/api/reorder-report', { body: { status: 'success', data: { /* ...expected data... */ }} });
 
-  await act(async () => { render(<MemoryRouter><ReorderReport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report')); });
 
@@ -65,7 +65,7 @@ test('Generates reorder report successfully.', async () => {
 test('Fails to generate reorder report due to server error.', async () => {
   fetchMock.post('/api/reorder-report', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><ReorderReport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report')); });
 

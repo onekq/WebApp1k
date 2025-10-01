@@ -55,7 +55,7 @@ test('Fails to validate long agenda item description.', async () => {
 test('marks tickets as sold out', async () => {
   fetchMock.post('/markSoldOut', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('markSoldOutButton')); });
 
   expect(fetchMock.calls('/markSoldOut').length).toEqual(1);
@@ -63,7 +63,7 @@ test('marks tickets as sold out', async () => {
 }, 10000);
 
 test('fails to mark tickets as sold out', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('markSoldOutButton')); });
 
   expect(screen.getByText('Unable to mark tickets as sold out.')).toBeInTheDocument();

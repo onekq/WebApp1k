@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current visibility distance for a given location', async () => {
   fetchMock.get('/api/current-visibility?location=NYC', { visibility: 10 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Visibility')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current visibility distance for a given locatio
 test('Fails to retrieve the current visibility distance if the API returns an error', async () => {
   fetchMock.get('/api/current-visibility?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Visibility')); });
 
@@ -70,7 +70,7 @@ test('FetchHourlyForecast - fails to retrieve hourly forecast', async () => {
 test('Fetch weather for custom locations succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { customLocation: 'Mars', temperature: -60 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('custom-location-input'), { target: { value: 'Mars' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -81,7 +81,7 @@ test('Fetch weather for custom locations succeeds.', async () => {
 test('Fetch weather for custom locations fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('custom-location-input'), { target: { value: 'InvalidLocation' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 

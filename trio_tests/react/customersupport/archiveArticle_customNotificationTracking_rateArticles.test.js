@@ -15,7 +15,7 @@ test('successfully archives articles', async () => {
   fetchMock.post('path/to/api/article/archive', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('archive-article-button'));
@@ -29,7 +29,7 @@ test('fails to archive articles with error message', async () => {
   fetchMock.post('path/to/api/article/archive', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('archive-article-button'));
@@ -42,7 +42,7 @@ test('fails to archive articles with error message', async () => {
 test('Successfully tracks custom notification delivery.', async () => {
   fetchMock.get('/api/getCustomNotificationDelivery', { deliveryStatus: 'Success' });
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Success')).toBeInTheDocument();
@@ -51,7 +51,7 @@ test('Successfully tracks custom notification delivery.', async () => {
 test('Fails to track custom notification delivery.', async () => {
   fetchMock.get('/api/getCustomNotificationDelivery', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to track delivery')).toBeInTheDocument();
@@ -61,7 +61,7 @@ test('successfully rates articles for helpfulness', async () => {
   fetchMock.post('path/to/api/article/rate', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('rate-article-button'));
@@ -75,7 +75,7 @@ test('fails to rate articles for helpfulness with error message', async () => {
   fetchMock.post('path/to/api/article/rate', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('rate-article-button'));

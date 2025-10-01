@@ -17,7 +17,7 @@ test('Search by Property Type filters properties by type successfully', async ()
     body: [{ id: 1, type: 'apartment' }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/property type/i), { target: { value: 'apartment' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -31,7 +31,7 @@ test('Search by Property Type filters properties by type fails', async () => {
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/property type/i), { target: { value: 'apartment' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -42,7 +42,7 @@ test('Search by Property Type filters properties by type fails', async () => {
 test('sorts property listings by the date they were listed', async () => {
   fetchMock.get('/properties?sort=date', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sortDate'), { target: { value: 'desc' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitSort')); });
 
@@ -53,7 +53,7 @@ test('sorts property listings by the date they were listed', async () => {
 test('fails to sort property listings by date due to network error', async () => {
   fetchMock.get('/properties?sort=date', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sortDate'), { target: { value: 'desc' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitSort')); });
 
@@ -64,7 +64,7 @@ test('fails to sort property listings by date due to network error', async () =>
 test('View open house schedule successfully', async () => {
   fetchMock.get('/api/open-house-schedule', { schedule: 'Sun 2-4 PM' });
 
-  await act(async () => { render(<MemoryRouter><OpenHouseSchedule /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-schedule-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -74,7 +74,7 @@ test('View open house schedule successfully', async () => {
 test('View open house schedule fails with error', async () => {
   fetchMock.get('/api/open-house-schedule', 500);
 
-  await act(async () => { render(<MemoryRouter><OpenHouseSchedule /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-schedule-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);

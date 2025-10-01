@@ -53,7 +53,7 @@ test('Editing an existing job post successfully', async () => {
   fetchMock.put('/api/job/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Senior Software Engineer' } });
@@ -70,7 +70,7 @@ test('Editing an existing job post failure due to network error', async () => {
   fetchMock.put('/api/job/1', 500);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Senior Software Engineer' } });

@@ -35,7 +35,7 @@ test('fails to add cooking tips due to missing input', async () => {
 test('Save Shopping List successfully', async () => {
   fetchMock.post('/api/shopping-list/save', { body: { message: 'Shopping list saved' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Save Shopping List')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -45,7 +45,7 @@ test('Save Shopping List successfully', async () => {
 test('Save Shopping List failure shows error message', async () => {
   fetchMock.post('/api/shopping-list/save', { body: { message: 'Error saving shopping list' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Save Shopping List')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -55,7 +55,7 @@ test('Save Shopping List failure shows error message', async () => {
 test('Share Recipe Link successfully', async () => {
   fetchMock.post('/api/recipe/1/share', { body: { message: 'Recipe link shared' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share Recipe Link')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -65,7 +65,7 @@ test('Share Recipe Link successfully', async () => {
 test('Share Recipe Link failure shows error message', async () => {
   fetchMock.post('/api/recipe/1/share', { body: { message: 'Error sharing recipe link' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share Recipe Link')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

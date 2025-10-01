@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully deletes a playlist', async () => {
   fetchMock.delete('/api/playlists/1', 200);
 
-  await act(async () => { render(<MemoryRouter><DeletePlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully deletes a playlist', async () => {
 test('fails to delete a non-existing playlist', async () => {
   fetchMock.delete('/api/playlists/1', 404);
 
-  await act(async () => { render(<MemoryRouter><DeletePlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('fails to delete a non-existing playlist', async () => {
 test('successfully reorders songs in a playlist', async () => {
   fetchMock.put('/api/playlists/1/reorder', 200);
 
-  await act(async () => { render(<MemoryRouter><ReorderPlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.dragAndDrop(screen.getByTestId('song-1'), screen.getByTestId('song-2')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('successfully reorders songs in a playlist', async () => {
 test('fails to reorder songs in a non-existing playlist', async () => {
   fetchMock.put('/api/playlists/1/reorder', 404);
 
-  await act(async () => { render(<MemoryRouter><ReorderPlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.dragAndDrop(screen.getByTestId('song-1'), screen.getByTestId('song-2')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

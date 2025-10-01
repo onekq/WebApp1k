@@ -18,7 +18,7 @@ test('Successfully reports on SLA performance.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLAPerformanceReporting /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-picker'), { target: { value: 'sla1' } });
@@ -38,7 +38,7 @@ test('Fails to report on SLA performance and shows error message.', async () => 
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLAPerformanceReporting /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-picker'), { target: { value: 'sla1' } });
@@ -54,7 +54,7 @@ test('Fails to report on SLA performance and shows error message.', async () => 
 test('Reassigning ticket to a different agent should show success message.', async () => {
   fetchMock.post('/api/reassign-ticket', { agent: 'Jane Doe' });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('reassign-ticket')); });
 
@@ -65,7 +65,7 @@ test('Reassigning ticket to a different agent should show success message.', asy
 test('Reassigning ticket to a different agent should show error message when failed.', async () => {
   fetchMock.post('/api/reassign-ticket', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('reassign-ticket')); });
 
@@ -76,7 +76,7 @@ test('Reassigning ticket to a different agent should show error message when fai
 test('successfully changes the status of a ticket', async () => {
   fetchMock.put('/api/tickets/1/status', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketStatusChange ticketId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App ticketId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Status'), { target: { value: 'Resolved' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Status')); });
   
@@ -87,7 +87,7 @@ test('successfully changes the status of a ticket', async () => {
 test('shows error if changing status fails', async () => {
   fetchMock.put('/api/tickets/1/status', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketStatusChange ticketId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App ticketId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Status'), { target: { value: 'Resolved' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Status')); });
   

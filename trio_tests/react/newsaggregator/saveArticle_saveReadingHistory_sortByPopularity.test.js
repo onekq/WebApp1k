@@ -14,7 +14,7 @@ afterEach(() => {
 test('Save article successfully.', async () => {
   fetchMock.post('/api/save-article', { success: true });
 
-  await act(async () => { render(<MemoryRouter><SaveArticle /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Save Article")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Save article successfully.', async () => {
 test('Fail to save article and display error.', async () => {
   fetchMock.post('/api/save-article', 500);
 
-  await act(async () => { render(<MemoryRouter><SaveArticle /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Save Article")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -56,7 +56,7 @@ test('Fails to save user reading history.', async () => {
 test('Sorts articles by popularity successfully', async () => {
   fetchMock.get('/api/articles?sort=popularity', { status: 200, body: [{ id: 1, popularity: 1000 }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="popularity" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="popularity" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('1000')).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('Sorts articles by popularity successfully', async () => {
 test('Fails to sort articles by popularity', async () => {
   fetchMock.get('/api/articles?sort=popularity', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="popularity" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="popularity" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to sort articles by popularity')).toBeInTheDocument();

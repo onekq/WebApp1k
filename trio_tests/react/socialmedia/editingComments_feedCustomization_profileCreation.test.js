@@ -14,7 +14,7 @@ afterEach(() => {
 test('Should update an existing comment', async () => {
   fetchMock.put('api/comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('edit-comment-input'), { target: { value: 'Updated comment' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save')); });
 
@@ -25,7 +25,7 @@ test('Should update an existing comment', async () => {
 test('Should display an error when updating a comment with invalid data', async () => {
   fetchMock.put('api/comment', { status: 400 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('edit-comment-input'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save')); });
 
@@ -39,7 +39,7 @@ test('Successfully customizes feed to show only posts with images.', async () =>
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomizationComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Show Only Images'));
@@ -55,7 +55,7 @@ test('Shows error message when customizing feed fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomizationComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Show Only Images'));
@@ -68,7 +68,7 @@ test('Shows error message when customizing feed fails.', async () => {
 test('Profile creation succeeds with valid inputs', async () => {
   fetchMock.post('/api/profile', { body: { message: 'Profile created' }, status: 201 });
 
-  await act(async () => { render(<MemoryRouter><ProfileCreationForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('profile-name'), { target: { value: 'John Doe' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Profile')); });
 
@@ -79,7 +79,7 @@ test('Profile creation succeeds with valid inputs', async () => {
 test('Profile creation fails with invalid inputs', async () => {
   fetchMock.post('/api/profile', { body: { error: 'Invalid profile inputs' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><ProfileCreationForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('profile-name'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Profile')); });
 

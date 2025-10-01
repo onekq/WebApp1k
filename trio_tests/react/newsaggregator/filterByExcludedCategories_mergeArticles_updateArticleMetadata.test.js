@@ -14,7 +14,7 @@ afterEach(() => {
 test('filters articles by excluded categories successfully', async () => {
   fetchMock.get('/api/articles?excludedCategories=Sports', { status: 200, body: [{ id: 2, title: 'Non-Sports News' }] });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-categories-filter-input'), { target: { value: 'Sports' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-excluded-categories-filter-button')); });
 
@@ -25,7 +25,7 @@ test('filters articles by excluded categories successfully', async () => {
 test('fails to filter articles by excluded categories', async () => {
   fetchMock.get('/api/articles?excludedCategories=Sports', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-categories-filter-input'), { target: { value: 'Sports' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-excluded-categories-filter-button')); });
 
@@ -36,7 +36,7 @@ test('fails to filter articles by excluded categories', async () => {
 test('Merge articles from different sources successfully.', async () => {
   fetchMock.post('/api/merge-articles', { success: true });
 
-  await act(async () => { render(<MemoryRouter><MergeArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Merge Articles")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('Merge articles from different sources successfully.', async () => {
 test('Fail to merge articles and display error.', async () => {
   fetchMock.post('/api/merge-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><MergeArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Merge Articles")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -56,7 +56,7 @@ test('Fail to merge articles and display error.', async () => {
 test('Update article metadata successfully.', async () => {
   fetchMock.post('/api/update-article-metadata', { success: true });
 
-  await act(async () => { render(<MemoryRouter><UpdateArticleMetadata /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Update Metadata")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -66,7 +66,7 @@ test('Update article metadata successfully.', async () => {
 test('Fail to update article metadata and display error.', async () => {
   fetchMock.post('/api/update-article-metadata', 500);
 
-  await act(async () => { render(<MemoryRouter><UpdateArticleMetadata /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Update Metadata")); });
 
   expect(fetchMock.calls().length).toBe(1);

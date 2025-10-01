@@ -17,7 +17,7 @@ test('Fetch articles from multiple sources successfully.', async () => {
     { id: 2, title: "Article 2" }
   ]);
 
-  await act(async () => { render(<MemoryRouter><Articles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText("Article 1")).toBeInTheDocument();
@@ -26,7 +26,7 @@ test('Fetch articles from multiple sources successfully.', async () => {
 test('Fail to fetch articles and display error.', async () => {
   fetchMock.get('/api/articles', 500);
 
-  await act(async () => { render(<MemoryRouter><Articles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText("Error fetching articles.")).toBeInTheDocument();
@@ -35,7 +35,7 @@ test('Fail to fetch articles and display error.', async () => {
 test('Searches articles by keyword successfully', async () => {
   fetchMock.get('/api/articles?search=keyword', { status: 200, body: [{ id: 1, title: 'Test Keyword' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'keyword' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -46,7 +46,7 @@ test('Searches articles by keyword successfully', async () => {
 test('Fails to search articles by keyword', async () => {
   fetchMock.get('/api/articles?search=keyword', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'keyword' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -57,7 +57,7 @@ test('Fails to search articles by keyword', async () => {
 test('saves user-selected sources successfully', async () => {
   fetchMock.post('/api/save-sources', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sources-input'), { target: { value: 'BBC' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-sources-button')); });
 
@@ -68,7 +68,7 @@ test('saves user-selected sources successfully', async () => {
 test('fails to save user-selected sources', async () => {
   fetchMock.post('/api/save-sources', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sources-input'), { target: { value: 'BBC' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-sources-button')); });
 

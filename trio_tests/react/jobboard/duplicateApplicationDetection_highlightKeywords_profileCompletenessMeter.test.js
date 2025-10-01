@@ -14,7 +14,7 @@ afterEach(() => {
 test('successful duplicate application detection.', async () => {
   fetchMock.get('/checkDuplicate/123', { duplicate: false });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('check-duplicate-button')); });
 
@@ -25,7 +25,7 @@ test('successful duplicate application detection.', async () => {
 test('failure duplicate application detection.', async () => {
   fetchMock.get('/checkDuplicate/123', { duplicate: true });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('check-duplicate-button')); });
 
@@ -76,7 +76,7 @@ test('shows an error message when keyword highlighting fails.', async () => {
 test('completeness meter displays successfully on job seeker profiles', async () => {
   fetchMock.get('/api/jobseeker/completeness', { completeness: 80 });
 
-  await act(async () => { render(<MemoryRouter><ProfileCompletenessMeter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Profile completeness: 80%')).toBeInTheDocument();
@@ -85,7 +85,7 @@ test('completeness meter displays successfully on job seeker profiles', async ()
 test('completeness meter fails to display on error', async () => {
   fetchMock.get('/api/jobseeker/completeness', 500);
 
-  await act(async () => { render(<MemoryRouter><ProfileCompletenessMeter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Failed to load completeness meter')).toBeInTheDocument();

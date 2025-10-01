@@ -14,7 +14,7 @@ afterEach(() => {
 test('Instructor Assignment success: should display assigned instructor.', async () => {
   fetchMock.post('/api/assign-instructor', { success: true });
 
-  await act(async () => { render(<MemoryRouter><InstructorAssignment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Instructor ID'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign')); });
 
@@ -25,7 +25,7 @@ test('Instructor Assignment success: should display assigned instructor.', async
 test('Instructor Assignment failure: should display an error message on assignment failure.', async () => {
   fetchMock.post('/api/assign-instructor', 400);
 
-  await act(async () => { render(<MemoryRouter><InstructorAssignment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Instructor ID'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign')); });
 
@@ -36,7 +36,7 @@ test('Instructor Assignment failure: should display an error message on assignme
 test('Successfully schedules and notifies for live session', async () => {
   fetchMock.post('/live-sessions/schedule', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><LiveSessionScheduling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Schedule')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Successfully schedules and notifies for live session', async () => {
 test('Fails to schedule and notify for live session', async () => {
   fetchMock.post('/live-sessions/schedule', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><LiveSessionScheduling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Schedule')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Fails to schedule and notify for live session', async () => {
 test('Users can successfully unenroll from a course.', async () => {
   fetchMock.delete('/api/unenroll/101', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Unenroll from Course/i)); });
 
   expect(fetchMock.calls('/api/unenroll/101').length).toEqual(1);
@@ -66,7 +66,7 @@ test('Users can successfully unenroll from a course.', async () => {
 test('Users cannot unenroll from a course if the server returns an error.', async () => {
   fetchMock.delete('/api/unenroll/101', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Unenroll from Course/i)); });
 
   expect(fetchMock.calls('/api/unenroll/101').length).toEqual(1);

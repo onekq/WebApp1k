@@ -18,7 +18,7 @@ test('Successfully analyzes average response time.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ResponseTimeAnalysis /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('agent-picker'), { target: { value: 'agent1' } });
@@ -38,7 +38,7 @@ test('Fails to analyze average response time and shows error message.', async ()
   });
 
   await act(async () => {
-    render(<MemoryRouter><ResponseTimeAnalysis /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('agent-picker'), { target: { value: 'agent1' } });
@@ -55,7 +55,7 @@ test('successfully suggests articles based on ticket content', async () => {
   fetchMock.post('path/to/api/article/suggest', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('suggest-articles-button'));
@@ -69,7 +69,7 @@ test('fails to suggest articles based on ticket content with error message', asy
   fetchMock.post('path/to/api/article/suggest', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('suggest-articles-button'));
@@ -82,7 +82,7 @@ test('fails to suggest articles based on ticket content with error message', asy
 test('successfully sets ticket priority', async () => {
   fetchMock.post('/api/tickets', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Priority'), { target: { value: 'High' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
@@ -93,7 +93,7 @@ test('successfully sets ticket priority', async () => {
 test('shows error if setting priority fails', async () => {
   fetchMock.post('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Priority'), { target: { value: 'High' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   

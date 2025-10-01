@@ -35,7 +35,7 @@ test('fails to add ingredient substitutions due to invalid input', async () => {
 test('Bookmark Recipe Section successfully', async () => {
   fetchMock.post('/api/recipe/1/bookmark', { body: { message: 'Section bookmarked' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Bookmark Section')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -45,7 +45,7 @@ test('Bookmark Recipe Section successfully', async () => {
 test('Bookmark Recipe Section failure shows error message', async () => {
   fetchMock.post('/api/recipe/1/bookmark', { body: { message: 'Error bookmarking section' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Bookmark Section')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -55,7 +55,7 @@ test('Bookmark Recipe Section failure shows error message', async () => {
 test('Report Recipe successfully', async () => {
   fetchMock.post('/api/recipe/1/report', { body: { message: 'Recipe reported' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Report Recipe')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -65,7 +65,7 @@ test('Report Recipe successfully', async () => {
 test('Report Recipe failure shows error message', async () => {
   fetchMock.post('/api/recipe/1/report', { body: { message: 'Error reporting recipe' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Report Recipe')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

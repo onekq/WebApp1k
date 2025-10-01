@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds structured data to a post', async () => {
   fetchMock.post('/api/structured-data', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/structured data/i), { target: { value: '{ "type": "BlogPosting" }' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds structured data to a post', async () => {
 test('fails to add structured data to a post due to server error', async () => {
   fetchMock.post('/api/structured-data', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/structured data/i), { target: { value: '{ "type": "BlogPosting" }' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -38,7 +38,7 @@ test('User can delete a tag successfully', async () => {
     status: 204
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete Tag')); });
 
   expect(fetchMock.calls('/tags/1').length).toBe(1);
@@ -51,7 +51,7 @@ test('User gets an error message when deleting a tag fails', async () => {
     body: { error: 'Unable to delete tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete Tag')); });
 
   expect(fetchMock.calls('/tags/1').length).toBe(1);
@@ -61,7 +61,7 @@ test('User gets an error message when deleting a tag fails', async () => {
 test('successfully generates an SEO audit report', async () => {
   fetchMock.post('/api/seo-audit', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate seo audit report/i)); });
 
   expect(fetchMock.calls('/api/seo-audit').length).toBe(1);
@@ -71,7 +71,7 @@ test('successfully generates an SEO audit report', async () => {
 test('fails to generate an SEO audit report due to server error', async () => {
   fetchMock.post('/api/seo-audit', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate seo audit report/i)); });
 
   expect(fetchMock.calls('/api/seo-audit').length).toBe(1);

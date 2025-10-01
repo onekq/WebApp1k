@@ -14,7 +14,7 @@ afterEach(() => {
 test('successful cover letter attachment.', async () => {
   fetchMock.post('/attachCoverLetter', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cover-letter-input'), { target: { value: 'Cover Letter Text' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('attach-button')); });
 
@@ -25,7 +25,7 @@ test('successful cover letter attachment.', async () => {
 test('failure cover letter attachment.', async () => {
   fetchMock.post('/attachCoverLetter', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cover-letter-input'), { target: { value: 'Cover Letter Text' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('attach-button')); });
 
@@ -37,7 +37,7 @@ test('Deleting a job post successfully', async () => {
   fetchMock.delete('/api/job/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete/i));
@@ -51,7 +51,7 @@ test('Deleting a job post failure due to not found error', async () => {
   fetchMock.delete('/api/job/1', 404);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete/i));

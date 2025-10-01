@@ -15,7 +15,7 @@ test('Specifying valid locations for job openings successfully', async () => {
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -33,7 +33,7 @@ test('Specifying locations failure due to invalid location', async () => {
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -50,7 +50,7 @@ test('Specifying locations failure due to invalid location', async () => {
 test('completeness meter displays successfully on job seeker profiles', async () => {
   fetchMock.get('/api/jobseeker/completeness', { completeness: 80 });
 
-  await act(async () => { render(<MemoryRouter><ProfileCompletenessMeter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Profile completeness: 80%')).toBeInTheDocument();
@@ -59,7 +59,7 @@ test('completeness meter displays successfully on job seeker profiles', async ()
 test('completeness meter fails to display on error', async () => {
   fetchMock.get('/api/jobseeker/completeness', 500);
 
-  await act(async () => { render(<MemoryRouter><ProfileCompletenessMeter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Failed to load completeness meter')).toBeInTheDocument();
@@ -68,7 +68,7 @@ test('completeness meter fails to display on error', async () => {
 test('employers can successfully specify salary ranges in job posts', async () => {
   fetchMock.post('/api/job', { success: true });
 
-  await act(async () => { render(<MemoryRouter><JobPost /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Salary Range/i), { target: { value: '50k-70k' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Post Job/i)); });
 
@@ -79,7 +79,7 @@ test('employers can successfully specify salary ranges in job posts', async () =
 test('employers see an error message if specifying salary ranges fails', async () => {
   fetchMock.post('/api/job', 500);
 
-  await act(async () => { render(<MemoryRouter><JobPost /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Salary Range/i), { target: { value: '50k-70k' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Post Job/i)); });
 

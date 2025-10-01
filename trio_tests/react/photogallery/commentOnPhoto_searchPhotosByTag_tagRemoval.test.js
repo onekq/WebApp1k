@@ -48,7 +48,7 @@ test('Should show error message when failing to add a comment.', async () => {
 test('should successfully search photos by tag', async () => {
   fetchMock.get('/api/search?tag=sunset', { photos: [{ id: 1, tag: 'sunset' }] });
 
-  await act(async () => { render(<MemoryRouter><SearchPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'sunset' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -59,7 +59,7 @@ test('should successfully search photos by tag', async () => {
 test('should fail to search photos by tag with error message', async () => {
   fetchMock.get('/api/search?tag=sunset', 404);
 
-  await act(async () => { render(<MemoryRouter><SearchPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'sunset' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -70,7 +70,7 @@ test('should fail to search photos by tag with error message', async () => {
 test('Users can successfully remove tags from photos.', async () => {
   fetchMock.delete('/api/tags', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TagRemovalComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-tag-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -80,7 +80,7 @@ test('Users can successfully remove tags from photos.', async () => {
 test('Shows an error message when tag removal fails.', async () => {
   fetchMock.delete('/api/tags', { success: false });
 
-  await act(async () => { render(<MemoryRouter><TagRemovalComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-tag-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);

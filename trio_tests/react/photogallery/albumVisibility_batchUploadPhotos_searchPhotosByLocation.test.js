@@ -15,7 +15,7 @@ test('Album Visibility Settings: success', async () => {
   fetchMock.post('/api/setAlbumVisibility', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-id-input'), { target: { value: 'AlbumID' } });
@@ -32,7 +32,7 @@ test('Album Visibility Settings: failure', async () => {
   fetchMock.post('/api/setAlbumVisibility', { throws: new Error('Visibility Change Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-id-input'), { target: { value: 'AlbumID' } });
@@ -49,7 +49,7 @@ test('batch uploads multiple photos successfully', async () => {
   fetchMock.post('/upload/batch', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><BatchPhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -72,7 +72,7 @@ test('fails to batch upload multiple photos', async () => {
   fetchMock.post('/upload/batch', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><BatchPhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -94,7 +94,7 @@ test('fails to batch upload multiple photos', async () => {
 test('should successfully search photos by location', async () => {
   fetchMock.get('/api/search?location=Paris', { photos: [{ id: 1, location: 'Paris' }] });
 
-  await act(async () => { render(<MemoryRouter><SearchPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'Paris' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -105,7 +105,7 @@ test('should successfully search photos by location', async () => {
 test('should fail to search photos by location with error message', async () => {
   fetchMock.get('/api/search?location=Paris', 404);
 
-  await act(async () => { render(<MemoryRouter><SearchPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'Paris' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 

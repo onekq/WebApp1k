@@ -14,7 +14,7 @@ afterEach(() => {
 test('Playing a preview of a song works.', async () => {
   fetchMock.post('/api/playPreview', 200);
 
-  await act(async () => { render(<MemoryRouter><PreviewComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('play-preview-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Playing a preview of a song works.', async () => {
 test('Playing a preview of a song fails with an error message.', async () => {
   fetchMock.post('/api/playPreview', 500);
 
-  await act(async () => { render(<MemoryRouter><PreviewComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('play-preview-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

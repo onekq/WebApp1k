@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can successfully sort photos by name.', async () => {
   fetchMock.get('/api/sort-photos-by-name', { success: true, data: ['photoA', 'photoB'] });
 
-  await act(async () => { render(<MemoryRouter><SortPhotosByNameComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-name-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -24,7 +24,7 @@ test('Users can successfully sort photos by name.', async () => {
 test('Shows an error message when sorting photos by name fails.', async () => {
   fetchMock.get('/api/sort-photos-by-name', { success: false });
 
-  await act(async () => { render(<MemoryRouter><SortPhotosByNameComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-name-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -34,7 +34,7 @@ test('Shows an error message when sorting photos by name fails.', async () => {
 test('Users can successfully remove tags from photos.', async () => {
   fetchMock.delete('/api/tags', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TagRemovalComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-tag-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -44,7 +44,7 @@ test('Users can successfully remove tags from photos.', async () => {
 test('Shows an error message when tag removal fails.', async () => {
   fetchMock.delete('/api/tags', { success: false });
 
-  await act(async () => { render(<MemoryRouter><TagRemovalComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-tag-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);

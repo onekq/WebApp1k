@@ -15,7 +15,7 @@ test('Album Sorting: success', async () => {
   fetchMock.get('/api/albums?sortBy=date', { body: [{ id: 1, name: 'Album1' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sort-select'), { target: { value: 'date' } });
@@ -32,7 +32,7 @@ test('Album Sorting: failure', async () => {
   fetchMock.get('/api/albums?sortBy=date', { throws: new Error('Sort Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sort-select'), { target: { value: 'date' } });
@@ -49,7 +49,7 @@ test('Share Album: success', async () => {
   fetchMock.post('/api/shareAlbum', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-input'), { target: { value: 'AlbumID' } });
@@ -66,7 +66,7 @@ test('Share Album: failure', async () => {
   fetchMock.post('/api/shareAlbum', { throws: new Error('Share Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-input'), { target: { value: 'AlbumID' } });
@@ -82,7 +82,7 @@ test('Share Album: failure', async () => {
 test('Users can successfully sort photos by date.', async () => {
   fetchMock.get('/api/sort-photos-by-date', { success: true, data: ['photo1', 'photo2'] });
 
-  await act(async () => { render(<MemoryRouter><SortPhotosByDateComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-date-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -92,7 +92,7 @@ test('Users can successfully sort photos by date.', async () => {
 test('Shows an error message when sorting photos by date fails.', async () => {
   fetchMock.get('/api/sort-photos-by-date', { success: false });
 
-  await act(async () => { render(<MemoryRouter><SortPhotosByDateComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-date-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);

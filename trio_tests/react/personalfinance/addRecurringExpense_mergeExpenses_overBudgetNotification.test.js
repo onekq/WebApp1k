@@ -14,7 +14,7 @@ afterEach(() => {
 test('adds a recurring expense successfully', async () => {
   fetchMock.post('/api/recurring-expense', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurring-expense-input'), { target: { value: '50' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-recurring-expense-button')); });
 
@@ -25,7 +25,7 @@ test('adds a recurring expense successfully', async () => {
 test('fails to add a recurring expense', async () => {
   fetchMock.post('/api/recurring-expense', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurring-expense-input'), { target: { value: '50' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-recurring-expense-button')); });
 
@@ -36,7 +36,7 @@ test('fails to add a recurring expense', async () => {
 test('merges multiple expenses into one successfully', async () => {
   fetchMock.post('/api/merge-expense', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('merge-expense-input-1'), { target: { value: '300' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-merge-expense-button')); });
 
@@ -47,7 +47,7 @@ test('merges multiple expenses into one successfully', async () => {
 test('fails to merge multiple expenses into one', async () => {
   fetchMock.post('/api/merge-expense', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('merge-expense-input-1'), { target: { value: '300' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-merge-expense-button')); });
 
@@ -59,7 +59,7 @@ test('Success: Notify when an expense exceeds the budget for a category.', async
   fetchMock.get('/api/check-expense-exceed', { status: 200, body: { exceeds: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -74,7 +74,7 @@ test('Failure: Notify when an expense exceeds the budget for a category.', async
   fetchMock.get('/api/check-expense-exceed', { status: 200, body: { exceeds: false } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

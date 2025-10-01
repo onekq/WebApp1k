@@ -14,7 +14,7 @@ afterEach(() => {
 test('Bulk enrollment is successful for organizations.', async () => {
   fetchMock.post('/api/bulk-enroll', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Organization ID/i), { target: { value: 'org123' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Bulk Enroll/i)); });
 
@@ -25,7 +25,7 @@ test('Bulk enrollment is successful for organizations.', async () => {
 test('Bulk enrollment fails if the server returns an error.', async () => {
   fetchMock.post('/api/bulk-enroll', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Organization ID/i), { target: { value: 'org123' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Bulk Enroll/i)); });
 
@@ -36,7 +36,7 @@ test('Bulk enrollment fails if the server returns an error.', async () => {
 test('Course completion status is updated successfully.', async () => {
   fetchMock.post('/api/course-complete/101', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Complete Course/i)); });
 
   expect(fetchMock.calls('/api/course-complete/101').length).toEqual(1);
@@ -46,7 +46,7 @@ test('Course completion status is updated successfully.', async () => {
 test('Course completion status update fails if the server returns an error.', async () => {
   fetchMock.post('/api/course-complete/101', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Complete Course/i)); });
 
   expect(fetchMock.calls('/api/course-complete/101').length).toEqual(1);
@@ -56,7 +56,7 @@ test('Course completion status update fails if the server returns an error.', as
 test('Successfully exports user progress data', async () => {
   fetchMock.get('/user-progress/export', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><UserProgressExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Export Progress')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('Successfully exports user progress data', async () => {
 test('Fails to export user progress data', async () => {
   fetchMock.get('/user-progress/export', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><UserProgressExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Export Progress')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

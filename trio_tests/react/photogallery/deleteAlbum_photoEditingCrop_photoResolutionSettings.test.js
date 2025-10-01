@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can successfully delete an album.', async () => {
   fetchMock.delete('/api/albums', { success: true });
 
-  await act(async () => { render(<MemoryRouter><DeleteAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-album-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -24,7 +24,7 @@ test('Users can successfully delete an album.', async () => {
 test('Shows an error message when deleting album fails.', async () => {
   fetchMock.delete('/api/albums', { success: false });
 
-  await act(async () => { render(<MemoryRouter><DeleteAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-album-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -34,7 +34,7 @@ test('Shows an error message when deleting album fails.', async () => {
 test('should successfully crop a photo', async () => {
   fetchMock.post('/api/crop', { id: 1, cropped: true });
 
-  await act(async () => { render(<MemoryRouter><CropPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('crop-input'), { target: { value: '100x100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('crop-button')); });
 
@@ -45,7 +45,7 @@ test('should successfully crop a photo', async () => {
 test('should fail to crop a photo with error message', async () => {
   fetchMock.post('/api/crop', 404);
 
-  await act(async () => { render(<MemoryRouter><CropPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('crop-input'), { target: { value: '100x100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('crop-button')); });
 
@@ -56,7 +56,7 @@ test('should fail to crop a photo with error message', async () => {
 test('should successfully set the resolution for viewing photos', async () => {
   fetchMock.post('/api/resolution', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ResolutionSettings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resolution-input'), { target: { value: '1080p' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resolution-button')); });
 
@@ -67,7 +67,7 @@ test('should successfully set the resolution for viewing photos', async () => {
 test('should fail to set the resolution for viewing photos with error message', async () => {
   fetchMock.post('/api/resolution', 404);
 
-  await act(async () => { render(<MemoryRouter><ResolutionSettings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resolution-input'), { target: { value: '1080p' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('resolution-button')); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Loyalty points should be calculated and applied for valid bookings.', async () => {
   fetchMock.post('/api/loyalty', 200);
 
-  await act(async () => { render(<MemoryRouter><LoyaltyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-loyalty')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Loyalty points should be calculated and applied for valid bookings.', asyn
 test('Error in applying loyalty points should show error message.', async () => {
   fetchMock.post('/api/loyalty', 400);
 
-  await act(async () => { render(<MemoryRouter><LoyaltyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-loyalty')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

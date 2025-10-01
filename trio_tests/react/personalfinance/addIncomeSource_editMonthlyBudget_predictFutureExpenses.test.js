@@ -15,7 +15,7 @@ test('successfully adds a new income source', async () => {
   fetchMock.post('/income', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><AddIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Salary' } });
@@ -32,7 +32,7 @@ test('fails to add a new income source', async () => {
   fetchMock.post('/income', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><AddIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });
@@ -49,7 +49,7 @@ test('Success: Edit a monthly budget.', async () => {
   fetchMock.put('/api/edit-budget', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -72,7 +72,7 @@ test('Failure: Edit a monthly budget.', async () => {
   fetchMock.put('/api/edit-budget', { status: 400, body: { error: 'Budget not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -95,7 +95,7 @@ test('Success: Predict future expenses based on past data.', async () => {
   fetchMock.post('/api/predict-expense', { status: 200, body: { success: true, prediction: 300 } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -110,7 +110,7 @@ test('Failure: Predict future expenses based on past data.', async () => {
   fetchMock.post('/api/predict-expense', { status: 500, body: { error: 'Prediction error' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

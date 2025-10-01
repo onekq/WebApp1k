@@ -54,7 +54,7 @@ test('Repeat Song - failure shows error message', async () => {
 test('successfully sorts playlists by name', async () => {
   fetchMock.get('/api/playlists?sort=name', [{ id: 1, name: 'A Playlist' }, { id: 2, name: 'B Playlist' }]);
 
-  await act(async () => { render(<MemoryRouter><SortPlaylists sortBy="name" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="name" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-name-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('successfully sorts playlists by name', async () => {
 test('fails to sort playlists by name due to empty list', async () => {
   fetchMock.get('/api/playlists?sort=name', 404);
 
-  await act(async () => { render(<MemoryRouter><SortPlaylists sortBy="name" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="name" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-name-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

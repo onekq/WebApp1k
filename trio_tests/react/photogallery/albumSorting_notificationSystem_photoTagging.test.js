@@ -15,7 +15,7 @@ test('Album Sorting: success', async () => {
   fetchMock.get('/api/albums?sortBy=date', { body: [{ id: 1, name: 'Album1' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sort-select'), { target: { value: 'date' } });
@@ -32,7 +32,7 @@ test('Album Sorting: failure', async () => {
   fetchMock.get('/api/albums?sortBy=date', { throws: new Error('Sort Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sort-select'), { target: { value: 'date' } });
@@ -76,7 +76,7 @@ test('Should show error message when failing to fetch notifications.', async () 
 test('Users can successfully add tags to photos.', async () => {
   fetchMock.post('/api/tags', { success: true });
 
-  await act(async () => { render(<MemoryRouter><PhotoTaggingComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input'), { target: { value: 'Nature' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-tag-button')); });
 
@@ -87,7 +87,7 @@ test('Users can successfully add tags to photos.', async () => {
 test('Shows an error message when tag addition fails.', async () => {
   fetchMock.post('/api/tags', { success: false });
 
-  await act(async () => { render(<MemoryRouter><PhotoTaggingComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input'), { target: { value: 'Nature' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-tag-button')); });
 

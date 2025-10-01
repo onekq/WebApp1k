@@ -35,7 +35,7 @@ test('Confirmation email is not sent if registration fails', async () => {
 test('Displays successful cancellation message upon event cancellation', async () => {
   fetchMock.post('/api/event/cancel', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('cancel-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -45,7 +45,7 @@ test('Displays successful cancellation message upon event cancellation', async (
 test('Displays error message upon failing to cancel an event', async () => {
   fetchMock.post('/api/event/cancel', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('cancel-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);

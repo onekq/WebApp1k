@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays success message upon event archiving', async () => {
   fetchMock.post('/api/event/archive', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('archive-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Displays success message upon event archiving', async () => {
 test('Displays error message upon failing to archive event', async () => {
   fetchMock.post('/api/event/archive', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('archive-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);

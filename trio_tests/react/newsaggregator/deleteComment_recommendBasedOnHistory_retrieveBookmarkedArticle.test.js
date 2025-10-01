@@ -14,7 +14,7 @@ afterEach(() => {
 test('deletes a comment successfully', async () => {
   fetchMock.delete('/comment/1', 200);
 
-  await act(async () => { render(<MemoryRouter><DeleteCommentComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('deletes a comment successfully', async () => {
 test('fails to delete a comment with error message', async () => {
   fetchMock.delete('/comment/1', 500);
 
-  await act(async () => { render(<MemoryRouter><DeleteCommentComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Fails to recommend articles based on user history.', async () => {
 test('retrieves bookmarked articles successfully', async () => {
   fetchMock.get('/bookmarks', { articles: [{ id: 1, title: 'Test Article' }] });
 
-  await act(async () => { render(<MemoryRouter><RetrieveBookmarkedArticlesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Test Article')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('retrieves bookmarked articles successfully', async () => {
 test('fails to retrieve bookmarked articles with error message', async () => {
   fetchMock.get('/bookmarks', 500);
 
-  await act(async () => { render(<MemoryRouter><RetrieveBookmarkedArticlesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load bookmarks')).toBeInTheDocument();

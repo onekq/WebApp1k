@@ -14,7 +14,7 @@ afterEach(() => {
 test('System awards badges for milestones achieved successfully.', async () => {
   fetchMock.get('/api/award-badges', { badge: '100 miles run' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('award-badge')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('System awards badges for milestones achieved successfully.', async () => {
 test('System fails to award badges for milestones achieved.', async () => {
   fetchMock.get('/api/award-badges', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('award-badge')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('System fails to award badges for milestones achieved.', async () => {
 test('User can compare their progress with friends successfully.', async () => {
   fetchMock.get('/api/friends-comparison', { comparison: 'Better than average' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-friends-comparison')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('User can compare their progress with friends successfully.', async () => {
 test('User fails to compare their progress with friends.', async () => {
   fetchMock.get('/api/friends-comparison', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-friends-comparison')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -55,7 +55,7 @@ test('User can delete a fitness activity successfully.', async () => {
   fetchMock.delete('/api/deleteActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('delete-activity'));
@@ -69,7 +69,7 @@ test('User sees an error message when deleting a fitness activity fails.', async
   fetchMock.delete('/api/deleteActivity', { status: 500, body: { error: 'Failed to delete activity' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('delete-activity'));

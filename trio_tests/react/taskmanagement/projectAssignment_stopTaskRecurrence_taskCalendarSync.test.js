@@ -15,7 +15,7 @@ test('Assign Users to Project - success', async () => {
   fetchMock.post('/api/projects/assign-users', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('Assign Users to Project - failure', async () => {
   fetchMock.post('/api/projects/assign-users', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -52,7 +52,7 @@ test('Assign Users to Project - failure', async () => {
 test('successfully stops task recurrence.', async () => {
   fetchMock.post('/api/stop-task-recurrence', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TaskRecurrence /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('stop-recurrence-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -62,7 +62,7 @@ test('successfully stops task recurrence.', async () => {
 test('fails to stop task recurrence if server error.', async () => {
   fetchMock.post('/api/stop-task-recurrence', 500);
 
-  await act(async () => { render(<MemoryRouter><TaskRecurrence /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('stop-recurrence-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -72,7 +72,7 @@ test('fails to stop task recurrence if server error.', async () => {
 test('successfully syncs task deadlines with an external calendar.', async () => {
   fetchMock.post('/api/calendar-sync', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CalendarSync /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-calendar-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -82,7 +82,7 @@ test('successfully syncs task deadlines with an external calendar.', async () =>
 test('fails to sync task deadlines with an external calendar if server error.', async () => {
   fetchMock.post('/api/calendar-sync', 500);
 
-  await act(async () => { render(<MemoryRouter><CalendarSync /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-calendar-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);

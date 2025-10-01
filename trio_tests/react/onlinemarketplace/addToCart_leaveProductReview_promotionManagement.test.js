@@ -14,7 +14,7 @@ afterEach(() => {
 test('Adding a product to the cart succeeds.', async () => {
   fetchMock.post('/api/cart', { status: 200, body: { message: 'Added to cart successfully' } });
 
-  await act(async () => { render(<MemoryRouter><ProductPage productId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Add to Cart')); });
 
   expect(fetchMock.calls('/api/cart').length).toBe(1);
@@ -24,7 +24,7 @@ test('Adding a product to the cart succeeds.', async () => {
 test('Adding a product to the cart fails with error message.', async () => {
   fetchMock.post('/api/cart', { status: 400, body: { message: 'Product out of stock' } });
 
-  await act(async () => { render(<MemoryRouter><ProductPage productId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Add to Cart')); });
 
   expect(fetchMock.calls('/api/cart').length).toBe(1);
@@ -34,7 +34,7 @@ test('Adding a product to the cart fails with error message.', async () => {
 test('Leave Product Review successfully posts a review.', async () => {
   fetchMock.post('/api/reviews', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><LeaveProductReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Great product!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-review-button')); });
 
@@ -45,7 +45,7 @@ test('Leave Product Review successfully posts a review.', async () => {
 test('Leave Product Review fails and displays error message.', async () => {
   fetchMock.post('/api/reviews', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><LeaveProductReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Great product!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-review-button')); });
 

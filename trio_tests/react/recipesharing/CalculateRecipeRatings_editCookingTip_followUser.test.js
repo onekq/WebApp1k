@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully calculates the average rating of a recipe', async () => {
   fetchMock.get('/recipe-rating', { rating: 4.5 });
 
-  await act(async () => { render(<MemoryRouter><CalculateRecipeRatingsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Average rating: 4.5')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('successfully calculates the average rating of a recipe', async () => {
 test('shows error message when failing to calculate the average rating of a recipe', async () => {
   fetchMock.get('/recipe-rating', 500);
 
-  await act(async () => { render(<MemoryRouter><CalculateRecipeRatingsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to calculate rating')).toBeInTheDocument();
@@ -53,7 +53,7 @@ test('fails to edit cooking tips due to server error', async () => {
 test('Successfully follow another user', async () => {
   fetchMock.post('/api/follow-user', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('follow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -63,7 +63,7 @@ test('Successfully follow another user', async () => {
 test('Fail to follow another user with error message', async () => {
   fetchMock.post('/api/follow-user', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('follow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

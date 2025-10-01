@@ -14,7 +14,7 @@ afterEach(() => {
 test('Edit Shopping List successfully', async () => {
   fetchMock.put('/api/shopping-list/1', { body: { message: 'Shopping list updated' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Edit Shopping List')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Edit Shopping List successfully', async () => {
 test('Edit Shopping List failure shows error message', async () => {
   fetchMock.put('/api/shopping-list/1', { body: { message: 'Error updating shopping list' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Edit Shopping List')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Edit Shopping List failure shows error message', async () => {
 test('successfully fetches user\'s added recipes', async () => {
   fetchMock.get('/user-recipes', { recipes: ['Recipe 1', 'Recipe 2'] });
 
-  await act(async () => { render(<MemoryRouter><ListUsersRecipesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Recipe 1')).toBeInTheDocument();
@@ -44,7 +44,7 @@ test('successfully fetches user\'s added recipes', async () => {
 test('shows error message when failing to fetch user\'s added recipes', async () => {
   fetchMock.get('/user-recipes', 500);
 
-  await act(async () => { render(<MemoryRouter><ListUsersRecipesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to fetch recipes')).toBeInTheDocument();

@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully generates and adds meta keywords to a post', async () => {
   fetchMock.post('/api/meta-keywords', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate meta keywords/i)); });
 
   expect(fetchMock.calls('/api/meta-keywords').length).toBe(1);
@@ -24,7 +24,7 @@ test('successfully generates and adds meta keywords to a post', async () => {
 test('fails to generate and add meta keywords to a post due to server error', async () => {
   fetchMock.post('/api/meta-keywords', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate meta keywords/i)); });
 
   expect(fetchMock.calls('/api/meta-keywords').length).toBe(1);
@@ -34,7 +34,7 @@ test('fails to generate and add meta keywords to a post due to server error', as
 test('successfully analyzes reader engagement', async () => {
   fetchMock.get('/api/analyzeReaderEngagement?postId=1', { status: 200, body: { engagementScore: 85 } });
 
-  await act(async () => { render(<MemoryRouter><AnalyzeReaderEngagement postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Analyze Engagement')); });
 
   expect(fetchMock.calls('/api/analyzeReaderEngagement')).toHaveLength(1);
@@ -44,7 +44,7 @@ test('successfully analyzes reader engagement', async () => {
 test('fails to analyze reader engagement with an error message', async () => {
   fetchMock.get('/api/analyzeReaderEngagement?postId=1', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><AnalyzeReaderEngagement postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Analyze Engagement')); });
 
   expect(fetchMock.calls('/api/analyzeReaderEngagement')).toHaveLength(1);
@@ -56,7 +56,7 @@ test('User can delete a tag successfully', async () => {
     status: 204
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete Tag')); });
 
   expect(fetchMock.calls('/tags/1').length).toBe(1);
@@ -69,7 +69,7 @@ test('User gets an error message when deleting a tag fails', async () => {
     body: { error: 'Unable to delete tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete Tag')); });
 
   expect(fetchMock.calls('/tags/1').length).toBe(1);

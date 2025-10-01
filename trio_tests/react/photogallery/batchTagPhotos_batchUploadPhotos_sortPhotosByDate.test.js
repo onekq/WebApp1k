@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can successfully batch tag multiple photos.', async () => {
   fetchMock.post('/api/batch-tags', { success: true });
 
-  await act(async () => { render(<MemoryRouter><BatchTagPhotosComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('batch-tag-input'), { target: { value: 'Holiday' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('batch-tag-button')); });
 
@@ -25,7 +25,7 @@ test('Users can successfully batch tag multiple photos.', async () => {
 test('Shows an error message when batch tagging photos fails.', async () => {
   fetchMock.post('/api/batch-tags', { success: false });
 
-  await act(async () => { render(<MemoryRouter><BatchTagPhotosComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('batch-tag-input'), { target: { value: 'Holiday' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('batch-tag-button')); });
 
@@ -37,7 +37,7 @@ test('batch uploads multiple photos successfully', async () => {
   fetchMock.post('/upload/batch', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><BatchPhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -60,7 +60,7 @@ test('fails to batch upload multiple photos', async () => {
   fetchMock.post('/upload/batch', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><BatchPhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -82,7 +82,7 @@ test('fails to batch upload multiple photos', async () => {
 test('Users can successfully sort photos by date.', async () => {
   fetchMock.get('/api/sort-photos-by-date', { success: true, data: ['photo1', 'photo2'] });
 
-  await act(async () => { render(<MemoryRouter><SortPhotosByDateComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-date-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -92,7 +92,7 @@ test('Users can successfully sort photos by date.', async () => {
 test('Shows an error message when sorting photos by date fails.', async () => {
   fetchMock.get('/api/sort-photos-by-date', { success: false });
 
-  await act(async () => { render(<MemoryRouter><SortPhotosByDateComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-date-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);

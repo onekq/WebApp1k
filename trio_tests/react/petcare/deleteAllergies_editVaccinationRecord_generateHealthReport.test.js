@@ -14,7 +14,7 @@ afterEach(() => {
 test('Delete allergies successfully.', async () => {
   fetchMock.delete('/api/allergies/1', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Delete Allergy/i)); });
 
   expect(fetchMock.calls('/api/allergies/1').length).toBe(1);
@@ -24,7 +24,7 @@ test('Delete allergies successfully.', async () => {
 test('Fail to delete allergies due to server error.', async () => {
   fetchMock.delete('/api/allergies/1', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Delete Allergy/i)); });
 
   expect(fetchMock.calls('/api/allergies/1').length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to delete allergies due to server error.', async () => {
 test('Edit vaccination record successfully.', async () => {
   fetchMock.put('/api/vaccinations/1', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vaccine/i), {target: {value: 'Rabies'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Edit Vaccination/i)); });
 
@@ -45,7 +45,7 @@ test('Edit vaccination record successfully.', async () => {
 test('Fail to edit vaccination record due to server error.', async () => {
   fetchMock.put('/api/vaccinations/1', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vaccine/i), {target: {value: 'Rabies'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Edit Vaccination/i)); });
 
@@ -56,7 +56,7 @@ test('Fail to edit vaccination record due to server error.', async () => {
 test('Generate health report successfully', async () => {
   fetchMock.get('/api/health-report', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report-button')); });
 
   expect(fetchMock.calls('/api/health-report').length).toBe(1);
@@ -66,7 +66,7 @@ test('Generate health report successfully', async () => {
 test('Fail to generate health report with error', async () => {
   fetchMock.get('/api/health-report', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report-button')); });
 
   expect(fetchMock.calls('/api/health-report').length).toBe(1);

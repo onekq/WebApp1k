@@ -14,7 +14,7 @@ afterEach(() => {
 test('calculateCartSubtotal: successfully calculate cart subtotal', async () => {
   fetchMock.get('/api/cart/subtotal', { status: 200, body: { subtotal: '100.00' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-subtotal')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('calculateCartSubtotal: successfully calculate cart subtotal', async () => 
 test('calculateCartSubtotal: fail to calculate cart subtotal with error message', async () => {
   fetchMock.get('/api/cart/subtotal', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-subtotal')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('calculateCartSubtotal: fail to calculate cart subtotal with error message'
 test('Processes payment successfully', async () => {
   fetchMock.post('/api/processPayment', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Process Payment')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('Processes payment successfully', async () => {
 test('Fails to process payment', async () => {
   fetchMock.post('/api/processPayment', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Process Payment')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Fails to process payment', async () => {
 test('Validates shipping address successfully', async () => {
   fetchMock.post('/api/validateShippingAddress', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Shipping Address'), { target: { value: '123 Main St' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Validate Shipping')); });
 
@@ -65,7 +65,7 @@ test('Validates shipping address successfully', async () => {
 test('Fails to validate shipping address with invalid data', async () => {
   fetchMock.post('/api/validateShippingAddress', 400);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Shipping Address'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Validate Shipping')); });
 

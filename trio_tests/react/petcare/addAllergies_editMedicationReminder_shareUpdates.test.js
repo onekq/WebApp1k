@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add allergies successfully.', async () => {
   fetchMock.post('/api/allergies', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/allergy/i), {target: {value: 'Peanuts'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Allergy/i)); });
 
@@ -25,7 +25,7 @@ test('Add allergies successfully.', async () => {
 test('Fail to add allergies due to missing allergy name.', async () => {
   fetchMock.post('/api/allergies', 400);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/allergy/i), {target: {value: ''}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Allergy/i)); });
 
@@ -37,7 +37,7 @@ test('should update an existing medication reminder successfully', async () => {
   fetchMock.put('/api/edit-medication-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/New Medication Name/i), { target: { value: 'Painkillers' } });
@@ -54,7 +54,7 @@ test('should fail to update an existing medication reminder', async () => {
   fetchMock.put('/api/edit-medication-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/New Medication Name/i), { target: { value: 'Painkillers' } });
@@ -70,7 +70,7 @@ test('should fail to update an existing medication reminder', async () => {
 test('Successfully shares updates with the community', async () => {
   fetchMock.post('/api/community/share', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('update-input'), { target: { value: 'New update' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-button')); });
 
@@ -81,7 +81,7 @@ test('Successfully shares updates with the community', async () => {
 test('Fails to share updates without input', async () => {
   fetchMock.post('/api/community/share', { status: 400 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

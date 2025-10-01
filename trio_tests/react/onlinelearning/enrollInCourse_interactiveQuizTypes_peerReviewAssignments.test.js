@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can successfully enroll in a course.', async () => {
   fetchMock.post('/api/enroll', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Course ID/i), { target: { value: '101' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Enroll/i)); });
 
@@ -25,7 +25,7 @@ test('Users can successfully enroll in a course.', async () => {
 test('Users cannot enroll in a course if the server returns an error.', async () => {
   fetchMock.post('/api/enroll', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Course ID/i), { target: { value: '101' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Enroll/i)); });
 
@@ -36,7 +36,7 @@ test('Users cannot enroll in a course if the server returns an error.', async ()
 test('Success: multiple choice quiz functions correctly', async () => {
   fetchMock.get('/api/multiple-choice-quiz', 200);
 
-  await act(async () => { render(<MemoryRouter><InteractiveQuizTypesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('start-multiple-choice-quiz')); });
 
@@ -47,7 +47,7 @@ test('Success: multiple choice quiz functions correctly', async () => {
 test('Failure: multiple choice quiz fails to load', async () => {
   fetchMock.get('/api/multiple-choice-quiz', 500);
 
-  await act(async () => { render(<MemoryRouter><InteractiveQuizTypesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('start-multiple-choice-quiz')); });
 
@@ -58,7 +58,7 @@ test('Failure: multiple choice quiz fails to load', async () => {
 test('Success: peer review assignment submitted', async () => {
   fetchMock.post('/api/peer-review', 200);
 
-  await act(async () => { render(<MemoryRouter><PeerReviewAssignmentsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('peer-review-text'), { target: { value: 'review' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -69,7 +69,7 @@ test('Success: peer review assignment submitted', async () => {
 test('Failure: peer review assignment submission fails', async () => {
   fetchMock.post('/api/peer-review', 500);
 
-  await act(async () => { render(<MemoryRouter><PeerReviewAssignmentsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('peer-review-text'), { target: { value: 'review' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

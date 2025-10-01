@@ -15,7 +15,7 @@ test('Deleting a job post successfully', async () => {
   fetchMock.delete('/api/job/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete/i));
@@ -29,7 +29,7 @@ test('Deleting a job post failure due to not found error', async () => {
   fetchMock.delete('/api/job/1', 404);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete/i));
@@ -42,7 +42,7 @@ test('Deleting a job post failure due to not found error', async () => {
 test('job seekers can rate job posts successfully', async () => {
   fetchMock.post('/api/job/rate', { success: true });
 
-  await act(async () => { render(<MemoryRouter><JobPostRating /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Rating/i), { target: { value: 4 } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Submit Rating/i)); });
 
@@ -53,7 +53,7 @@ test('job seekers can rate job posts successfully', async () => {
 test('job seekers see an error message if rating submission fails', async () => {
   fetchMock.post('/api/job/rate', 500);
 
-  await act(async () => { render(<MemoryRouter><JobPostRating /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Rating/i), { target: { value: 4 } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Submit Rating/i)); });
 

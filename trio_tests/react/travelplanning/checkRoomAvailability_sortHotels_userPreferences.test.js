@@ -18,7 +18,7 @@ test('checkRoomAvailability - checks room availability for selected hotels', asy
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('check-availability-1'));
@@ -35,7 +35,7 @@ test('checkRoomAvailability - shows error message when room availability check f
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('check-availability-1'));
@@ -52,7 +52,7 @@ test('sortHotels - sorts hotel search results successfully', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('sort-price'));
@@ -69,7 +69,7 @@ test('sortHotels - shows error message on sorting failure', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('sort-price'));
@@ -82,7 +82,7 @@ test('sortHotels - shows error message on sorting failure', async () => {
 test('User preferences should be stored and applied successfully.', async () => {
   fetchMock.post('/api/user/preferences', 200);
 
-  await act(async () => { render(<MemoryRouter><UserPreferencesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('preference-input'), { target: { value: 'preference' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference')); });
 
@@ -93,7 +93,7 @@ test('User preferences should be stored and applied successfully.', async () => 
 test('Error in storing user preferences should show error message.', async () => {
   fetchMock.post('/api/user/preferences', 500);
 
-  await act(async () => { render(<MemoryRouter><UserPreferencesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('preference-input'), { target: { value: 'preference' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference')); });
 

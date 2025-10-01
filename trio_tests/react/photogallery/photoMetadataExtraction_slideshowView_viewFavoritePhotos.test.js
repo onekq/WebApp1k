@@ -15,7 +15,7 @@ test('extracts photo metadata correctly', async () => {
   fetchMock.post('/upload', { status: 200, body: { metadata: { date: '2021-01-01', location: 'Paris' } } });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -35,7 +35,7 @@ test('fails to extract photo metadata', async () => {
   fetchMock.post('/upload', { status: 200, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -53,7 +53,7 @@ test('fails to extract photo metadata', async () => {
 test('should successfully view photos in slideshow mode', async () => {
   fetchMock.get('/api/photos', { photos: [{ id: 1 }] });
 
-  await act(async () => { render(<MemoryRouter><Slideshow /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('start-slideshow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -63,7 +63,7 @@ test('should successfully view photos in slideshow mode', async () => {
 test('should fail to view photos in slideshow mode with error message', async () => {
   fetchMock.get('/api/photos', 404);
 
-  await act(async () => { render(<MemoryRouter><Slideshow /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('start-slideshow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

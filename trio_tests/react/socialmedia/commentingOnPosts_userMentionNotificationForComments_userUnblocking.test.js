@@ -14,7 +14,7 @@ afterEach(() => {
 test('Should add a comment to a post', async () => {
   fetchMock.post('api/comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Great post!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Comment')); });
 
@@ -25,7 +25,7 @@ test('Should add a comment to a post', async () => {
 test('Should display an error when adding an invalid comment to a post', async () => {
   fetchMock.post('api/comment', { status: 400 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Comment')); });
 
@@ -36,7 +36,7 @@ test('Should display an error when adding an invalid comment to a post', async (
 test('should send a notification when a user is mentioned in a comment', async () => {
   fetchMock.post('/api/comment/mention', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), {target: {value: '@jane'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -47,7 +47,7 @@ test('should send a notification when a user is mentioned in a comment', async (
 test('should handle error when notification sending fails for a user mention in a comment', async () => {
   fetchMock.post('/api/comment/mention', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), {target: {value: '@jane'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -58,7 +58,7 @@ test('should handle error when notification sending fails for a user mention in 
 test('User unblocking succeeds for valid user', async () => {
   fetchMock.post('/api/profile/unblock', { body: { message: 'User unblocked' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><UnblockUser userId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App userId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Unblock User')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -68,7 +68,7 @@ test('User unblocking succeeds for valid user', async () => {
 test('User unblocking fails for not blocked user', async () => {
   fetchMock.post('/api/profile/unblock', { body: { error: 'User not blocked' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><UnblockUser userId={9999} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App userId={9999} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Unblock User')); });
 
   expect(fetchMock.calls().length).toBe(1);

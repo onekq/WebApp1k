@@ -14,7 +14,7 @@ afterEach(() => {
 test('Should successfully submit valid event end date', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/end date/i), { target: { value: '2023-12-14T10:00' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -25,7 +25,7 @@ test('Should successfully submit valid event end date', async () => {
 test('Should show error for end date before start date', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { 
     fireEvent.change(screen.getByLabelText(/start date/i), { target: { value: '2023-12-15T10:00' } }); 
     fireEvent.change(screen.getByLabelText(/end date/i), { target: { value: '2023-12-14T10:00' } });
@@ -59,7 +59,7 @@ test('Fails to validate session reminders.', async () => {
 test('ticket description within limit', async () => {
   fetchMock.post('/ticketDescription', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketDescription'), { target: { value: 'A valid description' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 
@@ -68,7 +68,7 @@ test('ticket description within limit', async () => {
 }, 10000);
 
 test('ticket description exceeds limit', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketDescription'), { target: { value: 'A'.repeat(300) } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 

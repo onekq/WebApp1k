@@ -17,7 +17,7 @@ test('fetchSevereThunderstormWarnings successfully retrieves severe thunderstorm
     body: [{ id: 1, warning: 'Severe Thunderstorm Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Severe Thunderstorm Warnings')); });
 
   expect(fetchMock.called('/api/severe-thunderstorm-warnings')).toBeTruthy();
@@ -27,7 +27,7 @@ test('fetchSevereThunderstormWarnings successfully retrieves severe thunderstorm
 test('fetchSevereThunderstormWarnings fails to retrieve severe thunderstorm warnings', async () => {
   fetchMock.getOnce('/api/severe-thunderstorm-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Severe Thunderstorm Warnings')); });
 
   expect(fetchMock.called('/api/severe-thunderstorm-warnings')).toBeTruthy();
@@ -37,7 +37,7 @@ test('fetchSevereThunderstormWarnings fails to retrieve severe thunderstorm warn
 test('Fetch weather by region succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { region: 'Midwest', temperature: 25 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('region-input'), { target: { value: 'Midwest' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -48,7 +48,7 @@ test('Fetch weather by region succeeds.', async () => {
 test('Fetch weather by region fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('region-input'), { target: { value: 'InvalidRegion' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 

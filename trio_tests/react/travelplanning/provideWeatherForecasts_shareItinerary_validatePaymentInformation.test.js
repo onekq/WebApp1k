@@ -36,7 +36,7 @@ test('should show error if fetching weather forecasts fails', async () => {
 test('successfully shares an itinerary with other users.', async () => {
   fetchMock.post('/api/share-itinerary', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('share-input'), { target: { value: 'user@example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-itinerary-button')); });
 
@@ -47,7 +47,7 @@ test('successfully shares an itinerary with other users.', async () => {
 test('fails to share itinerary due to invalid email.', async () => {
   fetchMock.post('/api/share-itinerary', { status: 400, body: { error: 'Invalid email address' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('share-input'), { target: { value: 'invalid-email' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-itinerary-button')); });
 
@@ -58,7 +58,7 @@ test('fails to share itinerary due to invalid email.', async () => {
 test('Valid payment information should be processed successfully.', async () => {
   fetchMock.post('/api/payment', 200);
 
-  await act(async () => { render(<MemoryRouter><PaymentComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('card-number'), { target: { value: '1234567890123456' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-payment')); });
 
@@ -69,7 +69,7 @@ test('Valid payment information should be processed successfully.', async () => 
 test('Invalid payment information should show error message.', async () => {
   fetchMock.post('/api/payment', 400);
 
-  await act(async () => { render(<MemoryRouter><PaymentComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('card-number'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-payment')); });
 

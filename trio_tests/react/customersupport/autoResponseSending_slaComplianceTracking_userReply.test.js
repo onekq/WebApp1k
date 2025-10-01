@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully sends auto-responses based on ticket content.', async () => {
   fetchMock.post('/api/sendAutoResponse', 200);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseSending /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketContent'), { target: { value: 'Issue' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send Auto-Response')); });
 
@@ -25,7 +25,7 @@ test('Successfully sends auto-responses based on ticket content.', async () => {
 test('Fails to send auto-responses based on ticket content.', async () => {
   fetchMock.post('/api/sendAutoResponse', 500);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseSending /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketContent'), { target: { value: 'Issue' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send Auto-Response')); });
 
@@ -40,7 +40,7 @@ test('Successfully tracks SLA compliance.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLAComplianceTracking /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-03-01' } });
@@ -60,7 +60,7 @@ test('Fails to track SLA compliance and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLAComplianceTracking /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-03-01' } });
@@ -76,7 +76,7 @@ test('Fails to track SLA compliance and shows error message.', async () => {
 test('Allowing users to reply to agent comments should show success message.', async () => {
   fetchMock.post('/api/user-reply', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-reply'), { target: { value: 'User reply' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-reply')); });
 
@@ -87,7 +87,7 @@ test('Allowing users to reply to agent comments should show success message.', a
 test('Allowing users to reply to agent comments should show error message when failed.', async () => {
   fetchMock.post('/api/user-reply', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-reply'), { target: { value: 'User reply' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-reply')); });
 

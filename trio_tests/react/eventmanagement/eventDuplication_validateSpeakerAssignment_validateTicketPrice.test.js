@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays success message upon event duplication', async () => {
   fetchMock.post('/api/event/duplicate', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('duplicate-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Displays success message upon event duplication', async () => {
 test('Displays error message upon failing to duplicate event', async () => {
   fetchMock.post('/api/event/duplicate', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('duplicate-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -56,7 +56,7 @@ test('Fails to validate missing speaker assignment.', async () => {
 test('sets ticket price successfully', async () => {
   fetchMock.post('/ticketPrice', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketPrice'), { target: { value: '25' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 
@@ -65,7 +65,7 @@ test('sets ticket price successfully', async () => {
 }, 10000);
 
 test('fails to set ticket price', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketPrice'), { target: { value: '-10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 

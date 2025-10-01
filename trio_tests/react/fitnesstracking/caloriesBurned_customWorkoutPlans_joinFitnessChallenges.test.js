@@ -14,7 +14,7 @@ afterEach(() => {
 test('System calculates total calories burned in a week successfully.', async () => {
   fetchMock.get('/api/total-calories', { calories: 5000 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-calories')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('System calculates total calories burned in a week successfully.', async ()
 test('System fails to calculate total calories burned in a week.', async () => {
   fetchMock.get('/api/total-calories', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-calories')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -35,7 +35,7 @@ test('should successfully create a custom workout plan', async () => {
   fetchMock.post('/api/workouts/custom', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><CreateWorkoutPlan /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/workout name/i), { target: { value: 'Morning Yoga' } });
@@ -52,7 +52,7 @@ test('should show error when creating a custom workout plan fails', async () => 
   fetchMock.post('/api/workouts/custom', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><CreateWorkoutPlan /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/workout name/i), { target: { value: 'Morning Yoga' } });
@@ -69,7 +69,7 @@ test('should successfully join a fitness challenge', async () => {
   fetchMock.post('/api/challenges/join/123', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><JoinChallenge challengeId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App challengeId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/join challenge/i));
@@ -83,7 +83,7 @@ test('should show error when joining a fitness challenge fails', async () => {
   fetchMock.post('/api/challenges/join/123', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><JoinChallenge challengeId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App challengeId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/join challenge/i));

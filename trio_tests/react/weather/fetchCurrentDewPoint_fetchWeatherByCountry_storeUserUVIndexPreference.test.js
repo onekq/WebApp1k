@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current dew point for a given location', async () => {
   fetchMock.get('/api/current-dew?location=NYC', { dewPoint: 60 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Dew Point')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current dew point for a given location', async 
 test('Fails to retrieve the current dew point if the API returns an error', async () => {
   fetchMock.get('/api/current-dew?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Dew Point')); });
 
@@ -36,7 +36,7 @@ test('Fails to retrieve the current dew point if the API returns an error', asyn
 test('Fetch weather by country succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { country: 'USA', temperature: 28 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('country-input'), { target: { value: 'USA' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -47,7 +47,7 @@ test('Fetch weather by country succeeds.', async () => {
 test('Fetch weather by country fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('country-input'), { target: { value: 'InvalidCountry' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -58,7 +58,7 @@ test('Fetch weather by country fails.', async () => {
 test('correctly stores user UV index preference', async () => {
   fetchMock.post('/preferences/uv-index', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('uv-index-checkbox'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -69,7 +69,7 @@ test('correctly stores user UV index preference', async () => {
 test('displays error when storing user UV index preference fails', async () => {
   fetchMock.post('/preferences/uv-index', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('uv-index-checkbox'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

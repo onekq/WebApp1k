@@ -71,7 +71,7 @@ test('Revoke Share Link: success', async () => {
   fetchMock.post('/api/revokeShare', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('share-link-input'), { target: { value: 'link-id' } });
@@ -88,7 +88,7 @@ test('Revoke Share Link: failure', async () => {
   fetchMock.post('/api/revokeShare', { throws: new Error('Revoke Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('share-link-input'), { target: { value: 'link-id' } });

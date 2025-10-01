@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current temperature for a given location', async () => {
   fetchMock.get('/api/current-temperature?location=NYC', { temperature: 75 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Temperature')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current temperature for a given location', asyn
 test('Fails to retrieve the current temperature if the API returns an error', async () => {
   fetchMock.get('/api/current-temperature?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Temperature')); });
 
@@ -36,7 +36,7 @@ test('Fails to retrieve the current temperature if the API returns an error', as
 test('Successfully retrieves the current UV index for a given location', async () => {
   fetchMock.get('/api/current-uv?location=NYC', { uvIndex: 5 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get UV Index')); });
 
@@ -47,7 +47,7 @@ test('Successfully retrieves the current UV index for a given location', async (
 test('Fails to retrieve the current UV index if the API returns an error', async () => {
   fetchMock.get('/api/current-uv?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get UV Index')); });
 
@@ -58,7 +58,7 @@ test('Fails to retrieve the current UV index if the API returns an error', async
 test('Fetch weather for specific landmark succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { landmark: 'Eiffel Tower', temperature: 18 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('landmark-input'), { target: { value: 'Eiffel Tower' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -69,7 +69,7 @@ test('Fetch weather for specific landmark succeeds.', async () => {
 test('Fetch weather for specific landmark fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('landmark-input'), { target: { value: 'InvalidLandmark' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 

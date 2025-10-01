@@ -14,7 +14,7 @@ afterEach(() => {
 test('should provide weather updates successfully.', async () => {
   fetchMock.get('/api/weather/updates', { status: 200, body: { weather: 'sunny' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('weather-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -25,7 +25,7 @@ test('should provide weather updates successfully.', async () => {
 test('should fail to provide weather updates.', async () => {
   fetchMock.get('/api/weather/updates', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('weather-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -37,7 +37,7 @@ test('should successfully set a target heart rate zone', async () => {
   fetchMock.post('/api/goals/heart-rate', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><SetHeartRateZone /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/heart rate zone/i), { target: { value: '120-150' } });
@@ -54,7 +54,7 @@ test('should show error when setting a target heart rate zone fails', async () =
   fetchMock.post('/api/goals/heart-rate', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><SetHeartRateZone /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/heart rate zone/i), { target: { value: '120-150' } });
@@ -70,7 +70,7 @@ test('should show error when setting a target heart rate zone fails', async () =
 test('should track route using GPS successfully.', async () => {
   fetchMock.post('/api/gps/track', { status: 200, body: { route: 'sample-route-data' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-route-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -81,7 +81,7 @@ test('should track route using GPS successfully.', async () => {
 test('should fail to track route using GPS.', async () => {
   fetchMock.post('/api/gps/track', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-route-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

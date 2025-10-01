@@ -14,7 +14,7 @@ afterEach(() => {
 test('Content Translation Handling success: should display translated content.', async () => {
   fetchMock.get('/api/courses/1?lang=es', { id: 1, title: 'Curso de Reacto', details: 'Informaci�n detallada' });
 
-  await act(async () => { render(<MemoryRouter><ContentTranslation courseId={1} language="es" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} language="es" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Curso de Reacto')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Content Translation Handling success: should display translated content.',
 test('Content Translation Handling failure: should display an error message on translation failure.', async () => {
   fetchMock.get('/api/courses/1?lang=es', 404);
 
-  await act(async () => { render(<MemoryRouter><ContentTranslation courseId={1} language="es" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} language="es" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Content cannot be translated.')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Content Translation Handling failure: should display an error message on t
 test('Success: quiz retake works properly', async () => {
   fetchMock.post('/api/quiz-retake', 200);
 
-  await act(async () => { render(<MemoryRouter><QuizRetakeLogicComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('retake-quiz-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -42,7 +42,7 @@ test('Success: quiz retake works properly', async () => {
 test('Failure: quiz retake fails', async () => {
   fetchMock.post('/api/quiz-retake', 500);
 
-  await act(async () => { render(<MemoryRouter><QuizRetakeLogicComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('retake-quiz-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -52,7 +52,7 @@ test('Failure: quiz retake fails', async () => {
 test('Peer review progress is tracked successfully.', async () => {
   fetchMock.get('/api/peer-review-progress/101', { progress: 'Reviewed' });
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Track Peer Review/i)); });
 
   expect(fetchMock.calls('/api/peer-review-progress/101').length).toEqual(1);
@@ -62,7 +62,7 @@ test('Peer review progress is tracked successfully.', async () => {
 test('Peer review progress tracking fails if the server returns an error.', async () => {
   fetchMock.get('/api/peer-review-progress/101', 500);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Track Peer Review/i)); });
 
   expect(fetchMock.calls('/api/peer-review-progress/101').length).toEqual(1);

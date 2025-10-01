@@ -15,7 +15,7 @@ test('batch uploads multiple photos successfully', async () => {
   fetchMock.post('/upload/batch', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><BatchPhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -38,7 +38,7 @@ test('fails to batch upload multiple photos', async () => {
   fetchMock.post('/upload/batch', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><BatchPhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -61,7 +61,7 @@ test('Download Album: success', async () => {
   fetchMock.post('/api/downloadAlbum', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-id-input'), { target: { value: 'AlbumID' } });
@@ -78,7 +78,7 @@ test('Download Album: failure', async () => {
   fetchMock.post('/api/downloadAlbum', { throws: new Error('Download Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-id-input'), { target: { value: 'AlbumID' } });
@@ -95,7 +95,7 @@ test('views detailed information of a photo successfully', async () => {
   fetchMock.get('/photo/1', { status: 200, body: { title: 'Sunset', date: '2021-01-01', location: 'Beach' } });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoDetailsComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -108,7 +108,7 @@ test('fails to view detailed information of a photo', async () => {
   fetchMock.get('/photo/1', { status: 404 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoDetailsComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

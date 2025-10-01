@@ -14,7 +14,7 @@ afterEach(() => {
 test('Approve or remove flagged articles successfully.', async () => {
   fetchMock.post('/api/moderate-articles', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ModerateArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Moderate Articles")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Approve or remove flagged articles successfully.', async () => {
 test('Fail to approve or remove flagged articles and display error.', async () => {
   fetchMock.post('/api/moderate-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><ModerateArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Moderate Articles")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to approve or remove flagged articles and display error.', async () =
 test('unlikes an article successfully', async () => {
   fetchMock.post('/unlike', 200);
 
-  await act(async () => { render(<MemoryRouter><UnlikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Unlike')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('unlikes an article successfully', async () => {
 test('fails to unlike an article with error message', async () => {
   fetchMock.post('/unlike', 500);
 
-  await act(async () => { render(<MemoryRouter><UnlikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Unlike')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('fails to unlike an article with error message', async () => {
 test('Update article metadata successfully.', async () => {
   fetchMock.post('/api/update-article-metadata', { success: true });
 
-  await act(async () => { render(<MemoryRouter><UpdateArticleMetadata /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Update Metadata")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -64,7 +64,7 @@ test('Update article metadata successfully.', async () => {
 test('Fail to update article metadata and display error.', async () => {
   fetchMock.post('/api/update-article-metadata', 500);
 
-  await act(async () => { render(<MemoryRouter><UpdateArticleMetadata /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Update Metadata")); });
 
   expect(fetchMock.calls().length).toBe(1);

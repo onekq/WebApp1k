@@ -14,7 +14,7 @@ afterEach(() => {
 test('Recently played songs are logged correctly.', async () => {
   fetchMock.get('/api/recentlyPlayed', [{ song: 'Song 1' }]);
 
-  await act(async () => { render(<MemoryRouter><RecentlyPlayed /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Song 1')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Recently played songs are logged correctly.', async () => {
 test('Recently played songs fail to log with an error message.', async () => {
   fetchMock.get('/api/recentlyPlayed', 500);
 
-  await act(async () => { render(<MemoryRouter><RecentlyPlayed /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error retrieving recently played songs')).toBeInTheDocument();
@@ -52,7 +52,7 @@ test('Repeat Song - failure shows error message', async () => {
 test('Unliking a song removes it from the user\'s favorites.', async () => {
   fetchMock.post('/api/unlikeSong', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -62,7 +62,7 @@ test('Unliking a song removes it from the user\'s favorites.', async () => {
 test('Unliking a song fails with an error message.', async () => {
   fetchMock.post('/api/unlikeSong', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

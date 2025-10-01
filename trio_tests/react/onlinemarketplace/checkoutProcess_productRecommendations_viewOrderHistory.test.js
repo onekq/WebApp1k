@@ -14,7 +14,7 @@ afterEach(() => {
 test('validates checkout steps successfully.', async () => {
   fetchMock.post('/api/checkout', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Proceed to Checkout')); });
 
   expect(fetchMock.calls('/api/checkout').length).toEqual(1);
@@ -24,7 +24,7 @@ test('validates checkout steps successfully.', async () => {
 test('displays error on checkout step failure.', async () => {
   fetchMock.post('/api/checkout', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Proceed to Checkout')); });
 
   expect(fetchMock.calls('/api/checkout').length).toEqual(1);
@@ -34,7 +34,7 @@ test('displays error on checkout step failure.', async () => {
 test('Product Recommendations successfully displays recommended products.', async () => {
   fetchMock.get('/api/recommendations', { status: 200, body: { products: ['Recommended Product 1'] } });
 
-  await act(async () => { render(<MemoryRouter><ProductRecommendations /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('recommend-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('Product Recommendations successfully displays recommended products.', asyn
 test('Product Recommendations fails and displays error message.', async () => {
   fetchMock.get('/api/recommendations', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><ProductRecommendations /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('recommend-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Product Recommendations fails and displays error message.', async () => {
 test('View Order History success shows order data', async () => {
   fetchMock.get('/api/orders', [{ id: 1, product: 'Product 1' }]);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   expect(fetchMock.calls('/api/orders').length).toBe(1);
   
   expect(screen.getByText('Product 1')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('View Order History success shows order data', async () => {
 test('View Order History failure shows error message', async () => {
   fetchMock.get('/api/orders', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   
   expect(screen.getByText('Error loading order history')).toBeInTheDocument();
 }, 10000);

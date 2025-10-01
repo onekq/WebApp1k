@@ -14,7 +14,7 @@ afterEach(() => {
 test('adjusts the number of articles shown successfully', async () => {
   fetchMock.get('/api/articles?limit=10', { status: 200, body: Array.from({ length: 10 }, (_, i) => ({ id: i, title: `Article ${i}` })) });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('articles-limit-input'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('adjust-articles-button')); });
 
@@ -25,7 +25,7 @@ test('adjusts the number of articles shown successfully', async () => {
 test('fails to adjust the number of articles shown', async () => {
   fetchMock.get('/api/articles?limit=10', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('articles-limit-input'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('adjust-articles-button')); });
 
@@ -34,7 +34,7 @@ test('fails to adjust the number of articles shown', async () => {
 }, 10000);
 
 test('copies article link to clipboard successfully', async () => {
-  await act(async () => { render(<MemoryRouter><CopyArticleLinkComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Copy Link')); });
 
   expect(navigator.clipboard.writeText).toBeCalledWith('http://example.com/article');
@@ -44,7 +44,7 @@ test('copies article link to clipboard successfully', async () => {
 test('fails to copy article link to clipboard with error message', async () => {
   navigator.clipboard.writeText = jest.fn().mockImplementation(() => { throw new Error('Copy failed'); });
 
-  await act(async () => { render(<MemoryRouter><CopyArticleLinkComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Copy Link')); });
 
   expect(navigator.clipboard.writeText).toBeCalledWith('http://example.com/article');
@@ -54,7 +54,7 @@ test('fails to copy article link to clipboard with error message', async () => {
 test('displays articles based on user preferences successfully', async () => {
   fetchMock.get('/api/articles?preferences=true', { status: 200, body: [{ id: 5, title: 'Preferred News' }] });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('display-preferences-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('displays articles based on user preferences successfully', async () => {
 test('fails to display articles based on user preferences', async () => {
   fetchMock.get('/api/articles?preferences=true', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('display-preferences-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

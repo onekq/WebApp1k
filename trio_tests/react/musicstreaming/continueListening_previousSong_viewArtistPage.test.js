@@ -54,7 +54,7 @@ test('Previous Song - failure shows error message', async () => {
 test('Viewing an artist\'s page shows correct information.', async () => {
   fetchMock.get('/api/artist/1', { name: 'Artist Name', bio: 'Artist Bio' });
 
-  await act(async () => { render(<MemoryRouter><ArtistPage artistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App artistId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Artist Name')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('Viewing an artist\'s page shows correct information.', async () => {
 test('Viewing an artist\'s page fails with an error message.', async () => {
   fetchMock.get('/api/artist/1', 500);
 
-  await act(async () => { render(<MemoryRouter><ArtistPage artistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App artistId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error loading artist information')).toBeInTheDocument();

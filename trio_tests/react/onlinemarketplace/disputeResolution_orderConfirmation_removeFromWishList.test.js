@@ -14,7 +14,7 @@ afterEach(() => {
 test('Dispute Resolution success resolves the dispute', async () => {
   fetchMock.post('/api/orders/1/dispute', { status: 'Resolved' });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Resolve Dispute')); });
 
   expect(fetchMock.calls('/api/orders/1/dispute').length).toBe(1);
@@ -24,7 +24,7 @@ test('Dispute Resolution success resolves the dispute', async () => {
 test('Dispute Resolution failure shows error message', async () => {
   fetchMock.post('/api/orders/1/dispute', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Resolve Dispute')); });
 
   expect(screen.getByText('Error resolving dispute')).toBeInTheDocument();
@@ -33,7 +33,7 @@ test('Dispute Resolution failure shows error message', async () => {
 test('displays order confirmation details correctly.', async () => {
   fetchMock.get('/api/order/confirmation', { body: { orderId: '12345' } });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Order Confirmation')); });
 
   expect(fetchMock.calls('/api/order/confirmation').length).toEqual(1);
@@ -43,7 +43,7 @@ test('displays order confirmation details correctly.', async () => {
 test('displays error on failing to fetch order confirmation.', async () => {
   fetchMock.get('/api/order/confirmation', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Order Confirmation')); });
 
   expect(fetchMock.calls('/api/order/confirmation').length).toEqual(1);
@@ -53,7 +53,7 @@ test('displays error on failing to fetch order confirmation.', async () => {
 test('Remove from Wish List success removes item from wish list', async () => {
   fetchMock.delete('/api/wishlist/1', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Remove from Wish List')); });
 
   expect(fetchMock.calls('/api/wishlist/1').length).toBe(1);
@@ -63,7 +63,7 @@ test('Remove from Wish List success removes item from wish list', async () => {
 test('Remove from Wish List failure shows error message', async () => {
   fetchMock.delete('/api/wishlist/1', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Remove from Wish List')); });
 
   expect(screen.getByText('Error removing from wish list')).toBeInTheDocument();

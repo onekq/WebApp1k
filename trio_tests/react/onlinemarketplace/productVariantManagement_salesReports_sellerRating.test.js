@@ -14,7 +14,7 @@ afterEach(() => {
 test('Managing product variants succeeds.', async () => {
   fetchMock.post('/api/products/1/variants', { status: 200, body: { id: 1, size: 'M', color: 'Red' } });
 
-  await act(async () => { render(<MemoryRouter><VariantManagement productId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Size'), { target: { value: 'M' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Add Variant')); });
 
@@ -25,7 +25,7 @@ test('Managing product variants succeeds.', async () => {
 test('Managing product variants fails with error message.', async () => {
   fetchMock.post('/api/products/1/variants', { status: 400, body: { message: 'Invalid variant details' } });
 
-  await act(async () => { render(<MemoryRouter><VariantManagement productId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Size'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Add Variant')); });
 

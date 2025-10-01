@@ -17,7 +17,7 @@ test('Successfully customizes feed to show only posts with images.', async () =>
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomizationComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Show Only Images'));
@@ -33,7 +33,7 @@ test('Shows error message when customizing feed fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomizationComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Show Only Images'));
@@ -47,7 +47,7 @@ test('Verify saving posts as drafts.', async () => {
   fetchMock.post('/api/posts/draft', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Write a post...'), { target: { value: 'Save as draft content' } });
@@ -64,7 +64,7 @@ test('Ensure error handling for saving drafts.', async () => {
   fetchMock.post('/api/posts/draft', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Write a post...'), { target: { value: '' } });
@@ -81,7 +81,7 @@ test('Verify sharing posts to user\'s feed.', async () => {
   fetchMock.post('/api/posts/share', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Share'));
@@ -95,7 +95,7 @@ test('Ensure error handling for sharing invalid posts.', async () => {
   fetchMock.post('/api/posts/share', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Share'));

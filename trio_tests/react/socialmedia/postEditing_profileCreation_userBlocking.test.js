@@ -15,7 +15,7 @@ test('Test updating an existing post.', async () => {
   fetchMock.put('/api/posts/1', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByText('Edit'), { target: { value: 'New content' } });
@@ -32,7 +32,7 @@ test('Ensure changes are saved and displayed.', async () => {
   fetchMock.put('/api/posts/1', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByText('Edit'), { target: { value: '' } });
@@ -48,7 +48,7 @@ test('Ensure changes are saved and displayed.', async () => {
 test('Profile creation succeeds with valid inputs', async () => {
   fetchMock.post('/api/profile', { body: { message: 'Profile created' }, status: 201 });
 
-  await act(async () => { render(<MemoryRouter><ProfileCreationForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('profile-name'), { target: { value: 'John Doe' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Profile')); });
 
@@ -59,7 +59,7 @@ test('Profile creation succeeds with valid inputs', async () => {
 test('Profile creation fails with invalid inputs', async () => {
   fetchMock.post('/api/profile', { body: { error: 'Invalid profile inputs' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><ProfileCreationForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('profile-name'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Profile')); });
 
@@ -70,7 +70,7 @@ test('Profile creation fails with invalid inputs', async () => {
 test('User blocking succeeds for valid user', async () => {
   fetchMock.post('/api/profile/block', { body: { message: 'User blocked' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><BlockUser userId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App userId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Block User')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -80,7 +80,7 @@ test('User blocking succeeds for valid user', async () => {
 test('User blocking fails for invalid user', async () => {
   fetchMock.post('/api/profile/block', { body: { error: 'Invalid user' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><BlockUser userId={9999} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App userId={9999} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Block User')); });
 
   expect(fetchMock.calls().length).toBe(1);

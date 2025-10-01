@@ -14,7 +14,7 @@ afterEach(() => {
 test('refund payment successfully', async () => {
   fetchMock.post('/api/refund-payment', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('refund-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('refund payment successfully', async () => {
 test('fail to refund payment', async () => {
   fetchMock.post('/api/refund-payment', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('refund-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('fail to refund payment', async () => {
 test('Sends order confirmation email successfully', async () => {
   fetchMock.post('/api/sendOrderConfirmationEmail', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Send Confirmation Email')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('Sends order confirmation email successfully', async () => {
 test('Fails to send order confirmation email', async () => {
   fetchMock.post('/api/sendOrderConfirmationEmail', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Send Confirmation Email')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Fails to send order confirmation email', async () => {
 test('valid expiration date', async () => {
   fetchMock.post('/api/validate-expiration-date', { valid: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expiration-date-input'), { target: { value: '12/25' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 
@@ -65,7 +65,7 @@ test('valid expiration date', async () => {
 test('invalid expiration date', async () => {
   fetchMock.post('/api/validate-expiration-date', 400);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expiration-date-input'), { target: { value: '13/25' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 

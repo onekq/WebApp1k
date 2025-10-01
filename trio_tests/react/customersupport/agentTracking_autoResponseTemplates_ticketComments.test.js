@@ -14,7 +14,7 @@ afterEach(() => {
 test('Tracking the agent assigned to a ticket should show agent name.', async () => {
   fetchMock.post('/api/track-agent', { agent: 'James Bond' });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id-track'), { target: { value: '789' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-agent')); });
 
@@ -25,7 +25,7 @@ test('Tracking the agent assigned to a ticket should show agent name.', async ()
 test('Tracking the agent assigned to a ticket should show error message when failed.', async () => {
   fetchMock.post('/api/track-agent', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id-track'), { target: { value: '789' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-agent')); });
 
@@ -36,7 +36,7 @@ test('Tracking the agent assigned to a ticket should show error message when fai
 test('Successfully configures auto-response templates.', async () => {
   fetchMock.post('/api/saveAutoResponseTemplate', 200);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTemplates /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('templateContent'), { target: { value: 'Hello' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Template')); });
 
@@ -47,7 +47,7 @@ test('Successfully configures auto-response templates.', async () => {
 test('Fails to configure auto-response templates.', async () => {
   fetchMock.post('/api/saveAutoResponseTemplate', 500);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTemplates /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('templateContent'), { target: { value: 'Hello' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Template')); });
 
@@ -58,7 +58,7 @@ test('Fails to configure auto-response templates.', async () => {
 test('Adding comments to a ticket should show success message.', async () => {
   fetchMock.post('/api/add-comment', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-comment'), { target: { value: 'This is a comment' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-comment')); });
 
@@ -69,7 +69,7 @@ test('Adding comments to a ticket should show success message.', async () => {
 test('Adding comments to a ticket should show error message when failed.', async () => {
   fetchMock.post('/api/add-comment', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-comment'), { target: { value: 'This is a comment' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-comment')); });
 

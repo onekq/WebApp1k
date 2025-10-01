@@ -15,7 +15,7 @@ test('successfully adds a recurring income', async () => {
   fetchMock.post('/income/recurring', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><AddRecurringIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Monthly Salary' } });
@@ -32,7 +32,7 @@ test('fails to add a recurring income', async () => {
   fetchMock.post('/income/recurring', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><AddRecurringIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });
@@ -49,7 +49,7 @@ test('successfully deletes a recurring income', async () => {
   fetchMock.delete('/income/recurring/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteRecurringIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete recurring income/i));
@@ -63,7 +63,7 @@ test('fails to delete a recurring income', async () => {
   fetchMock.delete('/income/recurring/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteRecurringIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete recurring income/i));
@@ -77,7 +77,7 @@ test('successfully sets a new financial goal', async () => {
   fetchMock.post('/api/goal', { status: 201, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><SetFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -93,7 +93,7 @@ test('fails to set a new financial goal', async () => {
   fetchMock.post('/api/goal', { status: 400, body: { error: 'Invalid goal' } });
 
   await act(async () => {
-    render(<MemoryRouter><SetFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

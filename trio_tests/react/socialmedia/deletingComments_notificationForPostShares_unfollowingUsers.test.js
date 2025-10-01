@@ -14,7 +14,7 @@ afterEach(() => {
 test('Should delete an existing comment', async () => {
   fetchMock.delete('api/comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Should delete an existing comment', async () => {
 test('Should display an error when deleting a non-existent comment', async () => {
   fetchMock.delete('api/comment', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-comment-button-invalid')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Should display an error when deleting a non-existent comment', async () =>
 test('should send a notification when a post is shared', async () => {
   fetchMock.post('/api/share', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('should send a notification when a post is shared', async () => {
 test('should handle error when notification sending fails for a post share', async () => {
   fetchMock.post('/api/share', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('should handle error when notification sending fails for a post share', asy
 test('Should unfollow a followed user', async () => {
   fetchMock.post('api/unfollow', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-input'), { target: { value: 'followedUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Unfollow')); });
 
@@ -65,7 +65,7 @@ test('Should unfollow a followed user', async () => {
 test('Should display an error when trying to unfollow a user not followed', async () => {
   fetchMock.post('api/unfollow', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-input'), { target: { value: 'unfollowedUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Unfollow')); });
 

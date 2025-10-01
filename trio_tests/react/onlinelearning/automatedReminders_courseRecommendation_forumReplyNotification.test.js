@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully sends automated reminders for deadlines', async () => {
   fetchMock.post('/reminders', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><AutomatedReminders /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Send Reminders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Successfully sends automated reminders for deadlines', async () => {
 test('Fails to send automated reminders for deadlines', async () => {
   fetchMock.post('/reminders', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><AutomatedReminders /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Send Reminders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Fails to send automated reminders for deadlines', async () => {
 test('Successfully displays course recommendations', async () => {
   fetchMock.get('/course-recommendations', { status: 200, body: [{ id: 1, title: 'Course 1' }] });
 
-  await act(async () => { render(<MemoryRouter><CourseRecommendation /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Course 1')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('Successfully displays course recommendations', async () => {
 test('Fails to display course recommendations', async () => {
   fetchMock.get('/course-recommendations', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><CourseRecommendation /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Recommendations failed')).toBeInTheDocument();
@@ -52,7 +52,7 @@ test('Fails to display course recommendations', async () => {
 test('Successfully sends a forum reply notification', async () => {
   fetchMock.post('/forum/reply-notifications', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><ForumReplyNotification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Reply')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -62,7 +62,7 @@ test('Successfully sends a forum reply notification', async () => {
 test('Fails to send a forum reply notification', async () => {
   fetchMock.post('/forum/reply-notifications', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><ForumReplyNotification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Reply')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

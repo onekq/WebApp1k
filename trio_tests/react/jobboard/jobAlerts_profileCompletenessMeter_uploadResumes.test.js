@@ -54,7 +54,7 @@ test('shows an error message when setting up alerts fails.', async () => {
 test('completeness meter displays successfully on job seeker profiles', async () => {
   fetchMock.get('/api/jobseeker/completeness', { completeness: 80 });
 
-  await act(async () => { render(<MemoryRouter><ProfileCompletenessMeter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Profile completeness: 80%')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('completeness meter displays successfully on job seeker profiles', async ()
 test('completeness meter fails to display on error', async () => {
   fetchMock.get('/api/jobseeker/completeness', 500);
 
-  await act(async () => { render(<MemoryRouter><ProfileCompletenessMeter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Failed to load completeness meter')).toBeInTheDocument();
@@ -72,7 +72,7 @@ test('completeness meter fails to display on error', async () => {
 test('successful resume upload.', async () => {
   fetchMock.post('/uploadResume', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resume-upload-input'), { target: { files: ['resume.pdf'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('upload-button')); });
 
@@ -83,7 +83,7 @@ test('successful resume upload.', async () => {
 test('failure resume upload.', async () => {
   fetchMock.post('/uploadResume', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resume-upload-input'), { target: { files: ['resume.pdf'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('upload-button')); });
 

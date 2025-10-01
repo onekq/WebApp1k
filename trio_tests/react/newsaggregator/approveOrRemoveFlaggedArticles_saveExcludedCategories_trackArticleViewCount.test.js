@@ -14,7 +14,7 @@ afterEach(() => {
 test('Approve or remove flagged articles successfully.', async () => {
   fetchMock.post('/api/moderate-articles', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ModerateArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Moderate Articles")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Approve or remove flagged articles successfully.', async () => {
 test('Fail to approve or remove flagged articles and display error.', async () => {
   fetchMock.post('/api/moderate-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><ModerateArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Moderate Articles")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to approve or remove flagged articles and display error.', async () =
 test('saves user-excluded categories successfully', async () => {
   fetchMock.post('/api/save-excluded-categories', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-categories-input'), { target: { value: 'Sports' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-excluded-categories-button')); });
 
@@ -45,7 +45,7 @@ test('saves user-excluded categories successfully', async () => {
 test('fails to save user-excluded categories', async () => {
   fetchMock.post('/api/save-excluded-categories', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-categories-input'), { target: { value: 'Sports' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-excluded-categories-button')); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays accurate search results for events based on filters', async () => {
   fetchMock.get('/api/event/search?query=concert', { results: [{ name: 'Concert Event' }] });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'concert' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-btn')); });
 
@@ -25,7 +25,7 @@ test('Displays accurate search results for events based on filters', async () =>
 test('Displays error message when search results are unavailable', async () => {
   fetchMock.get('/api/event/search?query=concert', 404);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'concert' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-btn')); });
 
@@ -58,7 +58,7 @@ test('Fails to validate missing speaker assignment.', async () => {
 test('allows ticket duplication', async () => {
   fetchMock.post('/duplicateTicket', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('duplicateTicketButton')); });
 
   expect(fetchMock.calls('/duplicateTicket').length).toEqual(1);
@@ -66,7 +66,7 @@ test('allows ticket duplication', async () => {
 }, 10000);
 
 test('fails to duplicate ticket', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('duplicateTicketButton')); });
 
   expect(screen.getByText('Unable to duplicate ticket.')).toBeInTheDocument();

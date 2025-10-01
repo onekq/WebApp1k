@@ -14,7 +14,7 @@ afterEach(() => {
 test('Fetch weather by GPS coordinates succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { lat: '40.7128', lon: '-74.0060', temperature: 22 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('lat-input'), { target: { value: '40.7128' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('lon-input'), { target: { value: '-74.0060' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
@@ -26,7 +26,7 @@ test('Fetch weather by GPS coordinates succeeds.', async () => {
 test('Fetch weather by GPS coordinates fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('lat-input'), { target: { value: 'InvalidLat' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('lon-input'), { target: { value: 'InvalidLon' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
@@ -72,7 +72,7 @@ test('FetchWeeklyForecast - fails to retrieve weekly forecast', async () => {
 test('correctly stores user forecast update interval preference', async () => {
   fetchMock.post('/preferences/update-interval', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('update-interval-select'), { target: { value: '30' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -83,7 +83,7 @@ test('correctly stores user forecast update interval preference', async () => {
 test('displays error when storing user forecast update interval preference fails', async () => {
   fetchMock.post('/preferences/update-interval', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('update-interval-select'), { target: { value: '30' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

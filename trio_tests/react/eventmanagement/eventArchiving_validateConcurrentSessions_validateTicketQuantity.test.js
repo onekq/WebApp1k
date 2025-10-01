@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays success message upon event archiving', async () => {
   fetchMock.post('/api/event/archive', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('archive-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Displays success message upon event archiving', async () => {
 test('Displays error message upon failing to archive event', async () => {
   fetchMock.post('/api/event/archive', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('archive-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Fails to validate overlapping concurrent sessions.', async () => {
 test('ticket quantity within event capacity', async () => {
   fetchMock.post('/ticketQuantity', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketQuantity'), { target: { value: '50' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 
@@ -63,7 +63,7 @@ test('ticket quantity within event capacity', async () => {
 }, 10000);
 
 test('ticket quantity exceeds event capacity', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketQuantity'), { target: { value: '1000' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 

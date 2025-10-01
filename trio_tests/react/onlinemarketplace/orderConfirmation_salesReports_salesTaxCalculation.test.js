@@ -14,7 +14,7 @@ afterEach(() => {
 test('displays order confirmation details correctly.', async () => {
   fetchMock.get('/api/order/confirmation', { body: { orderId: '12345' } });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Order Confirmation')); });
 
   expect(fetchMock.calls('/api/order/confirmation').length).toEqual(1);
@@ -24,7 +24,7 @@ test('displays order confirmation details correctly.', async () => {
 test('displays error on failing to fetch order confirmation.', async () => {
   fetchMock.get('/api/order/confirmation', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Order Confirmation')); });
 
   expect(fetchMock.calls('/api/order/confirmation').length).toEqual(1);
@@ -55,7 +55,7 @@ test('fails to generate sales reports with an error message.', async () => {
 test('calculates sales tax based on location.', async () => {
   fetchMock.post('/api/salesTax', { body: { tax: 8 } });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tax-location-input'), { target: { value: 'NY' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Calculate Sales Tax')); });
 
@@ -66,7 +66,7 @@ test('calculates sales tax based on location.', async () => {
 test('displays error on failing to calculate sales tax.', async () => {
   fetchMock.post('/api/salesTax', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tax-location-input'), { target: { value: 'CA' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Calculate Sales Tax')); });
 

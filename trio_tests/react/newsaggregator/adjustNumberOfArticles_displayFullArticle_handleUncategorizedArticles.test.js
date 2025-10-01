@@ -14,7 +14,7 @@ afterEach(() => {
 test('adjusts the number of articles shown successfully', async () => {
   fetchMock.get('/api/articles?limit=10', { status: 200, body: Array.from({ length: 10 }, (_, i) => ({ id: i, title: `Article ${i}` })) });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('articles-limit-input'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('adjust-articles-button')); });
 
@@ -25,7 +25,7 @@ test('adjusts the number of articles shown successfully', async () => {
 test('fails to adjust the number of articles shown', async () => {
   fetchMock.get('/api/articles?limit=10', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('articles-limit-input'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('adjust-articles-button')); });
 
@@ -36,7 +36,7 @@ test('fails to adjust the number of articles shown', async () => {
 test('Displays full article content successfully', async () => {
   fetchMock.get('/api/articles', { status: 200, body: [{ id: 1, content: 'Full Test Article Content' }] });
 
-  await act(async () => { render(<MemoryRouter><ArticlePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Full Test Article Content')).toBeInTheDocument();
@@ -45,7 +45,7 @@ test('Displays full article content successfully', async () => {
 test('Fails to display full article content', async () => {
   fetchMock.get('/api/articles', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><ArticlePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load full article content')).toBeInTheDocument();
@@ -56,7 +56,7 @@ test('Handle uncategorized articles successfully.', async () => {
     { id: 1, title: "Uncategorized Article 1" }
   ]);
 
-  await act(async () => { render(<MemoryRouter><UncategorizedArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText("Uncategorized Article 1")).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('Handle uncategorized articles successfully.', async () => {
 test('Fail to handle uncategorized articles and display error.', async () => {
   fetchMock.get('/api/uncategorized-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><UncategorizedArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText("Error fetching uncategorized articles.")).toBeInTheDocument();

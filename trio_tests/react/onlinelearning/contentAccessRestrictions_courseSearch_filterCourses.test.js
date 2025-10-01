@@ -14,7 +14,7 @@ afterEach(() => {
 test('Content Access Restrictions success: should display restricted content.', async () => {
   fetchMock.get('/api/courses/1/content', { id: 1, title: 'Protected Content' });
 
-  await act(async () => { render(<MemoryRouter><ContentAccessRestrictions courseId={1} permission="admin" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} permission="admin" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Protected Content')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Content Access Restrictions success: should display restricted content.', 
 test('Content Access Restrictions failure: should display an error message on unauthorized access.', async () => {
   fetchMock.get('/api/courses/1/content', 403);
 
-  await act(async () => { render(<MemoryRouter><ContentAccessRestrictions courseId={1} permission="guest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} permission="guest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Access restricted.')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Content Access Restrictions failure: should display an error message on un
 test('Course Search success: should display search results.', async () => {
   fetchMock.get('/api/courses?search=React', [{ id: 1, title: 'React Course' }]);
 
-  await act(async () => { render(<MemoryRouter><CourseSearch /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search for courses...'), { target: { value: 'React' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -43,7 +43,7 @@ test('Course Search success: should display search results.', async () => {
 test('Course Search failure: should display an error message if no results found.', async () => {
   fetchMock.get('/api/courses?search=Unknown', []);
 
-  await act(async () => { render(<MemoryRouter><CourseSearch /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search for courses...'), { target: { value: 'Unknown' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -54,7 +54,7 @@ test('Course Search failure: should display an error message if no results found
 test('Filter Courses success: should display filtered courses.', async () => {
   fetchMock.get('/api/courses?filter=beginner', [{ id: 1, title: 'Beginner Course' }]);
 
-  await act(async () => { render(<MemoryRouter><FilterCourses /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('course-filter'), { target: { value: 'beginner' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Apply Filters')); });
 
@@ -65,7 +65,7 @@ test('Filter Courses success: should display filtered courses.', async () => {
 test('Filter Courses failure: should display an error message if no filter results.', async () => {
   fetchMock.get('/api/courses?filter=advanced', []);
 
-  await act(async () => { render(<MemoryRouter><FilterCourses /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('course-filter'), { target: { value: 'advanced' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Apply Filters')); });
 

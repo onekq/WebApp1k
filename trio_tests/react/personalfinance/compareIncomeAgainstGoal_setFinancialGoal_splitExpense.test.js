@@ -40,7 +40,7 @@ test('successfully sets a new financial goal', async () => {
   fetchMock.post('/api/goal', { status: 201, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><SetFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -56,7 +56,7 @@ test('fails to set a new financial goal', async () => {
   fetchMock.post('/api/goal', { status: 400, body: { error: 'Invalid goal' } });
 
   await act(async () => {
-    render(<MemoryRouter><SetFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -71,7 +71,7 @@ test('fails to set a new financial goal', async () => {
 test('splits an expense into multiple categories successfully', async () => {
   fetchMock.post('/api/split-expense', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('split-expense-input'), { target: { value: '150' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-split-expense-button')); });
 
@@ -82,7 +82,7 @@ test('splits an expense into multiple categories successfully', async () => {
 test('fails to split an expense into multiple categories', async () => {
   fetchMock.post('/api/split-expense', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('split-expense-input'), { target: { value: '150' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-split-expense-button')); });
 

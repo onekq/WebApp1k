@@ -40,7 +40,7 @@ test('successfully notifies when expenses exceed income for a given period', asy
   fetchMock.get('/api/expenses/notification', { status: 200, body: { notify: true } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -55,7 +55,7 @@ test('fails to notify when expenses exceed income for a given period', async () 
   fetchMock.get('/api/expenses/notification', { status: 200, body: { notify: false } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -70,7 +70,7 @@ test('Success: Set a monthly budget for a category.', async () => {
   fetchMock.post('/api/set-budget', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -93,7 +93,7 @@ test('Failure: Set a monthly budget for a category.', async () => {
   fetchMock.post('/api/set-budget', { status: 400, body: { error: 'Invalid budget' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

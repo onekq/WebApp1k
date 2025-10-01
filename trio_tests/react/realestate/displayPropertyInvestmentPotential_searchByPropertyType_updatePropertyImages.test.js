@@ -14,7 +14,7 @@ afterEach(() => {
 test('Display property investment potential successfully', async () => {
   fetchMock.get('/api/investment-potential', { metrics: 'High' });
 
-  await act(async () => { render(<MemoryRouter><InvestmentPotential /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-investment-potential-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Display property investment potential successfully', async () => {
 test('Display property investment potential fails with error', async () => {
   fetchMock.get('/api/investment-potential', 500);
 
-  await act(async () => { render(<MemoryRouter><InvestmentPotential /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-investment-potential-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -37,7 +37,7 @@ test('Search by Property Type filters properties by type successfully', async ()
     body: [{ id: 1, type: 'apartment' }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/property type/i), { target: { value: 'apartment' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -51,7 +51,7 @@ test('Search by Property Type filters properties by type fails', async () => {
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/property type/i), { target: { value: 'apartment' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -62,7 +62,7 @@ test('Search by Property Type filters properties by type fails', async () => {
 test('Successfully updates property images.', async () => {
   fetchMock.put('/api/properties/1/images/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><UpdatePropertyImages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('image-upload'), { target: { files: [new File([], 'updated-image.jpg')] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -73,7 +73,7 @@ test('Successfully updates property images.', async () => {
 test('Fails to update property images with error message.', async () => {
   fetchMock.put('/api/properties/1/images/1', 400);
 
-  await act(async () => { render(<MemoryRouter><UpdatePropertyImages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('image-upload'), { target: { files: [new File([], 'updated-image.jpg')] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Multiple user profiles should be managed successfully.', async () => {
   fetchMock.get('/api/user/profiles', [{ id: 1, name: 'John Doe' }]);
 
-  await act(async () => { render(<MemoryRouter><UserProfileComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-profiles')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Multiple user profiles should be managed successfully.', async () => {
 test('Error in managing user profiles should show error message.', async () => {
   fetchMock.get('/api/user/profiles', 404);
 
-  await act(async () => { render(<MemoryRouter><UserProfileComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-profiles')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

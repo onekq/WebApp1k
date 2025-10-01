@@ -14,7 +14,7 @@ afterEach(() => {
 test('Success: quiz completes and submits', async () => {
   fetchMock.post('/api/quiz', 200);
 
-  await act(async () => { render(<MemoryRouter><CompleteQuizComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('quiz-answer'), { target: { value: 'answer' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Success: quiz completes and submits', async () => {
 test('Failure: quiz submission fails', async () => {
   fetchMock.post('/api/quiz', 500);
 
-  await act(async () => { render(<MemoryRouter><CompleteQuizComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('quiz-answer'), { target: { value: 'answer' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -36,7 +36,7 @@ test('Failure: quiz submission fails', async () => {
 test('Content Access Restrictions success: should display restricted content.', async () => {
   fetchMock.get('/api/courses/1/content', { id: 1, title: 'Protected Content' });
 
-  await act(async () => { render(<MemoryRouter><ContentAccessRestrictions courseId={1} permission="admin" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} permission="admin" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Protected Content')).toBeInTheDocument();
@@ -45,7 +45,7 @@ test('Content Access Restrictions success: should display restricted content.', 
 test('Content Access Restrictions failure: should display an error message on unauthorized access.', async () => {
   fetchMock.get('/api/courses/1/content', 403);
 
-  await act(async () => { render(<MemoryRouter><ContentAccessRestrictions courseId={1} permission="guest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App courseId={1} permission="guest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Access restricted.')).toBeInTheDocument();
@@ -54,7 +54,7 @@ test('Content Access Restrictions failure: should display an error message on un
 test('Successfully schedules and notifies for live session', async () => {
   fetchMock.post('/live-sessions/schedule', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><LiveSessionScheduling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Schedule')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('Successfully schedules and notifies for live session', async () => {
 test('Fails to schedule and notify for live session', async () => {
   fetchMock.post('/live-sessions/schedule', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><LiveSessionScheduling /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Schedule')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

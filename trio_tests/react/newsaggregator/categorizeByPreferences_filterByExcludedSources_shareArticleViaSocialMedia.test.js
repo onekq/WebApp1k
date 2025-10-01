@@ -14,7 +14,7 @@ afterEach(() => {
 test('Categorize articles based on user preferences successfully.', async () => {
   fetchMock.post('/api/preferences-categorize-articles', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CategorizeByPreferences /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Categorize by Preferences")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Categorize articles based on user preferences successfully.', async () => 
 test('Fail to categorize articles by preferences and display error.', async () => {
   fetchMock.post('/api/preferences-categorize-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><CategorizeByPreferences /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Categorize by Preferences")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to categorize articles by preferences and display error.', async () =
 test('filters articles by excluded sources successfully', async () => {
   fetchMock.get('/api/articles?excludedSources=CNN', { status: 200, body: [{ id: 4, title: 'Non-CNN News' }] });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-sources-filter-input'), { target: { value: 'CNN' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-excluded-sources-filter-button')); });
 
@@ -45,7 +45,7 @@ test('filters articles by excluded sources successfully', async () => {
 test('fails to filter articles by excluded sources', async () => {
   fetchMock.get('/api/articles?excludedSources=CNN', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-sources-filter-input'), { target: { value: 'CNN' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-excluded-sources-filter-button')); });
 
@@ -56,7 +56,7 @@ test('fails to filter articles by excluded sources', async () => {
 test('shares an article via social media successfully', async () => {
   fetchMock.post('/share/social-media', 200);
 
-  await act(async () => { render(<MemoryRouter><ShareViaSocialMediaComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('shares an article via social media successfully', async () => {
 test('fails to share an article via social media with error message', async () => {
   fetchMock.post('/share/social-media', 500);
 
-  await act(async () => { render(<MemoryRouter><ShareViaSocialMediaComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

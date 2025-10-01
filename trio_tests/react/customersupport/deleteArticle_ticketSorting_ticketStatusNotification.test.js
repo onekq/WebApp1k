@@ -15,7 +15,7 @@ test('successfully deletes outdated articles', async () => {
   fetchMock.delete('path/to/api/article', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('delete-article-button'));
@@ -29,7 +29,7 @@ test('fails to delete outdated articles with error message', async () => {
   fetchMock.delete('path/to/api/article', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('delete-article-button'));
@@ -42,7 +42,7 @@ test('fails to delete outdated articles with error message', async () => {
 test('sorts tickets by submission date', async () => {
   fetchMock.get('/api/tickets?sort=submissionDate', { status: 200, body: [{ id: 2, date: '2023-01-01' }, { id: 1, date: '2023-01-02' }] });
   
-  await act(async () => { render(<MemoryRouter><TicketSorting /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Sort by Date')); });
   
   expect(fetchMock.calls('/api/tickets?sort=submissionDate').length).toBe(1);
@@ -53,7 +53,7 @@ test('sorts tickets by submission date', async () => {
 test('shows error if sorting tickets fails', async () => {
   fetchMock.get('/api/tickets?sort=submissionDate', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSorting /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Sort by Date')); });
   
   expect(fetchMock.calls('/api/tickets?sort=submissionDate').length).toBe(1);
@@ -63,7 +63,7 @@ test('shows error if sorting tickets fails', async () => {
 test('notifies the user of a ticket status change', async () => {
   fetchMock.put('/api/tickets/1/notify', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketStatusNotification ticketId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App ticketId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Notify')); });
   
   expect(fetchMock.calls('/api/tickets/1/notify').length).toBe(1);
@@ -73,7 +73,7 @@ test('notifies the user of a ticket status change', async () => {
 test('shows error if notification fails', async () => {
   fetchMock.put('/api/tickets/1/notify', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketStatusNotification ticketId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App ticketId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Notify')); });
   
   expect(fetchMock.calls('/api/tickets/1/notify').length).toBe(1);

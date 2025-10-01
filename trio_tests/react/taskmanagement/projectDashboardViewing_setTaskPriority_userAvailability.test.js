@@ -15,7 +15,7 @@ test('View Project Dashboard - success', async () => {
   fetchMock.get('/api/projects/dashboard', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('View Project Dashboard - failure', async () => {
   fetchMock.get('/api/projects/dashboard', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -64,7 +64,7 @@ test('should display error when setting task priority fails.', async () => {
 test('Set user availability successfully', async () => {
   fetchMock.post('/set-availability', { status: 200, body: { available: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('availability-toggle')); });
 
@@ -75,7 +75,7 @@ test('Set user availability successfully', async () => {
 test('Fail to set user availability due to server error', async () => {
   fetchMock.post('/set-availability', { status: 500, body: { available: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('availability-toggle')); });
 

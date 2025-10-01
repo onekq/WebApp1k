@@ -42,7 +42,7 @@ test('SearchFlights - search flights fails with error message', async () => {
 test('successfully removes items from an itinerary.', async () => {
   fetchMock.delete('/api/remove-item', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-item-button')); });
 
   expect(fetchMock.calls('/api/remove-item', 'DELETE')).toHaveLength(1);
@@ -52,7 +52,7 @@ test('successfully removes items from an itinerary.', async () => {
 test('fails to remove items due to network error.', async () => {
   fetchMock.delete('/api/remove-item', { status: 500, body: { error: 'Network error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-item-button')); });
 
   expect(fetchMock.calls('/api/remove-item', 'DELETE')).toHaveLength(1);

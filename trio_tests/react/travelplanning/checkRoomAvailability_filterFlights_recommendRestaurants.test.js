@@ -18,7 +18,7 @@ test('checkRoomAvailability - checks room availability for selected hotels', asy
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('check-availability-1'));
@@ -35,7 +35,7 @@ test('checkRoomAvailability - shows error message when room availability check f
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('check-availability-1'));

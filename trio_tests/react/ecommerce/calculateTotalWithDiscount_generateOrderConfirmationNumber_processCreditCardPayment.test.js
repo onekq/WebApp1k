@@ -14,7 +14,7 @@ afterEach(() => {
 test('calculateTotalWithDiscount: successfully calculate total with discount applied', async () => {
   fetchMock.get('/api/cart/total-discount', { status: 200, body: { total: '80.00' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-total-discount')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('calculateTotalWithDiscount: successfully calculate total with discount app
 test('calculateTotalWithDiscount: fail to calculate total with discount applied with error message', async () => {
   fetchMock.get('/api/cart/total-discount', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-total-discount')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('calculateTotalWithDiscount: fail to calculate total with discount applied 
 test('Generates order confirmation number successfully', async () => {
   fetchMock.get('/api/generateOrderConfirmationNumber', { confirmationNumber: '123456' });
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Confirmation Number')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('Generates order confirmation number successfully', async () => {
 test('Fails to generate order confirmation number', async () => {
   fetchMock.get('/api/generateOrderConfirmationNumber', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Confirmation Number')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Fails to generate order confirmation number', async () => {
 test('process credit card payment successfully', async () => {
   fetchMock.post('/api/process-payment', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-with-credit-card-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('process credit card payment successfully', async () => {
 test('fail to process credit card payment', async () => {
   fetchMock.post('/api/process-payment', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-with-credit-card-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

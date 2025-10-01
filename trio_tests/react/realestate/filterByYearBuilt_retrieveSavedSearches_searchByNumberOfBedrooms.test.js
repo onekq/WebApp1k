@@ -17,7 +17,7 @@ test('Filter by Year Built filters properties by the year they were built succes
     body: [{ id: 1, yearBuilt: 2010 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/year built/i), { target: { value: '2010' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -31,7 +31,7 @@ test('Filter by Year Built filters properties by the year they were built fails'
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/year built/i), { target: { value: '2010' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -42,7 +42,7 @@ test('Filter by Year Built filters properties by the year they were built fails'
 test('successfully retrieves saved searches', async () => {
   fetchMock.get('/api/search/list', 200);
 
-  await act(async () => { render(<MemoryRouter><RetrieveSavedSearches /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('retrieve-searches-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -52,7 +52,7 @@ test('successfully retrieves saved searches', async () => {
 test('fails to retrieve saved searches and shows error message', async () => {
   fetchMock.get('/api/search/list', 500);
 
-  await act(async () => { render(<MemoryRouter><RetrieveSavedSearches /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('retrieve-searches-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -65,7 +65,7 @@ test('Search by Number of Bedrooms filters properties by number of bedrooms succ
     body: [{ id: 1, bedrooms: 2 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/bedrooms/i), { target: { value: '2' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -79,7 +79,7 @@ test('Search by Number of Bedrooms filters properties by number of bedrooms fail
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/bedrooms/i), { target: { value: '2' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 

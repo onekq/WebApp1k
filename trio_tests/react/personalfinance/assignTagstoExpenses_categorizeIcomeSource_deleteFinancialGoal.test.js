@@ -14,7 +14,7 @@ afterEach(() => {
 test('assigns tags to expenses successfully', async () => {
   fetchMock.post('/api/tag', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input'), { target: { value: 'Groceries' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-tag-button')); });
 
@@ -25,7 +25,7 @@ test('assigns tags to expenses successfully', async () => {
 test('fails to assign tags to expenses', async () => {
   fetchMock.post('/api/tag', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input'), { target: { value: 'Groceries' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-tag-button')); });
 
@@ -37,7 +37,7 @@ test('successfully categorizes an income source', async () => {
   fetchMock.post('/income/1/categorize', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><CategorizeIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/category/i), { target: { value: 'Job' } });
@@ -54,7 +54,7 @@ test('fails to categorize an income source', async () => {
   fetchMock.post('/income/1/categorize', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><CategorizeIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/category/i), { target: { value: '' } });
@@ -71,7 +71,7 @@ test('successfully deletes a financial goal', async () => {
   fetchMock.delete('/api/goal/1', { status: 200, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -86,7 +86,7 @@ test('fails to delete a financial goal', async () => {
   fetchMock.delete('/api/goal/1', { status: 404, body: { error: 'Goal not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

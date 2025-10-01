@@ -15,7 +15,7 @@ test('Verify post creation with valid content.', async () => {
   fetchMock.post('/api/posts', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Write a post...'), { target: { value: 'Hello World!' } });
@@ -32,7 +32,7 @@ test('Ensure error handling for invalid post content.', async () => {
   fetchMock.post('/api/posts', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Write a post...'), { target: { value: '' } });
@@ -49,7 +49,7 @@ test('Verify sharing posts to user\'s feed.', async () => {
   fetchMock.post('/api/posts/share', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Share'));
@@ -63,7 +63,7 @@ test('Ensure error handling for sharing invalid posts.', async () => {
   fetchMock.post('/api/posts/share', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Share'));
@@ -76,7 +76,7 @@ test('Ensure error handling for sharing invalid posts.', async () => {
 test('Profile editing succeeds with valid changes', async () => {
   fetchMock.put('/api/profile', { body: { message: 'Profile updated' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><ProfileEditingForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('profile-name'), { target: { value: 'John Updated' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Changes')); });
 
@@ -87,7 +87,7 @@ test('Profile editing succeeds with valid changes', async () => {
 test('Profile editing fails with invalid changes', async () => {
   fetchMock.put('/api/profile', { body: { error: 'Invalid changes' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><ProfileEditingForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('profile-name'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Changes')); });
 

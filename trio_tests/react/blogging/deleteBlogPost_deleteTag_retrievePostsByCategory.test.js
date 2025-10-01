@@ -15,7 +15,7 @@ test('Success: delete a blog post', async () => {
   fetchMock.delete('/api/deletePost', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete/i));
@@ -29,7 +29,7 @@ test('Failure: delete a blog post without authorization', async () => {
   fetchMock.delete('/api/deletePost', { status: 403, body: { error: 'Unauthorized' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete/i));
@@ -44,7 +44,7 @@ test('User can delete a tag successfully', async () => {
     status: 204
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete Tag')); });
 
   expect(fetchMock.calls('/tags/1').length).toBe(1);
@@ -57,7 +57,7 @@ test('User gets an error message when deleting a tag fails', async () => {
     body: { error: 'Unable to delete tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete Tag')); });
 
   expect(fetchMock.calls('/tags/1').length).toBe(1);
@@ -70,7 +70,7 @@ test('User can retrieve posts by category successfully', async () => {
     body: [{ id: 1, title: 'First Post' }, { id: 2, title: 'Second Post' }]
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 
@@ -85,7 +85,7 @@ test('User gets an error message when retrieving posts by category fails', async
     body: { error: 'Unable to fetch posts' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 

@@ -15,7 +15,7 @@ test('Album Visibility Settings: success', async () => {
   fetchMock.post('/api/setAlbumVisibility', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-id-input'), { target: { value: 'AlbumID' } });
@@ -32,7 +32,7 @@ test('Album Visibility Settings: failure', async () => {
   fetchMock.post('/api/setAlbumVisibility', { throws: new Error('Visibility Change Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-id-input'), { target: { value: 'AlbumID' } });

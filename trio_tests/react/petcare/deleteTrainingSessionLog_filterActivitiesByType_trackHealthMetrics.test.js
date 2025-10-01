@@ -14,7 +14,7 @@ afterEach(() => {
 test('Deletes a training session log successfully.', async () => {
   fetchMock.delete('/training-sessions/1', { message: 'Training session deleted' });
 
-  await act(async () => { render(<MemoryRouter><DeleteTrainingSessionLog trainingId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App trainingId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-button')); });
 
   expect(fetchMock.calls('/training-sessions/1').length).toBe(1);
@@ -24,7 +24,7 @@ test('Deletes a training session log successfully.', async () => {
 test('Fails to delete training session log with error message.', async () => {
   fetchMock.delete('/training-sessions/1', { status: 500, body: { message: 'Failed to delete training session' } });
 
-  await act(async () => { render(<MemoryRouter><DeleteTrainingSessionLog trainingId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App trainingId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-button')); });
 
   expect(fetchMock.calls('/training-sessions/1').length).toBe(1);
@@ -34,7 +34,7 @@ test('Fails to delete training session log with error message.', async () => {
 test('Filters activities by type successfully.', async () => {
   fetchMock.get('/activities?type=walk', [{ type: 'walk', description: 'Morning walk' }]);
 
-  await act(async () => { render(<MemoryRouter><FilterActivitiesByType /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('filter-input'), { target: { value: 'walk' } }); });
 
   expect(fetchMock.calls('/activities?type=walk').length).toBe(1);
@@ -44,7 +44,7 @@ test('Filters activities by type successfully.', async () => {
 test('Fails to filter activities by type with error message.', async () => {
   fetchMock.get('/activities?type=walk', { status: 500, body: { message: 'Failed to filter activities' } });
 
-  await act(async () => { render(<MemoryRouter><FilterActivitiesByType /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('filter-input'), { target: { value: 'walk' } }); });
 
   expect(fetchMock.calls('/activities?type=walk').length).toBe(1);
@@ -54,7 +54,7 @@ test('Fails to filter activities by type with error message.', async () => {
 test('Track health metrics successfully', async () => {
   fetchMock.post('/api/health-metrics', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('weight-input'), { target: { value: '10.2' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -65,7 +65,7 @@ test('Track health metrics successfully', async () => {
 test('Fail to track health metrics with error', async () => {
   fetchMock.post('/api/health-metrics', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('weight-input'), { target: { value: '' } }); }); // Failure case: Empty input
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('correctly calculates shipping based on location.', async () => {
   fetchMock.post('/api/shipping', { body: { cost: 15 } });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('location-input'), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Calculate Shipping')); });
 
@@ -25,7 +25,7 @@ test('correctly calculates shipping based on location.', async () => {
 test('displays error on failing to calculate shipping.', async () => {
   fetchMock.post('/api/shipping', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('location-input'), { target: { value: '54321' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Calculate Shipping')); });
 
@@ -36,7 +36,7 @@ test('displays error on failing to calculate shipping.', async () => {
 test('Cancel Order success removes order from list', async () => {
   fetchMock.delete('/api/orders/1', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Cancel Order')); });
 
   expect(fetchMock.calls('/api/orders/1').length).toBe(1);
@@ -46,7 +46,7 @@ test('Cancel Order success removes order from list', async () => {
 test('Cancel Order failure shows error message', async () => {
   fetchMock.delete('/api/orders/1', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Cancel Order')); });
 
   expect(screen.getByText('Error cancelling order')).toBeInTheDocument();
@@ -55,7 +55,7 @@ test('Cancel Order failure shows error message', async () => {
 test('Track Order success displays tracking information', async () => {
   fetchMock.get('/api/orders/1/track', { status: 'In Transit' });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Track Order')); });
 
   expect(fetchMock.calls('/api/orders/1/track').length).toBe(1);
@@ -65,7 +65,7 @@ test('Track Order success displays tracking information', async () => {
 test('Track Order failure shows error message', async () => {
   fetchMock.get('/api/orders/1/track', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Track Order')); });
 
   expect(screen.getByText('Error tracking order')).toBeInTheDocument();

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can successfully enroll in a course.', async () => {
   fetchMock.post('/api/enroll', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Course ID/i), { target: { value: '101' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Enroll/i)); });
 
@@ -25,7 +25,7 @@ test('Users can successfully enroll in a course.', async () => {
 test('Users cannot enroll in a course if the server returns an error.', async () => {
   fetchMock.post('/api/enroll', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Course ID/i), { target: { value: '101' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Enroll/i)); });
 
@@ -37,7 +37,7 @@ test('Enrollment is allowed after prerequisites are met.', async () => {
   fetchMock.get('/api/check-prerequisites/101', { prerequisitesMet: true });
   fetchMock.post('/api/enroll', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Check Prerequisites/i)); });
   await act(async () => { fireEvent.click(screen.getByText(/Enroll/i)); });
 
@@ -48,7 +48,7 @@ test('Enrollment is allowed after prerequisites are met.', async () => {
 test('Enrollment is blocked if prerequisites are not met.', async () => {
   fetchMock.get('/api/check-prerequisites/101', { prerequisitesMet: false });
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Check Prerequisites/i)); });
   await act(async () => { fireEvent.click(screen.getByText(/Enroll/i)); });
 
@@ -59,7 +59,7 @@ test('Enrollment is blocked if prerequisites are not met.', async () => {
 test('Users can be successfully added to the waitlist.', async () => {
   fetchMock.post('/api/waitlist', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Join Waitlist/i)); });
 
   expect(fetchMock.calls('/api/waitlist').length).toEqual(1);
@@ -69,7 +69,7 @@ test('Users can be successfully added to the waitlist.', async () => {
 test('Adding users to the waitlist fails with an error.', async () => {
   fetchMock.post('/api/waitlist', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Join Waitlist/i)); });
 
   expect(fetchMock.calls('/api/waitlist').length).toEqual(1);

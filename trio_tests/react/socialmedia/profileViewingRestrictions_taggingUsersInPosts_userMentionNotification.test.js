@@ -15,7 +15,7 @@ test('Viewing restricted profile succeeds with proper data', async () => {
   const profileData = { name: 'John Doe', bio: 'Software Developer' };
   fetchMock.get('/api/profile/valid-id', { body: profileData, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><ProfileView profileId={'valid-id'} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App profileId={'valid-id'} /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('John Doe')).toBeInTheDocument();
@@ -25,7 +25,7 @@ test('Viewing restricted profile succeeds with proper data', async () => {
 test('Viewing restricted profile fails with proper message', async () => {
   fetchMock.get('/api/profile/restricted-id', { body: { error: 'Profile is private' }, status: 403 });
 
-  await act(async () => { render(<MemoryRouter><ProfileView profileId={'restricted-id'} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App profileId={'restricted-id'} /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Profile is private')).toBeInTheDocument();
@@ -34,7 +34,7 @@ test('Viewing restricted profile fails with proper message', async () => {
 test('Should tag a valid user in a post', async () => {
   fetchMock.post('api/tag', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input-post'), { target: { value: 'userToTag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Tag')); });
 
@@ -45,7 +45,7 @@ test('Should tag a valid user in a post', async () => {
 test('Should display an error when tagging an invalid user in a post', async () => {
   fetchMock.post('api/tag', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input-post'), { target: { value: 'invalidUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Tag')); });
 
@@ -56,7 +56,7 @@ test('Should display an error when tagging an invalid user in a post', async () 
 test('should send a notification when a user is mentioned in a post', async () => {
   fetchMock.post('/api/mention', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('post-input'), {target: {value: '@john'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-button')); });
 
@@ -67,7 +67,7 @@ test('should send a notification when a user is mentioned in a post', async () =
 test('should handle error when notification sending fails for a user mention in a post', async () => {
   fetchMock.post('/api/mention', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('post-input'), {target: {value: '@john'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-button')); });
 

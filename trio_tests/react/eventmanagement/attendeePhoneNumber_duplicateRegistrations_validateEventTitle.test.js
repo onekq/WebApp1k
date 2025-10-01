@@ -56,7 +56,7 @@ test('Duplicate registrations are successfully prevented', async () => {
 test('Should successfully submit valid event title', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Valid Title' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -67,7 +67,7 @@ test('Should successfully submit valid event title', async () => {
 test('Should show error for missing event title', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/title/i), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

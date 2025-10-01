@@ -17,7 +17,7 @@ test('User can assign tags to a post successfully', async () => {
     body: { postId: 1, tags: [1, 2] }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tags Select'), { target: { value: ['1', '2'] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign Tags')); });
 
@@ -31,7 +31,7 @@ test('User gets an error message when assigning tags to a post fails', async () 
     body: { error: 'Unable to assign tags' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tags Select'), { target: { value: ['1', '2'] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Assign Tags')); });
 
@@ -45,7 +45,7 @@ test('User can retrieve posts by tag successfully', async () => {
     body: [{ id: 1, title: 'First Post' }, { id: 2, title: 'Second Post' }]
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 
@@ -60,7 +60,7 @@ test('User gets an error message when retrieving posts by tag fails', async () =
     body: { error: 'Unable to fetch posts' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 
@@ -72,7 +72,7 @@ test('Success: schedule a post for future publication', async () => {
   fetchMock.post('/api/schedulePost', { status: 200, body: { id: 1, title: 'Scheduled Post', content: 'Some content', scheduledDate: '2023-10-10T12:00:00Z' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/date/i), { target: { value: '2023-10-10T12:00:00Z' } });
@@ -89,7 +89,7 @@ test('Failure: schedule a post with invalid date', async () => {
   fetchMock.post('/api/schedulePost', { status: 400, body: { error: 'Invalid date format' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/date/i), { target: { value: 'invalid-date' } });

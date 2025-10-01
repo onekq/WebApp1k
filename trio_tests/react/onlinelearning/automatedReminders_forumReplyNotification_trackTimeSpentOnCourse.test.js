@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully sends automated reminders for deadlines', async () => {
   fetchMock.post('/reminders', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><AutomatedReminders /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Send Reminders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Successfully sends automated reminders for deadlines', async () => {
 test('Fails to send automated reminders for deadlines', async () => {
   fetchMock.post('/reminders', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><AutomatedReminders /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Send Reminders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Fails to send automated reminders for deadlines', async () => {
 test('Successfully sends a forum reply notification', async () => {
   fetchMock.post('/forum/reply-notifications', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><ForumReplyNotification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Reply')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('Successfully sends a forum reply notification', async () => {
 test('Fails to send a forum reply notification', async () => {
   fetchMock.post('/forum/reply-notifications', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><ForumReplyNotification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Reply')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Fails to send a forum reply notification', async () => {
 test('Time spent on course content is recorded successfully.', async () => {
   fetchMock.get('/api/time-spent/101', { timeSpent: '5 hours' });
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Track Time Spent/i)); });
 
   expect(fetchMock.calls('/api/time-spent/101').length).toEqual(1);
@@ -64,7 +64,7 @@ test('Time spent on course content is recorded successfully.', async () => {
 test('Time spent on course content tracking fails if the server returns an error.', async () => {
   fetchMock.get('/api/time-spent/101', 500);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Track Time Spent/i)); });
 
   expect(fetchMock.calls('/api/time-spent/101').length).toEqual(1);

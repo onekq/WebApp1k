@@ -14,7 +14,7 @@ afterEach(() => {
 test('Loyalty points should be calculated and applied for valid bookings.', async () => {
   fetchMock.post('/api/loyalty', 200);
 
-  await act(async () => { render(<MemoryRouter><LoyaltyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-loyalty')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Loyalty points should be calculated and applied for valid bookings.', asyn
 test('Error in applying loyalty points should show error message.', async () => {
   fetchMock.post('/api/loyalty', 400);
 
-  await act(async () => { render(<MemoryRouter><LoyaltyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-loyalty')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('CheckSeatAvailability - check seat availability fails with error message',
 test('successfully validates itinerary conflicts.', async () => {
   fetchMock.post('/api/validate-conflicts', { status: 200, body: { conflicts: [] } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-conflicts-button')); });
 
   expect(fetchMock.calls('/api/validate-conflicts', 'POST')).toHaveLength(1);
@@ -64,7 +64,7 @@ test('successfully validates itinerary conflicts.', async () => {
 test('fails to validate itinerary conflicts due to conflicts.', async () => {
   fetchMock.post('/api/validate-conflicts', { status: 400, body: { conflicts: ['Conflict1'] } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-conflicts-button')); });
 
   expect(fetchMock.calls('/api/validate-conflicts', 'POST')).toHaveLength(1);

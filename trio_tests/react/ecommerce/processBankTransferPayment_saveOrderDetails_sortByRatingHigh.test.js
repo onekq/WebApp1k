@@ -14,7 +14,7 @@ afterEach(() => {
 test('process bank transfer payment successfully', async () => {
   fetchMock.post('/api/process-bank-transfer', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-with-bank-transfer-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('process bank transfer payment successfully', async () => {
 test('fail to process bank transfer payment', async () => {
   fetchMock.post('/api/process-bank-transfer', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-with-bank-transfer-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('fail to process bank transfer payment', async () => {
 test('Saves order details successfully', async () => {
   fetchMock.post('/api/saveOrderDetails', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Save Order Details')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('Saves order details successfully', async () => {
 test('Fails to save order details', async () => {
   fetchMock.post('/api/saveOrderDetails', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Save Order Details')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Fails to save order details', async () => {
 test('sorts by highest rating successfully', async () => {
   fetchMock.get('/api/products?sort=rating_desc', { products: [{ id: 1, name: 'Top Rated Phone' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-rating-high')); });
 
   expect(fetchMock.called('/api/products?sort=rating_desc')).toBe(true);
@@ -64,7 +64,7 @@ test('sorts by highest rating successfully', async () => {
 test('fails to sort by highest rating and shows error', async () => {
   fetchMock.get('/api/products?sort=rating_desc', 500);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-rating-high')); });
 
   expect(fetchMock.called('/api/products?sort=rating_desc')).toBe(true);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully optimizes itinerary for travel time and convenience.', async () => {
   fetchMock.post('/api/optimize-itinerary', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('optimize-itinerary-button')); });
 
   expect(fetchMock.calls('/api/optimize-itinerary', 'POST')).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully optimizes itinerary for travel time and convenience.', async 
 test('fails to optimize itinerary due to server error.', async () => {
   fetchMock.post('/api/optimize-itinerary', { status: 500, body: { error: 'Server error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('optimize-itinerary-button')); });
 
   expect(fetchMock.calls('/api/optimize-itinerary', 'POST')).toHaveLength(1);
@@ -34,7 +34,7 @@ test('fails to optimize itinerary due to server error.', async () => {
 test('Booking history should be retrieved and displayed for valid request.', async () => {
   fetchMock.get('/api/booking/history', [{ id: 1, status: 'Confirmed' }]);
 
-  await act(async () => { render(<MemoryRouter><BookingHistoryComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-history')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('Booking history should be retrieved and displayed for valid request.', asy
 test('Error in retrieving booking history should show error message.', async () => {
   fetchMock.get('/api/booking/history', 500);
 
-  await act(async () => { render(<MemoryRouter><BookingHistoryComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-history')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Error in retrieving booking history should show error message.', async () 
 test('successfully sends itinerary updates.', async () => {
   fetchMock.post('/api/send-updates', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('send-updates-button')); });
 
   expect(fetchMock.calls('/api/send-updates', 'POST')).toHaveLength(1);
@@ -64,7 +64,7 @@ test('successfully sends itinerary updates.', async () => {
 test('fails to send updates due to invalid email.', async () => {
   fetchMock.post('/api/send-updates', { status: 400, body: { error: 'Invalid email address' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('send-updates-button')); });
 
   expect(fetchMock.calls('/api/send-updates', 'POST')).toHaveLength(1);

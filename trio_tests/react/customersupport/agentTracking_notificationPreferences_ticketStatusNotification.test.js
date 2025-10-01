@@ -14,7 +14,7 @@ afterEach(() => {
 test('Tracking the agent assigned to a ticket should show agent name.', async () => {
   fetchMock.post('/api/track-agent', { agent: 'James Bond' });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id-track'), { target: { value: '789' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-agent')); });
 
@@ -25,7 +25,7 @@ test('Tracking the agent assigned to a ticket should show agent name.', async ()
 test('Tracking the agent assigned to a ticket should show error message when failed.', async () => {
   fetchMock.post('/api/track-agent', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id-track'), { target: { value: '789' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-agent')); });
 
@@ -36,7 +36,7 @@ test('Tracking the agent assigned to a ticket should show error message when fai
 test('Successfully customizes notification preferences.', async () => {
   fetchMock.post('/api/savePreferences', 200);
 
-  await act(async () => { render(<MemoryRouter><NotificationPreferences /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('emailToggle'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Preferences')); });
 
@@ -47,7 +47,7 @@ test('Successfully customizes notification preferences.', async () => {
 test('Fails to customize notification preferences.', async () => {
   fetchMock.post('/api/savePreferences', 500);
 
-  await act(async () => { render(<MemoryRouter><NotificationPreferences /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('emailToggle'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Preferences')); });
 
@@ -58,7 +58,7 @@ test('Fails to customize notification preferences.', async () => {
 test('notifies the user of a ticket status change', async () => {
   fetchMock.put('/api/tickets/1/notify', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketStatusNotification ticketId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App ticketId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Notify')); });
   
   expect(fetchMock.calls('/api/tickets/1/notify').length).toBe(1);
@@ -68,7 +68,7 @@ test('notifies the user of a ticket status change', async () => {
 test('shows error if notification fails', async () => {
   fetchMock.put('/api/tickets/1/notify', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketStatusNotification ticketId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App ticketId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Notify')); });
   
   expect(fetchMock.calls('/api/tickets/1/notify').length).toBe(1);

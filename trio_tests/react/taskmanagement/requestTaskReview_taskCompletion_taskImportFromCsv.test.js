@@ -14,7 +14,7 @@ afterEach(() => {
 test('Request a review successfully', async () => {
   fetchMock.post('/request-review', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User2' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('request-review-button')); });
@@ -26,7 +26,7 @@ test('Request a review successfully', async () => {
 test('Fail to request a review due to server error', async () => {
   fetchMock.post('/request-review', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User2' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('request-review-button')); });
@@ -56,7 +56,7 @@ test('should show error when failing to mark task as completed.', async () => {
 test('successfully imports tasks from a CSV file.', async () => {
   fetchMock.post('/api/import-tasks', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CSVImportExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('csv-file-input'), { target: { files: [new File(['Task data'], 'tasks.csv')] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('import-csv-btn')); });
 
@@ -67,7 +67,7 @@ test('successfully imports tasks from a CSV file.', async () => {
 test('fails to import tasks from a CSV file if server error.', async () => {
   fetchMock.post('/api/import-tasks', 500);
 
-  await act(async () => { render(<MemoryRouter><CSVImportExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('csv-file-input'), { target: { files: [new File(['Task data'], 'tasks.csv')] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('import-csv-btn')); });
 

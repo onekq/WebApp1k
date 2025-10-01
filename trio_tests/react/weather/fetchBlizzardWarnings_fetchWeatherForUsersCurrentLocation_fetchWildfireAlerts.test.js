@@ -17,7 +17,7 @@ test('fetchBlizzardWarnings successfully retrieves blizzard warnings', async () 
     body: [{ id: 1, warning: 'Blizzard Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Blizzard Warnings')); });
 
   expect(fetchMock.called('/api/blizzard-warnings')).toBeTruthy();
@@ -27,7 +27,7 @@ test('fetchBlizzardWarnings successfully retrieves blizzard warnings', async () 
 test('fetchBlizzardWarnings fails to retrieve blizzard warnings', async () => {
   fetchMock.getOnce('/api/blizzard-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Blizzard Warnings')); });
 
   expect(fetchMock.called('/api/blizzard-warnings')).toBeTruthy();
@@ -37,7 +37,7 @@ test('fetchBlizzardWarnings fails to retrieve blizzard warnings', async () => {
 test('Fetch weather for user\'s current location succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { location: 'Current Location', temperature: 30 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather for Current Location')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -47,7 +47,7 @@ test('Fetch weather for user\'s current location succeeds.', async () => {
 test('Fetch weather for user\'s current location fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather for Current Location')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -60,7 +60,7 @@ test('fetchWildfireAlerts successfully retrieves wildfire alerts', async () => {
     body: [{ id: 1, alert: 'Wildfire Alert' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Wildfire Alerts')); });
 
   expect(fetchMock.called('/api/wildfire-alerts')).toBeTruthy();
@@ -70,7 +70,7 @@ test('fetchWildfireAlerts successfully retrieves wildfire alerts', async () => {
 test('fetchWildfireAlerts fails to retrieve wildfire alerts', async () => {
   fetchMock.getOnce('/api/wildfire-alerts', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Wildfire Alerts')); });
 
   expect(fetchMock.called('/api/wildfire-alerts')).toBeTruthy();

@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully analyzes reader engagement', async () => {
   fetchMock.get('/api/analyzeReaderEngagement?postId=1', { status: 200, body: { engagementScore: 85 } });
 
-  await act(async () => { render(<MemoryRouter><AnalyzeReaderEngagement postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Analyze Engagement')); });
 
   expect(fetchMock.calls('/api/analyzeReaderEngagement')).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully analyzes reader engagement', async () => {
 test('fails to analyze reader engagement with an error message', async () => {
   fetchMock.get('/api/analyzeReaderEngagement?postId=1', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><AnalyzeReaderEngagement postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Analyze Engagement')); });
 
   expect(fetchMock.calls('/api/analyzeReaderEngagement')).toHaveLength(1);
@@ -35,7 +35,7 @@ test('Success: retrieve a list of all blog posts', async () => {
   fetchMock.get('/api/posts', { status: 200, body: [{ id: 1, title: 'First Post' }, { id: 2, title: 'Second Post' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -47,7 +47,7 @@ test('Failure: retrieve a list of blog posts with server error', async () => {
   fetchMock.get('/api/posts', { status: 500, body: { error: 'Internal Server Error' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

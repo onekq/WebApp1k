@@ -14,7 +14,7 @@ afterEach(() => {
 test('adds a new expense successfully', async () => {
   fetchMock.post('/api/expense', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expense-amount-input'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-expense-button')); });
 
@@ -25,7 +25,7 @@ test('adds a new expense successfully', async () => {
 test('fails to add a new expense', async () => {
   fetchMock.post('/api/expense', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expense-amount-input'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-expense-button')); });
 
@@ -62,7 +62,7 @@ test('successfully assigns tags to an income source', async () => {
   fetchMock.post('/income/1/tags', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><AssignTags incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/tags/i), { target: { value: 'Bonus,Part-time' } });
@@ -79,7 +79,7 @@ test('fails to assign tags to an income source', async () => {
   fetchMock.post('/income/1/tags', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><AssignTags incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/tags/i), { target: { value: '' } });

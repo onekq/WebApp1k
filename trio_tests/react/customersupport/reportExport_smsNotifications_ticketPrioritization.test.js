@@ -18,7 +18,7 @@ test('Successfully exports reports to CSV.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ExportingReports /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-type-picker'), { target: { value: 'csv' } });
@@ -38,7 +38,7 @@ test('Fails to export reports to CSV and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ExportingReports /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-type-picker'), { target: { value: 'csv' } });
@@ -54,7 +54,7 @@ test('Fails to export reports to CSV and shows error message.', async () => {
 test('Successfully sends SMS notifications for urgent updates.', async () => {
   fetchMock.post('/api/sendSms', 200);
 
-  await act(async () => { render(<MemoryRouter><SmsNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketId'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send SMS')); });
 
@@ -65,7 +65,7 @@ test('Successfully sends SMS notifications for urgent updates.', async () => {
 test('Fails to send SMS notifications for urgent updates.', async () => {
   fetchMock.post('/api/sendSms', 500);
 
-  await act(async () => { render(<MemoryRouter><SmsNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketId'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Send SMS')); });
 
@@ -76,7 +76,7 @@ test('Fails to send SMS notifications for urgent updates.', async () => {
 test('successfully sets ticket priority', async () => {
   fetchMock.post('/api/tickets', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Priority'), { target: { value: 'High' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
@@ -87,7 +87,7 @@ test('successfully sets ticket priority', async () => {
 test('shows error if setting priority fails', async () => {
   fetchMock.post('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Priority'), { target: { value: 'High' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   

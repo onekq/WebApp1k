@@ -14,7 +14,7 @@ afterEach(() => {
 test('Filtering reviews by rating should display correct reviews', async () => {
   fetchMock.get('/api/reviews?rating=5', [{ id: 1, rating: 5, content: 'Great!' }]);
 
-  await act(async () => { render(<MemoryRouter><FilterReviewsByRating rating={5} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App rating={5} /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/reviews?rating=5')).toHaveLength(1);
   expect(screen.getByText('Great!')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Filtering reviews by rating should display correct reviews', async () => {
 test('Filtering reviews by rating should display no reviews for non-existent rating', async () => {
   fetchMock.get('/api/reviews?rating=5', []);
 
-  await act(async () => { render(<MemoryRouter><FilterReviewsByRating rating={5} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App rating={5} /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/reviews?rating=5')).toHaveLength(1);
   expect(screen.getByText('No reviews for this rating')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Filtering reviews by rating should display no reviews for non-existent rat
 test('Saves order details successfully', async () => {
   fetchMock.post('/api/saveOrderDetails', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Save Order Details')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -42,7 +42,7 @@ test('Saves order details successfully', async () => {
 test('Fails to save order details', async () => {
   fetchMock.post('/api/saveOrderDetails', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Save Order Details')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -52,7 +52,7 @@ test('Fails to save order details', async () => {
 test('valid expiration date', async () => {
   fetchMock.post('/api/validate-expiration-date', { valid: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expiration-date-input'), { target: { value: '12/25' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 
@@ -63,7 +63,7 @@ test('valid expiration date', async () => {
 test('invalid expiration date', async () => {
   fetchMock.post('/api/validate-expiration-date', 400);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expiration-date-input'), { target: { value: '13/25' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 

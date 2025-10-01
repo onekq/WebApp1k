@@ -17,7 +17,7 @@ test('User can edit an existing category successfully', async () => {
     body: { id: 1, name: 'Updated Category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Name'), { target: { value: 'Updated Category' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Category')); });
 
@@ -31,7 +31,7 @@ test('User gets an error message when editing a category fails', async () => {
     body: { error: 'Unable to update category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Name'), { target: { value: 'Updated Category' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Category')); });
 
@@ -42,7 +42,7 @@ test('User gets an error message when editing a category fails', async () => {
 test('successfully retrieves analytics for a post', async () => {
   fetchMock.get('/api/getPostAnalytics?postId=1', { status: 200, body: { views: 10, shares: 5 } });
 
-  await act(async () => { render(<MemoryRouter><RetrievePostAnalytics postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Get Analytics')); });
 
   expect(fetchMock.calls('/api/getPostAnalytics')).toHaveLength(1);
@@ -53,7 +53,7 @@ test('successfully retrieves analytics for a post', async () => {
 test('fails to retrieve analytics for a post with an error message', async () => {
   fetchMock.get('/api/getPostAnalytics?postId=1', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><RetrievePostAnalytics postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Get Analytics')); });
 
   expect(fetchMock.calls('/api/getPostAnalytics')).toHaveLength(1);
@@ -63,7 +63,7 @@ test('fails to retrieve analytics for a post with an error message', async () =>
 test('successfully tracks post views', async () => {
   fetchMock.post('/api/trackPostViews', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackPostViews postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Post')); });
 
   expect(fetchMock.calls('/api/trackPostViews')).toHaveLength(1);
@@ -74,7 +74,7 @@ test('successfully tracks post views', async () => {
 test('fails to track post views with an error message', async () => {
   fetchMock.post('/api/trackPostViews', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackPostViews postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Post')); });
 
   expect(fetchMock.calls('/api/trackPostViews')).toHaveLength(1);

@@ -15,7 +15,7 @@ test('User can log an outdoor activity and track the route using GPS successfull
   fetchMock.post('/api/logOutdoorActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('outdoor-activity-type'), { target: { value: 'Hiking' } });
@@ -30,7 +30,7 @@ test('User sees an error message when logging an outdoor activity fails.', async
   fetchMock.post('/api/logOutdoorActivity', { status: 500, body: { error: 'Failed to track activity' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('outdoor-activity-type'), { target: { value: 'Hiking' } });
@@ -44,7 +44,7 @@ test('User sees an error message when logging an outdoor activity fails.', async
 test('System predicts future fitness achievements based on current progress successfully.', async () => {
   fetchMock.get('/api/predict-achievements', { prediction: '5K run next month' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('predict-achievements')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('System predicts future fitness achievements based on current progress succ
 test('System fails to predict future fitness achievements based on current progress.', async () => {
   fetchMock.get('/api/predict-achievements', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('predict-achievements')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -65,7 +65,7 @@ test('should successfully set a weight goal', async () => {
   fetchMock.post('/api/goals/weight', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><SetWeightGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/weight goal/i), { target: { value: 150 } });
@@ -82,7 +82,7 @@ test('should show error when setting a weight goal fails', async () => {
   fetchMock.post('/api/goals/weight', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><SetWeightGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/weight goal/i), { target: { value: 150 } });

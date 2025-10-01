@@ -39,7 +39,7 @@ test('User can edit an existing tag successfully', async () => {
     body: { id: 1, name: 'Updated Tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Name'), { target: { value: 'Updated Tag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Tag')); });
 
@@ -53,7 +53,7 @@ test('User gets an error message when editing a tag fails', async () => {
     body: { error: 'Unable to update tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Name'), { target: { value: 'Updated Tag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Tag')); });
 
@@ -64,7 +64,7 @@ test('User gets an error message when editing a tag fails', async () => {
 test('successfully tracks bounce rate', async () => {
   fetchMock.post('/api/trackBounceRate', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackBounceRate postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Track Bounce Rate')); });
 
   expect(fetchMock.calls('/api/trackBounceRate')).toHaveLength(1);
@@ -74,7 +74,7 @@ test('successfully tracks bounce rate', async () => {
 test('fails to track bounce rate with an error message', async () => {
   fetchMock.post('/api/trackBounceRate', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackBounceRate postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Track Bounce Rate')); });
 
   expect(fetchMock.calls('/api/trackBounceRate')).toHaveLength(1);

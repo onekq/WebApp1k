@@ -57,7 +57,7 @@ test('Ensure recipes can be filtered by dietary preferences - failure', async ()
 test('Successfully unfollow another user', async () => {
   fetchMock.post('/api/unfollow-user', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unfollow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -67,7 +67,7 @@ test('Successfully unfollow another user', async () => {
 test('Fail to unfollow another user with error message', async () => {
   fetchMock.post('/api/unfollow-user', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unfollow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

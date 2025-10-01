@@ -14,7 +14,7 @@ afterEach(() => {
 test('applyDiscountCode: successfully apply discount code to cart', async () => {
   fetchMock.post('/api/cart/discount', { status: 200, body: { message: 'Discount Applied' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('discount-code'), { target: { value: 'DISCOUNT2023' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-discount')); });
 
@@ -25,7 +25,7 @@ test('applyDiscountCode: successfully apply discount code to cart', async () => 
 test('applyDiscountCode: fail to apply discount code to cart with error message', async () => {
   fetchMock.post('/api/cart/discount', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('discount-code'), { target: { value: 'DISCOUNT2023' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-discount')); });
 
@@ -36,7 +36,7 @@ test('applyDiscountCode: fail to apply discount code to cart with error message'
 test('process PayPal payment successfully', async () => {
   fetchMock.post('/api/process-paypal-payment', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-with-paypal-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('process PayPal payment successfully', async () => {
 test('fail to process PayPal payment', async () => {
   fetchMock.post('/api/process-paypal-payment', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-with-paypal-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('fail to process PayPal payment', async () => {
 test('valid credit card number', async () => {
   fetchMock.post('/api/validate-credit-card', { valid: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('credit-card-input'), { target: { value: '4111111111111111' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 
@@ -67,7 +67,7 @@ test('valid credit card number', async () => {
 test('invalid credit card number', async () => {
   fetchMock.post('/api/validate-credit-card', 400);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('credit-card-input'), { target: { value: '1234' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 

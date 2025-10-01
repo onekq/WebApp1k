@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current dew point for a given location', async () => {
   fetchMock.get('/api/current-dew?location=NYC', { dewPoint: 60 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Dew Point')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current dew point for a given location', async 
 test('Fails to retrieve the current dew point if the API returns an error', async () => {
   fetchMock.get('/api/current-dew?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Dew Point')); });
 
@@ -36,7 +36,7 @@ test('Fails to retrieve the current dew point if the API returns an error', asyn
 test('Successfully retrieves the current humidity for a given location', async () => {
   fetchMock.get('/api/current-humidity?location=NYC', { humidity: 65 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Humidity')); });
 
@@ -47,7 +47,7 @@ test('Successfully retrieves the current humidity for a given location', async (
 test('Fails to retrieve the current humidity if the API returns an error', async () => {
   fetchMock.get('/api/current-humidity?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Humidity')); });
 
@@ -61,7 +61,7 @@ test('fetchWildfireAlerts successfully retrieves wildfire alerts', async () => {
     body: [{ id: 1, alert: 'Wildfire Alert' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Wildfire Alerts')); });
 
   expect(fetchMock.called('/api/wildfire-alerts')).toBeTruthy();
@@ -71,7 +71,7 @@ test('fetchWildfireAlerts successfully retrieves wildfire alerts', async () => {
 test('fetchWildfireAlerts fails to retrieve wildfire alerts', async () => {
   fetchMock.getOnce('/api/wildfire-alerts', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Wildfire Alerts')); });
 
   expect(fetchMock.called('/api/wildfire-alerts')).toBeTruthy();

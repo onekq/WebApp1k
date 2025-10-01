@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully generates post performance report', async () => {
   fetchMock.get('/api/generatePostPerformanceReport?postId=1', { status: 200, body: { performance: 'high' } });
 
-  await act(async () => { render(<MemoryRouter><GeneratePostPerformanceReport postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Report')); });
 
   expect(fetchMock.calls('/api/generatePostPerformanceReport')).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully generates post performance report', async () => {
 test('fails to generate post performance report with an error message', async () => {
   fetchMock.get('/api/generatePostPerformanceReport?postId=1', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><GeneratePostPerformanceReport postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Report')); });
 
   expect(fetchMock.calls('/api/generatePostPerformanceReport')).toHaveLength(1);
@@ -52,7 +52,7 @@ test('fails to retrieve comments for a post', async () => {
 test('successfully tracks post likes and dislikes', async () => {
   fetchMock.post('/api/trackPostLikesDislikes', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackPostLikesDislikes postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Like Post')); });
 
   expect(fetchMock.calls('/api/trackPostLikesDislikes')).toHaveLength(1);
@@ -65,7 +65,7 @@ test('successfully tracks post likes and dislikes', async () => {
 test('fails to track post likes and dislikes with an error message', async () => {
   fetchMock.post('/api/trackPostLikesDislikes', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackPostLikesDislikes postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Like Post')); });
 
   expect(fetchMock.calls('/api/trackPostLikesDislikes')).toHaveLength(1);

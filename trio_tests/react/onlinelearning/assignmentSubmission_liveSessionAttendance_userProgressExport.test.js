@@ -14,7 +14,7 @@ afterEach(() => {
 test('Success: assignment submitted successfully', async () => {
   fetchMock.post('/api/assignment', 200);
 
-  await act(async () => { render(<MemoryRouter><AssignmentSubmissionComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('assignment-text'), { target: { value: 'assignment' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Success: assignment submitted successfully', async () => {
 test('Failure: assignment submission fails', async () => {
   fetchMock.post('/api/assignment', 500);
 
-  await act(async () => { render(<MemoryRouter><AssignmentSubmissionComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('assignment-text'), { target: { value: 'assignment' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -36,7 +36,7 @@ test('Failure: assignment submission fails', async () => {
 test('Successfully tracks attendance for live session', async () => {
   fetchMock.post('/live-sessions/attendance', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><LiveSessionAttendance /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Mark Attendance')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Successfully tracks attendance for live session', async () => {
 test('Fails to track attendance for live session', async () => {
   fetchMock.post('/live-sessions/attendance', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><LiveSessionAttendance /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Mark Attendance')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Fails to track attendance for live session', async () => {
 test('Successfully exports user progress data', async () => {
   fetchMock.get('/user-progress/export', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><UserProgressExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Export Progress')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('Successfully exports user progress data', async () => {
 test('Fails to export user progress data', async () => {
   fetchMock.get('/user-progress/export', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><UserProgressExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Export Progress')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

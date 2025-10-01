@@ -14,7 +14,7 @@ afterEach(() => {
 test('Flag inappropriate article successfully.', async () => {
   fetchMock.post('/api/flag-article', { success: true });
 
-  await act(async () => { render(<MemoryRouter><FlagArticle /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Flag Article")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Flag inappropriate article successfully.', async () => {
 test('Fail to flag inappropriate article and display error.', async () => {
   fetchMock.post('/api/flag-article', 500);
 
-  await act(async () => { render(<MemoryRouter><FlagArticle /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Flag Article")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to flag inappropriate article and display error.', async () => {
 test('removes a bookmark from an article successfully', async () => {
   fetchMock.delete('/bookmark/1', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveBookmarkComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Remove Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('removes a bookmark from an article successfully', async () => {
 test('fails to remove a bookmark from an article with error message', async () => {
   fetchMock.delete('/bookmark/1', 500);
 
-  await act(async () => { render(<MemoryRouter><RemoveBookmarkComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Remove Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('fails to remove a bookmark from an article with error message', async () =
 test('saves user-selected categories successfully', async () => {
   fetchMock.post('/api/save-categories', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('categories-input'), { target: { value: 'Tech' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-categories-button')); });
 
@@ -65,7 +65,7 @@ test('saves user-selected categories successfully', async () => {
 test('fails to save user-selected categories', async () => {
   fetchMock.post('/api/save-categories', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('categories-input'), { target: { value: 'Tech' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-categories-button')); });
 

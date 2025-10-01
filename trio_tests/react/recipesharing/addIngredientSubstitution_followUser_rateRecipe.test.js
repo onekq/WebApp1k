@@ -35,7 +35,7 @@ test('fails to add ingredient substitutions due to invalid input', async () => {
 test('Successfully follow another user', async () => {
   fetchMock.post('/api/follow-user', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('follow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -45,7 +45,7 @@ test('Successfully follow another user', async () => {
 test('Fail to follow another user with error message', async () => {
   fetchMock.post('/api/follow-user', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('follow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -55,7 +55,7 @@ test('Fail to follow another user with error message', async () => {
 test('Successfully rate a recipe', async () => {
   fetchMock.post('/api/rate-recipe', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('rate-input'), { target: { value: '5' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('rate-button')); });
 
@@ -66,7 +66,7 @@ test('Successfully rate a recipe', async () => {
 test('Fail to rate a recipe with error message', async () => {
   fetchMock.post('/api/rate-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('rate-input'), { target: { value: '5' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('rate-button')); });
 

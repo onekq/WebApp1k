@@ -14,7 +14,7 @@ afterEach(() => {
 test('Success: quiz retake works properly', async () => {
   fetchMock.post('/api/quiz-retake', 200);
 
-  await act(async () => { render(<MemoryRouter><QuizRetakeLogicComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('retake-quiz-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Success: quiz retake works properly', async () => {
 test('Failure: quiz retake fails', async () => {
   fetchMock.post('/api/quiz-retake', 500);
 
-  await act(async () => { render(<MemoryRouter><QuizRetakeLogicComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('retake-quiz-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Failure: quiz retake fails', async () => {
 test('Sort Courses success: should display sorted courses.', async () => {
   fetchMock.get('/api/courses?sort=popularity', [{ id: 1, title: 'Popular Course' }]);
 
-  await act(async () => { render(<MemoryRouter><SortCourses /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('course-sort'), { target: { value: 'popularity' } }); });
   
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('Sort Courses success: should display sorted courses.', async () => {
 test('Sort Courses failure: should display an error message if no sorting results.', async () => {
   fetchMock.get('/api/courses?sort=unknown', []);
 
-  await act(async () => { render(<MemoryRouter><SortCourses /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('course-sort'), { target: { value: 'unknown' } }); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Sort Courses failure: should display an error message if no sorting result
 test('Successfully exports user progress data', async () => {
   fetchMock.get('/user-progress/export', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><UserProgressExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Export Progress')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('Successfully exports user progress data', async () => {
 test('Fails to export user progress data', async () => {
   fetchMock.get('/user-progress/export', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><UserProgressExport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Export Progress')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

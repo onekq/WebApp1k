@@ -14,7 +14,7 @@ afterEach(() => {
 test('displays product stock status successfully', async () => {
   fetchMock.get('/api/products/1', { id: 1, name: 'Product 1', stock: 'In Stock' });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Product 1')); });
 
   expect(fetchMock.called('/api/products/1')).toBe(true);
@@ -24,7 +24,7 @@ test('displays product stock status successfully', async () => {
 test('fails to display product stock status and shows error', async () => {
   fetchMock.get('/api/products/1', 404);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Product 1')); });
 
   expect(fetchMock.called('/api/products/1')).toBe(true);
@@ -34,7 +34,7 @@ test('fails to display product stock status and shows error', async () => {
 test('Validates billing address successfully', async () => {
   fetchMock.post('/api/validateBillingAddress', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Billing Address'), { target: { value: '456 Elm St' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Validate Billing')); });
 
@@ -45,7 +45,7 @@ test('Validates billing address successfully', async () => {
 test('Fails to validate billing address with invalid data', async () => {
   fetchMock.post('/api/validateBillingAddress', 400);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Billing Address'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Validate Billing')); });
 
@@ -56,7 +56,7 @@ test('Fails to validate billing address with invalid data', async () => {
 test('valid expiration date', async () => {
   fetchMock.post('/api/validate-expiration-date', { valid: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expiration-date-input'), { target: { value: '12/25' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 
@@ -67,7 +67,7 @@ test('valid expiration date', async () => {
 test('invalid expiration date', async () => {
   fetchMock.post('/api/validate-expiration-date', 400);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expiration-date-input'), { target: { value: '13/25' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 

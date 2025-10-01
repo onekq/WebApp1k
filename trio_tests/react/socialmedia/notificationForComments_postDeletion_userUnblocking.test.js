@@ -14,7 +14,7 @@ afterEach(() => {
 test('should send a notification when a comment is added', async () => {
   fetchMock.post('/api/comment', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), {target: {value: 'Nice post!'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -25,7 +25,7 @@ test('should send a notification when a comment is added', async () => {
 test('should handle error when notification sending fails for a comment', async () => {
   fetchMock.post('/api/comment', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), {target: {value: 'Nice post!'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -37,7 +37,7 @@ test('Verify successful deletion of a post.', async () => {
   fetchMock.delete('/api/posts/1', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Delete'));
@@ -51,7 +51,7 @@ test('Check error handling for non-existent post deletion.', async () => {
   fetchMock.delete('/api/posts/1', 404);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Delete'));
@@ -64,7 +64,7 @@ test('Check error handling for non-existent post deletion.', async () => {
 test('User unblocking succeeds for valid user', async () => {
   fetchMock.post('/api/profile/unblock', { body: { message: 'User unblocked' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><UnblockUser userId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App userId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Unblock User')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -74,7 +74,7 @@ test('User unblocking succeeds for valid user', async () => {
 test('User unblocking fails for not blocked user', async () => {
   fetchMock.post('/api/profile/unblock', { body: { error: 'User not blocked' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><UnblockUser userId={9999} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App userId={9999} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Unblock User')); });
 
   expect(fetchMock.calls().length).toBe(1);

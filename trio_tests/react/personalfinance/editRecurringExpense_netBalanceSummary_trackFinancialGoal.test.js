@@ -14,7 +14,7 @@ afterEach(() => {
 test('edits a recurring expense successfully', async () => {
   fetchMock.put('/api/recurring-expense/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurring-expense-input-1'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-recurring-expense-button-1')); });
 
@@ -25,7 +25,7 @@ test('edits a recurring expense successfully', async () => {
 test('fails to edit a recurring expense', async () => {
   fetchMock.put('/api/recurring-expense/1', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurring-expense-input-1'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-recurring-expense-button-1')); });
 
@@ -62,7 +62,7 @@ test('successfully tracks progress towards a financial goal', async () => {
   fetchMock.get('/api/goal/progress/1', { status: 200, body: { progress: 50 } });
 
   await act(async () => {
-    render(<MemoryRouter><TrackProgress /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -77,7 +77,7 @@ test('fails to track progress towards a financial goal', async () => {
   fetchMock.get('/api/goal/progress/1', { status: 404, body: { error: 'Goal not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><TrackProgress /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

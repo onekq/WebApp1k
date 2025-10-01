@@ -14,7 +14,7 @@ afterEach(() => {
 test('Product listing succeeds with required details.', async () => {
   fetchMock.post('/api/products', { status: 200, body: { id: 1, name: 'Sample Product' } });
 
-  await act(async () => { render(<MemoryRouter><ProductForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Product Name'), { target: { value: 'Sample Product' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 
@@ -25,7 +25,7 @@ test('Product listing succeeds with required details.', async () => {
 test('Product listing fails with missing details error.', async () => {
   fetchMock.post('/api/products', { status: 400, body: { message: 'Missing required details' } });
 
-  await act(async () => { render(<MemoryRouter><ProductForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Product Name'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 
@@ -36,7 +36,7 @@ test('Product listing fails with missing details error.', async () => {
 test('Save Search Criteria successfully saves search criteria.', async () => {
   fetchMock.post('/api/saveSearch', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SaveSearchCriteria /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-search-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Save Search Criteria successfully saves search criteria.', async () => {
 test('Save Search Criteria fails and displays error message.', async () => {
   fetchMock.post('/api/saveSearch', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><SaveSearchCriteria /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-search-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

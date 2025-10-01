@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays event accessibility options', async () => {
   fetchMock.get('/api/event/accessibility', { wheelchairAccess: true, signLanguageInterpreter: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Wheelchair access')).toBeInTheDocument();
@@ -24,7 +24,7 @@ test('Displays event accessibility options', async () => {
 test('Displays error message when accessibility options are unavailable', async () => {
   fetchMock.get('/api/event/accessibility', 404);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Accessibility options are unavailable')).toBeInTheDocument();
@@ -55,7 +55,7 @@ test('Fails to validate long agenda item description.', async () => {
 test('sets ticket price successfully', async () => {
   fetchMock.post('/ticketPrice', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketPrice'), { target: { value: '25' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 
@@ -64,7 +64,7 @@ test('sets ticket price successfully', async () => {
 }, 10000);
 
 test('fails to set ticket price', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketPrice'), { target: { value: '-10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 

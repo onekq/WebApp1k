@@ -14,7 +14,7 @@ afterEach(() => {
 test('Verify generating an invoice for a sales order includes all relevant details.', async () => {
   fetchMock.get('/api/invoice', { status: 200, body: { invoice: { id: 1, total: 100, items: [{ item: 'Product A', quantity: 5 }] } } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generateInvoice')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -25,7 +25,7 @@ test('Verify generating an invoice for a sales order includes all relevant detai
 test('Generating an invoice for a sales order doesn\'t show details due to error.', async () => {
   fetchMock.get('/api/invoice', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generateInvoice')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -35,7 +35,7 @@ test('Generating an invoice for a sales order doesn\'t show details due to error
 test('Calculates total inventory value successfully.', async () => {
   fetchMock.post('/api/total-inventory-value', { body: { status: 'success', data: { value: 10000 }}});
 
-  await act(async () => { render(<MemoryRouter><TotalInventoryValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-value')); });
 
@@ -46,7 +46,7 @@ test('Calculates total inventory value successfully.', async () => {
 test('Fails to calculate total inventory value due to server error.', async () => {
   fetchMock.post('/api/total-inventory-value', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><TotalInventoryValue /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-value')); });
 

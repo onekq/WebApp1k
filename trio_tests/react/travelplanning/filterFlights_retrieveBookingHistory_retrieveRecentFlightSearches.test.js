@@ -40,7 +40,7 @@ test('FilterFlights - filter flights by price fails with error message', async (
 test('Booking history should be retrieved and displayed for valid request.', async () => {
   fetchMock.get('/api/booking/history', [{ id: 1, status: 'Confirmed' }]);
 
-  await act(async () => { render(<MemoryRouter><BookingHistoryComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-history')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -50,7 +50,7 @@ test('Booking history should be retrieved and displayed for valid request.', asy
 test('Error in retrieving booking history should show error message.', async () => {
   fetchMock.get('/api/booking/history', 500);
 
-  await act(async () => { render(<MemoryRouter><BookingHistoryComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-history')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

@@ -15,7 +15,7 @@ test('successfully archives articles', async () => {
   fetchMock.post('path/to/api/article/archive', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('archive-article-button'));
@@ -29,7 +29,7 @@ test('fails to archive articles with error message', async () => {
   fetchMock.post('path/to/api/article/archive', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('archive-article-button'));
@@ -42,7 +42,7 @@ test('fails to archive articles with error message', async () => {
 test('Successfully displays in-app notifications.', async () => {
   fetchMock.get('/api/getNotifications', { notifications: ['Notification 1'] });
 
-  await act(async () => { render(<MemoryRouter><InAppNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Notification 1')).toBeInTheDocument();
@@ -51,7 +51,7 @@ test('Successfully displays in-app notifications.', async () => {
 test('Fails to display in-app notifications.', async () => {
   fetchMock.get('/api/getNotifications', 500);
 
-  await act(async () => { render(<MemoryRouter><InAppNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load notifications')).toBeInTheDocument();
@@ -60,7 +60,7 @@ test('Fails to display in-app notifications.', async () => {
 test('successfully changes the status of a ticket', async () => {
   fetchMock.put('/api/tickets/1/status', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketStatusChange ticketId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App ticketId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Status'), { target: { value: 'Resolved' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Status')); });
   
@@ -71,7 +71,7 @@ test('successfully changes the status of a ticket', async () => {
 test('shows error if changing status fails', async () => {
   fetchMock.put('/api/tickets/1/status', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketStatusChange ticketId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App ticketId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Status'), { target: { value: 'Resolved' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Status')); });
   

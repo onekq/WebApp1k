@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully creates custom notification rules.', async () => {
   fetchMock.post('/api/createCustomNotificationRule', 200);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationRules /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ruleContent'), { target: { value: 'Rule' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Rule')); });
 
@@ -25,7 +25,7 @@ test('Successfully creates custom notification rules.', async () => {
 test('Fails to create custom notification rules.', async () => {
   fetchMock.post('/api/createCustomNotificationRule', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationRules /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ruleContent'), { target: { value: 'Rule' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Rule')); });
 
@@ -40,7 +40,7 @@ test('Successfully exports reports to CSV.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ExportingReports /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-type-picker'), { target: { value: 'csv' } });
@@ -60,7 +60,7 @@ test('Fails to export reports to CSV and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ExportingReports /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-type-picker'), { target: { value: 'csv' } });
@@ -77,7 +77,7 @@ test('successfully searches for articles in the knowledge base', async () => {
   fetchMock.get('path/to/api/articles?search=term', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'term' } });
@@ -94,7 +94,7 @@ test('fails to search for articles in the knowledge base with error message', as
   fetchMock.get('path/to/api/articles?search=term', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'term' } });

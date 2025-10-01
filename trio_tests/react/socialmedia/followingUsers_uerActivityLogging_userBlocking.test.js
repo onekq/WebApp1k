@@ -14,7 +14,7 @@ afterEach(() => {
 test('Should follow a valid user', async () => {
   fetchMock.post('api/follow', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-input'), { target: { value: 'validUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Follow')); });
 
@@ -25,7 +25,7 @@ test('Should follow a valid user', async () => {
 test('Should display an error when trying to follow an invalid user', async () => {
   fetchMock.post('api/follow', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-input'), { target: { value: 'invalidUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Follow')); });
 
@@ -39,7 +39,7 @@ test('Successfully logs user activities.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ActivityLogger /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Like'));
@@ -55,7 +55,7 @@ test('Shows error message when logging user activities fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ActivityLogger /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Like'));
@@ -68,7 +68,7 @@ test('Shows error message when logging user activities fails.', async () => {
 test('User blocking succeeds for valid user', async () => {
   fetchMock.post('/api/profile/block', { body: { message: 'User blocked' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><BlockUser userId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App userId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Block User')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -78,7 +78,7 @@ test('User blocking succeeds for valid user', async () => {
 test('User blocking fails for invalid user', async () => {
   fetchMock.post('/api/profile/block', { body: { error: 'Invalid user' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><BlockUser userId={9999} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App userId={9999} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Block User')); });
 
   expect(fetchMock.calls().length).toBe(1);

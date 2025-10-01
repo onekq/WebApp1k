@@ -18,7 +18,7 @@ test('Successfully tracks agent performance metrics.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><AgentPerformanceTracking /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('agent-picker'), { target: { value: 'agent2' } });
@@ -38,7 +38,7 @@ test('Fails to track agent performance metrics and shows error message.', async 
   });
 
   await act(async () => {
-    render(<MemoryRouter><AgentPerformanceTracking /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('agent-picker'), { target: { value: 'agent2' } });
@@ -54,7 +54,7 @@ test('Fails to track agent performance metrics and shows error message.', async 
 test('displays a list of tickets with their current status', async () => {
   fetchMock.get('/api/tickets', { status: 200, body: [{ id: 1, status: 'Open' }, { id: 2, status: 'Resolved' }] });
   
-  await act(async () => { render(<MemoryRouter><TicketListDisplay /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   
   expect(fetchMock.calls('/api/tickets').length).toBe(1);
   expect(screen.getByText('Open')).toBeInTheDocument();
@@ -64,7 +64,7 @@ test('displays a list of tickets with their current status', async () => {
 test('shows error if fetching ticket list fails', async () => {
   fetchMock.get('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketListDisplay /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   
   expect(fetchMock.calls('/api/tickets').length).toBe(1);
   expect(screen.getByText('Failed to fetch ticket list')).toBeInTheDocument();
@@ -77,7 +77,7 @@ test('Successfully reports on ticket resolution rates.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ResolutionRateReporting /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-02-01' } });
@@ -97,7 +97,7 @@ test('Fails to report on ticket resolution rates and shows error message.', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><ResolutionRateReporting /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-02-01' } });

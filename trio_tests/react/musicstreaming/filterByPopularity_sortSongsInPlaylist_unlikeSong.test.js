@@ -36,7 +36,7 @@ test('fails to filter songs by popularity because no songs match the filter', as
 test('successfully sorts songs within a playlist by name', async () => {
   fetchMock.get('/api/playlists/1/songs?sort=name', [{ id: 1, name: 'A Song' }, { id: 2, name: 'B Song' }]);
 
-  await act(async () => { render(<MemoryRouter><SortSongsInPlaylist playlistId={1} sortBy="name" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} sortBy="name" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-songs-by-name-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('successfully sorts songs within a playlist by name', async () => {
 test('fails to sort songs within a playlist due to empty playlist', async () => {
   fetchMock.get('/api/playlists/1/songs?sort=name', 404);
 
-  await act(async () => { render(<MemoryRouter><SortSongsInPlaylist playlistId={1} sortBy="name" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} sortBy="name" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-songs-by-name-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('fails to sort songs within a playlist due to empty playlist', async () => 
 test('Unliking a song removes it from the user\'s favorites.', async () => {
   fetchMock.post('/api/unlikeSong', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('Unliking a song removes it from the user\'s favorites.', async () => {
 test('Unliking a song fails with an error message.', async () => {
   fetchMock.post('/api/unlikeSong', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

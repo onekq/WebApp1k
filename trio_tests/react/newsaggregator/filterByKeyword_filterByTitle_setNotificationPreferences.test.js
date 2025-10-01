@@ -14,7 +14,7 @@ afterEach(() => {
 test('Searches articles by keyword successfully', async () => {
   fetchMock.get('/api/articles?search=keyword', { status: 200, body: [{ id: 1, title: 'Test Keyword' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'keyword' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -25,7 +25,7 @@ test('Searches articles by keyword successfully', async () => {
 test('Fails to search articles by keyword', async () => {
   fetchMock.get('/api/articles?search=keyword', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'keyword' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -36,7 +36,7 @@ test('Fails to search articles by keyword', async () => {
 test('Searches articles by title successfully', async () => {
   fetchMock.get('/api/articles?title=test', { status: 200, body: [{ id: 1, title: 'Test Title' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'test' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -47,7 +47,7 @@ test('Searches articles by title successfully', async () => {
 test('Fails to search articles by title', async () => {
   fetchMock.get('/api/articles?title=test', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'test' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 

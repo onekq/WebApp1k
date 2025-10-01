@@ -14,7 +14,7 @@ afterEach(() => {
 test('Edit health notes successfully', async () => {
   fetchMock.put('/api/health-notes/1', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notes-input'), { target: { value: 'Very healthy!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Edit health notes successfully', async () => {
 test('Fail to edit health notes with error', async () => {
   fetchMock.put('/api/health-notes/1', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notes-input'), { target: { value: '' } }); }); // Failure case: Empty input
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -37,7 +37,7 @@ test('should update an existing medication reminder successfully', async () => {
   fetchMock.put('/api/edit-medication-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/New Medication Name/i), { target: { value: 'Painkillers' } });
@@ -54,7 +54,7 @@ test('should fail to update an existing medication reminder', async () => {
   fetchMock.put('/api/edit-medication-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/New Medication Name/i), { target: { value: 'Painkillers' } });
@@ -70,7 +70,7 @@ test('should fail to update an existing medication reminder', async () => {
 test('Edit pet profile successfully.', async () => {
   fetchMock.put('/api/pets/1', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/name/i), {target: {value: 'Fluffy'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Edit Pet/i)); });
 
@@ -81,7 +81,7 @@ test('Edit pet profile successfully.', async () => {
 test('Fail to edit pet profile due to server error.', async () => {
   fetchMock.put('/api/pets/1', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/name/i), {target: {value: 'Fluffy'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Edit Pet/i)); });
 

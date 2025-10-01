@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully sets SLAs for tasks.', async () => {
   fetchMock.post('/api/task-sla', { success: true });
 
-  await act(async () => { render(<MemoryRouter><SLA /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sla-input'), { target: { value: '24 hours' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-sla-btn')); });
 
@@ -25,7 +25,7 @@ test('successfully sets SLAs for tasks.', async () => {
 test('fails to set SLAs for tasks if server error.', async () => {
   fetchMock.post('/api/task-sla', 500);
 
-  await act(async () => { render(<MemoryRouter><SLA /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sla-input'), { target: { value: '24 hours' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-sla-btn')); });
 
@@ -42,7 +42,7 @@ test('Sort tasks by priority successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Sort by'), { target: { value: 'priority' } });
@@ -60,7 +60,7 @@ test('Fail to sort tasks by priority when API returns 500.', async () => {
   fetchMock.get('/api/tasks?sort=priority', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Sort by'), { target: { value: 'priority' } });
@@ -77,7 +77,7 @@ test('View Project Progress - success', async () => {
   fetchMock.get('/api/projects/progress', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -92,7 +92,7 @@ test('View Project Progress - failure', async () => {
   fetchMock.get('/api/projects/progress', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

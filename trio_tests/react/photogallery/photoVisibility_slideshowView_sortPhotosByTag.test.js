@@ -15,7 +15,7 @@ test('Photo Visibility Settings: success', async () => {
   fetchMock.post('/api/setPhotoVisibility', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('photo-id-input'), { target: { value: 'PhotoID' } });
@@ -32,7 +32,7 @@ test('Photo Visibility Settings: failure', async () => {
   fetchMock.post('/api/setPhotoVisibility', { throws: new Error('Visibility Change Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('photo-id-input'), { target: { value: 'PhotoID' } });
@@ -48,7 +48,7 @@ test('Photo Visibility Settings: failure', async () => {
 test('should successfully view photos in slideshow mode', async () => {
   fetchMock.get('/api/photos', { photos: [{ id: 1 }] });
 
-  await act(async () => { render(<MemoryRouter><Slideshow /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('start-slideshow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -58,7 +58,7 @@ test('should successfully view photos in slideshow mode', async () => {
 test('should fail to view photos in slideshow mode with error message', async () => {
   fetchMock.get('/api/photos', 404);
 
-  await act(async () => { render(<MemoryRouter><Slideshow /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('start-slideshow-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -68,7 +68,7 @@ test('should fail to view photos in slideshow mode with error message', async ()
 test('should successfully sort photos by tag', async () => {
   fetchMock.get('/api/sort?tag=sunset', { photos: [{ id: 1, tag: 'sunset' }] });
 
-  await act(async () => { render(<MemoryRouter><SortPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sort-input'), { target: { value: 'sunset' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-button')); });
 
@@ -79,7 +79,7 @@ test('should successfully sort photos by tag', async () => {
 test('should fail to sort photos by tag with error message', async () => {
   fetchMock.get('/api/sort?tag=sunset', 404);
 
-  await act(async () => { render(<MemoryRouter><SortPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sort-input'), { target: { value: 'sunset' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-button')); });
 

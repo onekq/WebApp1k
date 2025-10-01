@@ -14,7 +14,7 @@ afterEach(() => {
 test('System calculates total distance covered in a week successfully.', async () => {
   fetchMock.get('/api/total-distance', { distance: 50 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-distance')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('System calculates total distance covered in a week successfully.', async (
 test('System fails to calculate total distance covered in a week.', async () => {
   fetchMock.get('/api/total-distance', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-distance')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('System fails to calculate total distance covered in a week.', async () => 
 test('System tracks mood changes over time related to workout intensity successfully.', async () => {
   fetchMock.get('/api/mood-changes', { data: 'Positive trend' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-mood')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('System tracks mood changes over time related to workout intensity successf
 test('System fails to track mood changes over time related to workout intensity.', async () => {
   fetchMock.get('/api/mood-changes', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-mood')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -55,7 +55,7 @@ test('should successfully view a graphical progress representation', async () =>
   fetchMock.get('/api/progress/graph', { status: 200, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><ViewProgressGraph /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('should show error message when viewing a graphical progress representation
   fetchMock.get('/api/progress/graph', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><ViewProgressGraph /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

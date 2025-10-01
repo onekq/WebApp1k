@@ -14,7 +14,7 @@ afterEach(() => {
 test('employers can successfully create and update company profiles', async () => {
   fetchMock.post('/api/company', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CompanyProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Company Name/i), { target: { value: 'TechCorp' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -25,7 +25,7 @@ test('employers can successfully create and update company profiles', async () =
 test('employers see an error message if profile creation fails', async () => {
   fetchMock.post('/api/company', 500);
 
-  await act(async () => { render(<MemoryRouter><CompanyProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Company Name/i), { target: { value: 'TechCorp' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -74,7 +74,7 @@ test('Rejecting an application fails due to server error.', async () => {
 test('job seekers can successfully set up alerts for new jobs matching their criteria', async () => {
   fetchMock.post('/api/job/alerts', { success: true });
 
-  await act(async () => { render(<MemoryRouter><JobAlerts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Keyword/i), { target: { value: 'React Developer' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Set Alert/i)); });
 
@@ -85,7 +85,7 @@ test('job seekers can successfully set up alerts for new jobs matching their cri
 test('job seekers see an error message if alert setup fails', async () => {
   fetchMock.post('/api/job/alerts', 500);
 
-  await act(async () => { render(<MemoryRouter><JobAlerts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Keyword/i), { target: { value: 'React Developer' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Set Alert/i)); });
 

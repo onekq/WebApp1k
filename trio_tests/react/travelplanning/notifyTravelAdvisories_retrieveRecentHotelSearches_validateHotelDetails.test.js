@@ -40,7 +40,7 @@ test('retrieveRecentHotelSearches - retrieves recent hotel searches successfully
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('retrieve-recent-searches'));
@@ -57,7 +57,7 @@ test('retrieveRecentHotelSearches - shows error message when retrieval fails', a
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('retrieve-recent-searches'));
@@ -74,7 +74,7 @@ test('validateHotelDetails - validates hotel details successfully before booking
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('validate-hotel-1'));
@@ -91,7 +91,7 @@ test('validateHotelDetails - shows error when validation fails', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('validate-hotel-1'));

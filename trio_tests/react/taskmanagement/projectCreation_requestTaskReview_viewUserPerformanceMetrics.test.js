@@ -15,7 +15,7 @@ test('Create Project - success', async () => {
   fetchMock.post('/api/projects', 201);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -38,7 +38,7 @@ test('Create Project - failure', async () => {
   fetchMock.post('/api/projects', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -60,7 +60,7 @@ test('Create Project - failure', async () => {
 test('Request a review successfully', async () => {
   fetchMock.post('/request-review', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User2' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('request-review-button')); });
@@ -72,7 +72,7 @@ test('Request a review successfully', async () => {
 test('Fail to request a review due to server error', async () => {
   fetchMock.post('/request-review', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User2' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('request-review-button')); });
@@ -84,7 +84,7 @@ test('Fail to request a review due to server error', async () => {
 test('View user performance metrics successfully', async () => {
   fetchMock.get('/user-performance?user=User1', { status: 200, body: { metrics: { tasksCompleted: 5 } } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-metrics-button')); });
 
@@ -95,7 +95,7 @@ test('View user performance metrics successfully', async () => {
 test('Fail to view user performance metrics due to server error', async () => {
   fetchMock.get('/user-performance?user=User1', { status: 500, body: { metrics: null } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-metrics-button')); });
 

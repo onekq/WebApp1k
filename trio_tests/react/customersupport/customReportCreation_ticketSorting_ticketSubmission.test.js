@@ -18,7 +18,7 @@ test('Successfully creates custom reports.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportCreation /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-name-input'), { target: { value: 'Test Report' } });
@@ -38,7 +38,7 @@ test('Fails to create custom reports and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportCreation /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-name-input'), { target: { value: 'Test Report' } });
@@ -54,7 +54,7 @@ test('Fails to create custom reports and shows error message.', async () => {
 test('sorts tickets by submission date', async () => {
   fetchMock.get('/api/tickets?sort=submissionDate', { status: 200, body: [{ id: 2, date: '2023-01-01' }, { id: 1, date: '2023-01-02' }] });
   
-  await act(async () => { render(<MemoryRouter><TicketSorting /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Sort by Date')); });
   
   expect(fetchMock.calls('/api/tickets?sort=submissionDate').length).toBe(1);
@@ -65,7 +65,7 @@ test('sorts tickets by submission date', async () => {
 test('shows error if sorting tickets fails', async () => {
   fetchMock.get('/api/tickets?sort=submissionDate', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSorting /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Sort by Date')); });
   
   expect(fetchMock.calls('/api/tickets?sort=submissionDate').length).toBe(1);
@@ -75,7 +75,7 @@ test('shows error if sorting tickets fails', async () => {
 test('successfully submits a ticket with required fields filled', async () => {
   fetchMock.post('/api/tickets', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'Test Ticket' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
@@ -86,7 +86,7 @@ test('successfully submits a ticket with required fields filled', async () => {
 test('shows error when submitting a ticket with missing fields', async () => {
   fetchMock.post('/api/tickets', { status: 400 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
   expect(fetchMock.calls('/api/tickets').length).toBe(1);

@@ -15,7 +15,7 @@ test('Filter Photos by Album: success', async () => {
   fetchMock.get('/api/photos?album=AlbumID', { body: [{ id: 1, name: 'Photo1' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-filter-input'), { target: { value: 'AlbumID' } });
@@ -32,7 +32,7 @@ test('Filter Photos by Album: failure', async () => {
   fetchMock.get('/api/photos?album=AlbumID', { throws: new Error('Filter Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-filter-input'), { target: { value: 'AlbumID' } });
@@ -49,7 +49,7 @@ test('adheres to photo upload size limit', async () => {
   fetchMock.post('/upload', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -69,7 +69,7 @@ test('fails when photo exceeds size limit', async () => {
   fetchMock.post('/upload', { status: 413 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -89,7 +89,7 @@ test('uploads a photo successfully', async () => {
   fetchMock.post('/upload', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   
   await act(async () => {
@@ -108,7 +108,7 @@ test('fails to upload a photo', async () => {
   fetchMock.post('/upload', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoUploadComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

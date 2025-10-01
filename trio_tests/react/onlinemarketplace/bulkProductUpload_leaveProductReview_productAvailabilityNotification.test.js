@@ -14,7 +14,7 @@ afterEach(() => {
 test('Bulk product upload succeeds.', async () => {
   fetchMock.post('/api/bulk-upload', { status: 200, body: { message: 'Bulk upload successful' } });
 
-  await act(async () => { render(<MemoryRouter><BulkUploadForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('CSV File'), { target: { files: [new File([''], 'sample.csv')] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Upload')); });
 
@@ -25,7 +25,7 @@ test('Bulk product upload succeeds.', async () => {
 test('Bulk product upload fails with error message.', async () => {
   fetchMock.post('/api/bulk-upload', { status: 400, body: { message: 'Invalid file format' } });
 
-  await act(async () => { render(<MemoryRouter><BulkUploadForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('CSV File'), { target: { files: [new File([''], 'invalid_file.txt')] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Upload')); });
 
@@ -36,7 +36,7 @@ test('Bulk product upload fails with error message.', async () => {
 test('Leave Product Review successfully posts a review.', async () => {
   fetchMock.post('/api/reviews', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><LeaveProductReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Great product!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-review-button')); });
 
@@ -47,7 +47,7 @@ test('Leave Product Review successfully posts a review.', async () => {
 test('Leave Product Review fails and displays error message.', async () => {
   fetchMock.post('/api/reviews', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><LeaveProductReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Great product!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-review-button')); });
 
@@ -58,7 +58,7 @@ test('Leave Product Review fails and displays error message.', async () => {
 test('Product availability notification succeeds.', async () => {
   fetchMock.post('/api/notify', { status: 200, body: { message: 'Notification set successfully' } });
 
-  await act(async () => { render(<MemoryRouter><NotifyForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'user@example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Notify Me')); });
 
@@ -69,7 +69,7 @@ test('Product availability notification succeeds.', async () => {
 test('Product availability notification fails with error message.', async () => {
   fetchMock.post('/api/notify', { status: 400, body: { message: 'Invalid email address' } });
 
-  await act(async () => { render(<MemoryRouter><NotifyForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'invalid-email' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Notify Me')); });
 

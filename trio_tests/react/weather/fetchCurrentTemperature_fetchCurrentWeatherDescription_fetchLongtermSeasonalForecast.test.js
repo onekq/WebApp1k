@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current temperature for a given location', async () => {
   fetchMock.get('/api/current-temperature?location=NYC', { temperature: 75 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Temperature')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current temperature for a given location', asyn
 test('Fails to retrieve the current temperature if the API returns an error', async () => {
   fetchMock.get('/api/current-temperature?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Temperature')); });
 
@@ -36,7 +36,7 @@ test('Fails to retrieve the current temperature if the API returns an error', as
 test('Successfully retrieves a description of current weather conditions', async () => {
   fetchMock.get('/api/current-description?location=NYC', { description: 'Sunny' });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Weather Description')); });
 
@@ -47,7 +47,7 @@ test('Successfully retrieves a description of current weather conditions', async
 test('Fails to retrieve a description of current weather conditions if the API returns an error', async () => {
   fetchMock.get('/api/current-description?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get Weather Description')); });
 

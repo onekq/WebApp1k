@@ -38,7 +38,7 @@ test('Fails to edit supplier details with server error.', async () => {
 test('Verify generating an invoice for a sales order includes all relevant details.', async () => {
   fetchMock.get('/api/invoice', { status: 200, body: { invoice: { id: 1, total: 100, items: [{ item: 'Product A', quantity: 5 }] } } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generateInvoice')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -49,7 +49,7 @@ test('Verify generating an invoice for a sales order includes all relevant detai
 test('Generating an invoice for a sales order doesn\'t show details due to error.', async () => {
   fetchMock.get('/api/invoice', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generateInvoice')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

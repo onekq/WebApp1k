@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds hotels to an itinerary.', async () => {
   fetchMock.post('/api/add-hotel', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('hotel-input'), { target: { value: 'Hotel1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-hotel-button')); });
 
@@ -25,7 +25,7 @@ test('successfully adds hotels to an itinerary.', async () => {
 test('fails to add hotels due to network error.', async () => {
   fetchMock.post('/api/add-hotel', { status: 500, body: { error: 'Network error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('hotel-input'), { target: { value: 'Hotel1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-hotel-button')); });
 
@@ -40,7 +40,7 @@ test('searchHotels - should display hotel search results on successful search', 
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('destination-input'), { target: { value: 'Paris' } });
@@ -58,7 +58,7 @@ test('searchHotels - should display an error message on search failure', async (
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('destination-input'), { target: { value: 'Paris' } });

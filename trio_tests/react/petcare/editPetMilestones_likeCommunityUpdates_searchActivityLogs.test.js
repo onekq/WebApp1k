@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully edits a pet milestone', async () => {
   fetchMock.put('/api/milestones/edit', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('edit-milestone-button', { name: /edit/i })); });
   await act(async () => { fireEvent.change(screen.getByTestId('milestone-input'), { target: { value: 'Learned to Fetch' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-milestone-button')); });
@@ -26,7 +26,7 @@ test('Successfully edits a pet milestone', async () => {
 test('Fails to edit a pet milestone', async () => {
   fetchMock.put('/api/milestones/edit', { status: 400 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('edit-milestone-button', { name: /edit/i })); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-milestone-button')); });
 
@@ -37,7 +37,7 @@ test('Fails to edit a pet milestone', async () => {
 test('Successfully likes a community update', async () => {
   fetchMock.post('/api/community/like', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -47,7 +47,7 @@ test('Successfully likes a community update', async () => {
 test('Fails to like a community update', async () => {
   fetchMock.post('/api/community/like', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -57,7 +57,7 @@ test('Fails to like a community update', async () => {
 test('Searches activities by keyword successfully.', async () => {
   fetchMock.get('/activities?keyword=walk', [{ description: 'Morning walk' }]);
 
-  await act(async () => { render(<MemoryRouter><SearchActivityLogs /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'walk' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -68,7 +68,7 @@ test('Searches activities by keyword successfully.', async () => {
 test('Fails to search activities with error message.', async () => {
   fetchMock.get('/activities?keyword=walk', { status: 500, body: { message: 'Failed to search activities' } });
 
-  await act(async () => { render(<MemoryRouter><SearchActivityLogs /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'walk' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 

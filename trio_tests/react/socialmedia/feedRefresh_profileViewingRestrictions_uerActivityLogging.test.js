@@ -17,7 +17,7 @@ test('Successfully refreshes feed to show new posts.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FeedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Refresh'));
@@ -33,7 +33,7 @@ test('Shows error message when feed refresh fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FeedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Refresh'));
@@ -47,7 +47,7 @@ test('Viewing restricted profile succeeds with proper data', async () => {
   const profileData = { name: 'John Doe', bio: 'Software Developer' };
   fetchMock.get('/api/profile/valid-id', { body: profileData, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><ProfileView profileId={'valid-id'} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App profileId={'valid-id'} /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('John Doe')).toBeInTheDocument();
@@ -57,7 +57,7 @@ test('Viewing restricted profile succeeds with proper data', async () => {
 test('Viewing restricted profile fails with proper message', async () => {
   fetchMock.get('/api/profile/restricted-id', { body: { error: 'Profile is private' }, status: 403 });
 
-  await act(async () => { render(<MemoryRouter><ProfileView profileId={'restricted-id'} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App profileId={'restricted-id'} /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Profile is private')).toBeInTheDocument();
@@ -69,7 +69,7 @@ test('Successfully logs user activities.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ActivityLogger /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Like'));
@@ -85,7 +85,7 @@ test('Shows error message when logging user activities fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ActivityLogger /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Like'));

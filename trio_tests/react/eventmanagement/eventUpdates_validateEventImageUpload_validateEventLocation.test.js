@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays success message upon successful event updates', async () => {
   fetchMock.post('/api/event/update', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('event-title-input'), { target: { value: 'New Title' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('update-event-btn')); });
 
@@ -25,7 +25,7 @@ test('Displays success message upon successful event updates', async () => {
 test('Displays error message upon failing to update event', async () => {
   fetchMock.post('/api/event/update', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('event-title-input'), { target: { value: 'New Title' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('update-event-btn')); });
 
@@ -36,7 +36,7 @@ test('Displays error message upon failing to update event', async () => {
 test('Should successfully upload a valid event image', async () => {
   fetchMock.post('/events/upload', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   const fileInput = screen.getByLabelText(/upload image/i);
   const file = new File(['image content'], 'event.png', { type: 'image/png' });
 
@@ -50,7 +50,7 @@ test('Should successfully upload a valid event image', async () => {
 test('Should show error for invalid event image upload', async () => {
   fetchMock.post('/events/upload', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   const fileInput = screen.getByLabelText(/upload image/i);
   const file = new File(['image content'], 'event.txt', { type: 'text/plain' });
 
@@ -64,7 +64,7 @@ test('Should show error for invalid event image upload', async () => {
 test('Should successfully submit valid event location', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/location/i), { target: { value: '123 Event St' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -75,7 +75,7 @@ test('Should successfully submit valid event location', async () => {
 test('Should show error for missing event location', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/location/i), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

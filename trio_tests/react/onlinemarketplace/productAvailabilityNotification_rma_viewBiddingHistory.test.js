@@ -14,7 +14,7 @@ afterEach(() => {
 test('Product availability notification succeeds.', async () => {
   fetchMock.post('/api/notify', { status: 200, body: { message: 'Notification set successfully' } });
 
-  await act(async () => { render(<MemoryRouter><NotifyForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'user@example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Notify Me')); });
 
@@ -25,7 +25,7 @@ test('Product availability notification succeeds.', async () => {
 test('Product availability notification fails with error message.', async () => {
   fetchMock.post('/api/notify', { status: 400, body: { message: 'Invalid email address' } });
 
-  await act(async () => { render(<MemoryRouter><NotifyForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'invalid-email' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Notify Me')); });
 
@@ -36,7 +36,7 @@ test('Product availability notification fails with error message.', async () => 
 test('Return Merchandise Authorization (RMA) success initiates RMA process', async () => {
   fetchMock.post('/api/orders/1/rma', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Initiate RMA')); });
 
   expect(fetchMock.calls('/api/orders/1/rma').length).toBe(1);
@@ -46,7 +46,7 @@ test('Return Merchandise Authorization (RMA) success initiates RMA process', asy
 test('Return Merchandise Authorization (RMA) failure shows error message', async () => {
   fetchMock.post('/api/orders/1/rma', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Initiate RMA')); });
 
   expect(screen.getByText('Error initiating RMA')).toBeInTheDocument();

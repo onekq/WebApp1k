@@ -14,7 +14,7 @@ afterEach(() => {
 test('shows the property location on a map', async () => {
   fetchMock.get('/property/1/location', { body: {} });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Map')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('shows the property location on a map', async () => {
 test('fails to display property location on map due to network error', async () => {
   fetchMock.get('/property/1/location', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Map')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -37,7 +37,7 @@ test('Search by Price Range filters properties within a specified price range su
     body: [{ id: 1, price: 100000 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/min price/i), { target: { value: '50000' } }));
   await act(async () => fireEvent.change(screen.getByLabelText(/max price/i), { target: { value: '200000' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
@@ -52,7 +52,7 @@ test('Search by Price Range filters properties within a specified price range fa
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/min price/i), { target: { value: '50000' } }));
   await act(async () => fireEvent.change(screen.getByLabelText(/max price/i), { target: { value: '200000' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
@@ -64,7 +64,7 @@ test('Search by Price Range filters properties within a specified price range fa
 test('displays detailed information about a property', async () => {
   fetchMock.get('/property/1', { body: {} });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -74,7 +74,7 @@ test('displays detailed information about a property', async () => {
 test('fails to display property details due to network error', async () => {
   fetchMock.get('/property/1', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1')); });
 
   expect(fetchMock.calls().length).toBe(1);

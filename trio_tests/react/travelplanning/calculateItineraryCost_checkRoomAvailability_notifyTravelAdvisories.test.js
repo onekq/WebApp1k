@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully calculates the total cost of the itinerary.', async () => {
   fetchMock.get('/api/calculate-cost', { status: 200, body: { totalCost: 1000 } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-cost-button')); });
 
   expect(fetchMock.calls('/api/calculate-cost', 'GET')).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully calculates the total cost of the itinerary.', async () => {
 test('fails to calculate cost due to server error.', async () => {
   fetchMock.get('/api/calculate-cost', { status: 500, body: { error: 'Server error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-cost-button')); });
 
   expect(fetchMock.calls('/api/calculate-cost', 'GET')).toHaveLength(1);
@@ -38,7 +38,7 @@ test('checkRoomAvailability - checks room availability for selected hotels', asy
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('check-availability-1'));
@@ -55,7 +55,7 @@ test('checkRoomAvailability - shows error message when room availability check f
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('check-availability-1'));

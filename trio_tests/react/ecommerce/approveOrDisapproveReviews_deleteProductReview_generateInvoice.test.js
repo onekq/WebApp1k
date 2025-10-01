@@ -15,7 +15,7 @@ afterEach(() => {
 test('Approving a review should succeed', async () => {
   fetchMock.post('/api/reviews/approve/123', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><ApproveReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Approve')); });
 
   expect(fetchMock.calls('/api/reviews/approve/123')).toHaveLength(1);
@@ -25,7 +25,7 @@ test('Approving a review should succeed', async () => {
 test('Disapproving a review should fail due to server error', async () => {
   fetchMock.post('/api/reviews/disapprove/123', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><DisapproveReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Disapprove')); });
 
   expect(fetchMock.calls('/api/reviews/disapprove/123')).toHaveLength(1);
@@ -35,7 +35,7 @@ test('Disapproving a review should fail due to server error', async () => {
 test('Deleting a product review should succeed', async () => {
   fetchMock.delete('/api/reviews/123', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><DeleteReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete')); });
 
   expect(fetchMock.calls('/api/reviews/123')).toHaveLength(1);
@@ -45,7 +45,7 @@ test('Deleting a product review should succeed', async () => {
 test('Deleting a product review should fail due to server error', async () => {
   fetchMock.delete('/api/reviews/123', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><DeleteReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete')); });
 
   expect(fetchMock.calls('/api/reviews/123')).toHaveLength(1);
@@ -55,7 +55,7 @@ test('Deleting a product review should fail due to server error', async () => {
 test('Generates invoice successfully', async () => {
   fetchMock.get('/api/generateInvoice', { invoiceNumber: 'INV-12345' });
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Invoice')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -65,7 +65,7 @@ test('Generates invoice successfully', async () => {
 test('Fails to generate invoice', async () => {
   fetchMock.get('/api/generateInvoice', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Invoice')); });
 
   expect(fetchMock.calls().length).toBe(1);

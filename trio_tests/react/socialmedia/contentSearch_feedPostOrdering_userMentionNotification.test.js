@@ -17,7 +17,7 @@ test('Successfully searches and displays posts.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SearchComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Search'), { target: { value: 'test' } });
@@ -36,7 +36,7 @@ test('Shows error message for invalid search query.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SearchComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Search'), { target: { value: '' } });
@@ -55,7 +55,7 @@ test('Successfully orders posts in feed.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><OrderComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText('Order By'), { target: { value: 'popular' } });
@@ -71,7 +71,7 @@ test('Shows error message when ordering posts fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><OrderComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText('Order By'), { target: { value: 'popular' } });
@@ -84,7 +84,7 @@ test('Shows error message when ordering posts fails.', async () => {
 test('should send a notification when a user is mentioned in a post', async () => {
   fetchMock.post('/api/mention', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('post-input'), {target: {value: '@john'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-button')); });
 
@@ -95,7 +95,7 @@ test('should send a notification when a user is mentioned in a post', async () =
 test('should handle error when notification sending fails for a user mention in a post', async () => {
   fetchMock.post('/api/mention', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('post-input'), {target: {value: '@john'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-button')); });
 

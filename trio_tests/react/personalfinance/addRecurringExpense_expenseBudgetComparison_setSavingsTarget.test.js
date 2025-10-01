@@ -14,7 +14,7 @@ afterEach(() => {
 test('adds a recurring expense successfully', async () => {
   fetchMock.post('/api/recurring-expense', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurring-expense-input'), { target: { value: '50' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-recurring-expense-button')); });
 
@@ -25,7 +25,7 @@ test('adds a recurring expense successfully', async () => {
 test('fails to add a recurring expense', async () => {
   fetchMock.post('/api/recurring-expense', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recurring-expense-input'), { target: { value: '50' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-recurring-expense-button')); });
 
@@ -37,7 +37,7 @@ test('Success: Compare expenses against the budget for a given period.', async (
   fetchMock.get('/api/compare-expense', { status: 200, body: { compared: true, result: 'Under budget' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -52,7 +52,7 @@ test('Failure: Compare expenses against the budget for a given period.', async (
   fetchMock.get('/api/compare-expense', { status: 400, body: { error: 'Comparison failed' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -67,7 +67,7 @@ test('successfully sets savings targets', async () => {
   fetchMock.post('/api/savings/target', { status: 201, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><SetSavingsTarget /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -83,7 +83,7 @@ test('fails to set savings targets', async () => {
   fetchMock.post('/api/savings/target', { status: 400, body: { error: 'Invalid target' } });
 
   await act(async () => {
-    render(<MemoryRouter><SetSavingsTarget /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

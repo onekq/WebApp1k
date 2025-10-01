@@ -14,7 +14,7 @@ afterEach(() => {
 test('User can compare their progress with friends successfully.', async () => {
   fetchMock.get('/api/friends-comparison', { comparison: 'Better than average' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-friends-comparison')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('User can compare their progress with friends successfully.', async () => {
 test('User fails to compare their progress with friends.', async () => {
   fetchMock.get('/api/friends-comparison', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-friends-comparison')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -35,7 +35,7 @@ test('should successfully set a daily fitness goal', async () => {
   fetchMock.post('/api/goals/daily', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><SetDailyGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/daily goal/i), { target: { value: 10000 } });
@@ -52,7 +52,7 @@ test('should show error when setting a daily fitness goal fails', async () => {
   fetchMock.post('/api/goals/daily', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><SetDailyGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/daily goal/i), { target: { value: 10000 } });
@@ -68,7 +68,7 @@ test('should show error when setting a daily fitness goal fails', async () => {
 test('System tracks mood changes over time related to workout intensity successfully.', async () => {
   fetchMock.get('/api/mood-changes', { data: 'Positive trend' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-mood')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -78,7 +78,7 @@ test('System tracks mood changes over time related to workout intensity successf
 test('System fails to track mood changes over time related to workout intensity.', async () => {
   fetchMock.get('/api/mood-changes', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-mood')); });
 
   expect(fetchMock.calls().length).toBe(1);

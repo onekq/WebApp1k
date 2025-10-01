@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add health notes successfully', async () => {
   fetchMock.post('/api/health-notes', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notes-input'), { target: { value: 'Healthy!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Add health notes successfully', async () => {
 test('Fail to add health notes with error', async () => {
   fetchMock.post('/api/health-notes', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notes-input'), { target: { value: '' } }); }); // Failure case: Empty input
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -36,7 +36,7 @@ test('Fail to add health notes with error', async () => {
 test('Successfully reports an inappropriate post', async () => {
   fetchMock.post('/api/community/report', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('report-button', { name: /report/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Successfully reports an inappropriate post', async () => {
 test('Fails to report an inappropriate post', async () => {
   fetchMock.post('/api/community/report', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('report-button', { name: /report/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -57,7 +57,7 @@ test('should set a new custom reminder successfully', async () => {
   fetchMock.post('/api/set-custom-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Custom Event/i), { target: { value: 'Birthday' } });
@@ -74,7 +74,7 @@ test('should fail to set a new custom reminder', async () => {
   fetchMock.post('/api/set-custom-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Custom Event/i), { target: { value: 'Birthday' } });

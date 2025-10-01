@@ -18,7 +18,7 @@ test('applyHotelDiscount - applies discount code successfully to hotel booking',
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('discount-code-input'), { target: { value: 'DISCOUNT10' } });
@@ -36,7 +36,7 @@ test('applyHotelDiscount - shows error message when discount code application fa
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('discount-code-input'), { target: { value: 'DISCOUNT10' } });
@@ -50,7 +50,7 @@ test('applyHotelDiscount - shows error message when discount code application fa
 test('Customer support options should be provided successfully.', async () => {
   fetchMock.get('/api/support/options', [{ id: 1, method: 'Phone' }]);
 
-  await act(async () => { render(<MemoryRouter><CustomerSupportComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-support-options')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -60,7 +60,7 @@ test('Customer support options should be provided successfully.', async () => {
 test('Error in offering customer support should show error message.', async () => {
   fetchMock.get('/api/support/options', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomerSupportComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('get-support-options')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

@@ -36,7 +36,7 @@ test('should show error message when failing to assign task.', async () => {
 test('successfully sets task dependencies.', async () => {
   fetchMock.post('/api/task-dependencies', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TaskDependencies /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'Task 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-dependency-btn')); });
 
@@ -47,7 +47,7 @@ test('successfully sets task dependencies.', async () => {
 test('fails to set task dependencies if server error.', async () => {
   fetchMock.post('/api/task-dependencies', 500);
 
-  await act(async () => { render(<MemoryRouter><TaskDependencies /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'Task 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-dependency-btn')); });
 
@@ -58,7 +58,7 @@ test('fails to set task dependencies if server error.', async () => {
 test('Set user availability successfully', async () => {
   fetchMock.post('/set-availability', { status: 200, body: { available: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('availability-toggle')); });
 
@@ -69,7 +69,7 @@ test('Set user availability successfully', async () => {
 test('Fail to set user availability due to server error', async () => {
   fetchMock.post('/set-availability', { status: 500, body: { available: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('availability-toggle')); });
 

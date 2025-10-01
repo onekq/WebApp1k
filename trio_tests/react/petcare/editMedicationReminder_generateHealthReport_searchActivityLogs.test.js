@@ -15,7 +15,7 @@ test('should update an existing medication reminder successfully', async () => {
   fetchMock.put('/api/edit-medication-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/New Medication Name/i), { target: { value: 'Painkillers' } });
@@ -32,7 +32,7 @@ test('should fail to update an existing medication reminder', async () => {
   fetchMock.put('/api/edit-medication-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/New Medication Name/i), { target: { value: 'Painkillers' } });
@@ -48,7 +48,7 @@ test('should fail to update an existing medication reminder', async () => {
 test('Generate health report successfully', async () => {
   fetchMock.get('/api/health-report', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report-button')); });
 
   expect(fetchMock.calls('/api/health-report').length).toBe(1);
@@ -58,7 +58,7 @@ test('Generate health report successfully', async () => {
 test('Fail to generate health report with error', async () => {
   fetchMock.get('/api/health-report', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report-button')); });
 
   expect(fetchMock.calls('/api/health-report').length).toBe(1);
@@ -68,7 +68,7 @@ test('Fail to generate health report with error', async () => {
 test('Searches activities by keyword successfully.', async () => {
   fetchMock.get('/activities?keyword=walk', [{ description: 'Morning walk' }]);
 
-  await act(async () => { render(<MemoryRouter><SearchActivityLogs /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'walk' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -79,7 +79,7 @@ test('Searches activities by keyword successfully.', async () => {
 test('Fails to search activities with error message.', async () => {
   fetchMock.get('/activities?keyword=walk', { status: 500, body: { message: 'Failed to search activities' } });
 
-  await act(async () => { render(<MemoryRouter><SearchActivityLogs /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'walk' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 

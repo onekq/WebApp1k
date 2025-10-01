@@ -17,7 +17,7 @@ test('fetchFloodWarnings successfully retrieves flood warnings', async () => {
     body: [{ id: 1, warning: 'Flood Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Flood Warnings')); });
 
   expect(fetchMock.called('/api/flood-warnings')).toBeTruthy();
@@ -27,7 +27,7 @@ test('fetchFloodWarnings successfully retrieves flood warnings', async () => {
 test('fetchFloodWarnings fails to retrieve flood warnings', async () => {
   fetchMock.getOnce('/api/flood-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Flood Warnings')); });
 
   expect(fetchMock.called('/api/flood-warnings')).toBeTruthy();
@@ -40,7 +40,7 @@ test('fetchHurricaneWarnings successfully retrieves hurricane warnings', async (
     body: [{ id: 1, warning: 'Hurricane Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Hurricane Warnings')); });
 
   expect(fetchMock.called('/api/hurricane-warnings')).toBeTruthy();
@@ -50,7 +50,7 @@ test('fetchHurricaneWarnings successfully retrieves hurricane warnings', async (
 test('fetchHurricaneWarnings fails to retrieve hurricane warnings', async () => {
   fetchMock.getOnce('/api/hurricane-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Hurricane Warnings')); });
 
   expect(fetchMock.called('/api/hurricane-warnings')).toBeTruthy();

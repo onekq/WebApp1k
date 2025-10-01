@@ -14,7 +14,7 @@ afterEach(() => {
 test('filters by price range successfully', async () => {
   fetchMock.get('/api/products?minPrice=100&maxPrice=500', { products: [{ id: 1, name: 'Laptop' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('min-price-filter'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('max-price-filter'), { target: { value: '500' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-price-filter')); });
@@ -26,7 +26,7 @@ test('filters by price range successfully', async () => {
 test('fails to filter by price range and shows error', async () => {
   fetchMock.get('/api/products?minPrice=100&maxPrice=500', 500);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('min-price-filter'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('max-price-filter'), { target: { value: '500' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-price-filter')); });
@@ -38,7 +38,7 @@ test('fails to filter by price range and shows error', async () => {
 test('Generates invoice successfully', async () => {
   fetchMock.get('/api/generateInvoice', { invoiceNumber: 'INV-12345' });
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Invoice')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -48,7 +48,7 @@ test('Generates invoice successfully', async () => {
 test('Fails to generate invoice', async () => {
   fetchMock.get('/api/generateInvoice', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Invoice')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -58,7 +58,7 @@ test('Fails to generate invoice', async () => {
 test('Sorting reviews by helpfulness should display reviews in order', async () => {
   fetchMock.get('/api/reviews?productId=123&sort=helpfulness', [{ id: 1, helpfulness: 10, content: 'Helpful review' }]);
 
-  await act(async () => { render(<MemoryRouter><SortReviews productId="123" sort="helpfulness" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId="123" sort="helpfulness" /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/reviews?productId=123&sort=helpfulness')).toHaveLength(1);
   expect(screen.getByText('Helpful review')).toBeInTheDocument();
@@ -67,7 +67,7 @@ test('Sorting reviews by helpfulness should display reviews in order', async () 
 test('Sorting reviews by helpfulness should display empty list when there are no reviews', async () => {
   fetchMock.get('/api/reviews?productId=123&sort=helpfulness', []);
 
-  await act(async () => { render(<MemoryRouter><SortReviews productId="123" sort="helpfulness" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId="123" sort="helpfulness" /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/reviews?productId=123&sort=helpfulness')).toHaveLength(1);
   expect(screen.getByText('No reviews')).toBeInTheDocument();

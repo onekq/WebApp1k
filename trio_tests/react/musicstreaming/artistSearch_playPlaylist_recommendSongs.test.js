@@ -36,7 +36,7 @@ test('Shows error message when searching for an artist by name fails.', async ()
 test('successfully plays a playlist', async () => {
   fetchMock.post('/api/playlists/1/play', 200);
 
-  await act(async () => { render(<MemoryRouter><PlayPlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('play-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('successfully plays a playlist', async () => {
 test('fails to play a non-existing playlist', async () => {
   fetchMock.post('/api/playlists/1/play', 404);
 
-  await act(async () => { render(<MemoryRouter><PlayPlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('play-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

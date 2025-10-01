@@ -15,7 +15,7 @@ test('User can log their mood after workouts successfully.', async () => {
   fetchMock.post('/api/logMood', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('mood'), { target: { value: 'Happy' } });
@@ -30,7 +30,7 @@ test('User sees an error message when logging their mood fails.', async () => {
   fetchMock.post('/api/logMood', { status: 500, body: { error: 'Failed to log mood' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('mood'), { target: { value: 'Happy' } });
@@ -45,7 +45,7 @@ test('User can log an outdoor activity and track the route using GPS successfull
   fetchMock.post('/api/logOutdoorActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('outdoor-activity-type'), { target: { value: 'Hiking' } });
@@ -60,7 +60,7 @@ test('User sees an error message when logging an outdoor activity fails.', async
   fetchMock.post('/api/logOutdoorActivity', { status: 500, body: { error: 'Failed to track activity' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('outdoor-activity-type'), { target: { value: 'Hiking' } });
@@ -75,7 +75,7 @@ test('User can log a strength training activity successfully.', async () => {
   fetchMock.post('/api/logStrengthTraining', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('strength-training-type'), { target: { value: 'Weightlifting' } });
@@ -90,7 +90,7 @@ test('User sees an error message when logging a strength training activity fails
   fetchMock.post('/api/logStrengthTraining', { status: 500, body: { error: 'Failed to log activity' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('strength-training-type'), { target: { value: 'Weightlifting' } });

@@ -55,7 +55,7 @@ test('Registration fails if the deadline is passed', async () => {
 test('ticket description within limit', async () => {
   fetchMock.post('/ticketDescription', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketDescription'), { target: { value: 'A valid description' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 
@@ -64,7 +64,7 @@ test('ticket description within limit', async () => {
 }, 10000);
 
 test('ticket description exceeds limit', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketDescription'), { target: { value: 'A'.repeat(300) } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 

@@ -17,7 +17,7 @@ test('Filter by Property Status filters properties by status successfully', asyn
     body: [{ id: 1, status: 'for sale' }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/status/i), { target: { value: 'forsale' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -31,7 +31,7 @@ test('Filter by Property Status filters properties by status fails', async () =>
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/status/i), { target: { value: 'forsale' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -42,7 +42,7 @@ test('Filter by Property Status filters properties by status fails', async () =>
 test('successfully removes favorite properties', async () => {
   fetchMock.post('/api/favorites/remove', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveFavoriteProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-favorite-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -52,7 +52,7 @@ test('successfully removes favorite properties', async () => {
 test('fails to remove favorite properties and shows error message', async () => {
   fetchMock.post('/api/favorites/remove', 500);
 
-  await act(async () => { render(<MemoryRouter><RemoveFavoriteProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-favorite-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -65,7 +65,7 @@ test('Search by Number of Bedrooms filters properties by number of bedrooms succ
     body: [{ id: 1, bedrooms: 2 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/bedrooms/i), { target: { value: '2' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -79,7 +79,7 @@ test('Search by Number of Bedrooms filters properties by number of bedrooms fail
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/bedrooms/i), { target: { value: '2' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 

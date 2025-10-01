@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a meta title to a post', async () => {
   fetchMock.post('/api/meta-title', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/meta title/i), { target: { value: 'New Meta Title' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds a meta title to a post', async () => {
 test('fails to add a meta title to a post due to server error', async () => {
   fetchMock.post('/api/meta-title', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/meta title/i), { target: { value: 'New Meta Title' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -56,7 +56,7 @@ test('fails to like a comment', async () => {
 test('successfully tracks post views', async () => {
   fetchMock.post('/api/trackPostViews', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackPostViews postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Post')); });
 
   expect(fetchMock.calls('/api/trackPostViews')).toHaveLength(1);
@@ -67,7 +67,7 @@ test('successfully tracks post views', async () => {
 test('fails to track post views with an error message', async () => {
   fetchMock.post('/api/trackPostViews', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackPostViews postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Post')); });
 
   expect(fetchMock.calls('/api/trackPostViews')).toHaveLength(1);

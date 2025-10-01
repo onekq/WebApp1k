@@ -14,7 +14,7 @@ afterEach(() => {
 test('Change assigned user successfully', async () => {
   fetchMock.post('/change-assigned-user', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User2' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('change-assigned-user-button')); });
@@ -26,7 +26,7 @@ test('Change assigned user successfully', async () => {
 test('Fail to change assigned user due to server error', async () => {
   fetchMock.post('/change-assigned-user', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User2' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('change-assigned-user-button')); });
@@ -41,7 +41,7 @@ test('Change the due date of an existing task successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Change deadline'), { target: { value: '2023-10-11' } });
@@ -58,7 +58,7 @@ test('Fail to change the due date of an existing task when API returns 500.', as
   fetchMock.put('/api/tasks/1/deadline', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Change deadline'), { target: { value: '2023-10-11' } });
@@ -74,7 +74,7 @@ test('Fail to change the due date of an existing task when API returns 500.', as
 test('successfully allocates resources to a task.', async () => {
   fetchMock.post('/api/resource-allocation', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ResourceAllocation /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resource-input'), { target: { value: '50%' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('allocate-resource-btn')); });
 
@@ -85,7 +85,7 @@ test('successfully allocates resources to a task.', async () => {
 test('fails to allocate resources to a task if server error.', async () => {
   fetchMock.post('/api/resource-allocation', 500);
 
-  await act(async () => { render(<MemoryRouter><ResourceAllocation /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resource-input'), { target: { value: '50%' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('allocate-resource-btn')); });
 

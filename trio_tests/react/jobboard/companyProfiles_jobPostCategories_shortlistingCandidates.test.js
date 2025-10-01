@@ -14,7 +14,7 @@ afterEach(() => {
 test('employers can successfully create and update company profiles', async () => {
   fetchMock.post('/api/company', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CompanyProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Company Name/i), { target: { value: 'TechCorp' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -25,7 +25,7 @@ test('employers can successfully create and update company profiles', async () =
 test('employers see an error message if profile creation fails', async () => {
   fetchMock.post('/api/company', 500);
 
-  await act(async () => { render(<MemoryRouter><CompanyProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Company Name/i), { target: { value: 'TechCorp' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -37,7 +37,7 @@ test('Assigning job posts to predefined categories successfully', async () => {
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -55,7 +55,7 @@ test('Assigning job posts failure due to invalid category', async () => {
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });

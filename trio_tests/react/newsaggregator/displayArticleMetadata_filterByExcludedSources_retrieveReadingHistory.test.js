@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays article metadata successfully', async () => {
   fetchMock.get('/api/articles', { status: 200, body: [{ id: 1, author: 'Author', date: 'Date', source: 'Source' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Author')).toBeInTheDocument();
@@ -25,7 +25,7 @@ test('Displays article metadata successfully', async () => {
 test('Fails to display article metadata', async () => {
   fetchMock.get('/api/articles', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load article metadata')).toBeInTheDocument();
@@ -34,7 +34,7 @@ test('Fails to display article metadata', async () => {
 test('filters articles by excluded sources successfully', async () => {
   fetchMock.get('/api/articles?excludedSources=CNN', { status: 200, body: [{ id: 4, title: 'Non-CNN News' }] });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-sources-filter-input'), { target: { value: 'CNN' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-excluded-sources-filter-button')); });
 
@@ -45,7 +45,7 @@ test('filters articles by excluded sources successfully', async () => {
 test('fails to filter articles by excluded sources', async () => {
   fetchMock.get('/api/articles?excludedSources=CNN', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-sources-filter-input'), { target: { value: 'CNN' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-excluded-sources-filter-button')); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays article metadata successfully', async () => {
   fetchMock.get('/api/articles', { status: 200, body: [{ id: 1, author: 'Author', date: 'Date', source: 'Source' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Author')).toBeInTheDocument();
@@ -25,7 +25,7 @@ test('Displays article metadata successfully', async () => {
 test('Fails to display article metadata', async () => {
   fetchMock.get('/api/articles', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load article metadata')).toBeInTheDocument();
@@ -34,7 +34,7 @@ test('Fails to display article metadata', async () => {
 test('Save article successfully.', async () => {
   fetchMock.post('/api/save-article', { success: true });
 
-  await act(async () => { render(<MemoryRouter><SaveArticle /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Save Article")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('Save article successfully.', async () => {
 test('Fail to save article and display error.', async () => {
   fetchMock.post('/api/save-article', 500);
 
-  await act(async () => { render(<MemoryRouter><SaveArticle /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Save Article")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Fail to save article and display error.', async () => {
 test('saves user-excluded categories successfully', async () => {
   fetchMock.post('/api/save-excluded-categories', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-categories-input'), { target: { value: 'Sports' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-excluded-categories-button')); });
 
@@ -65,7 +65,7 @@ test('saves user-excluded categories successfully', async () => {
 test('fails to save user-excluded categories', async () => {
   fetchMock.post('/api/save-excluded-categories', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-categories-input'), { target: { value: 'Sports' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-excluded-categories-button')); });
 

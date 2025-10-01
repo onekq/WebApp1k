@@ -14,7 +14,7 @@ afterEach(() => {
 test('bookmarks an article successfully', async () => {
   fetchMock.post('/bookmark', 200);
 
-  await act(async () => { render(<MemoryRouter><BookmarkArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('bookmarks an article successfully', async () => {
 test('fails to bookmark an article with error message', async () => {
   fetchMock.post('/bookmark', 500);
 
-  await act(async () => { render(<MemoryRouter><BookmarkArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('fails to bookmark an article with error message', async () => {
 test('filters articles by selected sources successfully', async () => {
   fetchMock.get('/api/articles?sources=BBC', { status: 200, body: [{ id: 3, title: 'BBC News' }] });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sources-filter-input'), { target: { value: 'BBC' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-sources-filter-button')); });
 
@@ -45,7 +45,7 @@ test('filters articles by selected sources successfully', async () => {
 test('fails to filter articles by selected sources', async () => {
   fetchMock.get('/api/articles?sources=BBC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sources-filter-input'), { target: { value: 'BBC' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-sources-filter-button')); });
 

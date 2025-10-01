@@ -18,7 +18,7 @@ test('sortHotels - sorts hotel search results successfully', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('sort-price'));
@@ -35,7 +35,7 @@ test('sortHotels - shows error message on sorting failure', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('sort-price'));
@@ -70,7 +70,7 @@ test('should show error if fetching travel insurance options fails', async () =>
 test('successfully validates itinerary conflicts.', async () => {
   fetchMock.post('/api/validate-conflicts', { status: 200, body: { conflicts: [] } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-conflicts-button')); });
 
   expect(fetchMock.calls('/api/validate-conflicts', 'POST')).toHaveLength(1);
@@ -80,7 +80,7 @@ test('successfully validates itinerary conflicts.', async () => {
 test('fails to validate itinerary conflicts due to conflicts.', async () => {
   fetchMock.post('/api/validate-conflicts', { status: 400, body: { conflicts: ['Conflict1'] } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-conflicts-button')); });
 
   expect(fetchMock.calls('/api/validate-conflicts', 'POST')).toHaveLength(1);

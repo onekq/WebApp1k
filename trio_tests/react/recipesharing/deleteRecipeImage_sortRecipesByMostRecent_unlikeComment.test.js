@@ -54,7 +54,7 @@ test('Ensure recipes can be sorted by most recent - failure', async () => {
 test('Successfully unlike a comment on a recipe', async () => {
   fetchMock.post('/api/unlike-comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('Successfully unlike a comment on a recipe', async () => {
 test('Fail to unlike a comment with error message', async () => {
   fetchMock.post('/api/unlike-comment', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

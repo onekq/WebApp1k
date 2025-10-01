@@ -17,7 +17,7 @@ test('Successfully archives a post.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><PostComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Archive'));
@@ -33,7 +33,7 @@ test('Shows error message when archiving a post fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><PostComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Archive'));
@@ -46,7 +46,7 @@ test('Shows error message when archiving a post fails.', async () => {
 test('should send a notification when a post is pinned', async () => {
   fetchMock.post('/api/pin', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pin-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('should send a notification when a post is pinned', async () => {
 test('should handle error when notification sending fails for a post pin', async () => {
   fetchMock.post('/api/pin', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pin-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -67,7 +67,7 @@ test('Test editing saved drafts.', async () => {
   fetchMock.put('/api/posts/draft/1', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByText('Edit Draft'), { target: { value: 'Updated draft content' } });
@@ -84,7 +84,7 @@ test('Ensure changes are saved and displayed (draft).', async () => {
   fetchMock.put('/api/posts/draft/1', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByText('Edit Draft'), { target: { value: '' } });

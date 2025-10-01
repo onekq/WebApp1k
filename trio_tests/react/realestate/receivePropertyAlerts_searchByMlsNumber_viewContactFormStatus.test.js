@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully receives property alerts', async () => {
   fetchMock.get('/api/alerts', 200);
 
-  await act(async () => { render(<MemoryRouter><ReceivePropertyAlerts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('receive-alerts-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -24,7 +24,7 @@ test('successfully receives property alerts', async () => {
 test('fails to receive property alerts and shows error message', async () => {
   fetchMock.get('/api/alerts', 500);
 
-  await act(async () => { render(<MemoryRouter><ReceivePropertyAlerts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('receive-alerts-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -34,7 +34,7 @@ test('fails to receive property alerts and shows error message', async () => {
 test('Successfully searches by MLS number.', async () => {
   fetchMock.get('/api/properties?mls=12345', { data: { property: 'Property Data' } });
 
-  await act(async () => { render(<MemoryRouter><SearchByMLS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('mls-input'), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -45,7 +45,7 @@ test('Successfully searches by MLS number.', async () => {
 test('Fails to search by MLS number with error message.', async () => {
   fetchMock.get('/api/properties?mls=12345', 400);
 
-  await act(async () => { render(<MemoryRouter><SearchByMLS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('mls-input'), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -56,7 +56,7 @@ test('Fails to search by MLS number with error message.', async () => {
 test('successfully shows contact form status', async () => {
   fetchMock.post('/api/contact/status', 200);
 
-  await act(async () => { render(<MemoryRouter><ViewContactFormStatus /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-status-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -66,7 +66,7 @@ test('successfully shows contact form status', async () => {
 test('fails to show contact form status and shows error message', async () => {
   fetchMock.post('/api/contact/status', 500);
 
-  await act(async () => { render(<MemoryRouter><ViewContactFormStatus /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-status-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 

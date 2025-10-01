@@ -48,7 +48,7 @@ test('FetchShorttermForecast - fails to retrieve short-term forecast', async () 
 test('Fetch weather by ZIP code succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { zip: '10001', temperature: 15 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('zip-input'), { target: { value: '10001' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -59,7 +59,7 @@ test('Fetch weather by ZIP code succeeds.', async () => {
 test('Fetch weather by ZIP code fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('zip-input'), { target: { value: '00000' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 

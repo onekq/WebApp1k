@@ -14,7 +14,7 @@ afterEach(() => {
 test('Edits an activity log successfully.', async () => {
   fetchMock.put('/activities/1', { message: 'Activity updated' });
 
-  await act(async () => { render(<MemoryRouter><EditActivityLog activityId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App activityId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('activity-input'), { target: { value: 'Updated walk' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Edits an activity log successfully.', async () => {
 test('Fails to edit activity log with error message.', async () => {
   fetchMock.put('/activities/1', { status: 500, body: { message: 'Failed to update activity' } });
 
-  await act(async () => { render(<MemoryRouter><EditActivityLog activityId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App activityId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('activity-input'), { target: { value: 'Updated walk' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -37,7 +37,7 @@ test('should update an existing custom reminder successfully', async () => {
   fetchMock.put('/api/edit-custom-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/New Custom Event/i), { target: { value: 'Training session' } });
@@ -54,7 +54,7 @@ test('should fail to update an existing custom reminder', async () => {
   fetchMock.put('/api/edit-custom-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/New Custom Event/i), { target: { value: 'Training session' } });
@@ -71,7 +71,7 @@ test('should set a new custom reminder successfully', async () => {
   fetchMock.post('/api/set-custom-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Custom Event/i), { target: { value: 'Birthday' } });
@@ -88,7 +88,7 @@ test('should fail to set a new custom reminder', async () => {
   fetchMock.post('/api/set-custom-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Custom Event/i), { target: { value: 'Birthday' } });

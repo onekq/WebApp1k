@@ -14,7 +14,7 @@ afterEach(() => {
 test('successful anonymous application submission.', async () => {
   fetchMock.post('/applyAnonymous', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-anonymous-button')); });
 
@@ -25,7 +25,7 @@ test('successful anonymous application submission.', async () => {
 test('failure anonymous application submission.', async () => {
   fetchMock.post('/applyAnonymous', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('job-id-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-anonymous-button')); });
 
@@ -36,7 +36,7 @@ test('failure anonymous application submission.', async () => {
 test('employers can successfully create and update company profiles', async () => {
   fetchMock.post('/api/company', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CompanyProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Company Name/i), { target: { value: 'TechCorp' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -47,7 +47,7 @@ test('employers can successfully create and update company profiles', async () =
 test('employers see an error message if profile creation fails', async () => {
   fetchMock.post('/api/company', 500);
 
-  await act(async () => { render(<MemoryRouter><CompanyProfile /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Company Name/i), { target: { value: 'TechCorp' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Save/i)); });
 
@@ -59,7 +59,7 @@ test('Editing an existing job post successfully', async () => {
   fetchMock.put('/api/job/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Senior Software Engineer' } });
@@ -76,7 +76,7 @@ test('Editing an existing job post failure due to network error', async () => {
   fetchMock.put('/api/job/1', 500);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Senior Software Engineer' } });

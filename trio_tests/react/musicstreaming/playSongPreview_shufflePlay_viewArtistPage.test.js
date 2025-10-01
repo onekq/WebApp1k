@@ -14,7 +14,7 @@ afterEach(() => {
 test('Playing a preview of a song works.', async () => {
   fetchMock.post('/api/playPreview', 200);
 
-  await act(async () => { render(<MemoryRouter><PreviewComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('play-preview-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Playing a preview of a song works.', async () => {
 test('Playing a preview of a song fails with an error message.', async () => {
   fetchMock.post('/api/playPreview', 500);
 
-  await act(async () => { render(<MemoryRouter><PreviewComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('play-preview-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Shuffle Play - failure shows error message', async () => {
 test('Viewing an artist\'s page shows correct information.', async () => {
   fetchMock.get('/api/artist/1', { name: 'Artist Name', bio: 'Artist Bio' });
 
-  await act(async () => { render(<MemoryRouter><ArtistPage artistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App artistId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Artist Name')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('Viewing an artist\'s page shows correct information.', async () => {
 test('Viewing an artist\'s page fails with an error message.', async () => {
   fetchMock.get('/api/artist/1', 500);
 
-  await act(async () => { render(<MemoryRouter><ArtistPage artistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App artistId={1} /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error loading artist information')).toBeInTheDocument();

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully comment on a recipe', async () => {
   fetchMock.post('/api/comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Yummy!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -25,7 +25,7 @@ test('Successfully comment on a recipe', async () => {
 test('Fail to comment on recipe with error message', async () => {
   fetchMock.post('/api/comment', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Yummy!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('comment-button')); });
 
@@ -58,7 +58,7 @@ test('Ensure recipes can be filtered by specific ingredients - failure', async (
 test('Successfully unlike a comment on a recipe', async () => {
   fetchMock.post('/api/unlike-comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -68,7 +68,7 @@ test('Successfully unlike a comment on a recipe', async () => {
 test('Fail to unlike a comment with error message', async () => {
   fetchMock.post('/api/unlike-comment', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('unlike-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

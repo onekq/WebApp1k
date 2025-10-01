@@ -14,7 +14,7 @@ afterEach(() => {
 test('Tracking the history of responses should show response history.', async () => {
   fetchMock.get('/api/response-history', { history: ['Initial response', 'Follow-up response'] });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-history'), { target: { value: 'history123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-history')); });
 
@@ -25,7 +25,7 @@ test('Tracking the history of responses should show response history.', async ()
 test('Tracking the history of responses should show error message when failed.', async () => {
   fetchMock.get('/api/response-history', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-history'), { target: { value: 'history123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-history')); });
 
@@ -40,7 +40,7 @@ test('Successfully analyzes average response time.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ResponseTimeAnalysis /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('agent-picker'), { target: { value: 'agent1' } });
@@ -60,7 +60,7 @@ test('Fails to analyze average response time and shows error message.', async ()
   });
 
   await act(async () => {
-    render(<MemoryRouter><ResponseTimeAnalysis /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('agent-picker'), { target: { value: 'agent1' } });
@@ -77,7 +77,7 @@ test('successfully searches for articles in the knowledge base', async () => {
   fetchMock.get('path/to/api/articles?search=term', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'term' } });
@@ -94,7 +94,7 @@ test('fails to search for articles in the knowledge base with error message', as
   fetchMock.get('path/to/api/articles?search=term', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'term' } });

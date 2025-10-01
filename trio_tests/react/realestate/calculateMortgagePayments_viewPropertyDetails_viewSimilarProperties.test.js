@@ -14,7 +14,7 @@ afterEach(() => {
 test('Calculate mortgage payments successfully', async () => {
   fetchMock.post('/api/mortgage-calc', { estimatedPayment: 1200 });
 
-  await act(async () => { render(<MemoryRouter><CalculateMortgage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('price-input'), { target: { value: '300000' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-btn')); });
 
@@ -25,7 +25,7 @@ test('Calculate mortgage payments successfully', async () => {
 test('Calculate mortgage payments fails with error', async () => {
   fetchMock.post('/api/mortgage-calc', 500);
 
-  await act(async () => { render(<MemoryRouter><CalculateMortgage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('price-input'), { target: { value: '300000' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-btn')); });
 
@@ -36,7 +36,7 @@ test('Calculate mortgage payments fails with error', async () => {
 test('displays detailed information about a property', async () => {
   fetchMock.get('/property/1', { body: {} });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('displays detailed information about a property', async () => {
 test('fails to display property details due to network error', async () => {
   fetchMock.get('/property/1', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -56,7 +56,7 @@ test('fails to display property details due to network error', async () => {
 test('View similar properties successfully', async () => {
   fetchMock.get('/api/similar-properties', { properties: [{ id: 1, name: "Prop 1" }] });
 
-  await act(async () => { render(<MemoryRouter><SimilarProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-similar-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -66,7 +66,7 @@ test('View similar properties successfully', async () => {
 test('View similar properties fails with error', async () => {
   fetchMock.get('/api/similar-properties', 500);
 
-  await act(async () => { render(<MemoryRouter><SimilarProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-similar-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);

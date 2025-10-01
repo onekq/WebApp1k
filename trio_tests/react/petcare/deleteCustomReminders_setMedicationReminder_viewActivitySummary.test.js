@@ -15,7 +15,7 @@ test('should delete a custom reminder successfully', async () => {
   fetchMock.delete('/api/delete-custom-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete Reminder/i));
@@ -29,7 +29,7 @@ test('should fail to delete a custom reminder', async () => {
   fetchMock.delete('/api/delete-custom-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/Delete Reminder/i));
@@ -43,7 +43,7 @@ test('should set a new medication reminder successfully', async () => {
   fetchMock.post('/api/set-medication-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Medication Name/i), { target: { value: 'Antibiotics' } });
@@ -60,7 +60,7 @@ test('should fail to set a new medication reminder', async () => {
   fetchMock.post('/api/set-medication-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Medication Name/i), { target: { value: 'Antibiotics' } });
@@ -76,7 +76,7 @@ test('should fail to set a new medication reminder', async () => {
 test('Views activity summary successfully.', async () => {
   fetchMock.get('/activities/summary', { summary: 'Activity summary data' });
 
-  await act(async () => { render(<MemoryRouter><ViewActivitySummary /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/activities/summary').length).toBe(1);
   expect(screen.getByText('Activity summary data')).toBeInTheDocument();
@@ -85,7 +85,7 @@ test('Views activity summary successfully.', async () => {
 test('Fails to view activity summary with error message.', async () => {
   fetchMock.get('/activities/summary', { status: 500, body: { message: 'Failed to fetch summary' } });
 
-  await act(async () => { render(<MemoryRouter><ViewActivitySummary /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/activities/summary').length).toBe(1);
   expect(screen.getByTestId('error-message')).toBeInTheDocument();

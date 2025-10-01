@@ -15,7 +15,7 @@ test('User can categorize a fitness activity successfully.', async () => {
   fetchMock.post('/api/categorizeActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-category'), { target: { value: 'Cycling' } });
@@ -30,7 +30,7 @@ test('User sees an error message when categorizing a fitness activity fails.', a
   fetchMock.post('/api/categorizeActivity', { status: 500, body: { error: 'Failed to set category' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-category'), { target: { value: 'Cycling' } });
@@ -45,7 +45,7 @@ test('User can delete a fitness activity successfully.', async () => {
   fetchMock.delete('/api/deleteActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('delete-activity'));
@@ -59,7 +59,7 @@ test('User sees an error message when deleting a fitness activity fails.', async
   fetchMock.delete('/api/deleteActivity', { status: 500, body: { error: 'Failed to delete activity' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('delete-activity'));
@@ -73,7 +73,7 @@ test('should successfully view a graphical progress representation', async () =>
   fetchMock.get('/api/progress/graph', { status: 200, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><ViewProgressGraph /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -84,7 +84,7 @@ test('should show error message when viewing a graphical progress representation
   fetchMock.get('/api/progress/graph', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><ViewProgressGraph /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

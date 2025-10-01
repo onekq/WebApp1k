@@ -52,7 +52,7 @@ test('Scheduling an interview fails due to server error.', async () => {
 test('job seekers can successfully set up alerts for new jobs matching their criteria', async () => {
   fetchMock.post('/api/job/alerts', { success: true });
 
-  await act(async () => { render(<MemoryRouter><JobAlerts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Keyword/i), { target: { value: 'React Developer' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Set Alert/i)); });
 
@@ -63,7 +63,7 @@ test('job seekers can successfully set up alerts for new jobs matching their cri
 test('job seekers see an error message if alert setup fails', async () => {
   fetchMock.post('/api/job/alerts', 500);
 
-  await act(async () => { render(<MemoryRouter><JobAlerts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Keyword/i), { target: { value: 'React Developer' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Set Alert/i)); });
 

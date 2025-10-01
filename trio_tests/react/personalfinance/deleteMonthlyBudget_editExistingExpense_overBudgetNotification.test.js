@@ -15,7 +15,7 @@ test('Success: Delete a monthly budget.', async () => {
   fetchMock.delete('/api/delete-budget', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('Failure: Delete a monthly budget.', async () => {
   fetchMock.delete('/api/delete-budget', { status: 400, body: { error: 'Budget not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -52,7 +52,7 @@ test('Failure: Delete a monthly budget.', async () => {
 test('edits an existing expense successfully', async () => {
   fetchMock.put('/api/expense/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expense-amount-input-1'), { target: { value: '200' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-expense-button-1')); });
 
@@ -63,7 +63,7 @@ test('edits an existing expense successfully', async () => {
 test('fails to edit an existing expense', async () => {
   fetchMock.put('/api/expense/1', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('expense-amount-input-1'), { target: { value: '200' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-expense-button-1')); });
 
@@ -75,7 +75,7 @@ test('Success: Notify when an expense exceeds the budget for a category.', async
   fetchMock.get('/api/check-expense-exceed', { status: 200, body: { exceeds: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -90,7 +90,7 @@ test('Failure: Notify when an expense exceeds the budget for a category.', async
   fetchMock.get('/api/check-expense-exceed', { status: 200, body: { exceeds: false } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

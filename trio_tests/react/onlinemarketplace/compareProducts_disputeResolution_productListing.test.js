@@ -14,7 +14,7 @@ afterEach(() => {
 test('Comparing multiple products succeeds.', async () => {
   fetchMock.post('/api/compare', { status: 200, body: [{ id: 1, name: 'Product A' }, { id: 2, name: 'Product B' }] });
 
-  await act(async () => { render(<MemoryRouter><ComparePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Compare Products')); });
 
   expect(fetchMock.calls('/api/compare').length).toBe(1);
@@ -25,7 +25,7 @@ test('Comparing multiple products succeeds.', async () => {
 test('Comparing multiple products fails with error message.', async () => {
   fetchMock.post('/api/compare', { status: 500, body: { message: 'Comparison failed' } });
 
-  await act(async () => { render(<MemoryRouter><ComparePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Compare Products')); });
 
   expect(fetchMock.calls('/api/compare').length).toBe(1);
@@ -35,7 +35,7 @@ test('Comparing multiple products fails with error message.', async () => {
 test('Dispute Resolution success resolves the dispute', async () => {
   fetchMock.post('/api/orders/1/dispute', { status: 'Resolved' });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Resolve Dispute')); });
 
   expect(fetchMock.calls('/api/orders/1/dispute').length).toBe(1);
@@ -45,7 +45,7 @@ test('Dispute Resolution success resolves the dispute', async () => {
 test('Dispute Resolution failure shows error message', async () => {
   fetchMock.post('/api/orders/1/dispute', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Resolve Dispute')); });
 
   expect(screen.getByText('Error resolving dispute')).toBeInTheDocument();
@@ -54,7 +54,7 @@ test('Dispute Resolution failure shows error message', async () => {
 test('Product listing succeeds with required details.', async () => {
   fetchMock.post('/api/products', { status: 200, body: { id: 1, name: 'Sample Product' } });
 
-  await act(async () => { render(<MemoryRouter><ProductForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Product Name'), { target: { value: 'Sample Product' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 
@@ -65,7 +65,7 @@ test('Product listing succeeds with required details.', async () => {
 test('Product listing fails with missing details error.', async () => {
   fetchMock.post('/api/products', { status: 400, body: { message: 'Missing required details' } });
 
-  await act(async () => { render(<MemoryRouter><ProductForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Product Name'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 

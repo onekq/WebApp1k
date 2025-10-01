@@ -15,7 +15,7 @@ test('should successfully edit a daily fitness goal', async () => {
   fetchMock.put('/api/goals/daily/123', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><EditDailyGoal goalId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App goalId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/daily goal/i), { target: { value: 12000 } });
@@ -32,7 +32,7 @@ test('should show error when editing a daily fitness goal fails', async () => {
   fetchMock.put('/api/goals/daily/123', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><EditDailyGoal goalId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App goalId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/daily goal/i), { target: { value: 12000 } });
@@ -49,7 +49,7 @@ test('User can log a yoga session successfully.', async () => {
   fetchMock.post('/api/logYogaSession', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('yoga-session-type'), { target: { value: 'Ashtanga' } });
@@ -64,7 +64,7 @@ test('User sees an error message when logging a yoga session fails.', async () =
   fetchMock.post('/api/logYogaSession', { status: 500, body: { error: 'Failed to log session' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('yoga-session-type'), { target: { value: 'Ashtanga' } });
@@ -78,7 +78,7 @@ test('User sees an error message when logging a yoga session fails.', async () =
 test('System tracks mood changes over time related to workout intensity successfully.', async () => {
   fetchMock.get('/api/mood-changes', { data: 'Positive trend' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-mood')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -88,7 +88,7 @@ test('System tracks mood changes over time related to workout intensity successf
 test('System fails to track mood changes over time related to workout intensity.', async () => {
   fetchMock.get('/api/mood-changes', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-mood')); });
 
   expect(fetchMock.calls().length).toBe(1);

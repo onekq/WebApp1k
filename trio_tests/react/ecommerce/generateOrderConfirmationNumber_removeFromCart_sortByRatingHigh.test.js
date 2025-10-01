@@ -14,7 +14,7 @@ afterEach(() => {
 test('Generates order confirmation number successfully', async () => {
   fetchMock.get('/api/generateOrderConfirmationNumber', { confirmationNumber: '123456' });
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Confirmation Number')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Generates order confirmation number successfully', async () => {
 test('Fails to generate order confirmation number', async () => {
   fetchMock.get('/api/generateOrderConfirmationNumber', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Confirmation Number')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fails to generate order confirmation number', async () => {
 test('removeFromCart: successfully remove a product from the cart', async () => {
   fetchMock.delete('/api/cart/1', { status: 200, body: { message: 'Removed' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-from-cart')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('removeFromCart: successfully remove a product from the cart', async () => 
 test('removeFromCart: fail to remove a product from the cart with error message', async () => {
   fetchMock.delete('/api/cart/1', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-from-cart')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('removeFromCart: fail to remove a product from the cart with error message'
 test('sorts by highest rating successfully', async () => {
   fetchMock.get('/api/products?sort=rating_desc', { products: [{ id: 1, name: 'Top Rated Phone' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-rating-high')); });
 
   expect(fetchMock.called('/api/products?sort=rating_desc')).toBe(true);
@@ -64,7 +64,7 @@ test('sorts by highest rating successfully', async () => {
 test('fails to sort by highest rating and shows error', async () => {
   fetchMock.get('/api/products?sort=rating_desc', 500);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-rating-high')); });
 
   expect(fetchMock.called('/api/products?sort=rating_desc')).toBe(true);

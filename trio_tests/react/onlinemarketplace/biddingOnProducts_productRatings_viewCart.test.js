@@ -36,7 +36,7 @@ test('fails to place a bid on a product with an error message displayed.', async
 test('Product Ratings successfully displays product ratings.', async () => {
   fetchMock.get('/api/ratings', { status: 200, body: { ratings: ['Rating 1'] } });
 
-  await act(async () => { render(<MemoryRouter><ProductRatings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('ratings-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Product Ratings successfully displays product ratings.', async () => {
 test('Product Ratings fails and displays error message.', async () => {
   fetchMock.get('/api/ratings', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><ProductRatings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('ratings-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Product Ratings fails and displays error message.', async () => {
 test('displays cart details correctly.', async () => {
   fetchMock.get('/api/cart', { body: { items: ['item1', 'item2'] } });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Cart')); });
 
   expect(fetchMock.calls('/api/cart').length).toEqual(1);
@@ -67,7 +67,7 @@ test('displays cart details correctly.', async () => {
 test('displays error message on fetching cart failure.', async () => {
   fetchMock.get('/api/cart', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Cart')); });
 
   expect(fetchMock.calls('/api/cart').length).toEqual(1);

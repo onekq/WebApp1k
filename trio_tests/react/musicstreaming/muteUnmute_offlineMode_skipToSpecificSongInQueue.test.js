@@ -54,7 +54,7 @@ test('fails to download songs for offline playback due to network error', async 
 test('Skipping to a specific song in the queue works.', async () => {
   fetchMock.post('/api/skipTo', 200);
 
-  await act(async () => { render(<MemoryRouter><QueueComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('skip-to-song-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('Skipping to a specific song in the queue works.', async () => {
 test('Skipping to a specific song in the queue fails with an error message.', async () => {
   fetchMock.post('/api/skipTo', 500);
 
-  await act(async () => { render(<MemoryRouter><QueueComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('skip-to-song-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

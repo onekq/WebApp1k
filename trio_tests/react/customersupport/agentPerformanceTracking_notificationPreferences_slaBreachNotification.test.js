@@ -18,7 +18,7 @@ test('Successfully tracks agent performance metrics.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><AgentPerformanceTracking /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('agent-picker'), { target: { value: 'agent2' } });
@@ -38,7 +38,7 @@ test('Fails to track agent performance metrics and shows error message.', async 
   });
 
   await act(async () => {
-    render(<MemoryRouter><AgentPerformanceTracking /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('agent-picker'), { target: { value: 'agent2' } });
@@ -54,7 +54,7 @@ test('Fails to track agent performance metrics and shows error message.', async 
 test('Successfully customizes notification preferences.', async () => {
   fetchMock.post('/api/savePreferences', 200);
 
-  await act(async () => { render(<MemoryRouter><NotificationPreferences /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('emailToggle'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Preferences')); });
 
@@ -65,7 +65,7 @@ test('Successfully customizes notification preferences.', async () => {
 test('Fails to customize notification preferences.', async () => {
   fetchMock.post('/api/savePreferences', 500);
 
-  await act(async () => { render(<MemoryRouter><NotificationPreferences /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('emailToggle'), { target: { checked: true } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Preferences')); });
 
@@ -80,7 +80,7 @@ test('Successfully notifies agents of SLA breaches.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLABreachNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-breach-picker'), { target: { value: 'breach1' } });
@@ -100,7 +100,7 @@ test('Fails to notify agents of SLA breaches and shows error message.', async ()
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLABreachNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-breach-picker'), { target: { value: 'breach1' } });

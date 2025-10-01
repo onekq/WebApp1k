@@ -14,7 +14,7 @@ afterEach(() => {
 test('Merge articles from different sources successfully.', async () => {
   fetchMock.post('/api/merge-articles', { success: true });
 
-  await act(async () => { render(<MemoryRouter><MergeArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Merge Articles")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Merge articles from different sources successfully.', async () => {
 test('Fail to merge articles and display error.', async () => {
   fetchMock.post('/api/merge-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><MergeArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Merge Articles")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Fails to retrieve user reading history.', async () => {
 test('saves user-selected categories successfully', async () => {
   fetchMock.post('/api/save-categories', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('categories-input'), { target: { value: 'Tech' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-categories-button')); });
 
@@ -65,7 +65,7 @@ test('saves user-selected categories successfully', async () => {
 test('fails to save user-selected categories', async () => {
   fetchMock.post('/api/save-categories', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('categories-input'), { target: { value: 'Tech' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-categories-button')); });
 

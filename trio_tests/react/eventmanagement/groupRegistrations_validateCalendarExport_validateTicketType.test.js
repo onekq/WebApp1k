@@ -56,7 +56,7 @@ test('Fails to validate calendar export.', async () => {
 test('selects ticket type successfully', async () => {
   fetchMock.post('/ticketType', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketType'), { target: { value: 'VIP' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 
@@ -65,7 +65,7 @@ test('selects ticket type successfully', async () => {
 }, 10000);
 
 test('fails to select ticket type', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 
   expect(screen.getByText('Please select a ticket type.')).toBeInTheDocument();

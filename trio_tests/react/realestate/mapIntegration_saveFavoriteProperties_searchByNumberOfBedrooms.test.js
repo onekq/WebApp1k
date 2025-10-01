@@ -14,7 +14,7 @@ afterEach(() => {
 test('shows the property location on a map', async () => {
   fetchMock.get('/property/1/location', { body: {} });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Map')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('shows the property location on a map', async () => {
 test('fails to display property location on map due to network error', async () => {
   fetchMock.get('/property/1/location', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Map')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('fails to display property location on map due to network error', async () 
 test('successfully saves favorite properties', async () => {
   fetchMock.post('/api/favorites', 200);
 
-  await act(async () => { render(<MemoryRouter><SaveFavoriteProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-favorite-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -44,7 +44,7 @@ test('successfully saves favorite properties', async () => {
 test('fails to save favorite properties and shows error message', async () => {
   fetchMock.post('/api/favorites', 500);
 
-  await act(async () => { render(<MemoryRouter><SaveFavoriteProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-favorite-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -57,7 +57,7 @@ test('Search by Number of Bedrooms filters properties by number of bedrooms succ
     body: [{ id: 1, bedrooms: 2 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/bedrooms/i), { target: { value: '2' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 
@@ -71,7 +71,7 @@ test('Search by Number of Bedrooms filters properties by number of bedrooms fail
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/bedrooms/i), { target: { value: '2' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
 

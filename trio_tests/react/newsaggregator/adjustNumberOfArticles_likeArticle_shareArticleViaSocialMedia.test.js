@@ -14,7 +14,7 @@ afterEach(() => {
 test('adjusts the number of articles shown successfully', async () => {
   fetchMock.get('/api/articles?limit=10', { status: 200, body: Array.from({ length: 10 }, (_, i) => ({ id: i, title: `Article ${i}` })) });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('articles-limit-input'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('adjust-articles-button')); });
 
@@ -25,7 +25,7 @@ test('adjusts the number of articles shown successfully', async () => {
 test('fails to adjust the number of articles shown', async () => {
   fetchMock.get('/api/articles?limit=10', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('articles-limit-input'), { target: { value: '10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('adjust-articles-button')); });
 
@@ -36,7 +36,7 @@ test('fails to adjust the number of articles shown', async () => {
 test('likes an article successfully', async () => {
   fetchMock.post('/like', 200);
 
-  await act(async () => { render(<MemoryRouter><LikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Like')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('likes an article successfully', async () => {
 test('fails to like an article with error message', async () => {
   fetchMock.post('/like', 500);
 
-  await act(async () => { render(<MemoryRouter><LikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Like')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('fails to like an article with error message', async () => {
 test('shares an article via social media successfully', async () => {
   fetchMock.post('/share/social-media', 200);
 
-  await act(async () => { render(<MemoryRouter><ShareViaSocialMediaComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('shares an article via social media successfully', async () => {
 test('fails to share an article via social media with error message', async () => {
   fetchMock.post('/share/social-media', 500);
 
-  await act(async () => { render(<MemoryRouter><ShareViaSocialMediaComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Share')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

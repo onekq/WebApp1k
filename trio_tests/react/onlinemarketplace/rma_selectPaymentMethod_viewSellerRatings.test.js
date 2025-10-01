@@ -14,7 +14,7 @@ afterEach(() => {
 test('Return Merchandise Authorization (RMA) success initiates RMA process', async () => {
   fetchMock.post('/api/orders/1/rma', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Initiate RMA')); });
 
   expect(fetchMock.calls('/api/orders/1/rma').length).toBe(1);
@@ -24,7 +24,7 @@ test('Return Merchandise Authorization (RMA) success initiates RMA process', asy
 test('Return Merchandise Authorization (RMA) failure shows error message', async () => {
   fetchMock.post('/api/orders/1/rma', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Initiate RMA')); });
 
   expect(screen.getByText('Error initiating RMA')).toBeInTheDocument();
@@ -33,7 +33,7 @@ test('Return Merchandise Authorization (RMA) failure shows error message', async
 test('validates selecting a payment method successfully.', async () => {
   fetchMock.post('/api/payment-method', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Select Payment Method')); });
   await act(async () => { fireEvent.click(screen.getByText('Credit Card')); });
 
@@ -44,7 +44,7 @@ test('validates selecting a payment method successfully.', async () => {
 test('displays error on invalid payment method selection.', async () => {
   fetchMock.post('/api/payment-method', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Select Payment Method')); });
   await act(async () => { fireEvent.click(screen.getByText('Expired Card')); });
 

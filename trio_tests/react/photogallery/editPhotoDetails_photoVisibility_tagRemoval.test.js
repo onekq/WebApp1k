@@ -15,7 +15,7 @@ test('edits photo details successfully', async () => {
   fetchMock.put('/photo/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoEditComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('fails to edit photo details', async () => {
   fetchMock.put('/photo/1', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoEditComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -53,7 +53,7 @@ test('Photo Visibility Settings: success', async () => {
   fetchMock.post('/api/setPhotoVisibility', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('photo-id-input'), { target: { value: 'PhotoID' } });
@@ -70,7 +70,7 @@ test('Photo Visibility Settings: failure', async () => {
   fetchMock.post('/api/setPhotoVisibility', { throws: new Error('Visibility Change Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('photo-id-input'), { target: { value: 'PhotoID' } });
@@ -86,7 +86,7 @@ test('Photo Visibility Settings: failure', async () => {
 test('Users can successfully remove tags from photos.', async () => {
   fetchMock.delete('/api/tags', { success: true });
 
-  await act(async () => { render(<MemoryRouter><TagRemovalComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-tag-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -96,7 +96,7 @@ test('Users can successfully remove tags from photos.', async () => {
 test('Shows an error message when tag removal fails.', async () => {
   fetchMock.delete('/api/tags', { success: false });
 
-  await act(async () => { render(<MemoryRouter><TagRemovalComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-tag-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);

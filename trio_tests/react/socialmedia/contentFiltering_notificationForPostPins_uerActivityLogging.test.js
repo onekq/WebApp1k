@@ -17,7 +17,7 @@ test('Filters posts by hashtags successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FilterComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('#Hashtag'), { target: { value: 'test' } });
@@ -36,7 +36,7 @@ test('Shows error message for invalid hashtag filter.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FilterComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('#Hashtag'), { target: { value: '' } });
@@ -52,7 +52,7 @@ test('Shows error message for invalid hashtag filter.', async () => {
 test('should send a notification when a post is pinned', async () => {
   fetchMock.post('/api/pin', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pin-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -62,7 +62,7 @@ test('should send a notification when a post is pinned', async () => {
 test('should handle error when notification sending fails for a post pin', async () => {
   fetchMock.post('/api/pin', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pin-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -75,7 +75,7 @@ test('Successfully logs user activities.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ActivityLogger /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Like'));
@@ -91,7 +91,7 @@ test('Shows error message when logging user activities fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ActivityLogger /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Like'));

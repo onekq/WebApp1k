@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add vaccination record successfully.', async () => {
   fetchMock.post('/api/vaccinations', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vaccine/i), {target: {value: 'Rabies'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Vaccination/i)); });
 
@@ -25,7 +25,7 @@ test('Add vaccination record successfully.', async () => {
 test('Fail to add vaccination record due to missing vaccine name.', async () => {
   fetchMock.post('/api/vaccinations', 400);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vaccine/i), {target: {value: ''}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Vaccination/i)); });
 
@@ -36,7 +36,7 @@ test('Fail to add vaccination record due to missing vaccine name.', async () => 
 test('Delete health notes successfully', async () => {
   fetchMock.delete('/api/health-notes/1', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-button')); });
 
   expect(fetchMock.calls('/api/health-notes/1').length).toBe(1);
@@ -46,7 +46,7 @@ test('Delete health notes successfully', async () => {
 test('Fail to delete health notes with error', async () => {
   fetchMock.delete('/api/health-notes/1', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-button')); });
 
   expect(fetchMock.calls('/api/health-notes/1').length).toBe(1);
@@ -56,7 +56,7 @@ test('Fail to delete health notes with error', async () => {
 test('View symptoms log successfully', async () => {
   fetchMock.get('/api/symptoms', [{ id: 1, description: 'Coughing' }]);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/symptoms').length).toBe(1);
   expect(screen.getByText('Coughing')).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('View symptoms log successfully', async () => {
 test('Fail to view symptoms log with error', async () => {
   fetchMock.get('/api/symptoms', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/symptoms').length).toBe(1);
   expect(screen.getByText('Failed to fetch symptoms log')).toBeInTheDocument(); // Error message

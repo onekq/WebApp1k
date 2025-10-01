@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current UV index for a given location', async () => {
   fetchMock.get('/api/current-uv?location=NYC', { uvIndex: 5 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get UV Index')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current UV index for a given location', async (
 test('Fails to retrieve the current UV index if the API returns an error', async () => {
   fetchMock.get('/api/current-uv?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get UV Index')); });
 
@@ -39,7 +39,7 @@ test('fetchSevereThunderstormWarnings successfully retrieves severe thunderstorm
     body: [{ id: 1, warning: 'Severe Thunderstorm Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Severe Thunderstorm Warnings')); });
 
   expect(fetchMock.called('/api/severe-thunderstorm-warnings')).toBeTruthy();
@@ -49,7 +49,7 @@ test('fetchSevereThunderstormWarnings successfully retrieves severe thunderstorm
 test('fetchSevereThunderstormWarnings fails to retrieve severe thunderstorm warnings', async () => {
   fetchMock.getOnce('/api/severe-thunderstorm-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Severe Thunderstorm Warnings')); });
 
   expect(fetchMock.called('/api/severe-thunderstorm-warnings')).toBeTruthy();
@@ -62,7 +62,7 @@ test('fetchTsunamiWarnings successfully retrieves tsunami warnings', async () =>
     body: [{ id: 1, warning: 'Tsunami Warning' }],
   });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Tsunami Warnings')); });
 
   expect(fetchMock.called('/api/tsunami-warnings')).toBeTruthy();
@@ -72,7 +72,7 @@ test('fetchTsunamiWarnings successfully retrieves tsunami warnings', async () =>
 test('fetchTsunamiWarnings fails to retrieve tsunami warnings', async () => {
   fetchMock.getOnce('/api/tsunami-warnings', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Tsunami Warnings')); });
 
   expect(fetchMock.called('/api/tsunami-warnings')).toBeTruthy();

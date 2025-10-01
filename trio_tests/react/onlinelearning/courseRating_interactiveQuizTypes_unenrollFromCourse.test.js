@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can rate and review courses.', async () => {
   fetchMock.post('/api/courses/rate', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CourseReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/rating/i), { target: { value: 5 } }); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/review/i), { target: { value: 'Great course!' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit review/i)); });
@@ -26,7 +26,7 @@ test('Users can rate and review courses.', async () => {
 test('Error message is shown when submission fails.', async () => {
   fetchMock.post('/api/courses/rate', 500);
 
-  await act(async () => { render(<MemoryRouter><CourseReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/rating/i), { target: { value: 3 } }); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/review/i), { target: { value: 'Okay course.' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit review/i)); });
@@ -38,7 +38,7 @@ test('Error message is shown when submission fails.', async () => {
 test('Success: multiple choice quiz functions correctly', async () => {
   fetchMock.get('/api/multiple-choice-quiz', 200);
 
-  await act(async () => { render(<MemoryRouter><InteractiveQuizTypesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('start-multiple-choice-quiz')); });
 
@@ -49,7 +49,7 @@ test('Success: multiple choice quiz functions correctly', async () => {
 test('Failure: multiple choice quiz fails to load', async () => {
   fetchMock.get('/api/multiple-choice-quiz', 500);
 
-  await act(async () => { render(<MemoryRouter><InteractiveQuizTypesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('start-multiple-choice-quiz')); });
 
@@ -60,7 +60,7 @@ test('Failure: multiple choice quiz fails to load', async () => {
 test('Users can successfully unenroll from a course.', async () => {
   fetchMock.delete('/api/unenroll/101', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Unenroll from Course/i)); });
 
   expect(fetchMock.calls('/api/unenroll/101').length).toEqual(1);
@@ -70,7 +70,7 @@ test('Users can successfully unenroll from a course.', async () => {
 test('Users cannot unenroll from a course if the server returns an error.', async () => {
   fetchMock.delete('/api/unenroll/101', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Unenroll from Course/i)); });
 
   expect(fetchMock.calls('/api/unenroll/101').length).toEqual(1);

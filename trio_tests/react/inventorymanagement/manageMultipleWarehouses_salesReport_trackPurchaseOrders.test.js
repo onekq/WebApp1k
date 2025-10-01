@@ -33,7 +33,7 @@ test('Shows error message on failure when fetching warehouse data', async () => 
 test('Generates sales report successfully.', async () => {
   fetchMock.post('/api/sales-report', { body: { status: 'success', data: { /* ...expected data... */ }} });
 
-  await act(async () => { render(<MemoryRouter><SalesReport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report')); });
 
@@ -44,7 +44,7 @@ test('Generates sales report successfully.', async () => {
 test('Fails to generate sales report due to server error.', async () => {
   fetchMock.post('/api/sales-report', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><SalesReport /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report')); });
 
@@ -55,7 +55,7 @@ test('Fails to generate sales report due to server error.', async () => {
 test('Validate tracking purchase orders shows all relevant orders correctly.', async () => {
   fetchMock.get('/api/purchase-orders', { status: 200, body: { orders: [{ id: 1, item: 'Product B', quantity: 10 }] } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('trackPurchaseOrders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -65,7 +65,7 @@ test('Validate tracking purchase orders shows all relevant orders correctly.', a
 test('Tracking purchase orders doesn\'t show orders due to error.', async () => {
   fetchMock.get('/api/purchase-orders', { status: 500, body: { error: 'Internal Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('trackPurchaseOrders')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

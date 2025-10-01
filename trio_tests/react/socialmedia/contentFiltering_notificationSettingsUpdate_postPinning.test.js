@@ -17,7 +17,7 @@ test('Filters posts by hashtags successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FilterComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('#Hashtag'), { target: { value: 'test' } });
@@ -36,7 +36,7 @@ test('Shows error message for invalid hashtag filter.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FilterComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('#Hashtag'), { target: { value: '' } });
@@ -52,7 +52,7 @@ test('Shows error message for invalid hashtag filter.', async () => {
 test('should update notification settings', async () => {
   fetchMock.post('/api/notification/settings', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Settings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('settings-input'), {target: {value: 'new-settings'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-settings-button')); });
 
@@ -63,7 +63,7 @@ test('should update notification settings', async () => {
 test('should handle error when updating notification settings fails', async () => {
   fetchMock.post('/api/notification/settings', 500);
 
-  await act(async () => { render(<MemoryRouter><Settings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('settings-input'), {target: {value: 'new-settings'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-settings-button')); });
 
@@ -75,7 +75,7 @@ test('Test pinning a post to the top of the profile.', async () => {
   fetchMock.put('/api/posts/pin/1', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Pin Post'));
@@ -89,7 +89,7 @@ test('Ensure error handling for pinning invalid posts.', async () => {
   fetchMock.put('/api/posts/pin/1', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Pin Post'));

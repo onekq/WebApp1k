@@ -17,7 +17,7 @@ test('Filters posts by hashtags successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FilterComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('#Hashtag'), { target: { value: 'test' } });
@@ -36,7 +36,7 @@ test('Shows error message for invalid hashtag filter.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FilterComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('#Hashtag'), { target: { value: '' } });
@@ -52,7 +52,7 @@ test('Shows error message for invalid hashtag filter.', async () => {
 test('Cover photo update succeeds with valid image', async () => {
   fetchMock.put('/api/profile/cover-photo', { body: { message: 'Cover photo updated' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CoverPhotoUpdate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cover-photo'), { target: { files: [new File([], 'cover.jpg', { type: 'image/jpeg' })] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Cover Photo')); });
 
@@ -63,7 +63,7 @@ test('Cover photo update succeeds with valid image', async () => {
 test('Cover photo update fails with invalid image', async () => {
   fetchMock.put('/api/profile/cover-photo', { body: { error: 'Invalid image format' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><CoverPhotoUpdate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cover-photo'), { target: { files: [new File([], 'cover.txt', { type: 'text/plain' })] } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Cover Photo')); });
 
@@ -74,7 +74,7 @@ test('Cover photo update fails with invalid image', async () => {
 test('Privacy settings update succeeds', async () => {
   fetchMock.put('/api/profile/privacy-settings', { body: { message: 'Privacy settings updated' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><PrivacySettingsUpdate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('privacy-setting'), { target: { value: 'private' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Settings')); });
 
@@ -85,7 +85,7 @@ test('Privacy settings update succeeds', async () => {
 test('Privacy settings update fails', async () => {
   fetchMock.put('/api/profile/privacy-settings', { body: { error: 'Failed to update settings' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><PrivacySettingsUpdate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('privacy-setting'), { target: { value: 'invalid' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Settings')); });
 

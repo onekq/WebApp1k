@@ -35,7 +35,7 @@ test('fails to edit a recipe due to server error', async () => {
 test('Successfully edit a recipe rating', async () => {
   fetchMock.put('/api/edit-rating', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('rate-input'), { target: { value: '4' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('edit-rate-button')); });
 
@@ -46,7 +46,7 @@ test('Successfully edit a recipe rating', async () => {
 test('Fail to edit recipe rating with error message', async () => {
   fetchMock.put('/api/edit-rating', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('rate-input'), { target: { value: '4' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('edit-rate-button')); });
 

@@ -40,7 +40,7 @@ test('successfully deletes an income source', async () => {
   fetchMock.delete('/income/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete income source/i));
@@ -54,7 +54,7 @@ test('fails to delete an income source', async () => {
   fetchMock.delete('/income/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete income source/i));

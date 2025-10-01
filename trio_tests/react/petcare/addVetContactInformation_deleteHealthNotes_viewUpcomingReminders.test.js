@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add vet contact information successfully.', async () => {
   fetchMock.post('/api/vets', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vet name/i), {target: {value: 'Dr. Smith'}}); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/phone/i), {target: {value: '123-456-7890'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Vet Contact/i)); });
@@ -26,7 +26,7 @@ test('Add vet contact information successfully.', async () => {
 test('Fail to add vet contact information due to missing vet name.', async () => {
   fetchMock.post('/api/vets', 400);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/vet name/i), {target: {value: ''}}); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/phone/i), {target: {value: '123-456-7890'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Vet Contact/i)); });
@@ -38,7 +38,7 @@ test('Fail to add vet contact information due to missing vet name.', async () =>
 test('Delete health notes successfully', async () => {
   fetchMock.delete('/api/health-notes/1', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-button')); });
 
   expect(fetchMock.calls('/api/health-notes/1').length).toBe(1);
@@ -48,7 +48,7 @@ test('Delete health notes successfully', async () => {
 test('Fail to delete health notes with error', async () => {
   fetchMock.delete('/api/health-notes/1', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-button')); });
 
   expect(fetchMock.calls('/api/health-notes/1').length).toBe(1);
@@ -64,7 +64,7 @@ test('should load upcoming reminders successfully', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -76,7 +76,7 @@ test('should fail to load upcoming reminders', async () => {
   fetchMock.get('/api/upcoming-reminders', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

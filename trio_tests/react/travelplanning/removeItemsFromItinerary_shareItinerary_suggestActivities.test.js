@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully removes items from an itinerary.', async () => {
   fetchMock.delete('/api/remove-item', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-item-button')); });
 
   expect(fetchMock.calls('/api/remove-item', 'DELETE')).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully removes items from an itinerary.', async () => {
 test('fails to remove items due to network error.', async () => {
   fetchMock.delete('/api/remove-item', { status: 500, body: { error: 'Network error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-item-button')); });
 
   expect(fetchMock.calls('/api/remove-item', 'DELETE')).toHaveLength(1);
@@ -34,7 +34,7 @@ test('fails to remove items due to network error.', async () => {
 test('successfully shares an itinerary with other users.', async () => {
   fetchMock.post('/api/share-itinerary', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('share-input'), { target: { value: 'user@example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-itinerary-button')); });
 
@@ -45,7 +45,7 @@ test('successfully shares an itinerary with other users.', async () => {
 test('fails to share itinerary due to invalid email.', async () => {
   fetchMock.post('/api/share-itinerary', { status: 400, body: { error: 'Invalid email address' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('share-input'), { target: { value: 'invalid-email' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-itinerary-button')); });
 

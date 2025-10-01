@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully analyzes comment sentiment', async () => {
   fetchMock.get('/api/analyzeCommentSentiment?postId=1', { status: 200, body: { sentiment: 'positive' } });
 
-  await act(async () => { render(<MemoryRouter><AnalyzeCommentSentiment postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Analyze Sentiment')); });
 
   expect(fetchMock.calls('/api/analyzeCommentSentiment')).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully analyzes comment sentiment', async () => {
 test('fails to analyze comment sentiment with an error message', async () => {
   fetchMock.get('/api/analyzeCommentSentiment?postId=1', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><AnalyzeCommentSentiment postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Analyze Sentiment')); });
 
   expect(fetchMock.calls('/api/analyzeCommentSentiment')).toHaveLength(1);
@@ -56,7 +56,7 @@ test('User can delete a category successfully', async () => {
     status: 204
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete Category')); });
 
   expect(fetchMock.calls('/categories/1').length).toBe(1);
@@ -69,7 +69,7 @@ test('User gets an error message when deleting a category fails', async () => {
     body: { error: 'Unable to delete category' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Delete Category')); });
 
   expect(fetchMock.calls('/categories/1').length).toBe(1);

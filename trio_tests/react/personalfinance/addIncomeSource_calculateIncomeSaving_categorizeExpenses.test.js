@@ -15,7 +15,7 @@ test('successfully adds a new income source', async () => {
   fetchMock.post('/income', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><AddIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Salary' } });
@@ -32,7 +32,7 @@ test('fails to add a new income source', async () => {
   fetchMock.post('/income', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><AddIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });
@@ -49,7 +49,7 @@ test('successfully calculates the percentage of income saved', async () => {
   fetchMock.get('/api/income/saved', { status: 200, body: { percentage: 20 } });
 
   await act(async () => {
-    render(<MemoryRouter><IncomeSaved /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -64,7 +64,7 @@ test('fails to calculate the percentage of income saved', async () => {
   fetchMock.get('/api/income/saved', { status: 400, body: { error: 'Error calculating' } });
 
   await act(async () => {
-    render(<MemoryRouter><IncomeSaved /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -78,7 +78,7 @@ test('fails to calculate the percentage of income saved', async () => {
 test('categorizes expenses successfully', async () => {
   fetchMock.post('/api/category', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('category-input'), { target: { value: 'Food' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-category-button')); });
 
@@ -89,7 +89,7 @@ test('categorizes expenses successfully', async () => {
 test('fails to categorize expenses', async () => {
   fetchMock.post('/api/category', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('category-input'), { target: { value: 'Food' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-category-button')); });
 

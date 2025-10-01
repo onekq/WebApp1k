@@ -14,7 +14,7 @@ afterEach(() => {
 test('likes an article successfully', async () => {
   fetchMock.post('/like', 200);
 
-  await act(async () => { render(<MemoryRouter><LikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Like')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('likes an article successfully', async () => {
 test('fails to like an article with error message', async () => {
   fetchMock.post('/like', 500);
 
-  await act(async () => { render(<MemoryRouter><LikeArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Like')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('fails to like an article with error message', async () => {
 test('retrieves bookmarked articles successfully', async () => {
   fetchMock.get('/bookmarks', { articles: [{ id: 1, title: 'Test Article' }] });
 
-  await act(async () => { render(<MemoryRouter><RetrieveBookmarkedArticlesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Test Article')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('retrieves bookmarked articles successfully', async () => {
 test('fails to retrieve bookmarked articles with error message', async () => {
   fetchMock.get('/bookmarks', 500);
 
-  await act(async () => { render(<MemoryRouter><RetrieveBookmarkedArticlesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load bookmarks')).toBeInTheDocument();
@@ -52,7 +52,7 @@ test('fails to retrieve bookmarked articles with error message', async () => {
 test('saves user-selected categories successfully', async () => {
   fetchMock.post('/api/save-categories', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('categories-input'), { target: { value: 'Tech' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-categories-button')); });
 
@@ -63,7 +63,7 @@ test('saves user-selected categories successfully', async () => {
 test('fails to save user-selected categories', async () => {
   fetchMock.post('/api/save-categories', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('categories-input'), { target: { value: 'Tech' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-categories-button')); });
 

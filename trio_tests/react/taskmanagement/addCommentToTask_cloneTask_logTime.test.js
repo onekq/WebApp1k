@@ -55,7 +55,7 @@ test('Log time spent on a task successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Log time'), { target: { value: '3' } });
@@ -72,7 +72,7 @@ test('Fail to log time spent on a task when API returns 500.', async () => {
   fetchMock.post('/api/tasks/1/time', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Log time'), { target: { value: '3' } });

@@ -14,7 +14,7 @@ afterEach(() => {
 test('User can compare their progress with friends successfully.', async () => {
   fetchMock.get('/api/friends-comparison', { comparison: 'Better than average' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-friends-comparison')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('User can compare their progress with friends successfully.', async () => {
 test('User fails to compare their progress with friends.', async () => {
   fetchMock.get('/api/friends-comparison', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('fetch-friends-comparison')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -35,7 +35,7 @@ test('should successfully join a fitness challenge', async () => {
   fetchMock.post('/api/challenges/join/123', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><JoinChallenge challengeId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App challengeId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/join challenge/i));
@@ -49,7 +49,7 @@ test('should show error when joining a fitness challenge fails', async () => {
   fetchMock.post('/api/challenges/join/123', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><JoinChallenge challengeId="123" /></MemoryRouter>);
+    render(<MemoryRouter><App challengeId="123" /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/join challenge/i));
@@ -62,7 +62,7 @@ test('should show error when joining a fitness challenge fails', async () => {
 test('should track route using GPS successfully.', async () => {
   fetchMock.post('/api/gps/track', { status: 200, body: { route: 'sample-route-data' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-route-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -73,7 +73,7 @@ test('should track route using GPS successfully.', async () => {
 test('should fail to track route using GPS.', async () => {
   fetchMock.post('/api/gps/track', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('track-route-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

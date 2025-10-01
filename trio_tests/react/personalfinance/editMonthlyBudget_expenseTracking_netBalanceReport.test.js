@@ -15,7 +15,7 @@ test('Success: Edit a monthly budget.', async () => {
   fetchMock.put('/api/edit-budget', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -38,7 +38,7 @@ test('Failure: Edit a monthly budget.', async () => {
   fetchMock.put('/api/edit-budget', { status: 400, body: { error: 'Budget not found' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -61,7 +61,7 @@ test('Success: Track expenses by payment method.', async () => {
   fetchMock.get('/api/track-expense-by-method', { status: 200, body: { success: true, result: 'Credit: 400, Cash: 300' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -76,7 +76,7 @@ test('Failure: Track expenses by payment method.', async () => {
   fetchMock.get('/api/track-expense-by-method', { status: 500, body: { error: 'Tracking error' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

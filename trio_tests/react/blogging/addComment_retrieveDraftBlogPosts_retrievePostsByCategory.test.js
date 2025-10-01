@@ -37,7 +37,7 @@ test('Success: retrieve a list of draft blog posts', async () => {
   fetchMock.get('/api/posts?status=draft', { status: 200, body: [{ id: 1, title: 'Draft Post' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -48,7 +48,7 @@ test('Failure: fetch draft posts but none exist', async () => {
   fetchMock.get('/api/posts?status=draft', { status: 404, body: { error: 'No draft posts found' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -61,7 +61,7 @@ test('User can retrieve posts by category successfully', async () => {
     body: [{ id: 1, title: 'First Post' }, { id: 2, title: 'Second Post' }]
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 
@@ -76,7 +76,7 @@ test('User gets an error message when retrieving posts by category fails', async
     body: { error: 'Unable to fetch posts' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 

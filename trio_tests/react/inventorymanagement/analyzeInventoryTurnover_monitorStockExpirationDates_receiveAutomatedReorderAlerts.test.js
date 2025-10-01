@@ -14,7 +14,7 @@ afterEach(() => {
 test('Analyzes inventory turnover successfully.', async () => {
   fetchMock.post('/api/inventory-turnover', { body: { status: 'success', data: { turnover: 10 }}});
 
-  await act(async () => { render(<MemoryRouter><InventoryTurnover /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('analyze-turnover')); });
 
@@ -25,7 +25,7 @@ test('Analyzes inventory turnover successfully.', async () => {
 test('Fails to analyze inventory turnover due to server error.', async () => {
   fetchMock.post('/api/inventory-turnover', { status: 500, body: { status: 'error', message: 'Server Error' }});
 
-  await act(async () => { render(<MemoryRouter><InventoryTurnover /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('date-range'), { target: { value: '2023-01-01 to 2023-01-31' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('analyze-turnover')); });
 

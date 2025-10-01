@@ -14,7 +14,7 @@ afterEach(() => {
 test('Should delete an existing comment', async () => {
   fetchMock.delete('api/comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Should delete an existing comment', async () => {
 test('Should display an error when deleting a non-existent comment', async () => {
   fetchMock.delete('api/comment', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-comment-button-invalid')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Should display an error when deleting a non-existent comment', async () =>
 test('Profile creation succeeds with valid inputs', async () => {
   fetchMock.post('/api/profile', { body: { message: 'Profile created' }, status: 201 });
 
-  await act(async () => { render(<MemoryRouter><ProfileCreationForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('profile-name'), { target: { value: 'John Doe' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Profile')); });
 
@@ -45,7 +45,7 @@ test('Profile creation succeeds with valid inputs', async () => {
 test('Profile creation fails with invalid inputs', async () => {
   fetchMock.post('/api/profile', { body: { error: 'Invalid profile inputs' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><ProfileCreationForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('profile-name'), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Profile')); });
 
@@ -56,7 +56,7 @@ test('Profile creation fails with invalid inputs', async () => {
 test('Should tag a valid user in a post', async () => {
   fetchMock.post('api/tag', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input-post'), { target: { value: 'userToTag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Tag')); });
 
@@ -67,7 +67,7 @@ test('Should tag a valid user in a post', async () => {
 test('Should display an error when tagging an invalid user in a post', async () => {
   fetchMock.post('api/tag', { status: 404 });
 
-  await act(async () => { render(<MemoryRouter><SocialMediaApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tag-input-post'), { target: { value: 'invalidUser' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Tag')); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a recipe to favorites', async () => {
   fetchMock.post('/add-to-favorites', 200);
 
-  await act(async () => { render(<MemoryRouter><AddRecipeToFavoritesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('favorite-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully adds a recipe to favorites', async () => {
 test('shows error message when failing to add a recipe to favorites', async () => {
   fetchMock.post('/add-to-favorites', 500);
 
-  await act(async () => { render(<MemoryRouter><AddRecipeToFavoritesComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('favorite-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('shows error message when failing to add a recipe to favorites', async () =
 test('Successfully delete a recipe rating', async () => {
   fetchMock.delete('/api/delete-rating', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-rate-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('Successfully delete a recipe rating', async () => {
 test('Fail to delete a recipe rating with error message', async () => {
   fetchMock.delete('/api/delete-rating', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-rate-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Fail to delete a recipe rating with error message', async () => {
 test('View Cooking Instructions successfully', async () => {
   fetchMock.get('/api/recipe/1/instructions', { body: [{ step: 'Preheat oven to 350F' }], status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Instructions')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('View Cooking Instructions successfully', async () => {
 test('View Cooking Instructions failure shows error message', async () => {
   fetchMock.get('/api/recipe/1/instructions', { body: { message: 'Error fetching instructions' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Instructions')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

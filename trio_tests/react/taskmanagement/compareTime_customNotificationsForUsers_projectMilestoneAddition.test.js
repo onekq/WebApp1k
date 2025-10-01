@@ -17,7 +17,7 @@ test('Compare estimated time to actual time spent on a task successfully.', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -29,7 +29,7 @@ test('Fail to compare estimated time to actual time spent on a task when API ret
   fetchMock.get('/api/tasks/1/time-comparison', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskDetail taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -39,7 +39,7 @@ test('Fail to compare estimated time to actual time spent on a task when API ret
 test('Set custom notification preferences successfully', async () => {
   fetchMock.post('/set-notifications', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('notifications-checkbox')); });
 
@@ -50,7 +50,7 @@ test('Set custom notification preferences successfully', async () => {
 test('Fail to set custom notification preferences due to server error', async () => {
   fetchMock.post('/set-notifications', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('notifications-checkbox')); });
 
@@ -62,7 +62,7 @@ test('Add Milestone to Project - success', async () => {
   fetchMock.post('/api/projects/milestone', 201);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -81,7 +81,7 @@ test('Add Milestone to Project - failure', async () => {
   fetchMock.post('/api/projects/milestone', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

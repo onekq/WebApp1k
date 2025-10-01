@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully retrieves the current air quality index for a given location', async () => {
   fetchMock.get('/api/current-aqi?location=NYC', { aqi: 42 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get AQI')); });
 
@@ -25,7 +25,7 @@ test('Successfully retrieves the current air quality index for a given location'
 test('Fails to retrieve the current air quality index if the API returns an error', async () => {
   fetchMock.get('/api/current-aqi?location=NYC', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Location Input'), { target: { value: 'NYC' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Get AQI')); });
 
@@ -70,7 +70,7 @@ test('FetchMonthlyForecast - fails to retrieve monthly forecast', async () => {
 test('correctly stores user location preference', async () => {
   fetchMock.post('/preferences/location', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('location-input'), { target: { value: 'New York' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -81,7 +81,7 @@ test('correctly stores user location preference', async () => {
 test('displays error when storing user location preference fails', async () => {
   fetchMock.post('/preferences/location', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('location-input'), { target: { value: 'New York' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

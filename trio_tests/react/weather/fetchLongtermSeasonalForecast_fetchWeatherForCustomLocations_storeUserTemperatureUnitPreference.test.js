@@ -48,7 +48,7 @@ test('FetchLongtermSeasonalForecast - fails to retrieve long-term seasonal forec
 test('Fetch weather for custom locations succeeds.', async () => {
   fetchMock.post('/api/weather', { data: { customLocation: 'Mars', temperature: -60 } });
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('custom-location-input'), { target: { value: 'Mars' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -59,7 +59,7 @@ test('Fetch weather for custom locations succeeds.', async () => {
 test('Fetch weather for custom locations fails.', async () => {
   fetchMock.post('/api/weather', 404);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('custom-location-input'), { target: { value: 'InvalidLocation' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Weather')); });
 
@@ -70,7 +70,7 @@ test('Fetch weather for custom locations fails.', async () => {
 test('correctly stores user temperature unit preference', async () => {
   fetchMock.post('/preferences/temperature-unit', 200);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('temperature-unit-select'), { target: { value: 'Celsius' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 
@@ -81,7 +81,7 @@ test('correctly stores user temperature unit preference', async () => {
 test('displays error when storing user temperature unit preference fails', async () => {
   fetchMock.post('/preferences/temperature-unit', 500);
 
-  await act(async () => { render(<MemoryRouter><WeatherApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('temperature-unit-select'), { target: { value: 'Celsius' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-preference-button')); });
 

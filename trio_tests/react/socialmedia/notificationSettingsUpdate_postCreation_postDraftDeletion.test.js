@@ -14,7 +14,7 @@ afterEach(() => {
 test('should update notification settings', async () => {
   fetchMock.post('/api/notification/settings', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Settings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('settings-input'), {target: {value: 'new-settings'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-settings-button')); });
 
@@ -25,7 +25,7 @@ test('should update notification settings', async () => {
 test('should handle error when updating notification settings fails', async () => {
   fetchMock.post('/api/notification/settings', 500);
 
-  await act(async () => { render(<MemoryRouter><Settings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('settings-input'), {target: {value: 'new-settings'}}); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-settings-button')); });
 
@@ -37,7 +37,7 @@ test('Verify post creation with valid content.', async () => {
   fetchMock.post('/api/posts', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Write a post...'), { target: { value: 'Hello World!' } });
@@ -54,7 +54,7 @@ test('Ensure error handling for invalid post content.', async () => {
   fetchMock.post('/api/posts', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Write a post...'), { target: { value: '' } });
@@ -71,7 +71,7 @@ test('Verify deletion of saved drafts.', async () => {
   fetchMock.delete('/api/posts/draft/1', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Delete Draft'));
@@ -85,7 +85,7 @@ test('Ensure error handling for non-existent draft deletion.', async () => {
   fetchMock.delete('/api/posts/draft/1', 404);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Delete Draft'));

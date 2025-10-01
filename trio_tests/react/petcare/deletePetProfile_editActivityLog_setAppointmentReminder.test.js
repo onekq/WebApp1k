@@ -14,7 +14,7 @@ afterEach(() => {
 test('Delete pet profile successfully.', async () => {
   fetchMock.delete('/api/pets/1', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Delete Pet/i)); });
 
   expect(fetchMock.calls('/api/pets/1').length).toBe(1);
@@ -24,7 +24,7 @@ test('Delete pet profile successfully.', async () => {
 test('Fail to delete pet profile due to server error.', async () => {
   fetchMock.delete('/api/pets/1', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Delete Pet/i)); });
 
   expect(fetchMock.calls('/api/pets/1').length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to delete pet profile due to server error.', async () => {
 test('Edits an activity log successfully.', async () => {
   fetchMock.put('/activities/1', { message: 'Activity updated' });
 
-  await act(async () => { render(<MemoryRouter><EditActivityLog activityId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App activityId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('activity-input'), { target: { value: 'Updated walk' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -45,7 +45,7 @@ test('Edits an activity log successfully.', async () => {
 test('Fails to edit activity log with error message.', async () => {
   fetchMock.put('/activities/1', { status: 500, body: { message: 'Failed to update activity' } });
 
-  await act(async () => { render(<MemoryRouter><EditActivityLog activityId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App activityId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('activity-input'), { target: { value: 'Updated walk' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -57,7 +57,7 @@ test('should set a new appointment reminder successfully', async () => {
   fetchMock.post('/api/set-appointment-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Appointment Description/i), { target: { value: 'Vet visit' } });
@@ -74,7 +74,7 @@ test('should fail to set a new appointment reminder', async () => {
   fetchMock.post('/api/set-appointment-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Appointment Description/i), { target: { value: 'Vet visit' } });

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add health notes successfully', async () => {
   fetchMock.post('/api/health-notes', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notes-input'), { target: { value: 'Healthy!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Add health notes successfully', async () => {
 test('Fail to add health notes with error', async () => {
   fetchMock.post('/api/health-notes', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notes-input'), { target: { value: '' } }); }); // Failure case: Empty input
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -36,7 +36,7 @@ test('Fail to add health notes with error', async () => {
 test('Edits a training session log successfully.', async () => {
   fetchMock.put('/training-sessions/1', { message: 'Training session updated' });
 
-  await act(async () => { render(<MemoryRouter><EditTrainingSessionLog trainingId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App trainingId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('training-input'), { target: { value: 'Updated training' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -47,7 +47,7 @@ test('Edits a training session log successfully.', async () => {
 test('Fails to edit training session log with error message.', async () => {
   fetchMock.put('/training-sessions/1', { status: 500, body: { message: 'Failed to update training session' } });
 
-  await act(async () => { render(<MemoryRouter><EditTrainingSessionLog trainingId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App trainingId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('training-input'), { target: { value: 'Updated training' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -58,7 +58,7 @@ test('Fails to edit training session log with error message.', async () => {
 test('Successfully views updates from the community', async () => {
   fetchMock.get('/api/community/updates', { status: 200, body: [{ id: 1, text: 'Community Update' }] });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Community Update')).toBeInTheDocument();
@@ -67,7 +67,7 @@ test('Successfully views updates from the community', async () => {
 test('Fails to fetch community updates', async () => {
   fetchMock.get('/api/community/updates', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to fetch updates')).toBeInTheDocument();

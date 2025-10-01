@@ -38,7 +38,7 @@ test('Fails to validate incorrect agenda item timing.', async () => {
 test('Should successfully upload a valid event image', async () => {
   fetchMock.post('/events/upload', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   const fileInput = screen.getByLabelText(/upload image/i);
   const file = new File(['image content'], 'event.png', { type: 'image/png' });
 
@@ -52,7 +52,7 @@ test('Should successfully upload a valid event image', async () => {
 test('Should show error for invalid event image upload', async () => {
   fetchMock.post('/events/upload', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   const fileInput = screen.getByLabelText(/upload image/i);
   const file = new File(['image content'], 'event.txt', { type: 'text/plain' });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully edits property details.', async () => {
   fetchMock.put('/api/properties/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EditProperty /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('property-title'), { target: { value: 'Updated Property' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Successfully edits property details.', async () => {
 test('Fails to edit property details with error message.', async () => {
   fetchMock.put('/api/properties/1', 400);
 
-  await act(async () => { render(<MemoryRouter><EditProperty /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('property-title'), { target: { value: 'Updated Property' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -36,7 +36,7 @@ test('Fails to edit property details with error message.', async () => {
 test('Filter by furnished properties successfully', async () => {
   fetchMock.get('/api/furnished-properties', { properties: [{ id: 1, name: "Furnished 1" }] });
 
-  await act(async () => { render(<MemoryRouter><FurnishedFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-furnished-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -46,7 +46,7 @@ test('Filter by furnished properties successfully', async () => {
 test('Filter by furnished properties fails with error', async () => {
   fetchMock.get('/api/furnished-properties', 500);
 
-  await act(async () => { render(<MemoryRouter><FurnishedFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-furnished-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -59,7 +59,7 @@ test('Filter by Property Status filters properties by status successfully', asyn
     body: [{ id: 1, status: 'for sale' }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/status/i), { target: { value: 'forsale' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -73,7 +73,7 @@ test('Filter by Property Status filters properties by status fails', async () =>
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/status/i), { target: { value: 'forsale' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 

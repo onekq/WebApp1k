@@ -14,7 +14,7 @@ afterEach(() => {
 test('Set custom notification preferences successfully', async () => {
   fetchMock.post('/set-notifications', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('notifications-checkbox')); });
 
@@ -25,7 +25,7 @@ test('Set custom notification preferences successfully', async () => {
 test('Fail to set custom notification preferences due to server error', async () => {
   fetchMock.post('/set-notifications', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('notifications-checkbox')); });
 
@@ -36,7 +36,7 @@ test('Fail to set custom notification preferences due to server error', async ()
 test('successfully sets SLAs for tasks.', async () => {
   fetchMock.post('/api/task-sla', { success: true });
 
-  await act(async () => { render(<MemoryRouter><SLA /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sla-input'), { target: { value: '24 hours' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-sla-btn')); });
 
@@ -47,7 +47,7 @@ test('successfully sets SLAs for tasks.', async () => {
 test('fails to set SLAs for tasks if server error.', async () => {
   fetchMock.post('/api/task-sla', 500);
 
-  await act(async () => { render(<MemoryRouter><SLA /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sla-input'), { target: { value: '24 hours' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-sla-btn')); });
 

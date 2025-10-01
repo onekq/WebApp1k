@@ -35,7 +35,7 @@ test('Success: publish a draft blog post', async () => {
   fetchMock.put('/api/publishPost', { status: 200, body: { id: 1, title: 'Draft Post', content: 'Some content', status: 'Published' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/publish/i));
@@ -49,7 +49,7 @@ test('Failure: publish a draft post without content', async () => {
   fetchMock.put('/api/publishPost', { status: 400, body: { error: 'Content cannot be empty' } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/publish/i));
@@ -62,7 +62,7 @@ test('Failure: publish a draft post without content', async () => {
 test('successfully retrieves overall site analytics', async () => {
   fetchMock.get('/api/getSiteAnalytics', { status: 200, body: { totalPosts: 100, totalViews: 1000 } });
 
-  await act(async () => { render(<MemoryRouter><RetrieveSiteAnalytics /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Get Site Analytics')); });
 
   expect(fetchMock.calls('/api/getSiteAnalytics')).toHaveLength(1);
@@ -73,7 +73,7 @@ test('successfully retrieves overall site analytics', async () => {
 test('fails to retrieve overall site analytics with an error message', async () => {
   fetchMock.get('/api/getSiteAnalytics', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><RetrieveSiteAnalytics /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Get Site Analytics')); });
 
   expect(fetchMock.calls('/api/getSiteAnalytics')).toHaveLength(1);

@@ -64,7 +64,7 @@ test('Fails to calculate total income due to missing period', async () => {
 test('deletes a recurring expense successfully', async () => {
   fetchMock.delete('/api/recurring-expense/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-recurring-expense-button-1')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -74,7 +74,7 @@ test('deletes a recurring expense successfully', async () => {
 test('fails to delete a recurring expense', async () => {
   fetchMock.delete('/api/recurring-expense/1', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-recurring-expense-button-1')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

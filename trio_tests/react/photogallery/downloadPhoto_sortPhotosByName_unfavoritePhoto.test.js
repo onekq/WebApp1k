@@ -15,7 +15,7 @@ test('downloads a photo successfully', async () => {
   fetchMock.get('/download/1', { status: 200, body: 'image binary data' });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoDownloadComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to download a photo', async () => {
   fetchMock.get('/download/1', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoDownloadComponent id="1" /></MemoryRouter>);
+    render(<MemoryRouter><App id="1" /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -44,7 +44,7 @@ test('fails to download a photo', async () => {
 test('Users can successfully sort photos by name.', async () => {
   fetchMock.get('/api/sort-photos-by-name', { success: true, data: ['photoA', 'photoB'] });
 
-  await act(async () => { render(<MemoryRouter><SortPhotosByNameComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-name-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -54,7 +54,7 @@ test('Users can successfully sort photos by name.', async () => {
 test('Shows an error message when sorting photos by name fails.', async () => {
   fetchMock.get('/api/sort-photos-by-name', { success: false });
 
-  await act(async () => { render(<MemoryRouter><SortPhotosByNameComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-name-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);

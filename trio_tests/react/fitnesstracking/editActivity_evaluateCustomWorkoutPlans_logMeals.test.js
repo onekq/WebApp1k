@@ -15,7 +15,7 @@ test('User can edit an existing fitness activity successfully.', async () => {
   fetchMock.put('/api/editActivity', { status: 200, body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-name'), { target: { value: 'Updated Running' } });
@@ -30,7 +30,7 @@ test('User sees an error message when editing a fitness activity fails.', async 
   fetchMock.put('/api/editActivity', { status: 500, body: { error: 'Failed to edit activity' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('activity-name'), { target: { value: 'Updated Running' } });

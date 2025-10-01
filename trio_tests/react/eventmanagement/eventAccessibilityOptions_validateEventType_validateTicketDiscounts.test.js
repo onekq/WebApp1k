@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays event accessibility options', async () => {
   fetchMock.get('/api/event/accessibility', { wheelchairAccess: true, signLanguageInterpreter: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Wheelchair access')).toBeInTheDocument();
@@ -24,7 +24,7 @@ test('Displays event accessibility options', async () => {
 test('Displays error message when accessibility options are unavailable', async () => {
   fetchMock.get('/api/event/accessibility', 404);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Accessibility options are unavailable')).toBeInTheDocument();
@@ -33,7 +33,7 @@ test('Displays error message when accessibility options are unavailable', async 
 test('Should successfully submit event with valid type', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/type/i), { target: { value: 'Conference' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -44,7 +44,7 @@ test('Should successfully submit event with valid type', async () => {
 test('Should show error for not selecting event type', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/type/i), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -55,7 +55,7 @@ test('Should show error for not selecting event type', async () => {
 test('applies ticket discount successfully', async () => {
   fetchMock.post('/applyDiscount', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('discountCode'), { target: { value: 'DISCOUNT50' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('applyDiscountButton')); });
 
@@ -64,7 +64,7 @@ test('applies ticket discount successfully', async () => {
 }, 10000);
 
 test('fails to apply ticket discount', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('discountCode'), { target: { value: 'INVALIDCODE' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('applyDiscountButton')); });
 

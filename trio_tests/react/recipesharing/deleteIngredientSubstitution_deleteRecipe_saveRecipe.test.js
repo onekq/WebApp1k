@@ -54,7 +54,7 @@ test('fails to delete a recipe due to server error', async () => {
 test('successfully saves a recipe to user profile', async () => {
   fetchMock.post('/save-recipe', 200);
 
-  await act(async () => { render(<MemoryRouter><SaveRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-button')); });
 
@@ -65,7 +65,7 @@ test('successfully saves a recipe to user profile', async () => {
 test('shows error message when failing to save a recipe', async () => {
   fetchMock.post('/save-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><SaveRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-button')); });
 

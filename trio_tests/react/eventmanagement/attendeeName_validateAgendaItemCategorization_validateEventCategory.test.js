@@ -53,7 +53,7 @@ test('Fails to validate agenda item categorization.', async () => {
 test('Should successfully submit event with valid category', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/category/i), { target: { value: 'Music' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -64,7 +64,7 @@ test('Should successfully submit event with valid category', async () => {
 test('Should show error for not selecting event category', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/category/i), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

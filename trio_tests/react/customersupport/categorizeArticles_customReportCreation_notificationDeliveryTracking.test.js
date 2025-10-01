@@ -15,7 +15,7 @@ test('successfully categorizes articles by topic', async () => {
   fetchMock.get('path/to/api/articles?category=topic', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('category-select'), { target: { value: 'topic' } });
@@ -29,7 +29,7 @@ test('fails to categorize articles by topic with error message', async () => {
   fetchMock.get('path/to/api/articles?category=topic', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('category-select'), { target: { value: 'topic' } });
@@ -46,7 +46,7 @@ test('Successfully creates custom reports.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportCreation /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-name-input'), { target: { value: 'Test Report' } });
@@ -66,7 +66,7 @@ test('Fails to create custom reports and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><CustomReportCreation /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('report-name-input'), { target: { value: 'Test Report' } });
@@ -82,7 +82,7 @@ test('Fails to create custom reports and shows error message.', async () => {
 test('Successfully tracks delivery status of notifications.', async () => {
   fetchMock.get('/api/getDeliveryStatus', { status: 'Delivered' });
 
-  await act(async () => { render(<MemoryRouter><NotificationDeliveryTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Delivered')).toBeInTheDocument();
@@ -91,7 +91,7 @@ test('Successfully tracks delivery status of notifications.', async () => {
 test('Fails to track delivery status of notifications.', async () => {
   fetchMock.get('/api/getDeliveryStatus', 500);
 
-  await act(async () => { render(<MemoryRouter><NotificationDeliveryTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to track delivery status')).toBeInTheDocument();

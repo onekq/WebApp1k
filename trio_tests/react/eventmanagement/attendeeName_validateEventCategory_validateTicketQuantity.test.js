@@ -33,7 +33,7 @@ test('Attendee name validation fails if left empty', async () => {
 test('Should successfully submit event with valid category', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/category/i), { target: { value: 'Music' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -44,7 +44,7 @@ test('Should successfully submit event with valid category', async () => {
 test('Should show error for not selecting event category', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/category/i), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -55,7 +55,7 @@ test('Should show error for not selecting event category', async () => {
 test('ticket quantity within event capacity', async () => {
   fetchMock.post('/ticketQuantity', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketQuantity'), { target: { value: '50' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 
@@ -64,7 +64,7 @@ test('ticket quantity within event capacity', async () => {
 }, 10000);
 
 test('ticket quantity exceeds event capacity', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticketQuantity'), { target: { value: '1000' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 

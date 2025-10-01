@@ -35,7 +35,7 @@ test('fails to display the auction countdown with an error message.', async () =
 test('Remove from Wish List success removes item from wish list', async () => {
   fetchMock.delete('/api/wishlist/1', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Remove from Wish List')); });
 
   expect(fetchMock.calls('/api/wishlist/1').length).toBe(1);
@@ -45,7 +45,7 @@ test('Remove from Wish List success removes item from wish list', async () => {
 test('Remove from Wish List failure shows error message', async () => {
   fetchMock.delete('/api/wishlist/1', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Remove from Wish List')); });
 
   expect(screen.getByText('Error removing from wish list')).toBeInTheDocument();
@@ -54,7 +54,7 @@ test('Remove from Wish List failure shows error message', async () => {
 test('View Product Reviews successfully displays reviews.', async () => {
   fetchMock.get('/api/reviews', { status: 200, body: { reviews: ['Review 1'] } });
 
-  await act(async () => { render(<MemoryRouter><ViewProductReviews /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('reviews-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('View Product Reviews successfully displays reviews.', async () => {
 test('View Product Reviews fails and displays error message.', async () => {
   fetchMock.get('/api/reviews', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><ViewProductReviews /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('reviews-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

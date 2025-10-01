@@ -14,7 +14,7 @@ afterEach(() => {
 test('Categorize articles based on user preferences successfully.', async () => {
   fetchMock.post('/api/preferences-categorize-articles', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CategorizeByPreferences /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Categorize by Preferences")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Categorize articles based on user preferences successfully.', async () => 
 test('Fail to categorize articles by preferences and display error.', async () => {
   fetchMock.post('/api/preferences-categorize-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><CategorizeByPreferences /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Categorize by Preferences")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to categorize articles by preferences and display error.', async () =
 test('Displays full article content successfully', async () => {
   fetchMock.get('/api/articles', { status: 200, body: [{ id: 1, content: 'Full Test Article Content' }] });
 
-  await act(async () => { render(<MemoryRouter><ArticlePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Full Test Article Content')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('Displays full article content successfully', async () => {
 test('Fails to display full article content', async () => {
   fetchMock.get('/api/articles', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><ArticlePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load full article content')).toBeInTheDocument();
@@ -52,7 +52,7 @@ test('Fails to display full article content', async () => {
 test('filters articles by excluded categories successfully', async () => {
   fetchMock.get('/api/articles?excludedCategories=Sports', { status: 200, body: [{ id: 2, title: 'Non-Sports News' }] });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-categories-filter-input'), { target: { value: 'Sports' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-excluded-categories-filter-button')); });
 
@@ -63,7 +63,7 @@ test('filters articles by excluded categories successfully', async () => {
 test('fails to filter articles by excluded categories', async () => {
   fetchMock.get('/api/articles?excludedCategories=Sports', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('excluded-categories-filter-input'), { target: { value: 'Sports' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-excluded-categories-filter-button')); });
 

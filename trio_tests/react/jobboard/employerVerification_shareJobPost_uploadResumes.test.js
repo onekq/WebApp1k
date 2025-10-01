@@ -14,7 +14,7 @@ afterEach(() => {
 test('employers can be successfully verified before allowing job postings', async () => {
   fetchMock.post('/api/employer/verify', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EmployerVerification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Verify Employer/i)); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('employers can be successfully verified before allowing job postings', asyn
 test('employers see an error message if verification fails', async () => {
   fetchMock.post('/api/employer/verify', 500);
 
-  await act(async () => { render(<MemoryRouter><EmployerVerification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Verify Employer/i)); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -72,7 +72,7 @@ test('shows an error message when sharing job posts via social media fails.', as
 test('successful resume upload.', async () => {
   fetchMock.post('/uploadResume', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resume-upload-input'), { target: { files: ['resume.pdf'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('upload-button')); });
 
@@ -83,7 +83,7 @@ test('successful resume upload.', async () => {
 test('failure resume upload.', async () => {
   fetchMock.post('/uploadResume', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('resume-upload-input'), { target: { files: ['resume.pdf'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('upload-button')); });
 

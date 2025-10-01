@@ -14,7 +14,7 @@ afterEach(() => {
 test('bookmarks an article successfully', async () => {
   fetchMock.post('/bookmark', 200);
 
-  await act(async () => { render(<MemoryRouter><BookmarkArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('bookmarks an article successfully', async () => {
 test('fails to bookmark an article with error message', async () => {
   fetchMock.post('/bookmark', 500);
 
-  await act(async () => { render(<MemoryRouter><BookmarkArticleComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

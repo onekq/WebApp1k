@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully contacts agent for viewing', async () => {
   fetchMock.post('/api/agent/contact', 200);
 
-  await act(async () => { render(<MemoryRouter><ContactAgentForViewing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('viewing-date'), { target: { value: '2023-10-01' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('contact-agent-btn')); });
 
@@ -25,7 +25,7 @@ test('successfully contacts agent for viewing', async () => {
 test('fails to contact agent for viewing and shows error message', async () => {
   fetchMock.post('/api/agent/contact', 500);
 
-  await act(async () => { render(<MemoryRouter><ContactAgentForViewing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('viewing-date'), { target: { value: '2023-10-01' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('contact-agent-btn')); });
 
@@ -36,7 +36,7 @@ test('fails to contact agent for viewing and shows error message', async () => {
 test('Successfully displays property utilities information.', async () => {
   fetchMock.get('/api/properties/1/utilities', { data: 'Utilities Information' });
 
-  await act(async () => { render(<MemoryRouter><PropertyUtilitiesInfo /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-utilities-button')); });
 
   expect(fetchMock.calls('/api/properties/1/utilities').length).toEqual(1);
@@ -46,7 +46,7 @@ test('Successfully displays property utilities information.', async () => {
 test('Fails to display property utilities information with error message.', async () => {
   fetchMock.get('/api/properties/1/utilities', 400);
 
-  await act(async () => { render(<MemoryRouter><PropertyUtilitiesInfo /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-utilities-button')); });
 
   expect(fetchMock.calls('/api/properties/1/utilities').length).toEqual(1);
@@ -59,7 +59,7 @@ test('Filter by Amenities filters properties by amenities successfully', async (
     body: [{ id: 1, amenities: ['pool'] }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/amenities/i), { target: { value: 'pool' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -73,7 +73,7 @@ test('Filter by Amenities filters properties by amenities fails', async () => {
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/amenities/i), { target: { value: 'pool' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 

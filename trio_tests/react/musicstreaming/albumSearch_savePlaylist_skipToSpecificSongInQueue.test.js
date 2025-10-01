@@ -36,7 +36,7 @@ test('Shows error message when searching for an album by name fails.', async () 
 test('successfully saves changes to a playlist', async () => {
   fetchMock.put('/api/playlists/1', 200);
 
-  await act(async () => { render(<MemoryRouter><SavePlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('successfully saves changes to a playlist', async () => {
 test('fails to save changes to a non-existing playlist', async () => {
   fetchMock.put('/api/playlists/1', 404);
 
-  await act(async () => { render(<MemoryRouter><SavePlaylist playlistId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App playlistId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-playlist-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -56,7 +56,7 @@ test('fails to save changes to a non-existing playlist', async () => {
 test('Skipping to a specific song in the queue works.', async () => {
   fetchMock.post('/api/skipTo', 200);
 
-  await act(async () => { render(<MemoryRouter><QueueComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('skip-to-song-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('Skipping to a specific song in the queue works.', async () => {
 test('Skipping to a specific song in the queue fails with an error message.', async () => {
   fetchMock.post('/api/skipTo', 500);
 
-  await act(async () => { render(<MemoryRouter><QueueComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('skip-to-song-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

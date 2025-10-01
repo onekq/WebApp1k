@@ -14,7 +14,7 @@ afterEach(() => {
 test('Categorize articles based on user preferences successfully.', async () => {
   fetchMock.post('/api/preferences-categorize-articles', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CategorizeByPreferences /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Categorize by Preferences")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Categorize articles based on user preferences successfully.', async () => 
 test('Fail to categorize articles by preferences and display error.', async () => {
   fetchMock.post('/api/preferences-categorize-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><CategorizeByPreferences /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Categorize by Preferences")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Fail to categorize articles by preferences and display error.', async () =
 test('Displays article metadata successfully', async () => {
   fetchMock.get('/api/articles', { status: 200, body: [{ id: 1, author: 'Author', date: 'Date', source: 'Source' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Author')).toBeInTheDocument();
@@ -45,7 +45,7 @@ test('Displays article metadata successfully', async () => {
 test('Fails to display article metadata', async () => {
   fetchMock.get('/api/articles', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to load article metadata')).toBeInTheDocument();
@@ -54,7 +54,7 @@ test('Fails to display article metadata', async () => {
 test('Searches articles by title successfully', async () => {
   fetchMock.get('/api/articles?title=test', { status: 200, body: [{ id: 1, title: 'Test Title' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'test' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -65,7 +65,7 @@ test('Searches articles by title successfully', async () => {
 test('Fails to search articles by title', async () => {
   fetchMock.get('/api/articles?title=test', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'test' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 

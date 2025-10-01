@@ -14,7 +14,7 @@ afterEach(() => {
 test('applies discount code successfully.', async () => {
   fetchMock.post('/api/discount', { body: { discount: 10 } });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('discount-code-input'), { target: { value: 'DISCOUNT10' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Apply Discount')); });
 
@@ -25,7 +25,7 @@ test('applies discount code successfully.', async () => {
 test('displays error on invalid discount code.', async () => {
   fetchMock.post('/api/discount', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('discount-code-input'), { target: { value: 'INVALIDCODE' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Apply Discount')); });
 
@@ -56,7 +56,7 @@ test('fails to notify user of winning bid with an error message.', async () => {
 test('Wish List Management success adds item to wish list', async () => {
   fetchMock.post('/api/wishlist', { id: 1, product: 'Product 1' });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Add to Wish List')); });
 
   expect(fetchMock.calls('/api/wishlist').length).toBe(1);
@@ -66,7 +66,7 @@ test('Wish List Management success adds item to wish list', async () => {
 test('Wish List Management failure shows error message', async () => {
   fetchMock.post('/api/wishlist', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Add to Wish List')); });
 
   expect(screen.getByText('Error adding to wish list')).toBeInTheDocument();

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully creates custom notification rules.', async () => {
   fetchMock.post('/api/createCustomNotificationRule', 200);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationRules /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ruleContent'), { target: { value: 'Rule' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Rule')); });
 
@@ -25,7 +25,7 @@ test('Successfully creates custom notification rules.', async () => {
 test('Fails to create custom notification rules.', async () => {
   fetchMock.post('/api/createCustomNotificationRule', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationRules /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ruleContent'), { target: { value: 'Rule' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Rule')); });
 
@@ -37,7 +37,7 @@ test('successfully searches for articles in the knowledge base', async () => {
   fetchMock.get('path/to/api/articles?search=term', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'term' } });
@@ -54,7 +54,7 @@ test('fails to search for articles in the knowledge base with error message', as
   fetchMock.get('path/to/api/articles?search=term', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'term' } });
@@ -74,7 +74,7 @@ test('Successfully generates reports on ticket volume.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TicketVolume /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-01-01' } });
@@ -94,7 +94,7 @@ test('Fails to generate reports on ticket volume and shows error message.', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><TicketVolume /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-01-01' } });

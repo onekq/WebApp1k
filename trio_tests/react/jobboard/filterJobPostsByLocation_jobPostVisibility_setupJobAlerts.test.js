@@ -55,7 +55,7 @@ test('Controlling job post visibility successfully', async () => {
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -73,7 +73,7 @@ test('Controlling job post visibility failure due to invalid visibility state', 
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -90,7 +90,7 @@ test('Controlling job post visibility failure due to invalid visibility state', 
 test('job seekers can successfully set up alerts for new jobs matching their criteria', async () => {
   fetchMock.post('/api/job/alerts', { success: true });
 
-  await act(async () => { render(<MemoryRouter><JobAlerts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Keyword/i), { target: { value: 'React Developer' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Set Alert/i)); });
 
@@ -101,7 +101,7 @@ test('job seekers can successfully set up alerts for new jobs matching their cri
 test('job seekers see an error message if alert setup fails', async () => {
   fetchMock.post('/api/job/alerts', 500);
 
-  await act(async () => { render(<MemoryRouter><JobAlerts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/Keyword/i), { target: { value: 'React Developer' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/Set Alert/i)); });
 

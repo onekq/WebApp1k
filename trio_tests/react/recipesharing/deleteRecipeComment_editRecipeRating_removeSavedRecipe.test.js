@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully delete a recipe comment', async () => {
   fetchMock.delete('/api/delete-comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Successfully delete a recipe comment', async () => {
 test('Fail to delete a recipe comment with error message', async () => {
   fetchMock.delete('/api/delete-comment', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Fail to delete a recipe comment with error message', async () => {
 test('Successfully edit a recipe rating', async () => {
   fetchMock.put('/api/edit-rating', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('rate-input'), { target: { value: '4' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('edit-rate-button')); });
 
@@ -45,7 +45,7 @@ test('Successfully edit a recipe rating', async () => {
 test('Fail to edit recipe rating with error message', async () => {
   fetchMock.put('/api/edit-rating', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('rate-input'), { target: { value: '4' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('edit-rate-button')); });
 
@@ -56,7 +56,7 @@ test('Fail to edit recipe rating with error message', async () => {
 test('successfully removes a saved recipe from user profile', async () => {
   fetchMock.post('/remove-saved-recipe', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveSavedRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('successfully removes a saved recipe from user profile', async () => {
 test('shows error message when failing to remove a saved recipe', async () => {
   fetchMock.post('/remove-saved-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><RemoveSavedRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

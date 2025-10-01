@@ -15,7 +15,7 @@ test('Filter Photos by Album: success', async () => {
   fetchMock.get('/api/photos?album=AlbumID', { body: [{ id: 1, name: 'Photo1' }] });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-filter-input'), { target: { value: 'AlbumID' } });
@@ -32,7 +32,7 @@ test('Filter Photos by Album: failure', async () => {
   fetchMock.get('/api/photos?album=AlbumID', { throws: new Error('Filter Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-filter-input'), { target: { value: 'AlbumID' } });
@@ -48,7 +48,7 @@ test('Filter Photos by Album: failure', async () => {
 test('should successfully adjust photo settings', async () => {
   fetchMock.post('/api/adjustments', { id: 1, adjusted: true });
 
-  await act(async () => { render(<MemoryRouter><AdjustPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('adjustments-input'), { target: { value: 'brightness|10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('adjustments-button')); });
 
@@ -59,7 +59,7 @@ test('should successfully adjust photo settings', async () => {
 test('should fail to adjust photo settings with error message', async () => {
   fetchMock.post('/api/adjustments', 404);
 
-  await act(async () => { render(<MemoryRouter><AdjustPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('adjustments-input'), { target: { value: 'brightness|10' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('adjustments-button')); });
 
@@ -70,7 +70,7 @@ test('should fail to adjust photo settings with error message', async () => {
 test('Users can successfully sort photos by date.', async () => {
   fetchMock.get('/api/sort-photos-by-date', { success: true, data: ['photo1', 'photo2'] });
 
-  await act(async () => { render(<MemoryRouter><SortPhotosByDateComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-date-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -80,7 +80,7 @@ test('Users can successfully sort photos by date.', async () => {
 test('Shows an error message when sorting photos by date fails.', async () => {
   fetchMock.get('/api/sort-photos-by-date', { success: false });
 
-  await act(async () => { render(<MemoryRouter><SortPhotosByDateComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('sort-by-date-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);

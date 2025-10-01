@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a canonical URL to a post', async () => {
   fetchMock.post('/api/canonical-url', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/canonical url/i), { target: { value: 'http://example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds a canonical URL to a post', async () => {
 test('fails to add a canonical URL to a post due to server error', async () => {
   fetchMock.post('/api/canonical-url', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/canonical url/i), { target: { value: 'http://example.com' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -36,7 +36,7 @@ test('fails to add a canonical URL to a post due to server error', async () => {
 test('successfully tracks post views', async () => {
   fetchMock.post('/api/trackPostViews', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackPostViews postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Post')); });
 
   expect(fetchMock.calls('/api/trackPostViews')).toHaveLength(1);
@@ -47,7 +47,7 @@ test('successfully tracks post views', async () => {
 test('fails to track post views with an error message', async () => {
   fetchMock.post('/api/trackPostViews', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackPostViews postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Post')); });
 
   expect(fetchMock.calls('/api/trackPostViews')).toHaveLength(1);
@@ -57,7 +57,7 @@ test('fails to track post views with an error message', async () => {
 test('successfully tracks unique visitors per post', async () => {
   fetchMock.post('/api/trackUniqueVisitors', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><TrackUniqueVisitors postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Visit Post')); });
 
   expect(fetchMock.calls('/api/trackUniqueVisitors')).toHaveLength(1);
@@ -68,7 +68,7 @@ test('successfully tracks unique visitors per post', async () => {
 test('fails to track unique visitors with an error message', async () => {
   fetchMock.post('/api/trackUniqueVisitors', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><TrackUniqueVisitors postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Visit Post')); });
 
   expect(fetchMock.calls('/api/trackUniqueVisitors')).toHaveLength(1);

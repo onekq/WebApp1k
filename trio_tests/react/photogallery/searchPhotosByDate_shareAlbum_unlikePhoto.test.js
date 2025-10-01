@@ -14,7 +14,7 @@ afterEach(() => {
 test('should successfully search photos by date', async () => {
   fetchMock.get('/api/search?date=2021-01-01', { photos: [{ id: 1, date: '2021-01-01' }] });
 
-  await act(async () => { render(<MemoryRouter><SearchPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: '2021-01-01' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -25,7 +25,7 @@ test('should successfully search photos by date', async () => {
 test('should fail to search photos by date with error message', async () => {
   fetchMock.get('/api/search?date=2021-01-01', 404);
 
-  await act(async () => { render(<MemoryRouter><SearchPhotos /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: '2021-01-01' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -37,7 +37,7 @@ test('Share Album: success', async () => {
   fetchMock.post('/api/shareAlbum', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-input'), { target: { value: 'AlbumID' } });
@@ -54,7 +54,7 @@ test('Share Album: failure', async () => {
   fetchMock.post('/api/shareAlbum', { throws: new Error('Share Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('album-input'), { target: { value: 'AlbumID' } });

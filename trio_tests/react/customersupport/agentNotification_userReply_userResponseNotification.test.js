@@ -14,7 +14,7 @@ afterEach(() => {
 test('Notifying agent of new ticket assignment should show success message.', async () => {
   fetchMock.post('/api/notify-agent', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id'), { target: { value: '456' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('notify-agent')); });
 
@@ -25,7 +25,7 @@ test('Notifying agent of new ticket assignment should show success message.', as
 test('Notifying agent of new ticket assignment should show error message when failed.', async () => {
   fetchMock.post('/api/notify-agent', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-id'), { target: { value: '456' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('notify-agent')); });
 
@@ -36,7 +36,7 @@ test('Notifying agent of new ticket assignment should show error message when fa
 test('Allowing users to reply to agent comments should show success message.', async () => {
   fetchMock.post('/api/user-reply', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-reply'), { target: { value: 'User reply' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-reply')); });
 
@@ -47,7 +47,7 @@ test('Allowing users to reply to agent comments should show success message.', a
 test('Allowing users to reply to agent comments should show error message when failed.', async () => {
   fetchMock.post('/api/user-reply', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-reply'), { target: { value: 'User reply' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-reply')); });
 
@@ -58,7 +58,7 @@ test('Allowing users to reply to agent comments should show error message when f
 test('Notifying user of agent response should show success message.', async () => {
   fetchMock.post('/api/notify-user', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notification-user'), { target: { value: 'User123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('send-notification')); });
 
@@ -69,7 +69,7 @@ test('Notifying user of agent response should show success message.', async () =
 test('Notifying user of agent response should show error message when failed.', async () => {
   fetchMock.post('/api/notify-user', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('notification-user'), { target: { value: 'User123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('send-notification')); });
 

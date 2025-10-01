@@ -14,7 +14,7 @@ afterEach(() => {
 test('Adding a product review should succeed', async () => {
   fetchMock.post('/api/reviews', { status: 201 });
 
-  await act(async () => { render(<MemoryRouter><AddReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Great product!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 
@@ -25,7 +25,7 @@ test('Adding a product review should succeed', async () => {
 test('Adding a product review should fail due to server error', async () => {
   fetchMock.post('/api/reviews', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><AddReview /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('review-input'), { target: { value: 'Great product!' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
 
@@ -36,7 +36,7 @@ test('Adding a product review should fail due to server error', async () => {
 test('displays related products successfully', async () => {
   fetchMock.get('/api/products/1/related', { products: [{ id: 2, name: 'Related Product' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Product 1')); });
 
   expect(fetchMock.called('/api/products/1/related')).toBe(true);
@@ -46,7 +46,7 @@ test('displays related products successfully', async () => {
 test('fails to display related products and shows error', async () => {
   fetchMock.get('/api/products/1/related', 404);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Product 1')); });
 
   expect(fetchMock.called('/api/products/1/related')).toBe(true);
@@ -56,7 +56,7 @@ test('fails to display related products and shows error', async () => {
 test('handle payment failure due to insufficient funds', async () => {
   fetchMock.post('/api/process-payment', { success: false, error: 'Insufficient funds' });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('handle payment failure due to insufficient funds', async () => {
 test('handle payment failure with generic error', async () => {
   fetchMock.post('/api/process-payment', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

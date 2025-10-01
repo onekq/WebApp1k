@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully tracks custom notification delivery.', async () => {
   fetchMock.get('/api/getCustomNotificationDelivery', { deliveryStatus: 'Success' });
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Success')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Successfully tracks custom notification delivery.', async () => {
 test('Fails to track custom notification delivery.', async () => {
   fetchMock.get('/api/getCustomNotificationDelivery', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to track delivery')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Fails to track custom notification delivery.', async () => {
 test('categorizes a ticket based on user input', async () => {
   fetchMock.post('/api/tickets', { status: 200 });
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'Technical' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
@@ -43,7 +43,7 @@ test('categorizes a ticket based on user input', async () => {
 test('shows error if categorizing a ticket fails', async () => {
   fetchMock.post('/api/tickets', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketSubmission /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'Technical' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Submit')); });
   
@@ -54,7 +54,7 @@ test('shows error if categorizing a ticket fails', async () => {
 test('Adding comments to a ticket should show success message.', async () => {
   fetchMock.post('/api/add-comment', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-comment'), { target: { value: 'This is a comment' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-comment')); });
 
@@ -65,7 +65,7 @@ test('Adding comments to a ticket should show success message.', async () => {
 test('Adding comments to a ticket should show error message when failed.', async () => {
   fetchMock.post('/api/add-comment', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ticket-comment'), { target: { value: 'This is a comment' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-comment')); });
 

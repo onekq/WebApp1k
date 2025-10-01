@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully edit a recipe comment', async () => {
   fetchMock.put('/api/edit-comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Delicious!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('edit-comment-button')); });
 
@@ -25,7 +25,7 @@ test('Successfully edit a recipe comment', async () => {
 test('Fail to edit recipe comment with error message', async () => {
   fetchMock.put('/api/edit-comment', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Delicious!' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('edit-comment-button')); });
 
@@ -36,7 +36,7 @@ test('Fail to edit recipe comment with error message', async () => {
 test('Print Recipe successfully', async () => {
   fetchMock.get('/api/recipe/1', { body: { title: 'Printable Recipe' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Print Recipe')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Print Recipe successfully', async () => {
 test('Print Recipe failure shows error message', async () => {
   fetchMock.get('/api/recipe/1', { body: { message: 'Error printing recipe' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Print Recipe')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

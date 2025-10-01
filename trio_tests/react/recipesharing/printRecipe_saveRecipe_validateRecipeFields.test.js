@@ -14,7 +14,7 @@ afterEach(() => {
 test('Print Recipe successfully', async () => {
   fetchMock.get('/api/recipe/1', { body: { title: 'Printable Recipe' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Print Recipe')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Print Recipe successfully', async () => {
 test('Print Recipe failure shows error message', async () => {
   fetchMock.get('/api/recipe/1', { body: { message: 'Error printing recipe' }, status: 500 });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Print Recipe')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Print Recipe failure shows error message', async () => {
 test('successfully saves a recipe to user profile', async () => {
   fetchMock.post('/save-recipe', 200);
 
-  await act(async () => { render(<MemoryRouter><SaveRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-button')); });
 
@@ -45,7 +45,7 @@ test('successfully saves a recipe to user profile', async () => {
 test('shows error message when failing to save a recipe', async () => {
   fetchMock.post('/save-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><SaveRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-button')); });
 
@@ -56,7 +56,7 @@ test('shows error message when failing to save a recipe', async () => {
 test('successfully validates required fields for a recipe', async () => {
   fetchMock.post('/validate-recipe', 200);
 
-  await act(async () => { render(<MemoryRouter><ValidateRecipeFieldsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-name-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 
@@ -67,7 +67,7 @@ test('successfully validates required fields for a recipe', async () => {
 test('shows error message when failing to validate required fields for a recipe', async () => {
   fetchMock.post('/validate-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><ValidateRecipeFieldsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('recipe-name-input'), { target: { value: 'Recipe 1' }}); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 

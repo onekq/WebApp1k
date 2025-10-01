@@ -14,7 +14,7 @@ afterEach(() => {
 test('applyDiscountCode: successfully apply discount code to cart', async () => {
   fetchMock.post('/api/cart/discount', { status: 200, body: { message: 'Discount Applied' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('discount-code'), { target: { value: 'DISCOUNT2023' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-discount')); });
 
@@ -25,7 +25,7 @@ test('applyDiscountCode: successfully apply discount code to cart', async () => 
 test('applyDiscountCode: fail to apply discount code to cart with error message', async () => {
   fetchMock.post('/api/cart/discount', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('discount-code'), { target: { value: 'DISCOUNT2023' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-discount')); });
 
@@ -36,7 +36,7 @@ test('applyDiscountCode: fail to apply discount code to cart with error message'
 test('Flagging inappropriate review should succeed', async () => {
   fetchMock.post('/api/reviews/flag/123', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><FlagInappropriateReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Flag as Inappropriate')); });
 
   expect(fetchMock.calls('/api/reviews/flag/123')).toHaveLength(1);
@@ -46,7 +46,7 @@ test('Flagging inappropriate review should succeed', async () => {
 test('Flagging inappropriate review should fail due to server error', async () => {
   fetchMock.post('/api/reviews/flag/123', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><FlagInappropriateReview reviewId="123" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App reviewId="123" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Flag as Inappropriate')); });
 
   expect(fetchMock.calls('/api/reviews/flag/123')).toHaveLength(1);
@@ -56,7 +56,7 @@ test('Flagging inappropriate review should fail due to server error', async () =
 test('process PayPal payment successfully', async () => {
   fetchMock.post('/api/process-paypal-payment', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-with-paypal-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('process PayPal payment successfully', async () => {
 test('fail to process PayPal payment', async () => {
   fetchMock.post('/api/process-paypal-payment', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-with-paypal-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

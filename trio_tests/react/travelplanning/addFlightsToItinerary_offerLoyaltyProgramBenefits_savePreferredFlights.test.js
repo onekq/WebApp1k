@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds flights to an itinerary.', async () => {
   fetchMock.post('/api/add-flight', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('flight-input'), { target: { value: 'Flight1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-flight-button')); });
 
@@ -25,7 +25,7 @@ test('successfully adds flights to an itinerary.', async () => {
 test('fails to add flights due to network error.', async () => {
   fetchMock.post('/api/add-flight', { status: 500, body: { error: 'Network error' } });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('flight-input'), { target: { value: 'Flight1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('add-flight-button')); });
 

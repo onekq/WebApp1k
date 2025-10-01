@@ -14,7 +14,7 @@ afterEach(() => {
 test('The current playback time is updated accurately.', async () => {
   fetchMock.get('/api/playbackTime', { currentTime: '1:23' });
 
-  await act(async () => { render(<MemoryRouter><PlaybackComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('1:23')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('The current playback time is updated accurately.', async () => {
 test('The current playback time fails to update with an error message.', async () => {
   fetchMock.get('/api/playbackTime', 500);
 
-  await act(async () => { render(<MemoryRouter><PlaybackComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Error updating playback time')).toBeInTheDocument();

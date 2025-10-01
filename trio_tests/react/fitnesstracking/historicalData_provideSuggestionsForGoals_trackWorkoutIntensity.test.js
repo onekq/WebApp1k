@@ -15,7 +15,7 @@ test('User can view historical data for past fitness activities successfully.', 
   fetchMock.get('/api/historicalData', { status: 200, body: { data: [{ id: 1, name: 'Running' }] } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('view-historical-data'));
@@ -29,7 +29,7 @@ test('User sees an error message when viewing historical data fails.', async () 
   fetchMock.get('/api/historicalData', { status: 500, body: { error: 'Failed to fetch historical data' } });
 
   await act(async () => {
-    render(<MemoryRouter><FitnessApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('view-historical-data'));

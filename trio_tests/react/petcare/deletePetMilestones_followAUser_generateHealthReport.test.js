@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully deletes a pet milestone', async () => {
   fetchMock.delete('/api/milestones/delete', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-milestone-button', { name: /delete/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Successfully deletes a pet milestone', async () => {
 test('Fails to delete a pet milestone', async () => {
   fetchMock.delete('/api/milestones/delete', { status: 500 });
 
-  await act(async () => {	render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => {	render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-milestone-button', { name: /delete/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Fails to delete a pet milestone', async () => {
 test('Successfully follows a user', async () => {
   fetchMock.post('/api/users/follow', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('follow-button', { name: /follow/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('Successfully follows a user', async () => {
 test('Fails to follow a user', async () => {
   fetchMock.post('/api/users/follow', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('follow-button', { name: /follow/i })); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -54,7 +54,7 @@ test('Fails to follow a user', async () => {
 test('Generate health report successfully', async () => {
   fetchMock.get('/api/health-report', 200);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report-button')); });
 
   expect(fetchMock.calls('/api/health-report').length).toBe(1);
@@ -64,7 +64,7 @@ test('Generate health report successfully', async () => {
 test('Fail to generate health report with error', async () => {
   fetchMock.get('/api/health-report', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('generate-report-button')); });
 
   expect(fetchMock.calls('/api/health-report').length).toBe(1);

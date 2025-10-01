@@ -14,7 +14,7 @@ afterEach(() => {
 test('Search Products successfully displays relevant results.', async () => {
   fetchMock.get('/api/search', { status: 200, body: { results: ['Product 1', 'Product 2'] } });
 
-  await act(async () => { render(<MemoryRouter><SearchProducts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'query' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -25,7 +25,7 @@ test('Search Products successfully displays relevant results.', async () => {
 test('Search Products fails and displays error message.', async () => {
   fetchMock.get('/api/search', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><SearchProducts /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'query' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-button')); });
 
@@ -59,7 +59,7 @@ test('fails to display the seller dashboard with an error message.', async () =>
 test('View Order History success shows order data', async () => {
   fetchMock.get('/api/orders', [{ id: 1, product: 'Product 1' }]);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   expect(fetchMock.calls('/api/orders').length).toBe(1);
   
   expect(screen.getByText('Product 1')).toBeInTheDocument();
@@ -68,7 +68,7 @@ test('View Order History success shows order data', async () => {
 test('View Order History failure shows error message', async () => {
   fetchMock.get('/api/orders', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   
   expect(screen.getByText('Error loading order history')).toBeInTheDocument();
 }, 10000);

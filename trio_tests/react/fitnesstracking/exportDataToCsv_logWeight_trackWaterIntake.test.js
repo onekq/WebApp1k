@@ -14,7 +14,7 @@ afterEach(() => {
 test('should export fitness data to CSV successfully.', async () => {
   fetchMock.get('/api/data/export', { status: 200, body: 'csv-data' });
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('export-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -25,7 +25,7 @@ test('should export fitness data to CSV successfully.', async () => {
 test('should fail to export fitness data to CSV.', async () => {
   fetchMock.get('/api/data/export', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('export-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

@@ -15,7 +15,7 @@ test('successfully adds a recurring income', async () => {
   fetchMock.post('/income/recurring', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><AddRecurringIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: 'Monthly Salary' } });
@@ -32,7 +32,7 @@ test('fails to add a recurring income', async () => {
   fetchMock.post('/income/recurring', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><AddRecurringIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/source name/i), { target: { value: '' } });
@@ -49,7 +49,7 @@ test('Success: Calculate the average expense per category for a given period.', 
   fetchMock.get('/api/calculate-average', { status: 200, body: { average: 250 } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -64,7 +64,7 @@ test('Failure: Calculate the average expense per category for a given period.', 
   fetchMock.get('/api/calculate-average', { status: 400, body: { error: 'Calculation error' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

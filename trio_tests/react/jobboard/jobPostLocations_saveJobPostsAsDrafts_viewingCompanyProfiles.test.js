@@ -15,7 +15,7 @@ test('Specifying valid locations for job openings successfully', async () => {
   fetchMock.post('/api/job', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -33,7 +33,7 @@ test('Specifying locations failure due to invalid location', async () => {
   fetchMock.post('/api/job', 400);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -51,7 +51,7 @@ test('Saving job posts as drafts successfully', async () => {
   fetchMock.post('/api/job/draft', { status: 201 });
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);  
+    render(<MemoryRouter><App /></MemoryRouter>);  
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -68,7 +68,7 @@ test('Saving job posts as drafts failure due to network error', async () => {
   fetchMock.post('/api/job/draft', 500);
 
   await act(async () => {
-    render(<MemoryRouter><JobPostingComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Job Title/i), { target: { value: 'Software Engineer' } });
@@ -84,7 +84,7 @@ test('Saving job posts as drafts failure due to network error', async () => {
 test('job seekers can successfully view company profiles', async () => {
   fetchMock.get('/api/company/1', { name: 'TechCorp', bio: 'A tech company' });
 
-  await act(async () => { render(<MemoryRouter><CompanyProfileView companyId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App companyId="1" /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('TechCorp')).toBeInTheDocument();
@@ -93,7 +93,7 @@ test('job seekers can successfully view company profiles', async () => {
 test('job seekers see an error message if company profile fails to load', async () => {
   fetchMock.get('/api/company/1', 404);
 
-  await act(async () => { render(<MemoryRouter><CompanyProfileView companyId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App companyId="1" /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText('Error loading company profile')).toBeInTheDocument();

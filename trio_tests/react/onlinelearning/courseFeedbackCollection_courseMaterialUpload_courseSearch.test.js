@@ -14,7 +14,7 @@ afterEach(() => {
 test('Feedback is collected at the end of the course.', async () => {
   fetchMock.post('/api/courses/feedback', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CourseFeedback /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/feedback/i), { target: { value: 'Excellent course!' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit feedback/i)); });
 
@@ -25,7 +25,7 @@ test('Feedback is collected at the end of the course.', async () => {
 test('Error message is shown when feedback submission fails.', async () => {
   fetchMock.post('/api/courses/feedback', 500);
 
-  await act(async () => { render(<MemoryRouter><CourseFeedback /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/feedback/i), { target: { value: 'Not great.' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit feedback/i)); });
 
@@ -36,7 +36,7 @@ test('Error message is shown when feedback submission fails.', async () => {
 test('Success: instructor uploads course material', async () => {
   fetchMock.post('/api/upload', 200);
 
-  await act(async () => { render(<MemoryRouter><CourseMaterialUploadComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('upload-file'), { target: { files: ['file'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('upload-button')); });
 
@@ -47,7 +47,7 @@ test('Success: instructor uploads course material', async () => {
 test('Failure: course material upload fails', async () => {
   fetchMock.post('/api/upload', 500);
 
-  await act(async () => { render(<MemoryRouter><CourseMaterialUploadComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('upload-file'), { target: { files: ['file'] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('upload-button')); });
 
@@ -58,7 +58,7 @@ test('Failure: course material upload fails', async () => {
 test('Course Search success: should display search results.', async () => {
   fetchMock.get('/api/courses?search=React', [{ id: 1, title: 'React Course' }]);
 
-  await act(async () => { render(<MemoryRouter><CourseSearch /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search for courses...'), { target: { value: 'React' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -69,7 +69,7 @@ test('Course Search success: should display search results.', async () => {
 test('Course Search failure: should display an error message if no results found.', async () => {
   fetchMock.get('/api/courses?search=Unknown', []);
 
-  await act(async () => { render(<MemoryRouter><CourseSearch /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search for courses...'), { target: { value: 'Unknown' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 

@@ -65,7 +65,7 @@ test('Success: Predict future expenses based on past data.', async () => {
   fetchMock.post('/api/predict-expense', { status: 200, body: { success: true, prediction: 300 } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -80,7 +80,7 @@ test('Failure: Predict future expenses based on past data.', async () => {
   fetchMock.post('/api/predict-expense', { status: 500, body: { error: 'Prediction error' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

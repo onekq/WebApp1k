@@ -12,7 +12,7 @@ afterEach(() => {
 
 
 test('copies article link to clipboard successfully', async () => {
-  await act(async () => { render(<MemoryRouter><CopyArticleLinkComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Copy Link')); });
 
   expect(navigator.clipboard.writeText).toBeCalledWith('http://example.com/article');
@@ -22,7 +22,7 @@ test('copies article link to clipboard successfully', async () => {
 test('fails to copy article link to clipboard with error message', async () => {
   navigator.clipboard.writeText = jest.fn().mockImplementation(() => { throw new Error('Copy failed'); });
 
-  await act(async () => { render(<MemoryRouter><CopyArticleLinkComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Copy Link')); });
 
   expect(navigator.clipboard.writeText).toBeCalledWith('http://example.com/article');
@@ -32,7 +32,7 @@ test('fails to copy article link to clipboard with error message', async () => {
 test('Searches articles by title successfully', async () => {
   fetchMock.get('/api/articles?title=test', { status: 200, body: [{ id: 1, title: 'Test Title' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'test' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -43,7 +43,7 @@ test('Searches articles by title successfully', async () => {
 test('Fails to search articles by title', async () => {
   fetchMock.get('/api/articles?title=test', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByPlaceholderText('Search...'), { target: { value: 'test' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Search')); });
 
@@ -54,7 +54,7 @@ test('Fails to search articles by title', async () => {
 test('Sorts articles by popularity successfully', async () => {
   fetchMock.get('/api/articles?sort=popularity', { status: 200, body: [{ id: 1, popularity: 1000 }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="popularity" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="popularity" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('1000')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('Sorts articles by popularity successfully', async () => {
 test('Fails to sort articles by popularity', async () => {
   fetchMock.get('/api/articles?sort=popularity', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="popularity" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="popularity" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to sort articles by popularity')).toBeInTheDocument();

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Allows users to expand article previews to full articles successfully', async () => {
   fetchMock.get('/api/articles/1', { status: 200, body: { id: 1, content: 'Full Test Article Content' } });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Test Article')); });
 
   expect(fetchMock.calls()).toHaveLength(2);
@@ -24,7 +24,7 @@ test('Allows users to expand article previews to full articles successfully', as
 test('Fails to expand article previews to full articles', async () => {
   fetchMock.get('/api/articles/1', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Test Article')); });
 
   expect(fetchMock.calls()).toHaveLength(2);
@@ -34,7 +34,7 @@ test('Fails to expand article previews to full articles', async () => {
 test('Sorts articles by date (oldest first) successfully', async () => {
   fetchMock.get('/api/articles?sort=oldest', { status: 200, body: [{ id: 1, date: '2020-01-01' }] });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="oldest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="oldest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('2020-01-01')).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('Sorts articles by date (oldest first) successfully', async () => {
 test('Fails to sort articles by date (oldest first)', async () => {
   fetchMock.get('/api/articles?sort=oldest', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><HomePage sortBy="oldest" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App sortBy="oldest" /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to sort articles by date')).toBeInTheDocument();

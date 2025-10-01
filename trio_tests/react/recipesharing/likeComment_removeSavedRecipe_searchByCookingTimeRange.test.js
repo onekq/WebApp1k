@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully like a comment on a recipe', async () => {
   fetchMock.post('/api/like-comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Successfully like a comment on a recipe', async () => {
 test('Fail to like a comment with error message', async () => {
   fetchMock.post('/api/like-comment', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('like-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('Fail to like a comment with error message', async () => {
 test('successfully removes a saved recipe from user profile', async () => {
   fetchMock.post('/remove-saved-recipe', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveSavedRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -44,7 +44,7 @@ test('successfully removes a saved recipe from user profile', async () => {
 test('shows error message when failing to remove a saved recipe', async () => {
   fetchMock.post('/remove-saved-recipe', 500);
 
-  await act(async () => { render(<MemoryRouter><RemoveSavedRecipeComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

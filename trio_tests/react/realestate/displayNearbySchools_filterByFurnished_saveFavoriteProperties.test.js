@@ -14,7 +14,7 @@ afterEach(() => {
 test('shows information about nearby schools for a property', async () => {
   fetchMock.get('/property/1/schools', { body: [] });
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Schools')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('shows information about nearby schools for a property', async () => {
 test('fails to display nearby schools due to network error', async () => {
   fetchMock.get('/property/1/schools', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyListing /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('property1Schools')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('fails to display nearby schools due to network error', async () => {
 test('Filter by furnished properties successfully', async () => {
   fetchMock.get('/api/furnished-properties', { properties: [{ id: 1, name: "Furnished 1" }] });
 
-  await act(async () => { render(<MemoryRouter><FurnishedFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-furnished-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('Filter by furnished properties successfully', async () => {
 test('Filter by furnished properties fails with error', async () => {
   fetchMock.get('/api/furnished-properties', 500);
 
-  await act(async () => { render(<MemoryRouter><FurnishedFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-furnished-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Filter by furnished properties fails with error', async () => {
 test('successfully saves favorite properties', async () => {
   fetchMock.post('/api/favorites', 200);
 
-  await act(async () => { render(<MemoryRouter><SaveFavoriteProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-favorite-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -64,7 +64,7 @@ test('successfully saves favorite properties', async () => {
 test('fails to save favorite properties and shows error message', async () => {
   fetchMock.post('/api/favorites', 500);
 
-  await act(async () => { render(<MemoryRouter><SaveFavoriteProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-favorite-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('calculateTaxes: successfully calculate taxes', async () => {
   fetchMock.get('/api/cart/taxes', { status: 200, body: { taxes: '8.00' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-taxes')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('calculateTaxes: successfully calculate taxes', async () => {
 test('calculateTaxes: fail to calculate taxes with error message', async () => {
   fetchMock.get('/api/cart/taxes', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-taxes')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('calculateTaxes: fail to calculate taxes with error message', async () => {
 test('Sends order confirmation email successfully', async () => {
   fetchMock.post('/api/sendOrderConfirmationEmail', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Send Confirmation Email')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('Sends order confirmation email successfully', async () => {
 test('Fails to send order confirmation email', async () => {
   fetchMock.post('/api/sendOrderConfirmationEmail', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Send Confirmation Email')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Fails to send order confirmation email', async () => {
 test('Updates product stock successfully', async () => {
   fetchMock.patch('/api/updateProductStock', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Update Product Stock')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -64,7 +64,7 @@ test('Updates product stock successfully', async () => {
 test('Fails to update product stock', async () => {
   fetchMock.patch('/api/updateProductStock', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Update Product Stock')); });
 
   expect(fetchMock.calls().length).toBe(1);

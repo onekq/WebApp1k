@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully adds a meta title to a post', async () => {
   fetchMock.post('/api/meta-title', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/meta title/i), { target: { value: 'New Meta Title' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('successfully adds a meta title to a post', async () => {
 test('fails to add a meta title to a post due to server error', async () => {
   fetchMock.post('/api/meta-title', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/meta title/i), { target: { value: 'New Meta Title' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -36,7 +36,7 @@ test('fails to add a meta title to a post due to server error', async () => {
 test('successfully generates an XML sitemap', async () => {
   fetchMock.post('/api/xml-sitemap', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate xml sitemap/i)); });
 
   expect(fetchMock.calls('/api/xml-sitemap').length).toBe(1);
@@ -46,7 +46,7 @@ test('successfully generates an XML sitemap', async () => {
 test('fails to generate an XML sitemap due to server error', async () => {
   fetchMock.post('/api/xml-sitemap', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><CMS /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/generate xml sitemap/i)); });
 
   expect(fetchMock.calls('/api/xml-sitemap').length).toBe(1);
@@ -59,7 +59,7 @@ test('User can retrieve posts by category successfully', async () => {
     body: [{ id: 1, title: 'First Post' }, { id: 2, title: 'Second Post' }]
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 
@@ -74,7 +74,7 @@ test('User gets an error message when retrieving posts by category fails', async
     body: { error: 'Unable to fetch posts' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Category Select'), { target: { value: '1' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Fetch Posts')); });
 

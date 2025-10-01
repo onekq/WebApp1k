@@ -14,7 +14,7 @@ afterEach(() => {
 test('Assignment grading logic works correctly.', async () => {
   fetchMock.post('/api/assignments/grade', { grade: 'A' });
 
-  await act(async () => { render(<MemoryRouter><AssignmentGrading /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/assignment id/i), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/grade/i)); });
 
@@ -25,7 +25,7 @@ test('Assignment grading logic works correctly.', async () => {
 test('Error message is shown when grading fails.', async () => {
   fetchMock.post('/api/assignments/grade', 500);
 
-  await act(async () => { render(<MemoryRouter><AssignmentGrading /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/assignment id/i), { target: { value: 'invalid' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/grade/i)); });
 
@@ -36,7 +36,7 @@ test('Error message is shown when grading fails.', async () => {
 test('Certificate is verified successfully.', async () => {
   fetchMock.post('/api/certificates/verify', { valid: true });
 
-  await act(async () => { render(<MemoryRouter><CertificateVerification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/certificate id/i), { target: { value: '12345' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/verify/i)); });
 
@@ -47,7 +47,7 @@ test('Certificate is verified successfully.', async () => {
 test('Error message is shown when certificate verification fails.', async () => {
   fetchMock.post('/api/certificates/verify', { valid: false });
 
-  await act(async () => { render(<MemoryRouter><CertificateVerification /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/certificate id/i), { target: { value: 'invalid' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/verify/i)); });
 
@@ -58,7 +58,7 @@ test('Error message is shown when certificate verification fails.', async () => 
 test('Course completion status is updated successfully.', async () => {
   fetchMock.post('/api/course-complete/101', 200);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Complete Course/i)); });
 
   expect(fetchMock.calls('/api/course-complete/101').length).toEqual(1);
@@ -68,7 +68,7 @@ test('Course completion status is updated successfully.', async () => {
 test('Course completion status update fails if the server returns an error.', async () => {
   fetchMock.post('/api/course-complete/101', 400);
 
-  await act(async () => { render(<MemoryRouter><LMSComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Complete Course/i)); });
 
   expect(fetchMock.calls('/api/course-complete/101').length).toEqual(1);

@@ -14,7 +14,7 @@ afterEach(() => {
 test('filters articles by selected categories successfully', async () => {
   fetchMock.get('/api/articles?categories=Tech', { status: 200, body: [{ id: 1, title: 'Tech News' }] });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('categories-filter-input'), { target: { value: 'Tech' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-categories-filter-button')); });
 
@@ -25,7 +25,7 @@ test('filters articles by selected categories successfully', async () => {
 test('fails to filter articles by selected categories', async () => {
   fetchMock.get('/api/articles?categories=Tech', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><NewsPlatform /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('categories-filter-input'), { target: { value: 'Tech' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-categories-filter-button')); });
 

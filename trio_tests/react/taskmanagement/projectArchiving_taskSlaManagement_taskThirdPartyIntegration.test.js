@@ -15,7 +15,7 @@ test('Archive Project - success', async () => {
   fetchMock.post('/api/projects/archive', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('Archive Project - failure', async () => {
   fetchMock.post('/api/projects/archive', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -44,7 +44,7 @@ test('Archive Project - failure', async () => {
 test('successfully sets SLAs for tasks.', async () => {
   fetchMock.post('/api/task-sla', { success: true });
 
-  await act(async () => { render(<MemoryRouter><SLA /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sla-input'), { target: { value: '24 hours' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-sla-btn')); });
 
@@ -55,7 +55,7 @@ test('successfully sets SLAs for tasks.', async () => {
 test('fails to set SLAs for tasks if server error.', async () => {
   fetchMock.post('/api/task-sla', 500);
 
-  await act(async () => { render(<MemoryRouter><SLA /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('sla-input'), { target: { value: '24 hours' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-sla-btn')); });
 
@@ -66,7 +66,7 @@ test('fails to set SLAs for tasks if server error.', async () => {
 test('successfully syncs tasks with a third-party tool.', async () => {
   fetchMock.post('/api/third-party-sync', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ThirdPartyIntegration /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tool-input'), { target: { value: 'Jira' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-tool-btn')); });
 
@@ -77,7 +77,7 @@ test('successfully syncs tasks with a third-party tool.', async () => {
 test('fails to sync tasks with a third-party tool if server error.', async () => {
   fetchMock.post('/api/third-party-sync', 500);
 
-  await act(async () => { render(<MemoryRouter><ThirdPartyIntegration /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tool-input'), { target: { value: 'Jira' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-tool-btn')); });
 

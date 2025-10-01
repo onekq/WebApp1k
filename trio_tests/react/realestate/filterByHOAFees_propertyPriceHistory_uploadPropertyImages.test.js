@@ -14,7 +14,7 @@ afterEach(() => {
 test('Filter by HOA fees successfully', async () => {
   fetchMock.get('/api/hoa-fees-properties', { properties: [{ id: 1, fee: 100 }] });
 
-  await act(async () => { render(<MemoryRouter><HOAFeesFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('hoa-fees-input'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-by-hoa-fees-btn')); });
 
@@ -25,7 +25,7 @@ test('Filter by HOA fees successfully', async () => {
 test('Filter by HOA fees fails with error', async () => {
   fetchMock.get('/api/hoa-fees-properties', 500);
 
-  await act(async () => { render(<MemoryRouter><HOAFeesFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('hoa-fees-input'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-by-hoa-fees-btn')); });
 
@@ -36,7 +36,7 @@ test('Filter by HOA fees fails with error', async () => {
 test('Successfully displays property price history.', async () => {
   fetchMock.get('/api/properties/1/price-history', { history: ['Price Data'] });
 
-  await act(async () => { render(<MemoryRouter><PropertyPriceHistory /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-history-button')); });
 
   expect(fetchMock.calls('/api/properties/1/price-history').length).toEqual(1);
@@ -46,7 +46,7 @@ test('Successfully displays property price history.', async () => {
 test('Fails to display property price history with error message.', async () => {
   fetchMock.get('/api/properties/1/price-history', 400);
 
-  await act(async () => { render(<MemoryRouter><PropertyPriceHistory /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('view-history-button')); });
 
   expect(fetchMock.calls('/api/properties/1/price-history').length).toEqual(1);
@@ -56,7 +56,7 @@ test('Fails to display property price history with error message.', async () => 
 test('Successfully uploads property images.', async () => {
   fetchMock.post('/api/properties/1/images', { success: true });
 
-  await act(async () => { render(<MemoryRouter><UploadPropertyImages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('image-upload'), { target: { files: [new File([], 'image.jpg')] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -67,7 +67,7 @@ test('Successfully uploads property images.', async () => {
 test('Fails to upload property images with error message.', async () => {
   fetchMock.post('/api/properties/1/images', 400);
 
-  await act(async () => { render(<MemoryRouter><UploadPropertyImages /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('image-upload'), { target: { files: [new File([], 'image.jpg')] } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully adds a property to the listings.', async () => {
   fetchMock.post('/api/properties', { success: true });
 
-  await act(async () => { render(<MemoryRouter><AddProperty /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('property-title'), { target: { value: 'New Property' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Successfully adds a property to the listings.', async () => {
 test('Fails to add a property to the listings with error message.', async () => {
   fetchMock.post('/api/properties', 400);
 
-  await act(async () => { render(<MemoryRouter><AddProperty /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('property-title'), { target: { value: 'New Property' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -39,7 +39,7 @@ test('Filter by Year Built filters properties by the year they were built succes
     body: [{ id: 1, yearBuilt: 2010 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/year built/i), { target: { value: '2010' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -53,7 +53,7 @@ test('Filter by Year Built filters properties by the year they were built fails'
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/year built/i), { target: { value: '2010' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -64,7 +64,7 @@ test('Filter by Year Built filters properties by the year they were built fails'
 test('successfully shares property listings', async () => {
   fetchMock.post('/api/share', 200);
 
-  await act(async () => { render(<MemoryRouter><SharePropertyListings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-listing-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -74,7 +74,7 @@ test('successfully shares property listings', async () => {
 test('fails to share property listings and shows error message', async () => {
   fetchMock.post('/api/share', 500);
 
-  await act(async () => { render(<MemoryRouter><SharePropertyListings /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-listing-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 

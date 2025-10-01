@@ -15,7 +15,7 @@ test('successfully calculates the percentage of expenses in each category', asyn
   fetchMock.get('/api/expenses/categories', { status: 200, body: { percentages: { food: 30, entertainment: 20 } } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseCategories /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to calculate the percentage of expenses in each category', async () 
   fetchMock.get('/api/expenses/categories', { status: 400, body: { error: 'Calculation error' } });
 
   await act(async () => {
-    render(<MemoryRouter><ExpenseCategories /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -45,7 +45,7 @@ test('Success: Calculate the average expense per category for a given period.', 
   fetchMock.get('/api/calculate-average', { status: 200, body: { average: 250 } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -60,7 +60,7 @@ test('Failure: Calculate the average expense per category for a given period.', 
   fetchMock.get('/api/calculate-average', { status: 400, body: { error: 'Calculation error' } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -75,7 +75,7 @@ test('Success: Notify when an expense exceeds the budget for a category.', async
   fetchMock.get('/api/check-expense-exceed', { status: 200, body: { exceeds: true } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -90,7 +90,7 @@ test('Failure: Notify when an expense exceeds the budget for a category.', async
   fetchMock.get('/api/check-expense-exceed', { status: 200, body: { exceeds: false } });
 
   await act(async () => {
-    render(<MemoryRouter><MyFinanceTool /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

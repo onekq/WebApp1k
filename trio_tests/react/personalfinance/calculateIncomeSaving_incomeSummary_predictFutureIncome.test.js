@@ -15,7 +15,7 @@ test('successfully calculates the percentage of income saved', async () => {
   fetchMock.get('/api/income/saved', { status: 200, body: { percentage: 20 } });
 
   await act(async () => {
-    render(<MemoryRouter><IncomeSaved /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -30,7 +30,7 @@ test('fails to calculate the percentage of income saved', async () => {
   fetchMock.get('/api/income/saved', { status: 400, body: { error: 'Error calculating' } });
 
   await act(async () => {
-    render(<MemoryRouter><IncomeSaved /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -70,7 +70,7 @@ test('successfully predicts future income based on past data', async () => {
   fetchMock.get('/api/income/predict', { status: 200, body: { prediction: 5000 } });
 
   await act(async () => {
-    render(<MemoryRouter><PredictIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -85,7 +85,7 @@ test('fails to predict future income based on past data', async () => {
   fetchMock.get('/api/income/predict', { status: 400, body: { error: 'Prediction error' } });
 
   await act(async () => {
-    render(<MemoryRouter><PredictIncome /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

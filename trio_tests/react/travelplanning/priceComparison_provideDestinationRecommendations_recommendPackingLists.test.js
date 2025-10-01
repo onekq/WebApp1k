@@ -14,7 +14,7 @@ afterEach(() => {
 test('Price comparison should be provided for valid search.', async () => {
   fetchMock.post('/api/price/comparison', { price: 100 });
 
-  await act(async () => { render(<MemoryRouter><PriceComparisonComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('compare-prices')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('Price comparison should be provided for valid search.', async () => {
 test('Error in providing price comparison should show error message.', async () => {
   fetchMock.post('/api/price/comparison', 500);
 
-  await act(async () => { render(<MemoryRouter><PriceComparisonComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('compare-prices')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

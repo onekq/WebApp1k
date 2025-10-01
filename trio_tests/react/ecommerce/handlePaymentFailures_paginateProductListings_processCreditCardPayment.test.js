@@ -14,7 +14,7 @@ afterEach(() => {
 test('handle payment failure due to insufficient funds', async () => {
   fetchMock.post('/api/process-payment', { success: false, error: 'Insufficient funds' });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('handle payment failure due to insufficient funds', async () => {
 test('handle payment failure with generic error', async () => {
   fetchMock.post('/api/process-payment', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -34,7 +34,7 @@ test('handle payment failure with generic error', async () => {
 test('paginates product listings successfully', async () => {
   fetchMock.get('/api/products?page=2', { products: [{ id: 2, name: 'Product 2' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('page-2')); });
 
   expect(fetchMock.called('/api/products?page=2')).toBe(true);
@@ -44,7 +44,7 @@ test('paginates product listings successfully', async () => {
 test('fails to paginate product listings and shows error', async () => {
   fetchMock.get('/api/products?page=2', 500);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('page-2')); });
 
   expect(fetchMock.called('/api/products?page=2')).toBe(true);
@@ -54,7 +54,7 @@ test('fails to paginate product listings and shows error', async () => {
 test('process credit card payment successfully', async () => {
   fetchMock.post('/api/process-payment', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-with-credit-card-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('process credit card payment successfully', async () => {
 test('fail to process credit card payment', async () => {
   fetchMock.post('/api/process-payment', 500);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('pay-with-credit-card-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

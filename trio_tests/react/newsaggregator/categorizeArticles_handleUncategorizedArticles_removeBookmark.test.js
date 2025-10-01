@@ -14,7 +14,7 @@ afterEach(() => {
 test('Categorize articles based on predefined categories successfully.', async () => {
   fetchMock.post('/api/categorize-articles', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CategorizeArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Categorize")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Categorize articles based on predefined categories successfully.', async (
 test('Fail to categorize articles and display error.', async () => {
   fetchMock.post('/api/categorize-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><CategorizeArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText("Categorize")); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -36,7 +36,7 @@ test('Handle uncategorized articles successfully.', async () => {
     { id: 1, title: "Uncategorized Article 1" }
   ]);
 
-  await act(async () => { render(<MemoryRouter><UncategorizedArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText("Uncategorized Article 1")).toBeInTheDocument();
@@ -45,7 +45,7 @@ test('Handle uncategorized articles successfully.', async () => {
 test('Fail to handle uncategorized articles and display error.', async () => {
   fetchMock.get('/api/uncategorized-articles', 500);
 
-  await act(async () => { render(<MemoryRouter><UncategorizedArticles /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls().length).toBe(1);
   expect(screen.getByText("Error fetching uncategorized articles.")).toBeInTheDocument();
@@ -54,7 +54,7 @@ test('Fail to handle uncategorized articles and display error.', async () => {
 test('removes a bookmark from an article successfully', async () => {
   fetchMock.delete('/bookmark/1', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveBookmarkComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Remove Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -64,7 +64,7 @@ test('removes a bookmark from an article successfully', async () => {
 test('fails to remove a bookmark from an article with error message', async () => {
   fetchMock.delete('/bookmark/1', 500);
 
-  await act(async () => { render(<MemoryRouter><RemoveBookmarkComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Remove Bookmark')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

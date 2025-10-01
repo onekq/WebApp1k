@@ -14,7 +14,7 @@ afterEach(() => {
 test('Set user roles successfully', async () => {
   fetchMock.post('/set-user-roles', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('role-manager-button')); });
 
@@ -25,7 +25,7 @@ test('Set user roles successfully', async () => {
 test('Fail to set user roles due to server error', async () => {
   fetchMock.post('/set-user-roles', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('role-manager-button')); });
 
@@ -39,7 +39,7 @@ test('Filter tasks by status successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by status'), { target: { value: 'completed' } });
@@ -56,7 +56,7 @@ test('Fail to filter tasks by status when API returns 500.', async () => {
   fetchMock.get('/api/tasks?status=completed', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskList /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByPlaceholderText('Filter by status'), { target: { value: 'completed' } });
@@ -72,7 +72,7 @@ test('Fail to filter tasks by status when API returns 500.', async () => {
 test('Mention user in a task comment successfully', async () => {
   fetchMock.post('/mention-user', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Hey @User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-comment-button')); });
 
@@ -83,7 +83,7 @@ test('Mention user in a task comment successfully', async () => {
 test('Fail to mention user in a task comment due to server error', async () => {
   fetchMock.post('/mention-user', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Hey @User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-comment-button')); });
 

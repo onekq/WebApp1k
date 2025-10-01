@@ -14,7 +14,7 @@ afterEach(() => {
 test('should successfully crop a photo', async () => {
   fetchMock.post('/api/crop', { id: 1, cropped: true });
 
-  await act(async () => { render(<MemoryRouter><CropPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('crop-input'), { target: { value: '100x100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('crop-button')); });
 
@@ -25,7 +25,7 @@ test('should successfully crop a photo', async () => {
 test('should fail to crop a photo with error message', async () => {
   fetchMock.post('/api/crop', 404);
 
-  await act(async () => { render(<MemoryRouter><CropPhoto /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('crop-input'), { target: { value: '100x100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('crop-button')); });
 
@@ -36,7 +36,7 @@ test('should fail to crop a photo with error message', async () => {
 test('Users can successfully remove photos from an album.', async () => {
   fetchMock.delete('/api/albums/photos', { success: true });
 
-  await act(async () => { render(<MemoryRouter><RemovePhotoFromAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-photo-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -46,7 +46,7 @@ test('Users can successfully remove photos from an album.', async () => {
 test('Shows an error message when removing photo from album fails.', async () => {
   fetchMock.delete('/api/albums/photos', { success: false });
 
-  await act(async () => { render(<MemoryRouter><RemovePhotoFromAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-photo-button')); });
 
   expect(fetchMock.calls().length).toEqual(1);
@@ -57,7 +57,7 @@ test('Share Photo: success', async () => {
   fetchMock.post('/api/sharePhoto', { body: { success: true } });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('photo-input'), { target: { value: 'PhotoID' } });
@@ -74,7 +74,7 @@ test('Share Photo: failure', async () => {
   fetchMock.post('/api/sharePhoto', { throws: new Error('Share Failed') });
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('photo-input'), { target: { value: 'PhotoID' } });

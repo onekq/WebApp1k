@@ -14,7 +14,7 @@ afterEach(() => {
 test('filters by price range successfully', async () => {
   fetchMock.get('/api/products?minPrice=100&maxPrice=500', { products: [{ id: 1, name: 'Laptop' }] });
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('min-price-filter'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('max-price-filter'), { target: { value: '500' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-price-filter')); });
@@ -26,7 +26,7 @@ test('filters by price range successfully', async () => {
 test('fails to filter by price range and shows error', async () => {
   fetchMock.get('/api/products?minPrice=100&maxPrice=500', 500);
 
-  await act(async () => { render(<MemoryRouter><Products /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('min-price-filter'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('max-price-filter'), { target: { value: '500' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('apply-price-filter')); });
@@ -38,7 +38,7 @@ test('fails to filter by price range and shows error', async () => {
 test('Processes payment successfully', async () => {
   fetchMock.post('/api/processPayment', 200);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Process Payment')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -48,7 +48,7 @@ test('Processes payment successfully', async () => {
 test('Fails to process payment', async () => {
   fetchMock.post('/api/processPayment', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Process Payment')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -58,7 +58,7 @@ test('Fails to process payment', async () => {
 test('valid credit card number', async () => {
   fetchMock.post('/api/validate-credit-card', { valid: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('credit-card-input'), { target: { value: '4111111111111111' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 
@@ -69,7 +69,7 @@ test('valid credit card number', async () => {
 test('invalid credit card number', async () => {
   fetchMock.post('/api/validate-credit-card', 400);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('credit-card-input'), { target: { value: '1234' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('displays order confirmation details correctly.', async () => {
   fetchMock.get('/api/order/confirmation', { body: { orderId: '12345' } });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Order Confirmation')); });
 
   expect(fetchMock.calls('/api/order/confirmation').length).toEqual(1);
@@ -24,7 +24,7 @@ test('displays order confirmation details correctly.', async () => {
 test('displays error on failing to fetch order confirmation.', async () => {
   fetchMock.get('/api/order/confirmation', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Order Confirmation')); });
 
   expect(fetchMock.calls('/api/order/confirmation').length).toEqual(1);
@@ -34,7 +34,7 @@ test('displays error on failing to fetch order confirmation.', async () => {
 test('displays cart details correctly.', async () => {
   fetchMock.get('/api/cart', { body: { items: ['item1', 'item2'] } });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Cart')); });
 
   expect(fetchMock.calls('/api/cart').length).toEqual(1);
@@ -45,7 +45,7 @@ test('displays cart details correctly.', async () => {
 test('displays error message on fetching cart failure.', async () => {
   fetchMock.get('/api/cart', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('View Cart')); });
 
   expect(fetchMock.calls('/api/cart').length).toEqual(1);

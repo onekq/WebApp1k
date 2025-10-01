@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully analyzes reader engagement', async () => {
   fetchMock.get('/api/analyzeReaderEngagement?postId=1', { status: 200, body: { engagementScore: 85 } });
 
-  await act(async () => { render(<MemoryRouter><AnalyzeReaderEngagement postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Analyze Engagement')); });
 
   expect(fetchMock.calls('/api/analyzeReaderEngagement')).toHaveLength(1);
@@ -24,7 +24,7 @@ test('successfully analyzes reader engagement', async () => {
 test('fails to analyze reader engagement with an error message', async () => {
   fetchMock.get('/api/analyzeReaderEngagement?postId=1', { status: 500, body: { message: 'Server Error' } });
 
-  await act(async () => { render(<MemoryRouter><AnalyzeReaderEngagement postId="1" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App postId="1" /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Analyze Engagement')); });
 
   expect(fetchMock.calls('/api/analyzeReaderEngagement')).toHaveLength(1);
@@ -37,7 +37,7 @@ test('User can create a new tag successfully', async () => {
     body: { id: 1, name: 'New Tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Name'), { target: { value: 'New Tag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Tag')); });
 
@@ -51,7 +51,7 @@ test('User gets an error message when creating a new tag fails', async () => {
     body: { error: 'Unable to create tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Name'), { target: { value: 'New Tag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Tag')); });
 

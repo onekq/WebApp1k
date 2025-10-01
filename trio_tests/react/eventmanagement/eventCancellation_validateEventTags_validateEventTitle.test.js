@@ -14,7 +14,7 @@ afterEach(() => {
 test('Displays successful cancellation message upon event cancellation', async () => {
   fetchMock.post('/api/event/cancel', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('cancel-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('Displays successful cancellation message upon event cancellation', async (
 test('Displays error message upon failing to cancel an event', async () => {
   fetchMock.post('/api/event/cancel', 400);
 
-  await act(async () => { render(<MemoryRouter><EventApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('cancel-event-btn')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('Displays error message upon failing to cancel an event', async () => {
 test('Should successfully add valid event tags', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/tags/i), { target: { value: 'tech, conference' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -45,7 +45,7 @@ test('Should successfully add valid event tags', async () => {
 test('Should show error for invalid event tag characters', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/tags/i), { target: { value: 'tech, con*ference' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -56,7 +56,7 @@ test('Should show error for invalid event tag characters', async () => {
 test('Should successfully submit valid event title', async () => {
   fetchMock.post('/events', 200);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Valid Title' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 
@@ -67,7 +67,7 @@ test('Should successfully submit valid event title', async () => {
 test('Should show error for missing event title', async () => {
   fetchMock.post('/events', 400);
 
-  await act(async () => { render(<MemoryRouter><EventForm /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/title/i), { target: { value: '' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/submit/i)); });
 

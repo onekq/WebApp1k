@@ -18,7 +18,7 @@ test('Successfully tracks agent performance metrics.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><AgentPerformanceTracking /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('agent-picker'), { target: { value: 'agent2' } });
@@ -38,7 +38,7 @@ test('Fails to track agent performance metrics and shows error message.', async 
   });
 
   await act(async () => {
-    render(<MemoryRouter><AgentPerformanceTracking /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('agent-picker'), { target: { value: 'agent2' } });
@@ -58,7 +58,7 @@ test('Successfully notifies agents of SLA breaches.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLABreachNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-breach-picker'), { target: { value: 'breach1' } });
@@ -78,7 +78,7 @@ test('Fails to notify agents of SLA breaches and shows error message.', async ()
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLABreachNotification /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('sla-breach-picker'), { target: { value: 'breach1' } });
@@ -98,7 +98,7 @@ test('Successfully generates reports on ticket volume.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TicketVolume /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-01-01' } });
@@ -118,7 +118,7 @@ test('Fails to generate reports on ticket volume and shows error message.', asyn
   });
 
   await act(async () => {
-    render(<MemoryRouter><TicketVolume /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-01-01' } });

@@ -14,7 +14,7 @@ afterEach(() => {
 test('validates checkout steps successfully.', async () => {
   fetchMock.post('/api/checkout', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Proceed to Checkout')); });
 
   expect(fetchMock.calls('/api/checkout').length).toEqual(1);
@@ -24,7 +24,7 @@ test('validates checkout steps successfully.', async () => {
 test('displays error on checkout step failure.', async () => {
   fetchMock.post('/api/checkout', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Proceed to Checkout')); });
 
   expect(fetchMock.calls('/api/checkout').length).toEqual(1);
@@ -34,7 +34,7 @@ test('displays error on checkout step failure.', async () => {
 test('validates selecting a payment method successfully.', async () => {
   fetchMock.post('/api/payment-method', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Select Payment Method')); });
   await act(async () => { fireEvent.click(screen.getByText('Credit Card')); });
 
@@ -45,7 +45,7 @@ test('validates selecting a payment method successfully.', async () => {
 test('displays error on invalid payment method selection.', async () => {
   fetchMock.post('/api/payment-method', 400);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Select Payment Method')); });
   await act(async () => { fireEvent.click(screen.getByText('Expired Card')); });
 

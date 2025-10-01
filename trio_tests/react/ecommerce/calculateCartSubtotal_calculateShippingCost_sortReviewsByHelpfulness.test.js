@@ -14,7 +14,7 @@ afterEach(() => {
 test('calculateCartSubtotal: successfully calculate cart subtotal', async () => {
   fetchMock.get('/api/cart/subtotal', { status: 200, body: { subtotal: '100.00' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-subtotal')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('calculateCartSubtotal: successfully calculate cart subtotal', async () => 
 test('calculateCartSubtotal: fail to calculate cart subtotal with error message', async () => {
   fetchMock.get('/api/cart/subtotal', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-subtotal')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('calculateCartSubtotal: fail to calculate cart subtotal with error message'
 test('calculateShippingCost: successfully calculate shipping costs', async () => {
   fetchMock.get('/api/cart/shipping', { status: 200, body: { shipping: '15.00' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-shipping')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('calculateShippingCost: successfully calculate shipping costs', async () =>
 test('calculateShippingCost: fail to calculate shipping costs with error message', async () => {
   fetchMock.get('/api/cart/shipping', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-shipping')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('calculateShippingCost: fail to calculate shipping costs with error message
 test('Sorting reviews by helpfulness should display reviews in order', async () => {
   fetchMock.get('/api/reviews?productId=123&sort=helpfulness', [{ id: 1, helpfulness: 10, content: 'Helpful review' }]);
 
-  await act(async () => { render(<MemoryRouter><SortReviews productId="123" sort="helpfulness" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId="123" sort="helpfulness" /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/reviews?productId=123&sort=helpfulness')).toHaveLength(1);
   expect(screen.getByText('Helpful review')).toBeInTheDocument();
@@ -63,7 +63,7 @@ test('Sorting reviews by helpfulness should display reviews in order', async () 
 test('Sorting reviews by helpfulness should display empty list when there are no reviews', async () => {
   fetchMock.get('/api/reviews?productId=123&sort=helpfulness', []);
 
-  await act(async () => { render(<MemoryRouter><SortReviews productId="123" sort="helpfulness" /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId="123" sort="helpfulness" /></MemoryRouter>); });
 
   expect(fetchMock.calls('/api/reviews?productId=123&sort=helpfulness')).toHaveLength(1);
   expect(screen.getByText('No reviews')).toBeInTheDocument();

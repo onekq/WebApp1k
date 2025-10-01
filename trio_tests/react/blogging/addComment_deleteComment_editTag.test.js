@@ -59,7 +59,7 @@ test('User can edit an existing tag successfully', async () => {
     body: { id: 1, name: 'Updated Tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Name'), { target: { value: 'Updated Tag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Tag')); });
 
@@ -73,7 +73,7 @@ test('User gets an error message when editing a tag fails', async () => {
     body: { error: 'Unable to update tag' }
   });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Tag Name'), { target: { value: 'Updated Tag' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Update Tag')); });
 

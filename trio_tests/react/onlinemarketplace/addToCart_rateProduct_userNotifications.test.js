@@ -14,7 +14,7 @@ afterEach(() => {
 test('Adding a product to the cart succeeds.', async () => {
   fetchMock.post('/api/cart', { status: 200, body: { message: 'Added to cart successfully' } });
 
-  await act(async () => { render(<MemoryRouter><ProductPage productId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Add to Cart')); });
 
   expect(fetchMock.calls('/api/cart').length).toBe(1);
@@ -24,7 +24,7 @@ test('Adding a product to the cart succeeds.', async () => {
 test('Adding a product to the cart fails with error message.', async () => {
   fetchMock.post('/api/cart', { status: 400, body: { message: 'Product out of stock' } });
 
-  await act(async () => { render(<MemoryRouter><ProductPage productId={1} /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App productId={1} /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Add to Cart')); });
 
   expect(fetchMock.calls('/api/cart').length).toBe(1);
@@ -34,7 +34,7 @@ test('Adding a product to the cart fails with error message.', async () => {
 test('Rate Product successfully submits a rating.', async () => {
   fetchMock.post('/api/rate', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><RateProduct /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('star-4')); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-rating-button')); });
 
@@ -45,7 +45,7 @@ test('Rate Product successfully submits a rating.', async () => {
 test('Rate Product fails and displays error message.', async () => {
   fetchMock.post('/api/rate', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><RateProduct /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('star-4')); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-rating-button')); });
 
@@ -56,7 +56,7 @@ test('Rate Product fails and displays error message.', async () => {
 test('User Notifications successfully displays notifications.', async () => {
   fetchMock.get('/api/notifications', { status: 200, body: { notifications: ['Notification 1'] } });
 
-  await act(async () => { render(<MemoryRouter><UserNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('notifications-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -66,7 +66,7 @@ test('User Notifications successfully displays notifications.', async () => {
 test('User Notifications fails and displays error message.', async () => {
   fetchMock.get('/api/notifications', { status: 500 });
 
-  await act(async () => { render(<MemoryRouter><UserNotifications /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('notifications-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

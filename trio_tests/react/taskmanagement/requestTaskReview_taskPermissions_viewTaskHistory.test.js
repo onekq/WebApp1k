@@ -14,7 +14,7 @@ afterEach(() => {
 test('Request a review successfully', async () => {
   fetchMock.post('/request-review', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User2' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('request-review-button')); });
@@ -26,7 +26,7 @@ test('Request a review successfully', async () => {
 test('Fail to request a review due to server error', async () => {
   fetchMock.post('/request-review', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('user-select'), { target: { value: 'User2' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('request-review-button')); });
@@ -38,7 +38,7 @@ test('Fail to request a review due to server error', async () => {
 test('Set task-specific permissions for users successfully', async () => {
   fetchMock.post('/set-task-permissions', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('permission-select'), { target: { value: 'edit' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-permission-button')); });
@@ -50,7 +50,7 @@ test('Set task-specific permissions for users successfully', async () => {
 test('Fail to set task-specific permissions for users due to server error', async () => {
   fetchMock.post('/set-task-permissions', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('task-select'), { target: { value: 'Task1' } }); });
   await act(async () => { fireEvent.change(screen.getByTestId('permission-select'), { target: { value: 'edit' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('set-permission-button')); });
@@ -65,7 +65,7 @@ test('View change history of a task successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><TaskHistory taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -76,7 +76,7 @@ test('Fail to view change history of a task when API returns 500.', async () => 
   fetchMock.get('/api/tasks/1/history', 500);
   
   await act(async () => {
-    render(<MemoryRouter><TaskHistory taskId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App taskId={1} /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);

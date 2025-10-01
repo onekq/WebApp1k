@@ -14,7 +14,7 @@ afterEach(() => {
 test('calculateTaxes: successfully calculate taxes', async () => {
   fetchMock.get('/api/cart/taxes', { status: 200, body: { taxes: '8.00' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-taxes')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -24,7 +24,7 @@ test('calculateTaxes: successfully calculate taxes', async () => {
 test('calculateTaxes: fail to calculate taxes with error message', async () => {
   fetchMock.get('/api/cart/taxes', { status: 500, body: { message: 'Error' } });
 
-  await act(async () => { render(<MemoryRouter><Cart /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('calculate-taxes')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -34,7 +34,7 @@ test('calculateTaxes: fail to calculate taxes with error message', async () => {
 test('Generates invoice successfully', async () => {
   fetchMock.get('/api/generateInvoice', { invoiceNumber: 'INV-12345' });
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Invoice')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -44,7 +44,7 @@ test('Generates invoice successfully', async () => {
 test('Fails to generate invoice', async () => {
   fetchMock.get('/api/generateInvoice', 500);
 
-  await act(async () => { render(<MemoryRouter><Order /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText('Generate Invoice')); });
 
   expect(fetchMock.calls().length).toBe(1);
@@ -54,7 +54,7 @@ test('Fails to generate invoice', async () => {
 test('valid CVV', async () => {
   fetchMock.post('/api/validate-cvv', { valid: true });
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cvv-input'), { target: { value: '123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 
@@ -65,7 +65,7 @@ test('valid CVV', async () => {
 test('invalid CVV', async () => {
   fetchMock.post('/api/validate-cvv', 400);
 
-  await act(async () => { render(<MemoryRouter><Payment /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('cvv-input'), { target: { value: '12A' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('validate-button')); });
 

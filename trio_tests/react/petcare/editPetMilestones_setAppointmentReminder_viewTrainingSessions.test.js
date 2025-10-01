@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully edits a pet milestone', async () => {
   fetchMock.put('/api/milestones/edit', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('edit-milestone-button', { name: /edit/i })); });
   await act(async () => { fireEvent.change(screen.getByTestId('milestone-input'), { target: { value: 'Learned to Fetch' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-milestone-button')); });
@@ -26,7 +26,7 @@ test('Successfully edits a pet milestone', async () => {
 test('Fails to edit a pet milestone', async () => {
   fetchMock.put('/api/milestones/edit', { status: 400 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('edit-milestone-button', { name: /edit/i })); });
   await act(async () => { fireEvent.click(screen.getByTestId('save-milestone-button')); });
 
@@ -38,7 +38,7 @@ test('should set a new appointment reminder successfully', async () => {
   fetchMock.post('/api/set-appointment-reminder', 200);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Appointment Description/i), { target: { value: 'Vet visit' } });
@@ -55,7 +55,7 @@ test('should fail to set a new appointment reminder', async () => {
   fetchMock.post('/api/set-appointment-reminder', 500);
 
   await act(async () => {
-    render(<MemoryRouter><RemindersComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByLabelText(/Appointment Description/i), { target: { value: 'Vet visit' } });
@@ -71,7 +71,7 @@ test('should fail to set a new appointment reminder', async () => {
 test('Views training sessions list successfully.', async () => {
   fetchMock.get('/training-sessions', [{ description: 'Obedience training' }]);
 
-  await act(async () => { render(<MemoryRouter><ViewTrainingSessions /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/training-sessions').length).toBe(1);
   expect(screen.getByText('Obedience training')).toBeInTheDocument();
@@ -80,7 +80,7 @@ test('Views training sessions list successfully.', async () => {
 test('Fails to view training sessions list with error message.', async () => {
   fetchMock.get('/training-sessions', { status: 500, body: { message: 'Failed to fetch training sessions' } });
 
-  await act(async () => { render(<MemoryRouter><ViewTrainingSessions /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls('/training-sessions').length).toBe(1);
   expect(screen.getByTestId('error-message')).toBeInTheDocument();

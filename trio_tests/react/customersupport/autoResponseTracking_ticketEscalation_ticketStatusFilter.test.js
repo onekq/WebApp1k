@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully tracks the use of auto-responses.', async () => {
   fetchMock.get('/api/getAutoResponseUsage', { usage: '10 times' });
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('10 times')).toBeInTheDocument();
@@ -23,7 +23,7 @@ test('Successfully tracks the use of auto-responses.', async () => {
 test('Fails to track the use of auto-responses.', async () => {
   fetchMock.get('/api/getAutoResponseUsage', 500);
 
-  await act(async () => { render(<MemoryRouter><AutoResponseTracking /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   expect(fetchMock.calls()).toHaveLength(1);
   expect(screen.getByText('Failed to track usage')).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('Fails to track the use of auto-responses.', async () => {
 test('Escalating tickets to higher support levels should show success message.', async () => {
   fetchMock.post('/api/escalate-ticket', { success: true });
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('escalation-ticket-id'), { target: { value: 'escalate123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('escalate-ticket')); });
 
@@ -43,7 +43,7 @@ test('Escalating tickets to higher support levels should show success message.',
 test('Escalating tickets to higher support levels should show error message when failed.', async () => {
   fetchMock.post('/api/escalate-ticket', 500);
 
-  await act(async () => { render(<MemoryRouter><HelpDeskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('escalation-ticket-id'), { target: { value: 'escalate123' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('escalate-ticket')); });
 
@@ -54,7 +54,7 @@ test('Escalating tickets to higher support levels should show error message when
 test('filters tickets by status', async () => {
   fetchMock.get('/api/tickets?status=Open', { status: 200, body: [{ id: 1, status: 'Open' }] });
   
-  await act(async () => { render(<MemoryRouter><TicketStatusFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Status Filter'), { target: { value: 'Open' } }); });
   
   expect(fetchMock.calls('/api/tickets?status=Open').length).toBe(1);
@@ -64,7 +64,7 @@ test('filters tickets by status', async () => {
 test('shows error if filtering tickets fails', async () => {
   fetchMock.get('/api/tickets?status=Open', 500);
   
-  await act(async () => { render(<MemoryRouter><TicketStatusFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText('Status Filter'), { target: { value: 'Open' } }); });
   
   expect(fetchMock.calls('/api/tickets?status=Open').length).toBe(1);

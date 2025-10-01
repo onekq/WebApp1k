@@ -14,7 +14,7 @@ afterEach(() => {
 test('Users can successfully create a new album.', async () => {
   fetchMock.post('/api/albums', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CreateAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('album-name-input'), { target: { value: 'Vacation' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('create-album-button')); });
 
@@ -25,7 +25,7 @@ test('Users can successfully create a new album.', async () => {
 test('Shows an error message when album creation fails.', async () => {
   fetchMock.post('/api/albums', { success: false });
 
-  await act(async () => { render(<MemoryRouter><CreateAlbumComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('album-name-input'), { target: { value: 'Vacation' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('create-album-button')); });
 
@@ -37,7 +37,7 @@ test('deletes a photo successfully', async () => {
   fetchMock.delete('/photo/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoManagementComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -52,7 +52,7 @@ test('fails to delete a photo', async () => {
   fetchMock.delete('/photo/1', { status: 500 });
 
   await act(async () => {
-    render(<MemoryRouter><PhotoManagementComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

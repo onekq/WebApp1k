@@ -54,7 +54,7 @@ test('Fails to validate session reminders.', async () => {
 test('ticket sales start date before event start date', async () => {
   fetchMock.post('/ticketSalesStartDate', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('salesStartDate'), { target: { value: '2023-01-01' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 
@@ -63,7 +63,7 @@ test('ticket sales start date before event start date', async () => {
 }, 10000);
 
 test('ticket sales start date after event start date', async () => {
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('salesStartDate'), { target: { value: '2024-01-01' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submitButton')); });
 

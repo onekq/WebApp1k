@@ -14,7 +14,7 @@ afterEach(() => {
 test('Certificate templates are customizable.', async () => {
   fetchMock.post('/api/certificates/customize', { success: true });
 
-  await act(async () => { render(<MemoryRouter><CustomizeCertificate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/template/i), { target: { value: 'new template' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -25,7 +25,7 @@ test('Certificate templates are customizable.', async () => {
 test('Error message is shown when customization fails.', async () => {
   fetchMock.post('/api/certificates/customize', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomizeCertificate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/template/i), { target: { value: 'invalid template' } }); });
   await act(async () => { fireEvent.click(screen.getByText(/save/i)); });
 
@@ -36,7 +36,7 @@ test('Error message is shown when customization fails.', async () => {
 test('Successfully posts a new forum post', async () => {
   fetchMock.post('/forum/posts', { status: 201 });
 
-  await act(async () => { render(<MemoryRouter><DiscussionForum /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('post-content'), { target: { value: 'New post' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Post')); });
 
@@ -47,7 +47,7 @@ test('Successfully posts a new forum post', async () => {
 test('Fails to post a new forum post', async () => {
   fetchMock.post('/forum/posts', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><DiscussionForum /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('post-content'), { target: { value: 'New post' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Post')); });
 
@@ -58,7 +58,7 @@ test('Fails to post a new forum post', async () => {
 test('Filter Courses success: should display filtered courses.', async () => {
   fetchMock.get('/api/courses?filter=beginner', [{ id: 1, title: 'Beginner Course' }]);
 
-  await act(async () => { render(<MemoryRouter><FilterCourses /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('course-filter'), { target: { value: 'beginner' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Apply Filters')); });
 
@@ -69,7 +69,7 @@ test('Filter Courses success: should display filtered courses.', async () => {
 test('Filter Courses failure: should display an error message if no filter results.', async () => {
   fetchMock.get('/api/courses?filter=advanced', []);
 
-  await act(async () => { render(<MemoryRouter><FilterCourses /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('course-filter'), { target: { value: 'advanced' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Apply Filters')); });
 

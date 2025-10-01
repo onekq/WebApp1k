@@ -14,7 +14,7 @@ afterEach(() => {
 test('Filter by HOA fees successfully', async () => {
   fetchMock.get('/api/hoa-fees-properties', { properties: [{ id: 1, fee: 100 }] });
 
-  await act(async () => { render(<MemoryRouter><HOAFeesFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('hoa-fees-input'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-by-hoa-fees-btn')); });
 
@@ -25,7 +25,7 @@ test('Filter by HOA fees successfully', async () => {
 test('Filter by HOA fees fails with error', async () => {
   fetchMock.get('/api/hoa-fees-properties', 500);
 
-  await act(async () => { render(<MemoryRouter><HOAFeesFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('hoa-fees-input'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-by-hoa-fees-btn')); });
 
@@ -39,7 +39,7 @@ test('Filter by Property Features filters properties by features successfully', 
     body: [{ id: 1, features: ['balcony'] }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/features/i), { target: { value: 'balcony' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -53,7 +53,7 @@ test('Filter by Property Features filters properties by features fails', async (
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/features/i), { target: { value: 'balcony' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -64,7 +64,7 @@ test('Filter by Property Features filters properties by features fails', async (
 test('Search by property owner successfully', async () => {
   fetchMock.get('/api/properties-by-owner', { properties: [{ id: 1, owner: "Owner 1" }] });
 
-  await act(async () => { render(<MemoryRouter><PropertyOwnerSearch /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('owner-search-input'), { target: { value: 'Owner 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-by-owner-btn')); });
 
@@ -75,7 +75,7 @@ test('Search by property owner successfully', async () => {
 test('Search by property owner fails with error', async () => {
   fetchMock.get('/api/properties-by-owner', 500);
 
-  await act(async () => { render(<MemoryRouter><PropertyOwnerSearch /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('owner-search-input'), { target: { value: 'Owner 1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('search-by-owner-btn')); });
 

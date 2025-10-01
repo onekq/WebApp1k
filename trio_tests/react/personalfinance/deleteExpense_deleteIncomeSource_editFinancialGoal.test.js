@@ -14,7 +14,7 @@ afterEach(() => {
 test('deletes an expense successfully', async () => {
   fetchMock.delete('/api/expense/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-expense-button-1')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -24,7 +24,7 @@ test('deletes an expense successfully', async () => {
 test('fails to delete an expense', async () => {
   fetchMock.delete('/api/expense/1', { success: false });
 
-  await act(async () => { render(<MemoryRouter><ExpenseManager /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-expense-button-1')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -35,7 +35,7 @@ test('successfully deletes an income source', async () => {
   fetchMock.delete('/income/1', { status: 200 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete income source/i));
@@ -49,7 +49,7 @@ test('fails to delete an income source', async () => {
   fetchMock.delete('/income/1', { status: 400 });
 
   await act(async () => {
-    render(<MemoryRouter><DeleteIncome incomeId={1} /></MemoryRouter>);
+    render(<MemoryRouter><App incomeId={1} /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText(/delete income source/i));
@@ -63,7 +63,7 @@ test('successfully edits a financial goal', async () => {
   fetchMock.put('/api/goal/1', { status: 200, body: {} });
 
   await act(async () => {
-    render(<MemoryRouter><EditFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -79,7 +79,7 @@ test('fails to edit a financial goal', async () => {
   fetchMock.put('/api/goal/1', { status: 400, body: { error: 'Invalid update' } });
 
   await act(async () => {
-    render(<MemoryRouter><EditFinancialGoal /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {

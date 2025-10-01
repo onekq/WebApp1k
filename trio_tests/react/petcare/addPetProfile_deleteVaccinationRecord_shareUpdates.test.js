@@ -14,7 +14,7 @@ afterEach(() => {
 test('Add pet profile successfully.', async () => {
   fetchMock.post('/api/pets', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/name/i), {target: {value: 'Fluffy'}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Pet/i)); });
 
@@ -25,7 +25,7 @@ test('Add pet profile successfully.', async () => {
 test('Fail to add pet profile due to missing name.', async () => {
   fetchMock.post('/api/pets', 400);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByLabelText(/name/i), {target: {value: ''}}); });
   await act(async () => { fireEvent.click(screen.getByText(/Add Pet/i)); });
 
@@ -36,7 +36,7 @@ test('Fail to add pet profile due to missing name.', async () => {
 test('Delete vaccination record successfully.', async () => {
   fetchMock.delete('/api/vaccinations/1', 200);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Delete Vaccination/i)); });
 
   expect(fetchMock.calls('/api/vaccinations/1').length).toBe(1);
@@ -46,7 +46,7 @@ test('Delete vaccination record successfully.', async () => {
 test('Fail to delete vaccination record due to server error.', async () => {
   fetchMock.delete('/api/vaccinations/1', 500);
 
-  await act(async () => { render(<MemoryRouter><YourComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByText(/Delete Vaccination/i)); });
 
   expect(fetchMock.calls('/api/vaccinations/1').length).toBe(1);
@@ -56,7 +56,7 @@ test('Fail to delete vaccination record due to server error.', async () => {
 test('Successfully shares updates with the community', async () => {
   fetchMock.post('/api/community/share', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('update-input'), { target: { value: 'New update' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-button')); });
 
@@ -67,7 +67,7 @@ test('Successfully shares updates with the community', async () => {
 test('Fails to share updates without input', async () => {
   fetchMock.post('/api/community/share', { status: 400 });
 
-  await act(async () => { render(<MemoryRouter><Community /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

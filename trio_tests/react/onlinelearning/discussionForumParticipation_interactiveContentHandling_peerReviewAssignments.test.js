@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully posts a new forum post', async () => {
   fetchMock.post('/forum/posts', { status: 201 });
 
-  await act(async () => { render(<MemoryRouter><DiscussionForum /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('post-content'), { target: { value: 'New post' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Post')); });
 
@@ -25,7 +25,7 @@ test('Successfully posts a new forum post', async () => {
 test('Fails to post a new forum post', async () => {
   fetchMock.post('/forum/posts', { status: 500, body: 'Error' });
 
-  await act(async () => { render(<MemoryRouter><DiscussionForum /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('post-content'), { target: { value: 'New post' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Post')); });
 
@@ -36,7 +36,7 @@ test('Fails to post a new forum post', async () => {
 test('Success: interactive content loads successfully', async () => {
   fetchMock.get('/api/interactive-content', 200);
 
-  await act(async () => { render(<MemoryRouter><InteractiveContentComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('load-interactive-content')); });
 
@@ -47,7 +47,7 @@ test('Success: interactive content loads successfully', async () => {
 test('Failure: interactive content fails to load', async () => {
   fetchMock.get('/api/interactive-content', 500);
 
-  await act(async () => { render(<MemoryRouter><InteractiveContentComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
 
   await act(async () => { fireEvent.click(screen.getByTestId('load-interactive-content')); });
 
@@ -58,7 +58,7 @@ test('Failure: interactive content fails to load', async () => {
 test('Success: peer review assignment submitted', async () => {
   fetchMock.post('/api/peer-review', 200);
 
-  await act(async () => { render(<MemoryRouter><PeerReviewAssignmentsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('peer-review-text'), { target: { value: 'review' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -69,7 +69,7 @@ test('Success: peer review assignment submitted', async () => {
 test('Failure: peer review assignment submission fails', async () => {
   fetchMock.post('/api/peer-review', 500);
 
-  await act(async () => { render(<MemoryRouter><PeerReviewAssignmentsComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('peer-review-text'), { target: { value: 'review' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 

@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully creates custom notification rules.', async () => {
   fetchMock.post('/api/createCustomNotificationRule', 200);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationRules /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ruleContent'), { target: { value: 'Rule' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Rule')); });
 
@@ -25,7 +25,7 @@ test('Successfully creates custom notification rules.', async () => {
 test('Fails to create custom notification rules.', async () => {
   fetchMock.post('/api/createCustomNotificationRule', 500);
 
-  await act(async () => { render(<MemoryRouter><CustomNotificationRules /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('ruleContent'), { target: { value: 'Rule' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Create Rule')); });
 
@@ -40,7 +40,7 @@ test('Successfully tracks SLA compliance.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLAComplianceTracking /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-03-01' } });
@@ -60,7 +60,7 @@ test('Fails to track SLA compliance and shows error message.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><SLAComplianceTracking /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.change(screen.getByTestId('date-picker'), { target: { value: '2022-03-01' } });
@@ -77,7 +77,7 @@ test('successfully suggests articles based on ticket content', async () => {
   fetchMock.post('path/to/api/article/suggest', 200);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('suggest-articles-button'));
@@ -91,7 +91,7 @@ test('fails to suggest articles based on ticket content with error message', asy
   fetchMock.post('path/to/api/article/suggest', 500);
 
   await act(async () => {
-    render(<MemoryRouter><YourComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByTestId('suggest-articles-button'));

@@ -35,7 +35,7 @@ test('fails to add a recipe due to missing required fields', async () => {
 test('Successfully delete a recipe comment', async () => {
   fetchMock.delete('/api/delete-comment', { status: 200 });
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -45,7 +45,7 @@ test('Successfully delete a recipe comment', async () => {
 test('Fail to delete a recipe comment with error message', async () => {
   fetchMock.delete('/api/delete-comment', 500);
 
-  await act(async () => { render(<MemoryRouter><MyComponent /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('delete-comment-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

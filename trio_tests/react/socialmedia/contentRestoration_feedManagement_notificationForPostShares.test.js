@@ -17,7 +17,7 @@ test('Successfully restores an archived post.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ArchivedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Restore'));
@@ -33,7 +33,7 @@ test('Shows error message when restoring an archived post fails.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><ArchivedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Restore'));
@@ -49,7 +49,7 @@ test('Displays posts from followed users in feed successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FeedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -62,7 +62,7 @@ test('Displays error when failing to load posts from followed users in feed.', a
   });
 
   await act(async () => {
-    render(<MemoryRouter><FeedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -72,7 +72,7 @@ test('Displays error when failing to load posts from followed users in feed.', a
 test('should send a notification when a post is shared', async () => {
   fetchMock.post('/api/share', { success: true });
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -82,7 +82,7 @@ test('should send a notification when a post is shared', async () => {
 test('should handle error when notification sending fails for a post share', async () => {
   fetchMock.post('/api/share', 500);
 
-  await act(async () => { render(<MemoryRouter><Post /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('share-button')); });
 
   expect(fetchMock.calls()).toHaveLength(1);

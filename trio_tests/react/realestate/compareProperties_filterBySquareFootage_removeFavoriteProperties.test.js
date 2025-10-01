@@ -14,7 +14,7 @@ afterEach(() => {
 test('successfully compares properties', async () => {
   fetchMock.post('/api/properties/compare', 200);
 
-  await act(async () => { render(<MemoryRouter><CompareProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('compare-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -24,7 +24,7 @@ test('successfully compares properties', async () => {
 test('fails to compare properties and shows error message', async () => {
   fetchMock.post('/api/properties/compare', 500);
 
-  await act(async () => { render(<MemoryRouter><CompareProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('compare-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -37,7 +37,7 @@ test('Filter by Square Footage filters properties by their square footage succes
     body: [{ id: 1, sqft: 1000 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/square footage/i), { target: { value: '1000' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -51,7 +51,7 @@ test('Filter by Square Footage filters properties by their square footage fails'
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/square footage/i), { target: { value: '1000' } }));
   await act(async () => fireEvent.click(screen.getByText(/filter/i)));
 
@@ -62,7 +62,7 @@ test('Filter by Square Footage filters properties by their square footage fails'
 test('successfully removes favorite properties', async () => {
   fetchMock.post('/api/favorites/remove', 200);
 
-  await act(async () => { render(<MemoryRouter><RemoveFavoriteProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-favorite-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 
@@ -72,7 +72,7 @@ test('successfully removes favorite properties', async () => {
 test('fails to remove favorite properties and shows error message', async () => {
   fetchMock.post('/api/favorites/remove', 500);
 
-  await act(async () => { render(<MemoryRouter><RemoveFavoriteProperties /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.click(screen.getByTestId('remove-favorite-btn')); });
 
   expect(fetchMock.calls()).toHaveLength(1); 

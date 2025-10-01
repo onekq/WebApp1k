@@ -17,7 +17,7 @@ test('Displays posts from followed users in feed successfully.', async () => {
   });
 
   await act(async () => {
-    render(<MemoryRouter><FeedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -30,7 +30,7 @@ test('Displays error when failing to load posts from followed users in feed.', a
   });
 
   await act(async () => {
-    render(<MemoryRouter><FeedComponent /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   expect(fetchMock.calls()).toHaveLength(1);
@@ -41,7 +41,7 @@ test('Test visibility settings for public posts.', async () => {
   fetchMock.patch('/api/posts/1', 200);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Set Public'));
@@ -55,7 +55,7 @@ test('Test visibility settings for private posts.', async () => {
   fetchMock.patch('/api/posts/1', 400);
 
   await act(async () => {
-    render(<MemoryRouter><SocialMediaApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
   await act(async () => {
     fireEvent.click(screen.getByText('Set Private'));
@@ -68,7 +68,7 @@ test('Test visibility settings for private posts.', async () => {
 test('Privacy settings update succeeds', async () => {
   fetchMock.put('/api/profile/privacy-settings', { body: { message: 'Privacy settings updated' }, status: 200 });
 
-  await act(async () => { render(<MemoryRouter><PrivacySettingsUpdate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('privacy-setting'), { target: { value: 'private' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Settings')); });
 
@@ -79,7 +79,7 @@ test('Privacy settings update succeeds', async () => {
 test('Privacy settings update fails', async () => {
   fetchMock.put('/api/profile/privacy-settings', { body: { error: 'Failed to update settings' }, status: 400 });
 
-  await act(async () => { render(<MemoryRouter><PrivacySettingsUpdate /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('privacy-setting'), { target: { value: 'invalid' } }); });
   await act(async () => { fireEvent.click(screen.getByText('Save Settings')); });
 

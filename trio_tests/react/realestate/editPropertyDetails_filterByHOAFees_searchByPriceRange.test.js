@@ -14,7 +14,7 @@ afterEach(() => {
 test('Successfully edits property details.', async () => {
   fetchMock.put('/api/properties/1', { success: true });
 
-  await act(async () => { render(<MemoryRouter><EditProperty /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('property-title'), { target: { value: 'Updated Property' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -25,7 +25,7 @@ test('Successfully edits property details.', async () => {
 test('Fails to edit property details with error message.', async () => {
   fetchMock.put('/api/properties/1', 400);
 
-  await act(async () => { render(<MemoryRouter><EditProperty /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('property-title'), { target: { value: 'Updated Property' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('submit-button')); });
 
@@ -36,7 +36,7 @@ test('Fails to edit property details with error message.', async () => {
 test('Filter by HOA fees successfully', async () => {
   fetchMock.get('/api/hoa-fees-properties', { properties: [{ id: 1, fee: 100 }] });
 
-  await act(async () => { render(<MemoryRouter><HOAFeesFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('hoa-fees-input'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-by-hoa-fees-btn')); });
 
@@ -47,7 +47,7 @@ test('Filter by HOA fees successfully', async () => {
 test('Filter by HOA fees fails with error', async () => {
   fetchMock.get('/api/hoa-fees-properties', 500);
 
-  await act(async () => { render(<MemoryRouter><HOAFeesFilter /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('hoa-fees-input'), { target: { value: '100' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('filter-by-hoa-fees-btn')); });
 
@@ -61,7 +61,7 @@ test('Search by Price Range filters properties within a specified price range su
     body: [{ id: 1, price: 100000 }]
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/min price/i), { target: { value: '50000' } }));
   await act(async () => fireEvent.change(screen.getByLabelText(/max price/i), { target: { value: '200000' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));
@@ -76,7 +76,7 @@ test('Search by Price Range filters properties within a specified price range fa
     body: { error: 'Server Error' }
   });
 
-  await act(async () => render(<MemoryRouter><PropertySearch /></MemoryRouter>));
+  await act(async () => render(<MemoryRouter><App /></MemoryRouter>));
   await act(async () => fireEvent.change(screen.getByLabelText(/min price/i), { target: { value: '50000' } }));
   await act(async () => fireEvent.change(screen.getByLabelText(/max price/i), { target: { value: '200000' } }));
   await act(async () => fireEvent.click(screen.getByText(/search/i)));

@@ -15,7 +15,7 @@ test('Assign Users to Project - success', async () => {
   fetchMock.post('/api/projects/assign-users', 200);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -34,7 +34,7 @@ test('Assign Users to Project - failure', async () => {
   fetchMock.post('/api/projects/assign-users', 400);
 
   await act(async () => {
-    render(<MemoryRouter><ProjectManagementApp /></MemoryRouter>);
+    render(<MemoryRouter><App /></MemoryRouter>);
   });
 
   await act(async () => {
@@ -52,7 +52,7 @@ test('Assign Users to Project - failure', async () => {
 test('successfully syncs tasks with a third-party tool.', async () => {
   fetchMock.post('/api/third-party-sync', { success: true });
 
-  await act(async () => { render(<MemoryRouter><ThirdPartyIntegration /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tool-input'), { target: { value: 'Jira' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-tool-btn')); });
 
@@ -63,7 +63,7 @@ test('successfully syncs tasks with a third-party tool.', async () => {
 test('fails to sync tasks with a third-party tool if server error.', async () => {
   fetchMock.post('/api/third-party-sync', 500);
 
-  await act(async () => { render(<MemoryRouter><ThirdPartyIntegration /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('tool-input'), { target: { value: 'Jira' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('sync-tool-btn')); });
 
@@ -74,7 +74,7 @@ test('fails to sync tasks with a third-party tool if server error.', async () =>
 test('Mention user in a task comment successfully', async () => {
   fetchMock.post('/mention-user', { status: 200, body: { success: true } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Hey @User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-comment-button')); });
 
@@ -85,7 +85,7 @@ test('Mention user in a task comment successfully', async () => {
 test('Fail to mention user in a task comment due to server error', async () => {
   fetchMock.post('/mention-user', { status: 500, body: { success: false } });
 
-  await act(async () => { render(<MemoryRouter><TaskApp /></MemoryRouter>); });
+  await act(async () => { render(<MemoryRouter><App /></MemoryRouter>); });
   await act(async () => { fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'Hey @User1' } }); });
   await act(async () => { fireEvent.click(screen.getByTestId('post-comment-button')); });
 
