@@ -56,8 +56,8 @@ class GPTCodeGenerator(CodeGenerator):
         self.client = openai.OpenAI(api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        response = self.client.responses.create(input=self.make_prompt(prompt), model=self.model_name)
-        return response.output_text.strip()
+        response = self.client.chat.completions.create(messages=self.make_prompt(prompt), model=self.model_name, max_tokens=self.max_tokens)
+        return response.choices[0].message.content.strip()
 
 class GeminiCodeGenerator(CodeGenerator):
     def __init__(self, api_key: str):
