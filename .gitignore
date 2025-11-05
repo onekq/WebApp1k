@@ -5,3 +5,4 @@ staging/src/
 staging/output.log
 models
 .DS_Store
+google-cloud-cli-linux-x86_64.tar.gz
