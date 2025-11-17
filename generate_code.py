@@ -42,12 +42,12 @@ class FireworksCodeGenerator(CodeGenerator):
 
     def generate_code(self, prompt: str) -> str:
         response = self.client.chat.completions.create(
-            messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=self.max_tokens)
+            messages=self.make_prompt(prompt), model=f"fireworks/{self.model_name}", max_tokens=self.max_tokens)
         return response.choices[0].message.content.strip()
 
     def find_errors(self, prompt: str) -> str:
         response = self.client.chat.completions.create(
-            messages=self.make_prompt(prompt), model=f"accounts/fireworks/models/{self.model_name}", max_tokens=self.max_tokens,
+            messages=self.make_prompt(prompt), model=f"fireworks/{self.model_name}", max_tokens=self.max_tokens,
             response_format={"type": "json_object", "schema": Result.model_json_schema()})
         return response.choices[0].message.content
 
