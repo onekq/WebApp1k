@@ -56,7 +56,19 @@ class GPTCodeGenerator(CodeGenerator):
         self.client = openai.OpenAI(api_key=api_key)
 
     def generate_code(self, prompt: str) -> str:
-        response = self.client.chat.completions.create(messages=self.make_prompt(prompt), model=self.model_name, max_tokens=self.max_tokens)
+        # Check if this is a codex model that requires /responses endpoint
+        if 'codex' in self.model_name.lower():
+            full_prompt = f"{self.system_prompt}\n\n{prompt}" if hasattr(self, 'system_prompt') else prompt
+            response = self.client.post("/responses", body={"model": self.model_name, "input": full_prompt}, cast_to=object)
+            # Navigate the response structure: output -> message -> content -> text
+            for item in response.get('output', []):
+                if item.get('type') == 'message':
+                    content = item.get('content', [])
+                    if content and len(content) > 0:
+                        return content[0].get('text', '').strip()
+            return ''
+        # Otherwise use standard chat completions
+        response = self.client.chat.completions.create(messages=self.make_prompt(prompt), model=self.model_name, max_completion_tokens=self.max_tokens)
         return response.choices[0].message.content.strip()
 
 class GeminiCodeGenerator(CodeGenerator):
